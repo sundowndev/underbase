@@ -1,0 +1,22 @@
+{
+  "name": "af-models",
+  "version": "1.0.0",
+  "description": "Airfordable Data Models for mongodb",
+  "main": "index.js",
+  "scripts": {
+    "compile": "babel src -d dist --presets es2015,stage-0",
+    "preinstall": "npm run compile",
+    "prepublish": "npm run compile",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Emmanuel Buah <emmanuel@airfordable.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.16.0"
+  },
+  "dependencies": {
+    "mongoose": "^4.6.1"
+  }
+}
