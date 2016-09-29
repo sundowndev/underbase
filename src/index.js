@@ -8,6 +8,7 @@
 /*jslint node: true */
 'use strict';
 
+import mongoose from './mongoose';
 import Agent from './agent';
 import Airport from './airport';
 import Booking from './booking';
@@ -18,4 +19,4 @@ import Reward from './reward';
 import User from './user';
 import AdminUser from './adminUser';
 
-export { Agent, Airport, Booking, BookingImage, BookingPreview, Installment, Reward, User, AdminUser};
+export { mongoose, Agent, Airport, Booking, BookingImage, BookingPreview, Installment, Reward, User, AdminUser};
