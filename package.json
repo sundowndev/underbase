@@ -2,7 +2,7 @@
   "name": "af-models",
   "version": "1.0.1",
   "description": "Airfordable Data Models for mongodb",
-  "main": "dist/person.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "nodemon src/index.js --exec babel-register",
     "compile": "babel src -d dist --presets es2015,stage-0",
