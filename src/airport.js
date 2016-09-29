@@ -8,18 +8,13 @@
 /*jslint node: true */
 'use strict';
 
-export default class Person {
+import mongoose from './mongoose';
 
-  constructor( name ) {
-    this.name = name;
-  }
+var Airport = mongoose.model('Airport', {
+	name: { type: String, required: false },
+	country: { type: String, required: false },
+	code: { type: String, index: false, unique: false, required: false },
+	city: { type: String, required: false }
+});
 
-  sayHello() {
-    return `Hello ${ this.name }!`;
-  }
-
-  sayHelloThreeTimes() {
-    let hello = this.sayHello();
-    return `${ hello } `.repeat(3);
-  }
-}
+export default Airport;

@@ -8,14 +8,9 @@
 /*jslint node: true */
 'use strict';
 
-export default class Dog {
+import mongoose from 'mongoose';
+import Promise from 'bluebird';
 
-  constructor( name ) {
-    this.name = name;
-  }
+mongoose.Promise = Promise;
 
-  bark() {
-    return `Woof Woof ${ this.name }!`;
-  }
-
-}
+export default mongoose;

@@ -8,7 +8,14 @@
 /*jslint node: true */
 'use strict';
 
-import Dog from './dog';
-import Person from './person';
+import Agent from './agent';
+import Airport from './airport';
+import Booking from './booking';
+import BookingImage from './bookingImage';
+import BookingPreview from './bookingPreview';
+import Installment from './installment';
+import Reward from './reward';
+import User from './user';
+import AdminUser from './adminUser';
 
-export { Dog, Person }
+export { Agent, Airport, Booking, BookingImage, BookingPreview, Installment, Reward, User, AdminUser};

@@ -11,17 +11,52 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Person = exports.Dog = undefined;
+exports.AdminUser = exports.User = exports.Reward = exports.Installment = exports.BookingPreview = exports.BookingImage = exports.Booking = exports.Airport = exports.Agent = undefined;
 
-var _dog = require('./dog');
+var _agent = require('./agent');
 
-var _dog2 = _interopRequireDefault(_dog);
+var _agent2 = _interopRequireDefault(_agent);
 
-var _person = require('./person');
+var _airport = require('./airport');
 
-var _person2 = _interopRequireDefault(_person);
+var _airport2 = _interopRequireDefault(_airport);
+
+var _booking = require('./booking');
+
+var _booking2 = _interopRequireDefault(_booking);
+
+var _bookingImage = require('./bookingImage');
+
+var _bookingImage2 = _interopRequireDefault(_bookingImage);
+
+var _bookingPreview = require('./bookingPreview');
+
+var _bookingPreview2 = _interopRequireDefault(_bookingPreview);
+
+var _installment = require('./installment');
+
+var _installment2 = _interopRequireDefault(_installment);
+
+var _reward = require('./reward');
+
+var _reward2 = _interopRequireDefault(_reward);
+
+var _user = require('./user');
+
+var _user2 = _interopRequireDefault(_user);
+
+var _adminUser = require('./adminUser');
+
+var _adminUser2 = _interopRequireDefault(_adminUser);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.Dog = _dog2.default;
-exports.Person = _person2.default;
+exports.Agent = _agent2.default;
+exports.Airport = _airport2.default;
+exports.Booking = _booking2.default;
+exports.BookingImage = _bookingImage2.default;
+exports.BookingPreview = _bookingPreview2.default;
+exports.Installment = _installment2.default;
+exports.Reward = _reward2.default;
+exports.User = _user2.default;
+exports.AdminUser = _adminUser2.default;
