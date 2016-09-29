@@ -5,8 +5,6 @@
   "main": "index.js",
   "scripts": {
     "compile": "babel src -d dist --presets es2015,stage-0",
-    "preinstall": "npm run compile",
-    "prepublish": "npm run compile",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Emmanuel Buah <emmanuel@airfordable.com>",
