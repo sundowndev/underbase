@@ -18,8 +18,8 @@ var UserSchema = new mongoose.Schema({
   /**
   * services holds all user local and third parter auth account
   * {  password : { bcrypt : xxxx }, facebook: { accessToken, id, etc }, google : { ..} etc }
-  services: { type: Object, required: false, default: {} },
   */
+  services: { type: Object, required: false, default: {} },
   password: { type: String, required: true },
   phoneNumber: { type: String },
   dob: { type: Date },
