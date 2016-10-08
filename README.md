@@ -6,9 +6,26 @@
 
 Airfordable DB Models based on Mongoose
 
-Install via npm
+# Install using npm
 
+via github
 ``
 npm install git+https://<accountname>@bitbucket.org/airfordable/afmodels
 
 ``
+
+
+via folder
+``
+npm install <local folder path>/afmodels
+
+``
+
+
+# Create db migration
+1. At root, Run `` node_modules/east/bin/east create <migration name eg.addXtoBookings> ``
+
+
+
+# Reads
+Babel:http://kleopetrov.me/2016/03/18/everything-about-babel/

@@ -1,11 +1,15 @@
 {
   "name": "af-models",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Airfordable Data Models for mongodb",
+  "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "start": "nodemon src/index.js --exec babel-register",
+    "start": "nodemon run.js --exec babel-register",
+    "start:debug": "nodemon run.js --exec babel-register --debug",
+    "start:debug-brk": "nodemon run.js --exec babel-register --debug-brk",
     "compile": "babel src -d dist --presets es2015,stage-0",
+    "migration": "node_modules/east/bin/east migrate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Emmanuel Buah <emmanuel@airfordable.com>",
@@ -18,6 +22,12 @@
     "nodemon": "^1.10.2"
   },
   "dependencies": {
-    "mongoose": "^4.6.1"
+    "bluebird": "^3.4.6",
+    "east": "^0.5.3",
+    "east-mongo": "^0.3.1",
+    "lodash": "^4.16.4",
+    "mongoose": "^4.6.3",
+    "synchronize": "^2.0.0",
+    "type-check": "^0.3.2"
   }
 }

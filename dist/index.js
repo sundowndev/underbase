@@ -11,11 +11,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AdminUser = exports.User = exports.Reward = exports.Installment = exports.BookingPreview = exports.BookingImage = exports.Booking = exports.Airport = exports.Agent = exports.mongoose = undefined;
+exports.AdminUser = exports.User = exports.Reward = exports.Installment = exports.BookingPreview = exports.BookingImage = exports.Booking = exports.Airport = exports.Agent = exports.migrator = exports.mongoose = undefined;
 
 var _mongoose = require('./mongoose');
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _migrator = require('./migrator');
+
+var _migrator2 = _interopRequireDefault(_migrator);
 
 var _agent = require('./agent');
 
@@ -56,6 +60,7 @@ var _adminUser2 = _interopRequireDefault(_adminUser);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.mongoose = _mongoose2.default;
+exports.migrator = _migrator2.default;
 exports.Agent = _agent2.default;
 exports.Airport = _airport2.default;
 exports.Booking = _booking2.default;

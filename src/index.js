@@ -9,6 +9,8 @@
 'use strict';
 
 import mongoose from './mongoose';
+import migrator from './migrator';
+
 import Agent from './agent';
 import Airport from './airport';
 import Booking from './booking';
@@ -19,4 +21,4 @@ import Reward from './reward';
 import User from './user';
 import AdminUser from './adminUser';
 
-export { mongoose, Agent, Airport, Booking, BookingImage, BookingPreview, Installment, Reward, User, AdminUser};
+export { mongoose, migrator, Agent, Airport, Booking, BookingImage, BookingPreview, Installment, Reward, User, AdminUser};
