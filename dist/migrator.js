@@ -9,40 +9,62 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+   value: true
 });
-exports.default = migrator;
 
-var _migrator = require('east/lib/migrator');
+var _migrations = require('./../migrations.pkg/migrations');
 
-var _migrator2 = _interopRequireDefault(_migrator);
+require('./migrations');
 
-var _path = require('path');
+var _bluebird = require('bluebird');
 
-var _path2 = _interopRequireDefault(_path);
-
-var _child_process = require('child_process');
+var _bluebird2 = _interopRequireDefault(_bluebird);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function migrator(dbUrl) {
+var co = _bluebird2.default.coroutine;
 
-  return function (migrationNumber) {
-    var east_path = _path2.default.join(__dirname, '../node_modules/east/bin/east');
-    var east_dir = _path2.default.join(__dirname, "../migrations");
-    var command;
-    console.log(east_path + ' migrate --dir ' + east_dir + ' --adapter east-mongo --url ' + dbUrl);
-    if (migrationNumber) {
-      command = east_path + ' migrate ' + migrationNumber + ' --dir ' + east_dir + ' --adapter east-mongo --url ' + dbUrl;
-    } else {
-      command = east_path + ' migrate --dir ' + east_dir + ' --adapter east-mongo --url ' + dbUrl;
-    }
-    var cmd = (0, _child_process.execSync)(command, { stdio: 'inherit' }, function (error, stdout, stderr) {
-      console.log('stdout: ' + stdout);
-      console.log('stderr: ' + stderr);
-      if (error !== null) {
-        console.log('exec error: ' + error);
+exports.default = {
+   /**
+   * @description Initialize migrator
+   * @param {String} dbUrl - Database connection url.
+   * @param {Object} logger - Logger object.
+   * @return {Object} Migrator - Migrator.
+   */
+   init: function init(dbUrl, logger) {
+      undefined.dbUrl = dbUrl;
+      undefined.logger = logger;
+      return undefined;
+   },
+
+   /**
+   * @param {String} version - migration version. Defaults to latest.
+   * @return {Promise} promise - object.
+   */
+   run: function run(version) {
+      var self = undefined;
+
+      if (self.dbUrl) {
+         return co(function* () {
+            yield* _migrations.Migrations.config({
+               // Log job run details to console
+               log: true,
+
+               // Use a custom logger function (defaults to Meteor's logging package)
+               logger: self.logger ? self.logger : null,
+
+               // Enable/disable logging "Not migrating, already at version {number}"
+               logIfLatest: true,
+
+               // migrations collection name to use in the database
+               collectionName: "_migration",
+
+               dbUrl: self.dbUrl
+            });
+            _migrations.Migrations.migrateTo(version ? version : 'latest');
+         })();
+      } else {
+         return _bluebird2.default.reject(Error("dbUrl can't be null"));
       }
-    });
-  };
-}
+   }
+};

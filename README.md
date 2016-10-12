@@ -4,28 +4,26 @@
 |     |-   -|    -|   __|  |  |    -|  |  |     | __ -|  |__|   __|
 |__|__|_____|__|__|__|  |_____|__|__|____/|__|__|_____|_____|_____|
 
-Airfordable DB Models based on Mongoose
+# Airfordable DB Models
 
-# Install using npm
+## Install using npm
 
-via github
-``
-npm install git+https://<accountname>@bitbucket.org/airfordable/afmodels
+##### via folder
 
-``
+``npm install <local folder path>/afmodels ``
 
+##### via github
 
-via folder
-``
-npm install <local folder path>/afmodels
-
+``npm install git+https://<accountname>@bitbucket.org/airfordable/afmodels
 ``
 
-
-# Create db migration
+## Create db migration
 1. At root, Run `` node_modules/east/bin/east create <migration name eg.addXtoBookings> ``
 
-
-
-# Reads
+## Reads
 Babel:http://kleopetrov.me/2016/03/18/everything-about-babel/
+
+
+## Known issues
+- Nodemon restarts process on tab switching in atom and other IDE's. Check out https://github.com/remy/nodemon/issues/763. Current solution is to peg it at 1.5.0 via nodemon@~1.5.0.
+- Sometime debug run will raise the Error: listen EADDRINUSE :::5858. Run ``killall -9 node`` to kill all nodes processes and rerun command

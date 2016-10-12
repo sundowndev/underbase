@@ -34,20 +34,19 @@
 /*jshint esversion: 6 */
 /* global require */
 /*jslint node: true */
+/*eslint rest-spread-spacing: ["error", "never"]*/
 
-import 'babel-polyfill';
-var MongoClient = require('mongodb').MongoClient;
-var Promise = require('bluebird');
-var _ = require('lodash');
+
+//import 'babel-polyfill'; //Needed only for es5 polyfills like generate not supported by node v4 less.
+import  MongoClient from 'mongodb';
+import Promise from 'bluebird';
+import * as _ from 'lodash';
 var check = require('type-check').typeCheck;
-var sync = require('synchronize');
-var MongoConnect = Promise.promisify(MongoClient.connect);
 
 // since we'll be at version 0 by default, we should have a migration set for
 // it.
+let co = Promise.coroutine;
 var DefaultMigration = {version: 0, up: function(){}};
-
-debugger;
 
 export var Migrations = {
   _list: [DefaultMigration],
@@ -63,20 +62,14 @@ export var Migrations = {
     //mongdb url
     dbUrl: null
   },
-  config: function (opts, done) {
+  config:function* (opts) {
     var self = this;
-    this.options = _.extend({}, this.options, opts);
-
-    sync.fiber(function(){
-       var db = sync.await(MongoClient.connect(self.options.dbUrl, {
-          promiseLibrary: Promise
-        },sync.defer()));
-
-       console.log(db);
-       self._collection = sync.await(db.collection(self.options.collectionName,sync.defer()));
-       self._db = db;
-       return db;
-   },done);
+    self.options = _.extend({}, self.options, opts);
+    var db = yield MongoClient.connect(self.options.dbUrl,{
+      promiseLibrary: Promise
+    });
+    self._collection = db.collection(self.options.collectionName);
+    self._db = db;
   }
 };
 
@@ -100,22 +93,16 @@ function createLogger(prefix) {
     return function() {};
   }
 
-  return function(level, message, ex) {
+  return function(level, ...args) {
     //check(level, Match.OneOf('info', 'error', 'warn', 'debug'));
-    check('String',message);
-
     var logger = Migrations.options && Migrations.options.logger;
 
     if(logger && _.isFunction(logger)) {
 
-      logger({
-        level: level,
-        message: message,
-        tag: prefix
-      });
+      logger({level, ...args });
 
     } else {
-      console[level]({ message: prefix + ': ' + message }, ex);
+      console[level]({ level, ...args });
     }
   }
 }
@@ -154,10 +141,12 @@ Migrations.add = function(migration) {
   this._list = _.sortBy(this._list, function(m) {return m.version;});
 }
 
+
 // Attempts to run the migrations using command in the form of:
 // e.g 'latest', 'latest,exit', 2
 // use 'XX,rerun' to re-run the migration at that version
-Migrations.migrateTo = function(command) {
+Migrations.migrateTo = co(function* (command) {
+  var self = this;
   if (_.isUndefined(command) || command === '' || this._list.length === 0)
     throw new Error("Cannot migrate using invalid command: " + command);
 
@@ -168,29 +157,78 @@ Migrations.migrateTo = function(command) {
     var subcommand = command.split(',')[1];//.trim();
   }
 
-  if (version === 'latest') {
-    this._migrateTo(_.last(this._list).version);
-  } else {
-    this._migrateTo(parseInt(version), (subcommand === 'rerun'));
+  try {
+      if (version === 'latest') {
+          yield* self._migrateTo(_.last(self._list).version);
+      } else {
+          yield* this._migrateTo(parseInt(version), (subcommand === 'rerun'));
+      }
+  } catch (e) {
+      throw e;
   }
 
   // remember to run meteor with --once otherwise it will restart
   if (subcommand === 'exit')
     process.exit(0);
-}
+});
 
 // just returns the current version
-Migrations.getVersion = function() {
-  return this._getControl().version;
+Migrations.getVersion = function* () {
+  let control = yield this._getControl();
+  return control.version;
 }
 
 // migrates to the specific version passed in
-Migrations._migrateTo = function(version, rerun) {
+Migrations._migrateTo = function* (version, rerun) {
   var self = this;
-  var control = this._getControl(); // Side effect: upserts control document.
+  var control = yield this._getControl(); // Side effect: upserts control document.
   var currentVersion = control.version;
 
-  if (lock() === false) {
+  // run the actual migration
+  let migrate = co(function* (direction, idx) {
+    var migration = self._list[idx];
+
+    if (typeof migration[direction] !== 'function') {
+      unlock();
+      throw new Error('Cannot migrate ' + direction + ' on version '+ migration.version);
+    }
+
+    function maybeName() {
+      return migration.name ? ' (' + migration.name + ')' : '';
+    }
+
+    log.info('Running ' + direction + '() on version '+ migration.version + maybeName());
+
+    if(migration[direction].constructor.name === 'GeneratorFunction'){ //if its a generator func
+        yield* migration[direction](self._db,migration);
+    } else if(migration[direction].then){ //if its a promise
+          yield migration[direction](self._db,migration);
+      } else {
+       migration[direction](self._db,migration);
+    }
+
+  });
+
+
+  // Returns true if lock was acquired.
+  let lock = co(function* (){
+    // This is atomic. The selector ensures only one caller at a time will see
+    // the unlocked control, and locking occurs in the same update's modifier.
+    // All other simultaneous callers will get false back from the update.
+        var updateResult = yield self._collection.update(
+        {_id: 'control', locked: false}, {$set: {locked: true, lockedAt: new Date()}});
+
+        if(updateResult && updateResult.result.ok)
+         return true;
+        else
+         return false;
+  });
+
+  // Side effect: saves version.
+  let unlock = () => self._setControl({locked: false, version: currentVersion});
+
+
+  if ((yield lock()) === false) {
     log.info('Not migrating, control is locked.');
     return;
   }
@@ -199,7 +237,7 @@ Migrations._migrateTo = function(version, rerun) {
     log.info('Rerunning version ' + version);
     migrate('up', version);
     log.info('Finished migrating.');
-    unlock();
+    yield unlock();
     return;
   }
 
@@ -207,54 +245,18 @@ Migrations._migrateTo = function(version, rerun) {
     if (Migrations.options.logIfLatest) {
       log.info('Not migrating, already at version ' + version);
     }
-    unlock();
+    yield unlock();
     return;
   }
 
   var startIdx = this._findIndexByVersion(currentVersion);
   var endIdx = this._findIndexByVersion(version);
 
+
   // log.info('startIdx:' + startIdx + ' endIdx:' + endIdx);
   log.info('Migrating from version ' + this._list[startIdx].version
     + ' -> ' + this._list[endIdx].version);
 
-  // run the actual migration
-  function migrate(direction, idx) {
-    var migration = self._list[idx];
-
-    if (typeof migration[direction] !== 'function') {
-      unlock();
-      throw new Error('Cannot migrate ' + direction + ' on version '
-        + migration.version);
-    }
-
-    function maybeName() {
-      return migration.name ? ' (' + migration.name + ')' : '';
-    }
-
-    log.info('Running ' + direction + '() on version '
-      + migration.version + maybeName());
-
-    migration[direction](this._db,migration);
-  }
-
-  // Returns true if lock was acquired.
-  function lock() {
-    // This is atomic. The selector ensures only one caller at a time will see
-    // the unlocked control, and locking occurs in the same update's modifier.
-    // All other simultaneous callers will get false back from the update.
-
-    return Promise.coroutine(function*(){
-        yield self._collection.update(
-        {_id: 'control', locked: false}, {$set: {locked: true, lockedAt: new Date()}}
-      )
-    })() === 1;
-  }
-
-  // Side effect: saves version.
-  function unlock() {
-    self._setControl({locked: false, version: currentVersion});
-  }
 
   if (currentVersion < version) {
     for (var i = startIdx;i < endIdx;i++) {
@@ -268,31 +270,34 @@ Migrations._migrateTo = function(version, rerun) {
     }
   }
 
-  unlock();
+  yield unlock();
   log.info('Finished migrating.');
 }
 
 // gets the current control record, optionally creating it if non-existant
-Migrations._getControl = function() {
+Migrations._getControl = co(function* () {
   var self = this;
-  var control = Promise.coroutine(function*(){
-    return yield self._collection.findOne({_id: 'control'});
-  })();
+  var con = yield self._collection.findOne({_id: 'control'});
+  return con || (yield self._setControl({version: 0, locked: false}));
 
-  return control || this._setControl({version: 0, locked: false});
-}
+});
 
 // sets the control record
-Migrations._setControl = function(control) {
+Migrations._setControl = co(function* (control) {
   // be quite strict
+  let self = this;
   check('Number',control.version);
   check('Boolean',control.locked);
 
-  this._collection.update({_id: 'control'},
-    {$set: {version: control.version, locked: control.locked}}, {upsert: true});
+  let updateResult = yield self._collection.update({_id: 'control'},
+  {$set: {version: control.version, locked: control.locked}}, {upsert: true})
 
-  return control;
-}
+  if(updateResult && updateResult.result.ok)
+   return control;
+  else
+   return null;
+});
+
 
 // returns the migration index in _list or throws if not found
 Migrations._findIndexByVersion = function(version) {
@@ -303,6 +308,7 @@ Migrations._findIndexByVersion = function(version) {
 
   throw new Error('Can\'t find migration version ' + version);
 }
+
 
 //reset (mainly intended for tests)
 Migrations._reset = function() {

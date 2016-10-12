@@ -6,17 +6,6 @@
 /*jshint esversion: 6 */
 /* global require */
 /*jslint node: true */
+'use strict';
 
-import { Migrations } from './migration';
-
-
-Migrations.add({
-  version: 1,
-  name: 'Adds pants to some people in the db.',
-  up: function(db) {
-    	console.log('YEAH!!! up at version 1');
-  },
-  down: function(db) {
-    	console.log('YEAH!!! down at version 1');
-  }
-});
+import './1.addAuthServices';

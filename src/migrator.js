@@ -8,31 +8,57 @@
 /*jslint node: true */
 'use strict';
 
-import Migrator from 'east/lib/migrator';
-import path  from 'path';
-import { execSync } from 'child_process';
+import { Migrations } from './../migrations.pkg/migrations';
+import './migrations';
+import Promise from 'bluebird';
+import { isNil } from 'lodash';
 
-export default function migrator(dbUrl){
+let co = Promise.coroutine;
 
- return (migrationNumber) => {
-  var east_path = path.join(__dirname,'../node_modules/east/bin/east');
-  var east_dir = path.join(__dirname, "../migrations");
-  var command;
-  console.log(`${east_path} migrate --dir ${east_dir} --adapter east-mongo --url ${dbUrl}`);
-  if(migrationNumber){
-    command = `${east_path} migrate ${migrationNumber} --dir ${east_dir} --adapter east-mongo --url ${dbUrl}`
-  } else {
-    command = `${east_path} migrate --dir ${east_dir} --adapter east-mongo --url ${dbUrl}`
-  }
-  var cmd = execSync(command, { stdio: 'inherit' },
-    (error, stdout, stderr) => {
-      console.log(`stdout: ${stdout}`);
-      console.log(`stderr: ${stderr}`);
-      if (error !== null) {
-          console.log(`exec error: ${error}`);
-      }
-  });
+debugger;
 
-};
+export default {
+   /**
+   * @description Initialize migrator
+   * @param {String} dbUrl - Database connection url.
+   * @param {Object} logger - Logger object.
+   * @return {Object} Migrator - Migrator.
+   */
+   init (dbUrl,logger) {
+      this.dbUrl = dbUrl;
+      this.logger = logger;
+      return this;
+   },
 
-}
+     /**
+     * @param {String} version - migration version. Defaults to latest.
+     * @return {Promise} promise - object.
+     */
+     run : co(function* (version)  {
+       let self = this;
+
+       if(self.dbUrl){
+
+           try{
+             yield* Migrations.config({
+                 // Log job run details to console
+                 log: true,
+                 // Use a custom logger function (defaults to Meteor's logging package)
+                 logger: self.logger? self.logger: null,
+                 // Enable/disable logging "Not migrating, already at version {number}"
+                 logIfLatest: true,
+                 // migrations collection name to use in the database
+                 collectionName: "_migration",
+                 //db connection string
+                 dbUrl: self.dbUrl
+             });
+             yield Migrations.migrateTo((!isNil(version))? version : 'latest');
+           } catch (e){
+             return Promise.reject(e);
+           }
+
+       } else {
+          return Promise.reject(Error("dbUrl can't be null")) ;
+       }
+     })
+ }
