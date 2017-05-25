@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "declaration": true,
+    "rootDir": "./src",
+    "outDir": "dist",
+    "sourceMap": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "declarationDir": "./dist/@types",
+    "pretty": true,
+    "removeComments": true
+    //"traceResolution": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

@@ -1,6 +1,4 @@
-afdb:
+af-localhost-db:
   image: mongo:latest
   ports:
    - "27017:27017"
-  volumes:
-   - ./../afbeta/data/db:/data/db
