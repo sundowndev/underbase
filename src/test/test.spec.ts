@@ -2,18 +2,21 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
 
-import { migrator } from '../';
+import { Migration } from '../';
 
 describe('Migration', () => {
 
+  let migrator: Migration;
+
   beforeAll(async () => {
     try {
-      await migrator.config({
+      migrator = new Migration({
         log: true,
         logIfLatest: true,
         collectionName: '_migration',
         db: 'mongodb://localhost:27030/migration-test-db',
       });
+      await migrator.config();
     } catch (e) {
       console.log(e);
       throw e;
@@ -45,6 +48,7 @@ describe('Migration', () => {
   });
 
   describe('#migrateTo', () => {
+
     test('1 from 0, should migrate to v1', async () => {
       let currentVersion = await migrator.getVersion();
       expect(currentVersion).toBe(0);

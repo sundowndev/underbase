@@ -34,8 +34,9 @@ var migrator = new Migration({{
       // migrations collection name
       collectionName: 'migrations',
       // mongdb url or mongo Db instance
-      db: null,
+      db: "your connection string",
 }})
+await migrator.config(); //Returns a promise
 ```
 
 To write a simple migration, somewhere in the server section of your project define:
@@ -124,7 +125,7 @@ migrator.config({
   // migrations collection name to use in the database
   collectionName: "migrations"
   // mongdb url or mongo Db instance
-  db: null,
+  db: "your connection string",
 });
 ```
 

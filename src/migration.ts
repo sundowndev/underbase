@@ -56,7 +56,7 @@ export class Migration {
   constructor(opts?: IMigrationOptions) {
     // since we'll be at version 0 by default, we should have a migration set for it.
     this._list = [this.defaultMigration];
-    this.options = {
+    this.options = opts ? opts : {
       // false disables logging
       log: true,
       // null or a function
@@ -68,17 +68,18 @@ export class Migration {
       // mongdb url or mongo Db instance
       db: null,
     };
-
-    if (opts) {
-      this.config(opts);
-    }
   }
 
-  public async config(opts): Promise<void> {
-    this.options = _.extend({}, this.options, opts);
-    // tslint:disable-next-line:one-line
-    if (!this.options.logger){
+  public async config(opts?: IMigrationOptions): Promise<void> {
+
+    this.options = Object.assign({}, this.options, opts);
+
+    if (!this.options.logger && this.options.log) {
       this.options.logger = (level: string, ...args) => console[level](...args);
+    }
+    if (this.options.log === false) {
+      // tslint:disable-next-line:no-empty
+      this.options.logger = (level: string, ...args) => { };
     }
     if (!(this._db instanceof Db) && !this.options.db) {
       throw new ReferenceError('Option.db canno\'t be null');
@@ -102,6 +103,7 @@ export class Migration {
   //  name: String *optional
   // }
   public add(migration: IMigration): void {
+
     if (typeof migration.up !== 'function') {
       throw new Error('Migration must supply an up function.');
     }
@@ -128,6 +130,11 @@ export class Migration {
    * @example '2,rerun' - if at version 2, re-run up migration
    */
   public async migrateTo(command: string | number): Promise<void> {
+    if (!this._db) {
+      throw new Error('Migration instance has not be configured/initialized.' +
+       ' Call <instance>.config(..) to initialize this instance');
+    }
+
     if (_.isUndefined(command) || command === '' || this._list.length === 0) {
       throw new Error('Cannot migrate using invalid command: ' + command);
     }
