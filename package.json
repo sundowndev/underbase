@@ -6,12 +6,12 @@
   "main": "dist/index.js",
   "typings": "dist/@types/index.d.ts",
   "scripts": {
-    "postinstall" : "rm -rf dist && tsc",
+    "postinstall" : "rm -rf dist && node_modules/.bin/tsc",
     "lint": "tslint src/**/*.ts",
-    "compile": "rm -rf dist && tsc",
-    "compile:watch": "rm -rf dist && tsc -w",
-    "test": "jest dist/* --coverage",
-    "test:watch": "jest dist/* --watch --useStderr --coverage"
+    "compile": "rm -rf dist && node_modules/.bin/tsc",
+    "compile:watch": "rm -rf dist && node_modules/.bin/tsc -w",
+    "test": "node_modules/.bin/jest dist/* --coverage",
+    "test:watch": "node_modules/.bin/jest dist/* --watch --useStderr --coverage"
   },
   "author": "Emmanuel Buah <emmanuelbuah@gmail.com>",
   "license": "ISC",
