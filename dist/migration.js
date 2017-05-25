@@ -22,7 +22,7 @@ class Migration {
             logger: null,
             logIfLatest: true,
             collectionName: 'migrations',
-            dbUrl: null,
+            db: null,
         };
         if (opts) {
             this.config(opts);
@@ -34,9 +34,18 @@ class Migration {
             if (!this.options.logger) {
                 this.options.logger = (level, ...args) => console[level](...args);
             }
-            const db = yield mongodb_1.MongoClient.connect(this.options.dbUrl, {
-                promiseLibrary: bluebird_1.Promise,
-            });
+            if (!(this._db instanceof mongodb_1.Db) && !this.options.db) {
+                throw new ReferenceError('Option.db canno\'t be null');
+            }
+            let db;
+            if (typeof (this.options.db) === 'string') {
+                db = yield mongodb_1.MongoClient.connect(this.options.db, {
+                    promiseLibrary: bluebird_1.Promise,
+                });
+            }
+            else {
+                db = this.options.db;
+            }
             this._collection = db.collection(this.options.collectionName);
             this._db = db;
         });

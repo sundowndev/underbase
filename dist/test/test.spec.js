@@ -16,7 +16,7 @@ describe('Migration', () => {
                 log: true,
                 logIfLatest: true,
                 collectionName: '_migration',
-                dbUrl: 'mongodb://localhost:27017/migration-test-db',
+                db: 'mongodb://localhost:27030/migration-test-db',
             });
         }
         catch (e) {

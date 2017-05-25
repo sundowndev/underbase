@@ -4,7 +4,7 @@ export interface IMigrationOptions {
     logger?: (level, ...args) => void;
     logIfLatest?: boolean;
     collectionName?: string;
-    dbUrl: string;
+    db: string | Db;
 }
 export interface IMigration {
     version: number;

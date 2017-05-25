@@ -35,7 +35,7 @@ export interface IMigrationOptions {
   logger?: (level, ...args) => void;
   logIfLatest?: boolean;
   collectionName?: string;
-  dbUrl: string;
+  db: string | Db;
 }
 export interface IMigration {
   version: number;
@@ -65,8 +65,8 @@ export class Migration {
       logIfLatest: true,
       // migrations collection name
       collectionName: 'migrations',
-      // mongdb url
-      dbUrl: null,
+      // mongdb url or mongo Db instance
+      db: null,
     };
 
     if (opts) {
@@ -80,9 +80,17 @@ export class Migration {
     if (!this.options.logger){
       this.options.logger = (level: string, ...args) => console[level](...args);
     }
-    const db = await MongoClient.connect(this.options.dbUrl, {
-      promiseLibrary: BluebirdPromise,
-    });
+    if (!(this._db instanceof Db) && !this.options.db) {
+      throw new ReferenceError('Option.db canno\'t be null');
+    }
+    let db: string | Db;
+    if (typeof(this.options.db) === 'string') {
+      db = await MongoClient.connect(this.options.db, {
+        promiseLibrary: BluebirdPromise,
+      });
+    } else {
+      db = this.options.db;
+    }
     this._collection = db.collection(this.options.collectionName);
     this._db = db;
   }

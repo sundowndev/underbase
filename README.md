@@ -33,8 +33,8 @@ var migrator = new Migration({{
       logIfLatest: true,
       // migrations collection name
       collectionName: 'migrations',
-      // mongdb url
-      dbUrl: null,
+      // mongdb url or mongo Db instance
+      db: null,
 }})
 ```
 
@@ -123,14 +123,21 @@ migrator.config({
   logIfLatest: true,
   // migrations collection name to use in the database
   collectionName: "migrations"
+  // mongdb url or mongo Db instance
+  db: null,
 });
 ```
 
 
 ## Test
 
-Run test
+Run docker-compose to fire up test db
 
+``` sh
+$ docker-compose up
+```
+
+After test db is up, run
 ``` sh
 $ yarn test
 ```
