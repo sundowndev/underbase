@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "typings": "dist/@types/index.d.ts",
   "scripts": {
-    "postinstall" : "rm -rf dist && node_modules/.bin/tsc",
+    "postinstall" : "rm -rf dist && ./node_modules/.bin/tsc",
     "lint": "tslint src/**/*.ts",
     "compile": "rm -rf dist && node_modules/.bin/tsc",
     "compile:watch": "rm -rf dist && node_modules/.bin/tsc -w",
