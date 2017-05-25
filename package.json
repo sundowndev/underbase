@@ -4,6 +4,7 @@
   "description": "Mongodb schema and data migration lib",
   "private": true,
   "main": "dist/index.js",
+  "typings": "dist/@types/index.d.ts",
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "compile": "rm -rf dist && tsc",
