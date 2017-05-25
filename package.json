@@ -1,5 +1,5 @@
 {
-  "name": "af-data-migration",
+  "name": "mgdb-migrator",
   "version": "1.0.0",
   "description": "Mongodb schema and data migration lib",
   "private": true,
