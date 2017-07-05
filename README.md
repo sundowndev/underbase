@@ -7,7 +7,7 @@ migration library
 Migrations can be installed through yarn or npm. Type:
 
 ``` sh
-$ yarn add ebuah:migration
+$ yarn add mgdb-migrator
 ```
 
 ## API
