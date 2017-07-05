@@ -14,13 +14,15 @@ $ yarn add mgdb-migrator
 
 ### Basics
 
-Import and use the migration instance - migrator
+Import and use the migration instance - migrator. User the migrator to configure and setup your migration
 
 ``` javascript
 import { migrator } from 'migration';
 ```
 
-User the migrator to configure and setup your migration or define a new instance of migration
+Or ...
+
+Define a new instance of migration and configure it as you see fit
 
 ``` javascript
 import { Migration } from 'migration';
