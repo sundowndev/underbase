@@ -1,6 +1,6 @@
 {
   "name": "mgdb-migrator",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Mongodb schema and data migration lib",
   "main": "dist/index.js",
   "typings": "dist/@types/index.d.ts",
