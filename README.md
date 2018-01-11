@@ -7,6 +7,10 @@ migration library
 Migrations can be installed through yarn or npm. Type:
 
 ``` sh
+$ npm install mgdb-migrator
+```
+or
+``` sh
 $ yarn add mgdb-migrator
 ```
 
@@ -132,17 +136,19 @@ migrator.config({
 ```
 
 
+
+## Development
+
+Run docker-compose to execute lib in dev mode
+
+``` sh
+$ npm run docker:dev
+```
+
 ## Test
 
-Run docker-compose to fire up test db
+Run docker-compose to execute lib in test mode
 
 ``` sh
-$ docker-compose up
+$ npm run docker:test
 ```
-
-After test db is up, run
-``` sh
-$ yarn test
-```
-
-
