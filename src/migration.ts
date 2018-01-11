@@ -56,18 +56,18 @@ export class Migration {
   private options: IMigrationOptions;
 
   constructor(opts?: IMigrationOptions) {
-    // since we'll be at version 0 by default, we should have a migration set for it.
+    // Since we'll be at version 0 by default, we should have a migration set for it.
     this._list = [this.defaultMigration];
     this.options = opts ? opts : {
-      // false disables logging
+      // False disables logging
       log: true,
-      // null or a function
+      // Null or a function
       logger: null,
-      // enable/disable info log "already at latest."
+      // Enable/disable info log "already at latest."
       logIfLatest: true,
-      // migrations collection name
+      // Migrations collection name
       collectionName: 'migrations',
-      // mongdb url or mongo Db instance
+      // Mongdb url or mongo Db instance
       db: null,
     };
   }
@@ -100,9 +100,9 @@ export class Migration {
 
   // Add a new migration:
   // {up: function *required
-  //  version: Number *required
-  //  down: function *optional
-  //  name: String *optional
+  //  Version: Number *required
+  //  Down: function *optional
+  //  Name: String *optional
   // }
   public add(migration: IMigration): void {
 
@@ -162,31 +162,31 @@ export class Migration {
 
   }
 
-  // just returns the current version
+  // Just returns the current version
   public async getVersion(): Promise<number> {
     const control = await this._getControl();
     return control.version;
   }
 
-  // unlock control
+  // Unlock control
   public unlock() {
     this._list = [this.defaultMigration];
     this._collection.update({ _id: 'control' }, { $set: { locked: false } });
   }
 
-  // reset (mainly intended for tests)
+  // Reset (mainly intended for tests)
   public async _reset() {
     this._list = [this.defaultMigration];
     await this._collection.remove({});
   }
 
-  // migrates to the specific version passed in
+  // Migrates to the specific version passed in
   private async _migrateTo(version: any, rerun?: any): Promise<void> {
     const self = this;
     const control = await this._getControl(); // Side effect: upserts control document.
     let currentVersion = control.version;
 
-    // run the actual migration
+    // Run the actual migration
     const migrate = async (direction, idx) => {
       const migration = self._list[idx];
 
@@ -202,10 +202,10 @@ export class Migration {
       this.options.logger('info',
       'Running ' + direction + '() on version ' + migration.version + maybeName());
 
-      // if its a generator func
+      // If its a generator func
       if (migration[direction].constructor.name === 'GeneratorFunction') {
         await migration[direction](self._db, migration);
-      } else if (migration[direction].then) { // if its a promise
+      } else if (migration[direction].then) { // If its a promise
         await migration[direction](self._db, migration);
       } else {
         migration[direction](self._db, migration);
@@ -216,7 +216,7 @@ export class Migration {
     // Returns true if lock was acquired.
     const lock = async () => {
       // This is atomic. The selector ensures only one caller at a time will see
-      // the unlocked control, and locking occurs in the same update's modifier.
+      // The unlocked control, and locking occurs in the same update's modifier.
       // All other simultaneous callers will get false back from the update.
       const updateResult = await self._collection.update(
         { _id: 'control', locked: false }, { $set: { locked: true, lockedAt: new Date() } });
@@ -255,7 +255,7 @@ export class Migration {
     const startIdx = this._findIndexByVersion(currentVersion);
     const endIdx = this._findIndexByVersion(version);
 
-    // log.info('startIdx:' + startIdx + ' endIdx:' + endIdx);
+    // Log.info('startIdx:' + startIdx + ' endIdx:' + endIdx);
     this.options.logger('info','Migrating from version ' + this._list[startIdx].version
       + ' -> ' + this._list[endIdx].version);
 
@@ -275,15 +275,15 @@ export class Migration {
     this.options.logger('info','Finished migrating.');
   }
 
-  // gets the current control record, optionally creating it if non-existant
+  // Gets the current control record, optionally creating it if non-existant
   private async _getControl(): Promise<{ version: number, locked: boolean }> {
     const con = await this._collection.findOne({ _id: 'control' });
     return con || (await this._setControl({ version: 0, locked: false }));
   }
 
-  // sets the control record
+  // Sets the control record
   private async _setControl(control: { version: number, locked: boolean }) {
-    // be quite strict
+    // Be quite strict
     check('Number', control.version);
     check('Boolean', control.locked);
 
@@ -297,7 +297,7 @@ export class Migration {
     }
   }
 
-  // returns the migration index in _list or throws if not found
+  // Returns the migration index in _list or throws if not found
   private _findIndexByVersion(version) {
     for (let i = 0; i < this._list.length; i++) {
       if (this._list[i].version === version) {

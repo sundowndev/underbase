@@ -1,3 +1,4 @@
+
 {
   "compilerOptions": {
     "target": "es6",
@@ -5,19 +6,32 @@
     "jsx": "react",
     "moduleResolution": "node",
     "declaration": true,
-    "rootDir": "./src",
+    "rootDir": ".",
     "outDir": "dist",
+    "baseUrl": ".",
     "sourceMap": true,
     "typeRoots": [
       "node_modules/@types"
     ],
-    "declarationDir": "./dist/@types",
     "pretty": true,
-    "removeComments": true
-    //"traceResolution": true
+    "removeComments": true,
+    "traceResolution": false,
+    "paths": {
+      "*": [
+        "node_modules/@types/*",
+        "src/*",
+        "*"
+      ],
+      "af-data-models": [
+        "src/index"
+      ]
+    }
   },
-  "exclude": [
-    "node_modules",
-    "dist"
+  "files": [
+    "src/index.ts"
+  ],
+  "include": [
+    "test/**/*"
   ]
 }
+

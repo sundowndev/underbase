@@ -1,15 +1,20 @@
 {
   "name": "mgdb-migrator",
-  "version": "1.1.8",
+  "version": "1.2.0",
   "description": "Mongodb schema and data migration lib",
-  "main": "dist/index.js",
-  "typings": "dist/@types/index.d.ts",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
   "scripts": {
     "lint": "tslint src/**/*.ts",
-    "compile": "rm -rf dist && tsc",
-    "compile:watch": "rm -rf dist && tsc -w",
-    "test": "jest dist/* --coverage",
-    "test:watch": "jest dist/* --watch --useStderr --coverage"
+    "build": "tsc",
+    "build:watch": "rm -rf dist && tsc -w",
+    "docker:dev": "npm run build && docker-compose up mgdb-migrator-dev || true",
+    "docker:test": "npm run build && docker-compose up mgdb-migrator-test || true",
+    "docker:down": "docker-compose down",
+    "prestart": "npm run build:watch & sleep 8s",
+    "start": "npm run test:watch",
+    "test": "jest dist/* --coverage --useStderr --forceExit",
+    "test:watch": "jest dist/* --watchAll --useStderr --coverage"
   },
   "author": "Emmanuel Buah <emmanuelbuah@gmail.com>",
   "license": "ISC",
@@ -17,23 +22,23 @@
     "node": ">=7.10.0"
   },
   "devDependencies": {
-    "@types/jest": "^20.0.1",
-    "@types/lodash": "^4.14.62",
-    "@types/mongoose": "^4.7.11",
-    "@types/node": "^8.0.1",
+    "@types/jest": "^22.0.1",
+    "@types/lodash": "^4.14.92",
+    "@types/mongoose": "^4.7.32",
+    "@types/node": "^8.5.8",
     "jest": "^20.0.3",
-    "nodemon": "^1.11.0",
-    "tslint": "^5.1.0",
+    "nodemon": "^1.14.11",
+    "tslint": "^5.9.1",
     "tslint-eslint-rules": "^4.0.0",
     "tslint-microsoft-contrib": "^5.0.0",
-    "tslint-react": "^3.0.0",
-    "typescript": "^2.3.0",
-    "vrsource-tslint-rules": "^5.1.0"
+    "tslint-react": "^3.4.0",
+    "typescript": "^2.6.2",
+    "vrsource-tslint-rules": "^5.8.0"
   },
   "dependencies": {
-    "bluebird": "^3.4.6",
-    "lodash": "^4.16.4",
-    "mongoose": "^4.9.7",
+    "bluebird": "^3.5.1",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.13.9",
     "type-check": "^0.3.2"
   }
 }

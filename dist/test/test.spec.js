@@ -8,7 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const _1 = require("../");
+const _1 = require("../src/");
+const dbURL = process.env.DBURL;
 describe('Migration', () => {
     let migrator;
     beforeAll(() => __awaiter(this, void 0, void 0, function* () {
@@ -17,7 +18,7 @@ describe('Migration', () => {
                 log: true,
                 logIfLatest: true,
                 collectionName: '_migration',
-                db: 'mongodb://localhost:27030/migration-test-db',
+                db: dbURL,
             });
             yield migrator.config();
         }

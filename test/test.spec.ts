@@ -2,7 +2,9 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
 
-import { Migration } from '../';
+import { Migration } from '../src/';
+
+const dbURL = process.env.DBURL;
 
 describe('Migration', () => {
 
@@ -14,7 +16,7 @@ describe('Migration', () => {
         log: true,
         logIfLatest: true,
         collectionName: '_migration',
-        db: 'mongodb://localhost:27030/migration-test-db',
+        db: dbURL,
       });
       await migrator.config();
     } catch (e) {

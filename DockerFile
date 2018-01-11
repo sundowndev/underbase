@@ -1,0 +1,26 @@
+FROM node:8
+
+LABEL maintainer "Emmanuel Buah <emmanuelbuah@gmail.com>"
+
+RUN wget -O /usr/bin/dumb-init \
+       https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 \
+       && chmod +x /usr/bin/dumb-init
+
+# Set working directory
+WORKDIR /usr/src/mgdb-migrator
+
+# Moved here to improve caching.
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["/bin/bash", "startup.sh"]
+
+# Copy source
+COPY . .
+
+# Install app dependencies
+RUN npm install && npm run build
+
+# Set our version info here.
+ARG VERSION=v0.0.0
+ENV VERSION=${VERSION}
+LABEL version=${VERSION}
+LABEL Name=mgdb-migrator Version=${VERSION}

@@ -1,5 +1,33 @@
-af-localhost-db:
-  image: mongo:latest
-  ports:
-   - "27030:27030"
-  command: mongod --port 27030 --smallfiles
+
+version: '3.3'
+
+services:
+
+  mgdb-migrator-dev:
+    image: mgdb-migrator:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mgdb-migrator-db
+    environment:
+      - 'DBURL=mongodb://mgdb-migrator-db:27017/mgdb-migrator-db'
+      - 'NODE_ENV=developoment'
+    volumes:
+      - '.:/usr/src/mgdb-migrator'
+
+  mgdb-migrator-db:
+    image: mongo:latest
+    command: mongod --bind_ip 0.0.0.0 --smallfiles
+
+  mgdb-migrator-test:
+    image: mgdb-migrator:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mgdb-migrator-db
+    environment:
+      - 'DBURL=mongodb://mgdb-migrator-db:27017/mgdb-migrator-db'
+      - 'NODE_ENV=test'
+
