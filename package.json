@@ -16,7 +16,14 @@
     "test": "jest dist/* --coverage --useStderr --forceExit",
     "test:watch": "jest dist/* --watchAll --useStderr --coverage"
   },
-  "author": "Emmanuel Buah <emmanuelbuah@gmail.com>",
+  "author": "Emmanuel Buah <emmanuelbuah@gmail.com> (https://twitter.com/emmanuelbuah)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emmanuelbuah/mgdb-migrator"
+  },
+  "bugs": {
+    "url": "https://github.com/emmanuelbuah/mgdb-migrator/issues"
+  },
   "license": "ISC",
   "engines": {
     "node": ">=7.10.0"
