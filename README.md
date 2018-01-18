@@ -50,8 +50,8 @@ To write a simple migration, somewhere in the server section of your project def
 ``` javascript
 migrator.add({
   version: 1,
-  up: function() {
-    //code to migrate up to version 1
+  up: function(db) {
+    // use `db`(mongo driver Db instance) for migration setup to version 1
   }
 });
 ```
@@ -69,16 +69,61 @@ A more complete set of migrations might look like:
 ``` javascript
 migrator.add({
   version: 1,
-  name: 'Adds pants to some people in the db.',
-  up: function() { // code to migrate up to version 1 }
-  down: function() { // code to migrate down to version 0 }
+  name: 'Name for this migration',
+  up: function(db) {
+    // use `db`(mongo driver Db instance) for migration setup to version 1.
+  },
+  down: function(db) {
+    // use `db`(mongo driver Db instance) for migration setup to version 0
+  }
 });
 
 migrator.add({
   version: 2,
-  name: 'Adds a hat to all people in the db who are wearing pants.',
-  up: function() { // code to migrate up to version 2 }
-  down: function() { // code to migrate down to version 1 }
+  name: 'Name for this migration',
+  up: function(db) {
+    // use `db`(mongo driver Db instance) for migration setup to version 2
+  },
+  down: function(db) {
+    // use `db`(mongo driver Db instance) for migration setup to version 1
+  }
+});
+```
+
+Control execution flow with promises:
+
+``` javascript
+// using bluebird promise lib
+var Promise = require('bluebird');
+
+migrator.add({
+  version: 1,
+  name: 'Name for this migration',
+  up: Promise.method(function(db) {
+    // use `db`(mongo driver Db instance) for migration setup to version 1.
+    return db.collections('someCollectoin')....
+  }),
+  down: Promise.method(function(db) {
+    // use `db`(mongo driver Db instance) for migration setup to version 0
+    return db.collections('someCollectoin')....
+  })
+});
+```
+
+Control execution flow with async/await:
+
+``` javascript
+migrator.add({
+  version: 2,
+  name: 'Name for this migration',
+  up: async function(db) {
+    // use `db`(mongo driver Db instance) for migration setup to version 2
+     await db.collections('someCollectoin')....
+  },
+  down: async function(db) {
+    // use `db`(mongo driver Db instance) for migration setup to version 1
+    await db.collections('someCollectoin')....
+  }
 });
 ```
 
