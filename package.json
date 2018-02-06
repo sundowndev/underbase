@@ -12,9 +12,11 @@
     "docker:test": "npm run build && docker-compose up mgdb-migrator-test || true",
     "docker:down": "docker-compose down",
     "prestart": "npm run build:watch & sleep 8s",
-    "start": "npm run test:watch",
+    "start": "npm run test:debug:watch",
     "test": "jest dist/* --coverage --useStderr --forceExit",
-    "test:watch": "jest dist/* --watchAll --useStderr --coverage"
+    "test:debug": "node --inspect=0.0.0.0:5857 node_modules/.bin/jest dist/* --coverage --useStderr --forceExit",
+    "test:watch": "jest dist/* --watchAll --useStderr --coverage",
+    "test:debug:watch": "node --inspect=0.0.0.0:5857 node_modules/.bin/jest dist/* --coverage --useStderr"
   },
   "author": "Emmanuel Buah <emmanuelbuah@gmail.com> (https://twitter.com/emmanuelbuah)",
   "repository": {

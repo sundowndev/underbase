@@ -38,7 +38,7 @@ describe('Migration', () => {
         });
         migrator.add({
             version: 2,
-            name: 'Version 2.',
+            name: 'Version 2',
             up: (db) => {
             },
             down: (db) => {
@@ -63,7 +63,7 @@ describe('Migration', () => {
             currentVersion = yield migrator.getVersion();
             expect(currentVersion).toBe(2);
         }));
-        test('\'latest\' from 0, should migrate to v2', () => __awaiter(this, void 0, void 0, function* () {
+        test(`'latest' from 0, should migrate to v2`, () => __awaiter(this, void 0, void 0, function* () {
             let currentVersion = yield migrator.getVersion();
             expect(currentVersion).toBe(0);
             yield migrator.migrateTo('latest');
@@ -71,7 +71,7 @@ describe('Migration', () => {
             expect(currentVersion).toBe(2);
         }));
         test('from 2 to 1, should migrate to v1', () => __awaiter(this, void 0, void 0, function* () {
-            yield migrator.migrateTo('latest');
+            yield migrator.migrateTo('2');
             let currentVersion = yield migrator.getVersion();
             expect(currentVersion).toBe(2);
             yield migrator.migrateTo(1);
@@ -79,7 +79,7 @@ describe('Migration', () => {
             expect(currentVersion).toBe(1);
         }));
         test('from 2 to 0, should migrate to v0', () => __awaiter(this, void 0, void 0, function* () {
-            yield migrator.migrateTo('latest');
+            yield migrator.migrateTo('2');
             let currentVersion = yield migrator.getVersion();
             expect(currentVersion).toBe(2);
             yield migrator.migrateTo(0);
@@ -93,6 +93,32 @@ describe('Migration', () => {
             currentVersion = yield migrator.getVersion();
             expect(currentVersion).toBe(0);
         }));
+        describe('On Error', () => {
+            beforeEach(() => {
+                migrator.add({
+                    version: 3,
+                    name: 'Version 3.',
+                    up: (db) => {
+                        throw new Error('Something went wrong');
+                    },
+                    down: (db) => {
+                    },
+                });
+            });
+            test('from 0 to 3, should stop migration at v2 due to error from v2 to v3', () => __awaiter(this, void 0, void 0, function* () {
+                let currentVersion = yield migrator.getVersion();
+                expect(currentVersion).toBe(0);
+                try {
+                    yield migrator.migrateTo(3);
+                }
+                catch (e) {
+                    expect(e).toBeTruthy();
+                    expect(e).toBeInstanceOf(Error);
+                }
+                currentVersion = yield migrator.getVersion();
+                expect(currentVersion).toBe(2);
+            }));
+        });
     });
 });
 //# sourceMappingURL=test.spec.js.map

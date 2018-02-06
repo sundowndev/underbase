@@ -22,7 +22,7 @@
   remain locked and at the version it was at previously, however the db could
   be in an inconsistant state.
 */
- // tslint:disable:variable-name
+// tslint:disable:variable-name
 
 import { Promise as BluebirdPromise } from 'bluebird';
 import * as _ from 'lodash';
@@ -87,7 +87,7 @@ export class Migration {
       throw new ReferenceError('Option.db canno\'t be null');
     }
     let db: string | Db;
-    if (typeof(this.options.db) === 'string') {
+    if (typeof (this.options.db) === 'string') {
       db = await MongoClient.connect(this.options.db, {
         promiseLibrary: BluebirdPromise,
       });
@@ -134,7 +134,7 @@ export class Migration {
   public async migrateTo(command: string | number): Promise<void> {
     if (!this._db) {
       throw new Error('Migration instance has not be configured/initialized.' +
-       ' Call <instance>.config(..) to initialize this instance');
+        ' Call <instance>.config(..) to initialize this instance');
     }
 
     if (_.isUndefined(command) || command === '' || this._list.length === 0) {
@@ -157,12 +157,20 @@ export class Migration {
         await this._migrateTo(parseInt(version as string, null), (subcommand === 'rerun'));
       }
     } catch (e) {
+      this.options.
+        logger('info', `Encountered an error while migrating. Migration failed.`);
       throw e;
     }
 
   }
 
-  // Just returns the current version
+  // Returns the number of migrations
+  public getNumberOfMigrations(): number {
+    // Exclude default/base migration v0 since its not a configured migration
+    return this._list.length - 1;
+  }
+
+  // Returns the current version
   public async getVersion(): Promise<number> {
     const control = await this._getControl();
     return control.version;
@@ -200,7 +208,7 @@ export class Migration {
       }
 
       this.options.logger('info',
-      'Running ' + direction + '() on version ' + migration.version + maybeName());
+        'Running ' + direction + '() on version ' + migration.version + maybeName());
 
       // If its a generator func
       if (migration[direction].constructor.name === 'GeneratorFunction') {
@@ -218,8 +226,15 @@ export class Migration {
       // This is atomic. The selector ensures only one caller at a time will see
       // The unlocked control, and locking occurs in the same update's modifier.
       // All other simultaneous callers will get false back from the update.
-      const updateResult = await self._collection.update(
-        { _id: 'control', locked: false }, { $set: { locked: true, lockedAt: new Date() } });
+      const updateResult = await self._collection.update({
+        _id: 'control',
+        locked: false,
+      }, {
+          $set: {
+            locked: true,
+            lockedAt: new Date(),
+          },
+        });
 
       if (updateResult && updateResult.result.ok) {
         return true;
@@ -229,15 +244,24 @@ export class Migration {
     };
 
     // Side effect: saves version.
-    const unlock = () => self._setControl({ locked: false, version: currentVersion });
+    const unlock = () => self._setControl({
+      locked: false,
+      version: currentVersion,
+    });
+
+    // Side effect: saves version.
+    const updateVersion = async () => await self._setControl({
+      locked: true,
+      version: currentVersion,
+    });
 
     if ((await lock()) === false) {
-      this.options.logger('info','Not migrating, control is locked.');
+      this.options.logger('info', 'Not migrating, control is locked.');
       return;
     }
 
     if (rerun) {
-      this.options.logger('info','Rerunning version ' + version);
+      this.options.logger('info', 'Rerunning version ' + version);
       migrate('up', version);
       this.options.logger('info', 'Finished migrating.');
       await unlock();
@@ -246,7 +270,7 @@ export class Migration {
 
     if (currentVersion === version) {
       if (this.options.logIfLatest) {
-        this.options.logger('info','Not migrating, already at version ' + version);
+        this.options.logger('info', 'Not migrating, already at version ' + version);
       }
       await unlock();
       return;
@@ -256,29 +280,46 @@ export class Migration {
     const endIdx = this._findIndexByVersion(version);
 
     // Log.info('startIdx:' + startIdx + ' endIdx:' + endIdx);
-    this.options.logger('info','Migrating from version ' + this._list[startIdx].version
+    this.options.logger('info', 'Migrating from version ' + this._list[startIdx].version
       + ' -> ' + this._list[endIdx].version);
 
     if (currentVersion < version) {
       for (let i = startIdx; i < endIdx; i++) {
-        migrate('up', i + 1);
-        currentVersion = self._list[i + 1].version;
+        try {
+          await migrate('up', i + 1);
+          currentVersion = self._list[i + 1].version;
+          await updateVersion();
+        } catch (e) {
+          this.options.
+            logger('error', `Encountered an error while migrating from ${i} to ${i + 1}`);
+          throw e;
+        }
       }
     } else {
       for (let i = startIdx; i > endIdx; i--) {
-        migrate('down', i);
-        currentVersion = self._list[i - 1].version;
+        try {
+          await migrate('down', i);
+          currentVersion = self._list[i - 1].version;
+          await updateVersion();
+        } catch (e) {
+          this.options.
+            logger('error', `Encountered an error while migrating from ${i} to ${i - 1}`);
+          throw e;
+        }
       }
     }
 
     await unlock();
-    this.options.logger('info','Finished migrating.');
+    this.options.logger('info', 'Finished migrating.');
   }
 
   // Gets the current control record, optionally creating it if non-existant
   private async _getControl(): Promise<{ version: number, locked: boolean }> {
     const con = await this._collection.findOne({ _id: 'control' });
-    return con || (await this._setControl({ version: 0, locked: false }));
+    return con || (await this._setControl({
+      version: 0,
+      locked: false,
+    }));
   }
 
   // Sets the control record
@@ -287,8 +328,16 @@ export class Migration {
     check('Number', control.version);
     check('Boolean', control.locked);
 
-    const updateResult = await this._collection.update({ _id: 'control' },
-      { $set: { version: control.version, locked: control.locked } }, { upsert: true });
+    const updateResult = await this._collection.update({
+      _id: 'control',
+    }, {
+        $set: {
+          version: control.version,
+          locked: control.locked,
+        },
+      }, {
+        upsert: true,
+      });
 
     if (updateResult && updateResult.result.ok) {
       return control;

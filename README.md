@@ -69,6 +69,7 @@ migrator.add({
   version: 1,
   up: function(db) {
     // use `db`(mongo driver Db instance) for migration setup to version 1
+    // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
   }
 });
 ```
@@ -178,13 +179,23 @@ Sometimes (usually when somethings gone awry), you may need to re-run a migratio
 migrator.migrateTo('3,rerun');
 ```
 
-**NOTE**: You cannot create your own migration at version 0. This version is reserved by migration for a 'vanilla' system, that is, one without any migrations applied.
-
 To see what version the database is at, call:
 
 ``` javascript
 migrator.getVersion();
 ```
+
+To see what number of migrations configured, call:
+
+``` javascript
+migrator.getNumberOfMigrations();
+```
+
+**IMPORTANT**:
+- You cannot create your own migration at version 0. This version is reserved by migration for
+a 'vanilla' system, that is, one without any migrations applied.
+- If migrating from vT1 to vTz and migration fails from a vTx to vTy, where vTx & vTy are incremental versions
+between vT1 to vTz, migration will stop at vTx.
 
 ### Configuration
 

@@ -91,9 +91,14 @@ class Migration {
                 }
             }
             catch (e) {
+                this.options.
+                    logger('info', `Encountered an error while migrating. Migration failed.`);
                 throw e;
             }
         });
+    }
+    getNumberOfMigrations() {
+        return this._list.length - 1;
     }
     getVersion() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -137,7 +142,15 @@ class Migration {
                 }
             });
             const lock = () => __awaiter(this, void 0, void 0, function* () {
-                const updateResult = yield self._collection.update({ _id: 'control', locked: false }, { $set: { locked: true, lockedAt: new Date() } });
+                const updateResult = yield self._collection.update({
+                    _id: 'control',
+                    locked: false,
+                }, {
+                    $set: {
+                        locked: true,
+                        lockedAt: new Date(),
+                    },
+                });
                 if (updateResult && updateResult.result.ok) {
                     return true;
                 }
@@ -145,7 +158,16 @@ class Migration {
                     return false;
                 }
             });
-            const unlock = () => self._setControl({ locked: false, version: currentVersion });
+            const unlock = () => self._setControl({
+                locked: false,
+                version: currentVersion,
+            });
+            const updateVersion = () => __awaiter(this, void 0, void 0, function* () {
+                return yield self._setControl({
+                    locked: true,
+                    version: currentVersion,
+                });
+            });
             if ((yield lock()) === false) {
                 this.options.logger('info', 'Not migrating, control is locked.');
                 return;
@@ -170,14 +192,30 @@ class Migration {
                 + ' -> ' + this._list[endIdx].version);
             if (currentVersion < version) {
                 for (let i = startIdx; i < endIdx; i++) {
-                    migrate('up', i + 1);
-                    currentVersion = self._list[i + 1].version;
+                    try {
+                        yield migrate('up', i + 1);
+                        currentVersion = self._list[i + 1].version;
+                        yield updateVersion();
+                    }
+                    catch (e) {
+                        this.options.
+                            logger('error', `Encountered an error while migrating from ${i} to ${i + 1}`);
+                        throw e;
+                    }
                 }
             }
             else {
                 for (let i = startIdx; i > endIdx; i--) {
-                    migrate('down', i);
-                    currentVersion = self._list[i - 1].version;
+                    try {
+                        yield migrate('down', i);
+                        currentVersion = self._list[i - 1].version;
+                        yield updateVersion();
+                    }
+                    catch (e) {
+                        this.options.
+                            logger('error', `Encountered an error while migrating from ${i} to ${i - 1}`);
+                        throw e;
+                    }
                 }
             }
             yield unlock();
@@ -187,14 +225,26 @@ class Migration {
     _getControl() {
         return __awaiter(this, void 0, void 0, function* () {
             const con = yield this._collection.findOne({ _id: 'control' });
-            return con || (yield this._setControl({ version: 0, locked: false }));
+            return con || (yield this._setControl({
+                version: 0,
+                locked: false,
+            }));
         });
     }
     _setControl(control) {
         return __awaiter(this, void 0, void 0, function* () {
             check('Number', control.version);
             check('Boolean', control.locked);
-            const updateResult = yield this._collection.update({ _id: 'control' }, { $set: { version: control.version, locked: control.locked } }, { upsert: true });
+            const updateResult = yield this._collection.update({
+                _id: 'control',
+            }, {
+                $set: {
+                    version: control.version,
+                    locked: control.locked,
+                },
+            }, {
+                upsert: true,
+            });
             if (updateResult && updateResult.result.ok) {
                 return control;
             }

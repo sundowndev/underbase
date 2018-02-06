@@ -23,6 +23,7 @@ export declare class Migration {
     config(opts?: IMigrationOptions): Promise<void>;
     add(migration: IMigration): void;
     migrateTo(command: string | number): Promise<void>;
+    getNumberOfMigrations(): number;
     getVersion(): Promise<number>;
     unlock(): void;
     _reset(): Promise<void>;
