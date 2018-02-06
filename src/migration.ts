@@ -178,7 +178,6 @@ export class Migration {
 
   // Unlock control
   public unlock() {
-    this._list = [this.defaultMigration];
     this._collection.update({ _id: 'control' }, { $set: { locked: false } });
   }
 

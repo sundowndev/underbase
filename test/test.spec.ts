@@ -106,22 +106,55 @@ describe('Migration', () => {
     });
 
     describe('On Error', () => {
-
       beforeEach(() => {
         migrator.add({
           version: 3,
           name: 'Version 3.',
+          up: (db) => {
+          },
+          down: (db) => {
+          },
+        });
+
+        migrator.add({
+          version: 4,
+          name: 'Version 4.',
+          up: (db) => {
+          },
+          down: (db) => {
+            throw new Error('Something went wrong');
+          },
+        });
+
+        migrator.add({
+          version: 5,
+          name: 'Version 5.',
           up: (db) => {
             throw new Error('Something went wrong');
           },
           down: (db) => {
           },
         });
+
       });
 
-      test('from 0 to 3, should stop migration at v2 due to error from v2 to v3', async () => {
+      test('from 0 to 5, should stop migration at v4 due to error from v4 to v5', async () => {
         let currentVersion = await migrator.getVersion();
         expect(currentVersion).toBe(0);
+        try {
+          await migrator.migrateTo(5);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+        currentVersion = await migrator.getVersion();
+        expect(currentVersion).toBe(4);
+      });
+
+      test('from 4 to 3, should stop migration at 4 due to error from v4 to v3', async () => {
+        await migrator.migrateTo(4);
+        let currentVersion = await migrator.getVersion();
+        expect(currentVersion).toBe(4);
         try {
           await migrator.migrateTo(3);
         } catch (e) {
@@ -129,7 +162,7 @@ describe('Migration', () => {
           expect(e).toBeInstanceOf(Error);
         }
         currentVersion = await migrator.getVersion();
-        expect(currentVersion).toBe(2);
+        expect(currentVersion).toBe(4);
       });
 
     });

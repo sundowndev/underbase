@@ -107,7 +107,6 @@ class Migration {
         });
     }
     unlock() {
-        this._list = [this.defaultMigration];
         this._collection.update({ _id: 'control' }, { $set: { locked: false } });
     }
     _reset() {
