@@ -51,7 +51,7 @@ describe('Migration', () => {
         });
     });
     afterEach(() => __awaiter(this, void 0, void 0, function* () {
-        yield migrator._reset();
+        yield migrator.reset();
     }));
     describe('#migrateTo', () => {
         test('1 from 0, should migrate to v1', () => __awaiter(this, void 0, void 0, function* () {

@@ -52,7 +52,7 @@ describe('Migration', () => {
   });
 
   afterEach(async () => {
-    await migrator._reset();
+    await migrator.reset();
   });
 
   describe('#migrateTo', () => {

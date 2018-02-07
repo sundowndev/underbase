@@ -15,7 +15,10 @@ const type_check_1 = require("type-check");
 const check = type_check_1.typeCheck;
 class Migration {
     constructor(opts) {
-        this.defaultMigration = { version: 0, up: () => { } };
+        this.defaultMigration = {
+            version: 0,
+            up: () => { },
+        };
         this._list = [this.defaultMigration];
         this.options = opts ? opts : {
             log: true,
@@ -54,6 +57,9 @@ class Migration {
         if (typeof migration.up !== 'function') {
             throw new Error('Migration must supply an up function.');
         }
+        if (typeof migration.down !== 'function') {
+            throw new Error('Migration must supply a down function.');
+        }
         if (typeof migration.version !== 'number') {
             throw new Error('Migration must supply a version number.');
         }
@@ -89,10 +95,10 @@ class Migration {
             }
             try {
                 if (version === 'latest') {
-                    yield this._migrateTo(_.last(this._list).version);
+                    yield this.execute(_.last(this._list).version);
                 }
                 else {
-                    yield this._migrateTo(parseInt(version, null), (subcommand === 'rerun'));
+                    yield this.execute(parseInt(version, null), (subcommand === 'rerun'));
                 }
             }
             catch (e) {
@@ -107,23 +113,23 @@ class Migration {
     }
     getVersion() {
         return __awaiter(this, void 0, void 0, function* () {
-            const control = yield this._getControl();
+            const control = yield this.getControl();
             return control.version;
         });
     }
     unlock() {
         this._collection.update({ _id: 'control' }, { $set: { locked: false } });
     }
-    _reset() {
+    reset() {
         return __awaiter(this, void 0, void 0, function* () {
             this._list = [this.defaultMigration];
             yield this._collection.remove({});
         });
     }
-    _migrateTo(version, rerun) {
+    execute(version, rerun) {
         return __awaiter(this, void 0, void 0, function* () {
             const self = this;
-            const control = yield this._getControl();
+            const control = yield this.getControl();
             let currentVersion = control.version;
             const migrate = (direction, idx) => __awaiter(this, void 0, void 0, function* () {
                 const migration = self._list[idx];
@@ -154,12 +160,12 @@ class Migration {
                     return false;
                 }
             });
-            const unlock = () => self._setControl({
+            const unlock = () => self.setControl({
                 locked: false,
                 version: currentVersion,
             });
             const updateVersion = () => __awaiter(this, void 0, void 0, function* () {
-                return yield self._setControl({
+                return yield self.setControl({
                     locked: true,
                     version: currentVersion,
                 });
@@ -182,8 +188,8 @@ class Migration {
                 yield unlock();
                 return;
             }
-            const startIdx = this._findIndexByVersion(currentVersion);
-            const endIdx = this._findIndexByVersion(version);
+            const startIdx = this.findIndexByVersion(currentVersion);
+            const endIdx = this.findIndexByVersion(version);
             this.options.logger('info', 'Migrating from version ' + this._list[startIdx].version
                 + ' -> ' + this._list[endIdx].version);
             if (currentVersion < version) {
@@ -218,16 +224,16 @@ class Migration {
             this.options.logger('info', 'Finished migrating.');
         });
     }
-    _getControl() {
+    getControl() {
         return __awaiter(this, void 0, void 0, function* () {
             const con = yield this._collection.findOne({ _id: 'control' });
-            return con || (yield this._setControl({
+            return con || (yield this.setControl({
                 version: 0,
                 locked: false,
             }));
         });
     }
-    _setControl(control) {
+    setControl(control) {
         return __awaiter(this, void 0, void 0, function* () {
             check('Number', control.version);
             check('Boolean', control.locked);
@@ -249,7 +255,7 @@ class Migration {
             }
         });
     }
-    _findIndexByVersion(version) {
+    findIndexByVersion(version) {
         for (let i = 0; i < this._list.length; i++) {
             if (this._list[i].version === version) {
                 return i;

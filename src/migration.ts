@@ -49,13 +49,21 @@ export interface IMigration {
 
 export class Migration {
 
-  // tslint:disable-next-line:no-empty
-  private defaultMigration = { version: 0, up: () => { } };
+  private defaultMigration = {
+    version: 0,
+    // tslint:disable-next-line:no-empty
+    up: () => { },
+  };
   private _list: any[];
   private _collection: Collection;
   private _db: Db;
   private options: IMigrationOptions;
 
+  /**
+   * Creates an instance of Migration.
+   * @param {IMigrationOptions} [opts]
+   * @memberof Migration
+   */
   constructor(opts?: IMigrationOptions) {
     // Since we'll be at version 0 by default, we should have a migration set for it.
     this._list = [this.defaultMigration];
@@ -73,12 +81,19 @@ export class Migration {
     };
   }
 
+  /**
+   * Configure migration
+   *
+   * @param {IMigrationOptions} [opts]
+   * @returns {Promise<void>}
+   * @memberof Migration
+   */
   public async config(opts?: IMigrationOptions): Promise<void> {
 
     this.options = Object.assign({}, this.options, opts);
 
     if (!this.options.logger && this.options.log) {
-      this.options.logger = (level: string, ...args) => console.log(level,...args);
+      this.options.logger = (level: string, ...args) => console.log(level, ...args);
     }
     if (this.options.log === false) {
       // tslint:disable-next-line:no-empty
@@ -99,12 +114,12 @@ export class Migration {
     this._db = db;
   }
 
-  // Add a new migration:
-  // {up: function *required
-  //  Version: Number *required
-  //  Down: function *optional
-  //  Name: String *optional
-  // }
+  /**
+   * Add a new migration
+   *
+   * @param {IMigration} migration
+   * @memberof Migration
+   */
   public add(migration: IMigration): void {
 
     if (typeof migration.up !== 'function') {
@@ -126,7 +141,7 @@ export class Migration {
     if (typeof migration.up === 'function' || typeof migration.down === 'function') {
       this.options.
         logger('warning', 'Prefer an async function (async | promise) for both up()/down() setup.' +
-         ' This will ensure migration completes before version bump during execution');
+        ' This will ensure migration completes before version bump during execution');
     }
 
     // Freeze the migration object to make it hereafter immutable
@@ -137,7 +152,7 @@ export class Migration {
   }
 
   /**
-   * Attempts to run the migrations using command in the form of:
+   * Run the migrations using command in the form of:
    * @example 'latest' - migrate to latest, 2, '2,rerun'
    * @example 2 - migrate to version 2
    * @example '2,rerun' - if at version 2, re-run up migration
@@ -163,9 +178,9 @@ export class Migration {
 
     try {
       if (version === 'latest') {
-        await this._migrateTo(_.last<any>(this._list).version);
+        await this.execute(_.last<any>(this._list).version);
       } else {
-        await this._migrateTo(parseInt(version as string, null), (subcommand === 'rerun'));
+        await this.execute(parseInt(version as string, null), (subcommand === 'rerun'));
       }
     } catch (e) {
       this.options.
@@ -175,33 +190,60 @@ export class Migration {
 
   }
 
-  // Returns the number of migrations
+  /**
+   * Returns the number of migrations
+   *
+   * @returns {number}
+   * @memberof Migration
+   */
   public getNumberOfMigrations(): number {
     // Exclude default/base migration v0 since its not a configured migration
     return this._list.length - 1;
   }
 
-  // Returns the current version
+  /**
+   * Returns the current version
+   *
+   * @returns {Promise<number>}
+   * @memberof Migration
+   */
   public async getVersion(): Promise<number> {
-    const control = await this._getControl();
+    const control = await this.getControl();
     return control.version;
   }
 
-  // Unlock control
-  public unlock() {
+  /**
+   * Unlock control
+   *
+   * @memberof Migration
+   */
+  public unlock(): void {
     this._collection.update({ _id: 'control' }, { $set: { locked: false } });
   }
 
-  // Reset (mainly intended for tests)
-  public async _reset() {
+  /**
+   * Reset migration configuration. This is intended for dev and test mode only. Use wisely
+   *
+   * @returns {Promise<void>}
+   * @memberof Migration
+   */
+  public async reset(): Promise<void> {
     this._list = [this.defaultMigration];
     await this._collection.remove({});
   }
 
-  // Migrates to the specific version passed in
-  private async _migrateTo(version: any, rerun?: any): Promise<void> {
+  /**
+   * Migrate to the specific version passed in
+   *
+   * @private
+   * @param {*} version
+   * @param {*} [rerun]
+   * @returns {Promise<void>}
+   * @memberof Migration
+   */
+  private async execute(version: any, rerun?: any): Promise<void> {
     const self = this;
-    const control = await this._getControl(); // Side effect: upserts control document.
+    const control = await this.getControl(); // Side effect: upserts control document.
     let currentVersion = control.version;
 
     // Run the actual migration
@@ -247,13 +289,13 @@ export class Migration {
     };
 
     // Side effect: saves version.
-    const unlock = () => self._setControl({
+    const unlock = () => self.setControl({
       locked: false,
       version: currentVersion,
     });
 
     // Side effect: saves version.
-    const updateVersion = async () => await self._setControl({
+    const updateVersion = async () => await self.setControl({
       locked: true,
       version: currentVersion,
     });
@@ -279,8 +321,8 @@ export class Migration {
       return;
     }
 
-    const startIdx = this._findIndexByVersion(currentVersion);
-    const endIdx = this._findIndexByVersion(version);
+    const startIdx = this.findIndexByVersion(currentVersion);
+    const endIdx = this.findIndexByVersion(version);
 
     // Log.info('startIdx:' + startIdx + ' endIdx:' + endIdx);
     this.options.logger('info', 'Migrating from version ' + this._list[startIdx].version
@@ -316,17 +358,31 @@ export class Migration {
     this.options.logger('info', 'Finished migrating.');
   }
 
-  // Gets the current control record, optionally creating it if non-existant
-  private async _getControl(): Promise<{ version: number, locked: boolean }> {
+  /**
+   * Gets the current control record, optionally creating it if non-existant
+   *
+   * @private
+   * @returns {Promise<{ version: number, locked: boolean }>}
+   * @memberof Migration
+   */
+  private async getControl(): Promise<{ version: number, locked: boolean }> {
     const con = await this._collection.findOne({ _id: 'control' });
-    return con || (await this._setControl({
+    return con || (await this.setControl({
       version: 0,
       locked: false,
     }));
   }
 
-  // Sets the control record
-  private async _setControl(control: { version: number, locked: boolean }) {
+  /**
+   * Set the control record
+   *
+   * @private
+   * @param {{ version: number, locked: boolean }} control
+   * @returns {(Promise<{ version: number, locked: boolean } | null>)}
+   * @memberof Migration
+   */
+  private async setControl(control: { version: number, locked: boolean }):
+    Promise<{ version: number, locked: boolean } | null> {
     // Be quite strict
     check('Number', control.version);
     check('Boolean', control.locked);
@@ -349,8 +405,15 @@ export class Migration {
     }
   }
 
-  // Returns the migration index in _list or throws if not found
-  private _findIndexByVersion(version) {
+  /**
+   * Returns the migration index in _list or throws if not found
+   *
+   * @private
+   * @param {any} version
+   * @returns {number}
+   * @memberof Migration
+   */
+  private findIndexByVersion(version): number {
     for (let i = 0; i < this._list.length; i++) {
       if (this._list[i].version === version) {
         return i;
