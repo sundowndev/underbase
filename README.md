@@ -28,7 +28,7 @@ migrator.config({
       logger: (level, ..arg) => console.log(level, ..arg),
       // enable/disable info log "already at latest."
       logIfLatest: true,
-      // migrations collection name
+      // migrations collection name. Defaults to 'migrations'
       collectionName: 'migrations',
       // mongdb url or mongo Db instance
       db: "your connection string",
@@ -57,8 +57,6 @@ var migrator = new Migration({
 })
 await migrator.config(); // Returns a promise
 ```
-
-If mi
 
 To write a simple migration, somewhere in the server section of your project define:
 
@@ -215,6 +213,35 @@ migrator.config({
 });
 ```
 
+### Logging
+
+Migrations uses console by default for logging if not provided. If you want to use your
+own logger (for sending to other consumers or similar) you can do so by
+configuring the `logger` option when calling `migrator.config` .
+
+Migrations expects a function as `logger`, and will pass an argument with properties level, message,
+ to it for
+you to take action on.
+
+``` javascript
+var MyLogger = function(opts) {
+  console.log('Level', opts.level);
+  console.log('Message', opts.message);
+}
+
+Migrations.config({
+  ...
+  logger: MyLogger
+  ...
+});
+
+```
+
+The `opts` object passed to `MyLogger` above includes `level`, `message`, and any other additional
+info needed.
+
+- `level` will be one of `info`, `warn`, `error`, `debug`.
+- `message` is something like `Finished migrating.`.
 
 
 ## Development
