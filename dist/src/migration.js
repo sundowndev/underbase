@@ -60,6 +60,11 @@ class Migration {
         if (migration.version <= 0) {
             throw new Error('Migration version must be greater than 0');
         }
+        if (typeof migration.up === 'function' || typeof migration.down === 'function') {
+            this.options.
+                logger('warning', 'Prefer an async function (async | promise) for both up()/down() setup.' +
+                ' This will ensure migration completes before version bump during execution');
+        }
         Object.freeze(migration);
         this._list.push(migration);
         this._list = _.sortBy(this._list, (m) => m.version);
@@ -130,15 +135,7 @@ class Migration {
                     return migration.name ? ' (' + migration.name + ')' : '';
                 }
                 this.options.logger('info', 'Running ' + direction + '() on version ' + migration.version + maybeName());
-                if (migration[direction].constructor.name === 'GeneratorFunction') {
-                    yield migration[direction](self._db, migration);
-                }
-                else if (migration[direction].then) {
-                    yield migration[direction](self._db, migration);
-                }
-                else {
-                    migration[direction](self._db, migration);
-                }
+                yield migration[direction](self._db, migration);
             });
             const lock = () => __awaiter(this, void 0, void 0, function* () {
                 const updateResult = yield self._collection.update({

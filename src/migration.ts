@@ -118,6 +118,12 @@ export class Migration {
       throw new Error('Migration version must be greater than 0');
     }
 
+    if (typeof migration.up === 'function' || typeof migration.down === 'function') {
+      this.options.
+        logger('warning', 'Prefer an async function (async | promise) for both up()/down() setup.' +
+         ' This will ensure migration completes before version bump during execution');
+    }
+
     // Freeze the migration object to make it hereafter immutable
     Object.freeze(migration);
 
@@ -209,14 +215,7 @@ export class Migration {
       this.options.logger('info',
         'Running ' + direction + '() on version ' + migration.version + maybeName());
 
-      // If its a generator func
-      if (migration[direction].constructor.name === 'GeneratorFunction') {
-        await migration[direction](self._db, migration);
-      } else if (migration[direction].then) { // If its a promise
-        await migration[direction](self._db, migration);
-      } else {
-        migration[direction](self._db, migration);
-      }
+      await migration[direction](self._db, migration);
 
     };
 

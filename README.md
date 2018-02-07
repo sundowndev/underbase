@@ -194,6 +194,7 @@ migrator.getNumberOfMigrations();
 a 'vanilla' system, that is, one without any migrations applied.
 - If migrating from vT1 to vTz and migration fails from a vTx to vTy, where vTx & vTy are incremental versions
 between vT1 to vTz, migration will stop at vTx.
+- Prefer an async function ( async | promise) for both up()/down() setup. This will ensure migration completes before version bump during execution.
 
 ### Configuration
 
