@@ -2,6 +2,7 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
 
+import { Promise as  BlueBirdPromise } from 'bluebird';
 import { Migration } from '../src/';
 
 const dbURL = process.env.DBURL;
@@ -30,8 +31,10 @@ describe('Migration', () => {
       version: 1,
       name: 'Version 1',
       up: (db) => {
+        return 'done';
       },
       down: (db) => {
+        return 'done';
       },
     });
 
@@ -39,8 +42,10 @@ describe('Migration', () => {
       version: 2,
       name: 'Version 2',
       up: (db) => {
+        return 'done';
       },
       down: (db) => {
+        return 'done';
       },
     });
 
@@ -161,6 +166,51 @@ describe('Migration', () => {
           expect(e).toBeTruthy();
           expect(e).toBeInstanceOf(Error);
         }
+        currentVersion = await migrator.getVersion();
+        expect(currentVersion).toBe(4);
+      });
+
+    });
+
+    describe('Async up()/down()', () => {
+
+      beforeEach(() => {
+        migrator.add({
+          version: 3,
+          name: 'Version 3.',
+          up: async (db) => {
+            return 'done';
+          },
+          down: async (db) => {
+            return 'done';
+          },
+        });
+
+        migrator.add({
+          version: 4,
+          name: 'Version 4',
+          up: BlueBirdPromise.method((db) => {
+            return 'done';
+          }),
+          down: BlueBirdPromise.method((db) => {
+            return 'done';
+          }),
+        });
+
+      });
+
+      test('from 0 to 3, should migrate to v3', async () => {
+        let currentVersion = await migrator.getVersion();
+        expect(currentVersion).toBe(0);
+        await migrator.migrateTo(3);
+        currentVersion = await migrator.getVersion();
+        expect(currentVersion).toBe(3);
+      });
+
+      test('from 0 to 4, should migrate to v4', async () => {
+        let currentVersion = await migrator.getVersion();
+        expect(currentVersion).toBe(0);
+        await migrator.migrateTo(4);
         currentVersion = await migrator.getVersion();
         expect(currentVersion).toBe(4);
       });

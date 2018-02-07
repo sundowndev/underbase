@@ -8,7 +8,7 @@
     "lint": "tslint src/**/*.ts",
     "build": "tsc",
     "build:watch": "rm -rf dist && tsc -w",
-    "docker:dev": "npm run build && docker-compose up mgdb-migrator-dev || true",
+    "docker:start": "npm run build && docker-compose up mgdb-migrator-dev || true",
     "docker:test": "npm run build && docker-compose up mgdb-migrator-test || true",
     "docker:down": "docker-compose down",
     "prestart": "npm run build:watch & sleep 8s",

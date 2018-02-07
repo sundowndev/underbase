@@ -29,7 +29,7 @@ class Migration {
         return __awaiter(this, void 0, void 0, function* () {
             this.options = Object.assign({}, this.options, opts);
             if (!this.options.logger && this.options.log) {
-                this.options.logger = (level, ...args) => console[level](...args);
+                this.options.logger = (level, ...args) => console.log(level, ...args);
             }
             if (this.options.log === false) {
                 this.options.logger = (level, ...args) => { };

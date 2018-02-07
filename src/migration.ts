@@ -23,6 +23,7 @@
   be in an inconsistant state.
 */
 // tslint:disable:variable-name
+// tslint:disable:no-console
 
 import { Promise as BluebirdPromise } from 'bluebird';
 import * as _ from 'lodash';
@@ -77,7 +78,7 @@ export class Migration {
     this.options = Object.assign({}, this.options, opts);
 
     if (!this.options.logger && this.options.log) {
-      this.options.logger = (level: string, ...args) => console[level](...args);
+      this.options.logger = (level: string, ...args) => console.log(level,...args);
     }
     if (this.options.log === false) {
       // tslint:disable-next-line:no-empty

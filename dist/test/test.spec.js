@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const bluebird_1 = require("bluebird");
 const _1 = require("../src/");
 const dbURL = process.env.DBURL;
 describe('Migration', () => {
@@ -32,16 +33,20 @@ describe('Migration', () => {
             version: 1,
             name: 'Version 1',
             up: (db) => {
+                return 'done';
             },
             down: (db) => {
+                return 'done';
             },
         });
         migrator.add({
             version: 2,
             name: 'Version 2',
             up: (db) => {
+                return 'done';
             },
             down: (db) => {
+                return 'done';
             },
         });
     });
@@ -146,6 +151,44 @@ describe('Migration', () => {
                     expect(e).toBeTruthy();
                     expect(e).toBeInstanceOf(Error);
                 }
+                currentVersion = yield migrator.getVersion();
+                expect(currentVersion).toBe(4);
+            }));
+        });
+        describe('Async up()/down()', () => {
+            beforeEach(() => {
+                migrator.add({
+                    version: 3,
+                    name: 'Version 3.',
+                    up: (db) => __awaiter(this, void 0, void 0, function* () {
+                        return 'done';
+                    }),
+                    down: (db) => __awaiter(this, void 0, void 0, function* () {
+                        return 'done';
+                    }),
+                });
+                migrator.add({
+                    version: 4,
+                    name: 'Version 4',
+                    up: bluebird_1.Promise.method((db) => {
+                        return 'done';
+                    }),
+                    down: bluebird_1.Promise.method((db) => {
+                        return 'done';
+                    }),
+                });
+            });
+            test('from 0 to 3, should migrate to v3', () => __awaiter(this, void 0, void 0, function* () {
+                let currentVersion = yield migrator.getVersion();
+                expect(currentVersion).toBe(0);
+                yield migrator.migrateTo(3);
+                currentVersion = yield migrator.getVersion();
+                expect(currentVersion).toBe(3);
+            }));
+            test('from 0 to 4, should migrate to v4', () => __awaiter(this, void 0, void 0, function* () {
+                let currentVersion = yield migrator.getVersion();
+                expect(currentVersion).toBe(0);
+                yield migrator.migrateTo(4);
                 currentVersion = yield migrator.getVersion();
                 expect(currentVersion).toBe(4);
             }));
