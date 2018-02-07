@@ -26,6 +26,11 @@
   "bugs": {
     "url": "https://github.com/emmanuelbuah/mgdb-migrator/issues"
   },
+  "keywords": [
+    "mongo",
+    "mongodb",
+    "migration"
+  ],
   "license": "ISC",
   "engines": {
     "node": ">=7.10.0"

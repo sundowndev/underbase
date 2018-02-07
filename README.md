@@ -1,6 +1,4 @@
-A simple migration system for mongodb supporting up/downwards migrations. Migration is a fork and
-heavily refeactored version of [percolatestudio/meteor-migrations](https://github.com/percolatestudio/meteor-migrations) to make a generic mongodb
-migration library
+A simple migration system for mongodb supporting up/downwards migrations.
 
 ## Installation
 
@@ -233,3 +231,6 @@ Run docker-compose to execute lib in test mode
 ``` sh
 $ npm run docker:test
 ```
+
+## Credits
+Migration builds on [percolatestudio/meteor-migrations](https://github.com/percolatestudio/meteor-migrations) with the goal of creating a generic mongodb migration library
