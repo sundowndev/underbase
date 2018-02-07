@@ -10,8 +10,8 @@ export interface IMigrationOptions {
 export interface IMigration {
     version: number;
     name: string;
-    up: (db: Db) => void;
-    down: (db: Db) => void;
+    up: (db: Db) => Promise<any> | any;
+    down: (db: Db) => Promise<any> | any;
 }
 export declare class Migration {
     private defaultMigration;

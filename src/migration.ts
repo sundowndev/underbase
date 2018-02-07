@@ -43,8 +43,8 @@ export interface IMigrationOptions {
 export interface IMigration {
   version: number;
   name: string;
-  up: (db: Db) => void;
-  down: (db: Db) => void;
+  up: (db: Db) => Promise<any> | any;
+  down: (db: Db) => Promise<any> | any;
 }
 
 export class Migration {
@@ -136,12 +136,6 @@ export class Migration {
 
     if (migration.version <= 0) {
       throw new Error('Migration version must be greater than 0');
-    }
-
-    if (typeof migration.up === 'function' || typeof migration.down === 'function') {
-      this.options.
-        logger('warning', 'Prefer an async function (async | promise) for both up()/down() setup.' +
-        ' This will ensure migration completes before version bump during execution');
     }
 
     // Freeze the migration object to make it hereafter immutable

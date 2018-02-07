@@ -66,11 +66,6 @@ class Migration {
         if (migration.version <= 0) {
             throw new Error('Migration version must be greater than 0');
         }
-        if (typeof migration.up === 'function' || typeof migration.down === 'function') {
-            this.options.
-                logger('warning', 'Prefer an async function (async | promise) for both up()/down() setup.' +
-                ' This will ensure migration completes before version bump during execution');
-        }
         Object.freeze(migration);
         this._list.push(migration);
         this._list = _.sortBy(this._list, (m) => m.version);
