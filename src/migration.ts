@@ -265,21 +265,17 @@ export class Migration {
       // This is atomic. The selector ensures only one caller at a time will see
       // The unlocked control, and locking occurs in the same update's modifier.
       // All other simultaneous callers will get false back from the update.
-      const updateResult = await self._collection.update({
+      const updateResult = await self._collection.findOneAndUpdate({
         _id: 'control',
         locked: false,
       }, {
-          $set: {
-            locked: true,
-            lockedAt: new Date(),
-          },
-        });
+        $set: {
+          locked: true,
+          lockedAt: new Date(),
+        },
+      });
 
-      if (updateResult && updateResult.result.ok) {
-        return true;
-      } else {
-        return false;
-      }
+      return updateResult && updateResult.ok === 1 || false;
     };
 
     // Side effect: saves version.
