@@ -262,9 +262,11 @@ export class Migration {
 
     // Returns true if lock was acquired.
     const lock = async () => {
-      // This is atomic. The selector ensures only one caller at a time will see
-      // The unlocked control, and locking occurs in the same update's modifier.
-      // All other simultaneous callers will get false back from the update.
+      /*
+       * This is an atomic op. The op ensures only one caller at a time will match the control
+       * object and thus be able to update it.  All other simultaneous callers will not match the
+       * object and thus will have null return values in the result of the operation.
+       */
       const updateResult = await self._collection.findOneAndUpdate({
         _id: 'control',
         locked: false,
@@ -275,7 +277,7 @@ export class Migration {
         },
       });
 
-      return updateResult && updateResult.ok === 1 || false;
+      return null != updateResult.value && 1 === updateResult.ok;
     };
 
     // Side effect: saves version.
