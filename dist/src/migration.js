@@ -148,7 +148,7 @@ class Migration {
                         lockedAt: new Date(),
                     },
                 });
-                return updateResult && updateResult.ok === 1 || false;
+                return null != updateResult.value && 1 === updateResult.ok;
             });
             const unlock = () => self.setControl({
                 locked: false,
