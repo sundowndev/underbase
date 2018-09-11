@@ -2,7 +2,7 @@ import { Db } from 'mongodb';
 export declare type SyslogLevels = 'debug' | 'info' | 'notice' | 'warning' | 'error' | 'crit' | 'alert';
 export interface IMigrationOptions {
     log?: boolean;
-    logger?: (level: SyslogLevels, ...args) => void;
+    logger?: (level: SyslogLevels, ...args: any[]) => void;
     logIfLatest?: boolean;
     collectionName?: string;
     db: string | Db;
