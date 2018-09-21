@@ -27,8 +27,8 @@ export declare class Migration {
     getVersion(): Promise<number>;
     unlock(): void;
     reset(): Promise<void>;
-    private execute(version, rerun?);
-    private getControl();
-    private setControl(control);
-    private findIndexByVersion(version);
+    private execute;
+    private getControl;
+    private setControl;
+    private findIndexByVersion;
 }

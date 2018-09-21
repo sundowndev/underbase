@@ -42,9 +42,11 @@ class Migration {
             }
             let db;
             if (typeof (this.options.db) === 'string') {
-                db = yield mongodb_1.MongoClient.connect(this.options.db, {
+                const client = yield mongodb_1.MongoClient.connect(this.options.db, {
                     promiseLibrary: bluebird_1.Promise,
+                    useNewUrlParser: true,
                 });
+                db = client.db();
             }
             else {
                 db = this.options.db;
@@ -113,12 +115,12 @@ class Migration {
         });
     }
     unlock() {
-        this._collection.update({ _id: 'control' }, { $set: { locked: false } });
+        this._collection.updateOne({ _id: 'control' }, { $set: { locked: false } });
     }
     reset() {
         return __awaiter(this, void 0, void 0, function* () {
             this._list = [this.defaultMigration];
-            yield this._collection.remove({});
+            yield this._collection.deleteMany({});
         });
     }
     execute(version, rerun) {
@@ -227,7 +229,7 @@ class Migration {
         return __awaiter(this, void 0, void 0, function* () {
             check('Number', control.version);
             check('Boolean', control.locked);
-            const updateResult = yield this._collection.update({
+            const updateResult = yield this._collection.updateOne({
                 _id: 'control',
             }, {
                 $set: {

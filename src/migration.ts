@@ -104,9 +104,11 @@ export class Migration {
     }
     let db: string | Db;
     if (typeof (this.options.db) === 'string') {
-      db = await MongoClient.connect(this.options.db, {
+      const client = await MongoClient.connect(this.options.db, {
         promiseLibrary: BluebirdPromise,
+        useNewUrlParser: true,
       });
+      db = client.db();
     } else {
       db = this.options.db;
     }
@@ -212,7 +214,7 @@ export class Migration {
    * @memberof Migration
    */
   public unlock(): void {
-    this._collection.update({ _id: 'control' }, { $set: { locked: false } });
+    this._collection.updateOne({ _id: 'control' }, { $set: { locked: false } });
   }
 
   /**
@@ -223,7 +225,7 @@ export class Migration {
    */
   public async reset(): Promise<void> {
     this._list = [this.defaultMigration];
-    await this._collection.remove({});
+    await this._collection.deleteMany({});
   }
 
   /**
@@ -379,7 +381,7 @@ export class Migration {
     check('Number', control.version);
     check('Boolean', control.locked);
 
-    const updateResult = await this._collection.update({
+    const updateResult = await this._collection.updateOne({
       _id: 'control',
     }, {
         $set: {
