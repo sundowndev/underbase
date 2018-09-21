@@ -1,7 +1,6 @@
 {
   "extends": [
     "tslint:recommended",
-    "tslint-react",
     "tslint-eslint-rules"
   ],
   "rulesDirectory": [

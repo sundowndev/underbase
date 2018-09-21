@@ -4,10 +4,8 @@ version: '3.3'
 services:
 
   mgdb-migrator-dev:
-    image: mgdb-migrator:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: node:8-alpine
+    command: sh -c 'cd /usr/src/mgdb-migrator && exec npm test'
     depends_on:
       - mgdb-migrator-db
     environment:
@@ -28,13 +26,13 @@ services:
     command: mongod --bind_ip 0.0.0.0 --smallfiles
 
   mgdb-migrator-test:
-    image: mgdb-migrator:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: node:8-alpine
+    command: sh -c 'cd /usr/src/mgdb-migrator && exec npm test'
     depends_on:
       - mgdb-migrator-db
     environment:
       - 'DBURL=mongodb://mgdb-migrator-db:27017/mgdb-migrator-db'
       - 'NODE_ENV=test'
+    volumes:
+      - '.:/usr/src/mgdb-migrator'
 

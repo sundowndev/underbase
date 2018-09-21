@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const bluebird_1 = require("bluebird");
-const _1 = require("../src/");
+const src_1 = require("../src/");
 const dbURL = process.env.DBURL;
 describe('Migration', () => {
     let migrator;
     beforeAll(() => __awaiter(this, void 0, void 0, function* () {
         try {
-            migrator = new _1.Migration({
+            migrator = new src_1.Migration({
                 log: true,
                 logIfLatest: true,
                 collectionName: '_migration',
