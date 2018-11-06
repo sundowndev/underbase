@@ -1,6 +1,6 @@
 {
   "name": "mgdb-migrator",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Mongodb schema and data migration lib",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -36,22 +36,22 @@
     "node": ">=7.10.0"
   },
   "devDependencies": {
-    "@types/jest": "23.3.2",
-    "@types/lodash": "4.14.116",
-    "@types/mongodb": "3.1.7",
-    "@types/node": "8.9.4",
+    "@types/jest": "23.3.9",
+    "@types/lodash": "4.14.118",
+    "@types/mongodb": "3.1.14",
+    "@types/node": "10.12.2",
     "jest": "23.6.0",
     "tslint": "5.11.0",
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "5.2.1",
-    "typescript": "3.0.3",
+    "typescript": "3.1.6",
     "vrsource-tslint-rules": "5.8.2"
   },
   "dependencies": {
     "@types/bluebird": "3.5.24",
-    "bluebird": "3.5.2",
+    "bluebird": "3.5.3",
     "lodash": "4.17.11",
-    "mongodb": "3.1.6",
+    "mongodb": "3.1.9",
     "type-check": "0.3.2"
   },
   "jest": {
