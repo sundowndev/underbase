@@ -38,20 +38,20 @@
   "devDependencies": {
     "@types/jest": "23.3.9",
     "@types/lodash": "4.14.118",
-    "@types/mongodb": "3.1.14",
+    "@types/mongodb": "3.1.19",
     "@types/node": "10.12.2",
     "jest": "23.6.0",
-    "tslint": "5.11.0",
+    "tslint": "5.12.1",
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "5.2.1",
     "typescript": "3.3.1",
-    "vrsource-tslint-rules": "5.8.2"
+    "vrsource-tslint-rules": "6.0.0"
   },
   "dependencies": {
-    "@types/bluebird": "3.5.24",
+    "@types/bluebird": "3.5.25",
     "bluebird": "3.5.3",
     "lodash": "4.17.11",
-    "mongodb": "3.1.9",
+    "mongodb": "3.1.13",
     "type-check": "0.3.2"
   },
   "jest": {
