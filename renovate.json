@@ -1,5 +1,13 @@
 {
   "extends": [
     "config:base"
-  ]
+  ],
+  "baseBranches": [
+    "next"
+  ],
+  "labels": [
+    "bot:renovate"
+  ],
+  "commitMessagePrefix": "Renovate:",
+  "separateMultipleMajor": true
 }
