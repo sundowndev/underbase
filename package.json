@@ -43,7 +43,7 @@
     "jest": "23.6.0",
     "tslint": "5.12.1",
     "tslint-eslint-rules": "5.4.0",
-    "tslint-microsoft-contrib": "5.2.1",
+    "tslint-microsoft-contrib": "6.0.0",
     "typescript": "3.3.1",
     "vrsource-tslint-rules": "6.0.0"
   },
