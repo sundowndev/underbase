@@ -1,15 +1,26 @@
-A simple migration system for mongodb supporting up/downwards migrations.
+# metro
+
+MongoDB migrations made right. Abstract framework and CLI app for writing, executing, and organizing your database migrations.
+
+## Goals
+
+- Migration versioning
+- Automatic backups
+- Backup restoration
+- Flexible and modular code
+- Easy to install and configure
+- Abstract framework for writting migrations
 
 ## Installation
 
 Migrations can be installed through yarn or npm. Type:
 
 ``` sh
-$ npm install mgdb-migrator
+$ npm install @sundowndev/metro
 ```
 or
 ``` sh
-$ yarn add mgdb-migrator
+$ yarn add @sundowndev/metro
 ```
 
 ## API
@@ -19,7 +30,7 @@ $ yarn add mgdb-migrator
 Import and use the migration instance - migrator. User the migrator to configure and setup your migration
 
 ``` javascript
-import { migrator } from 'migration';
+import { migrator } from '@sundowndev/metro';
 
 migrator.config({
       // false disables logging
