@@ -1,0 +1,7 @@
+{
+  "db": "mongodb://localhost:27017/api",
+  "migrationsDir": "./examples",
+  "collectionName": "migrations",
+  "backupsDir": "",
+  "backups": true
+}
