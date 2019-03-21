@@ -176,7 +176,7 @@ export class Migration {
       if (version === 'latest') {
         await this.execute(_.last<any>(this._list).version);
       } else {
-        await this.execute(parseInt(version as string, null), (subcommand === 'rerun'));
+        await this.execute(parseFloat(version as string), (subcommand === 'rerun'));
       }
     } catch (e) {
       this.options.
