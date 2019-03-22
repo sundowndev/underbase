@@ -1,5 +1,8 @@
 # metro
 
+![build status](https://img.shields.io/travis/sundowndev/metro/master.svg?style=flat-square)
+![tag](https://img.shields.io/github/tag/sundowndev/metro.svg?style=flat-square)
+
 MongoDB migrations made right. Abstract framework and CLI app for writing, executing, and organizing your database migrations.
 
 ## Goals
@@ -16,11 +19,11 @@ MongoDB migrations made right. Abstract framework and CLI app for writing, execu
 Migrations can be installed through yarn or npm. Type:
 
 ``` sh
-$ npm install @sundowndev/metro
+$ npm install metrodb
 ```
 or
 ``` sh
-$ yarn add @sundowndev/metro
+$ yarn add metrodb
 ```
 
 ## API
@@ -30,7 +33,7 @@ $ yarn add @sundowndev/metro
 Import and use the migration instance - migrator. User the migrator to configure and setup your migration
 
 ``` javascript
-import { migrator } from '@sundowndev/metro';
+import { migrator } from 'metrodb';
 
 migrator.config({
       // false disables logging
@@ -52,7 +55,7 @@ Or ...
 Define a new instance of migration and configure it as you see fit
 
 ``` javascript
-import { Migration } from 'migration';
+import { Migration } from 'metrodb';
 
 var migrator = new Migration({
       // false disables logging
@@ -245,7 +248,6 @@ Migrations.config({
   logger: MyLogger
   ...
 });
-
 ```
 
 The `opts` object passed to `MyLogger` above includes `level`, `message`, and any other additional
@@ -272,4 +274,7 @@ $ npm run docker:test
 ```
 
 ## Credits
-Migration builds on [percolatestudio/meteor-migrations](https://github.com/percolatestudio/meteor-migrations) with the goal of creating a generic mongodb migration library
+
+This repository is a fork of [emmanuelbuah/mgdb-migrator](https://github.com/emmanuelbuah/mgdb-migrator), which is a generic mongodb migration library based on [percolatestudio/meteor-migrations](https://github.com/percolatestudio/meteor-migrations).
+
+This fork was created in order to provide a CLI program to interact with the library's API and add some features such as automatic backups and MongoDB query interface.
