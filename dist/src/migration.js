@@ -95,7 +95,7 @@ class Migration {
                     yield this.execute(_.last(this._list).version);
                 }
                 else {
-                    yield this.execute(parseInt(version, null), (subcommand === 'rerun'));
+                    yield this.execute(parseFloat(version), (subcommand === 'rerun'));
                 }
             }
             catch (e) {
