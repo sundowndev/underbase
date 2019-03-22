@@ -1,15 +1,15 @@
 {
-  "name": "mgdb-migrator",
-  "version": "1.6.1",
-  "description": "Mongodb schema and data migration lib",
+  "name": "metrodb",
+  "version": "1.0.0",
+  "description": "Mongodb schema and data migration library",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "scripts": {
     "lint": "tslint --project .",
     "build": "tsc",
     "build:watch": "rm -rf dist && tsc -w",
-    "docker:start": "npm run build && docker-compose up mgdb-migrator-dev || true",
-    "docker:test": "npm run build && docker-compose up mgdb-migrator-test || true",
+    "docker:start": "npm run build && docker-compose up metro-dev || true",
+    "docker:test": "npm run build && docker-compose up metro-test || true",
     "docker:down": "docker-compose down",
     "prestart": "npm run build:watch & sleep 12s",
     "start": "npm run test",
@@ -18,13 +18,13 @@
     "test:watch": "jest dist/* --watchAll --useStderr --coverage",
     "test:debug:watch": "node --inspect=0.0.0.0:5857 node_modules/.bin/jest dist/* --coverage --useStderr"
   },
-  "author": "Emmanuel Buah <emmanuelbuah@gmail.com> (https://twitter.com/emmanuelbuah)",
+  "author": "Raphaël Cerveaux <raphael@crvx.fr> (https://twitter.com/sundowndev)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/emmanuelbuah/mgdb-migrator"
+    "url": "https://github.com/sundowndev/metro"
   },
   "bugs": {
-    "url": "https://github.com/emmanuelbuah/mgdb-migrator/issues"
+    "url": "https://github.com/sundowndev/metro/issues"
   },
   "keywords": [
     "mongo",
