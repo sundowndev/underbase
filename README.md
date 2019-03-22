@@ -26,7 +26,52 @@ or
 $ yarn add metrodb
 ```
 
-## API
+## Configuration
+
+You can use json to configure Metro by creating a `metro.json` file at the root of your project :
+
+```json
+{
+  "db": "mongodb://localhost:27017/api",
+  "migrationsDir": "./migrations",
+  "collectionName": "migrations",
+  "backupsDir": "./migrations/backups",
+  "backups": true
+}
+```
+
+Arguments can also be passed to the CLI program :
+
+```
+$ metrodb --db mongodb://localhost:27017/api --migrations-dir ./migrations
+```
+
+## Usage
+
+CLI commands :
+
+```
+$ metrodb --help
+
+Usage: cli.js <command> [OPTIONS]
+
+Commandes:
+  cli.js migrate <migration>  Execute migrations
+  cli.js list                 Show all migrations versions
+  cli.js status               Show migrations status
+
+Options:
+  --version          Affiche le numéro de version                      [boolean]
+  --db               MongoDB connection URL
+  --migrations-dir   Migrations versions directory
+  --backups          Enable automatic backups
+  --backups-dir      Backups directory
+  --collection-name  Migrations state collection
+  --logs             Enable logs
+  -h, --help         Affiche de l'aide                                 [boolean]
+```
+
+# API
 
 ### Basics
 
@@ -39,7 +84,7 @@ migrator.config({
       // false disables logging
       log: true,
       // null or a function
-      logger: (level, ..arg) => console.log(level, ..arg),
+      logger: (level, ...arg) => console.log(level, ...arg),
       // enable/disable info log "already at latest."
       logIfLatest: true,
       // migrations collection name. Defaults to 'migrations'
@@ -61,7 +106,7 @@ var migrator = new Migration({
       // false disables logging
       log: true,
       // null or a function
-      logger: (level, ..arg) => console.log(level, ..arg),
+      logger: (level, ...arg) => console.log(level, ...arg),
       // enable/disable info log "already at latest."
       logIfLatest: true,
       // migrations collection name
@@ -253,25 +298,8 @@ Migrations.config({
 The `opts` object passed to `MyLogger` above includes `level`, `message`, and any other additional
 info needed.
 
-- `level` will be one of `info`, `warn`, `error`, `debug`.
-- `message` is something like `Finished migrating.`.
-
-
-## Development
-
-Run docker-compose to execute lib in dev mode
-
-``` sh
-$ npm run docker:dev
-```
-
-## Test
-
-Run docker-compose to execute lib in test mode
-
-``` sh
-$ npm run docker:test
-```
+- `level` will be a string, one of `info`, `warn`, `error`, `debug`.
+- `message` is a string, like `Finished migrating.`.
 
 ## Credits
 
