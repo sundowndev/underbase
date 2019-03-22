@@ -1,38 +1,36 @@
-
 version: '3.3'
 
 services:
-
-  mgdb-migrator-dev:
+  metro-dev:
     image: node:8-alpine
-    command: sh -c 'cd /usr/src/mgdb-migrator && exec npm test'
+    command: sh -c 'cd /usr/src/metro && exec npm test'
     depends_on:
-      - mgdb-migrator-db
+      - metro-db
     environment:
-      - 'DBURL=mongodb://mgdb-migrator-db:27017/mgdb-migrator-db'
+      - 'DBURL=mongodb://metro-db:27017/metro-db'
       - 'NODE_ENV=developoment'
     volumes:
-      - '.:/usr/src/mgdb-migrator'
+      - '.:/usr/src/metro'
     ports:
       # Warning: Binding to 0.0.0.0 without firewall protection opens
       # host up to outside access. Make sure to turn on firewall
       # if you are not testing from an exernal machine or device.
       - "0.0.0.0:5857-5870:5857-5870"
 
-  mgdb-migrator-db:
+  metro-db:
     image: mongo:latest
     ports:
       - "27017:27017"
     command: mongod --bind_ip 0.0.0.0 --smallfiles
 
-  mgdb-migrator-test:
+  metro-test:
     image: node:8-alpine
-    command: sh -c 'cd /usr/src/mgdb-migrator && exec npm test'
+    command: sh -c 'cd /usr/src/metro && exec npm test'
     depends_on:
-      - mgdb-migrator-db
+      - metro-db
     environment:
-      - 'DBURL=mongodb://mgdb-migrator-db:27017/mgdb-migrator-db'
+      - 'DBURL=mongodb://metro-db:27017/metro-db'
       - 'NODE_ENV=test'
     volumes:
-      - '.:/usr/src/mgdb-migrator'
+      - '.:/usr/src/metro'
 
