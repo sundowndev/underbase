@@ -1,9 +1,9 @@
 {
   "name": "metrodb",
-  "version": "1.0.0",
+  "version": "1.6.3",
   "description": "Mongodb schema and data migration library",
-  "main": "dist/src/index.js",
-  "typings": "dist/src/index.d.ts",
+  "main": "dist/src/cli.js",
+  "typings": "dist/src/cli.d.ts",
   "scripts": {
     "lint": "tslint --project .",
     "build": "tsc",
