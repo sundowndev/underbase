@@ -1,4 +1,3 @@
-
 {
   "compilerOptions": {
     "target": "es6",
@@ -23,12 +22,13 @@
         "*"
       ],
       "af-data-models": [
-        "src/index"
+        "src/*"
       ]
     }
   },
   "files": [
-    "src/index.ts"
+    // "src/index.ts",
+    "src/cli.ts"
   ],
   "include": [
     "test/**/*"

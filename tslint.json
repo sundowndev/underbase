@@ -118,7 +118,6 @@
       "check-format"
     ],
     "class-name": true,
-    "no-param-reassign": true,
     "prefer-case-blocks": true,
     "no-duplicate-imports": true,
     "max-params": [
