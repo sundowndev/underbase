@@ -33,6 +33,7 @@ const argv = yargs
   .describe('logs', 'Enable logs')
   .help('h')
   .alias('h', 'help')
+  .locale('en_US')
   .argv;
 
 let metro = <configFile>{};
