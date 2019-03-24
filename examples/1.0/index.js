@@ -10,6 +10,6 @@ export default {
   },
   down: async (db) => {
     await user.down(db);
-    await workspaces.up(db);
+    await workspaces.down(db);
   }
 };
