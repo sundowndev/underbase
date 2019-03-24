@@ -3,7 +3,7 @@
     "config:base"
   ],
   "baseBranches": [
-    "next"
+    "master"
   ],
   "labels": [
     "bot:renovate"
