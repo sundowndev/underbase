@@ -2,17 +2,19 @@
 
 ![build status](https://img.shields.io/travis/sundowndev/underbase/master.svg?style=flat-square)
 ![tag](https://img.shields.io/github/tag/sundowndev/underbase.svg?style=flat-square)
+![dependencies](https://david-dm.org/sundowndev/underbase/status.svg?style=flat-square)
 
-MongoDB migrations done right. Abstract framework and CLI app for writing, executing, and organizing your database migrations.
+>MongoDB migrations done right. Abstract framework and CLI app for writing, executing, and organizing your database migrations.
+
+Look at [underbase-cli]() for command line usage
 
 ## Goals
 
 - Migration versioning
-- Automatic backups
+- Automatic and incremental backups
 - Backup restoration
-- Flexible and modular code
-- Easy to install and configure
-- Abstract framework for writting migrations
+- Flexible & easy to configure
+- Provide MongoDB query interface
 
 ## Installation
 
