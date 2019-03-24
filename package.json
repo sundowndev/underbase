@@ -1,9 +1,9 @@
 {
   "name": "underbase",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MongoDB schema and data migration library",
-  "main": "dist/src/cli.js",
-  "typings": "dist/src/cli.d.ts",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
   "scripts": {
     "lint": "tslint --project .",
     "build": "tsc",
