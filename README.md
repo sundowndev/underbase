@@ -1,12 +1,12 @@
 # Underbase
 
-![build status](https://img.shields.io/travis/sundowndev/underbase/master.svg?style=flat-square)
-![tag](https://img.shields.io/github/tag/sundowndev/underbase.svg?style=flat-square)
-![dependencies](https://david-dm.org/sundowndev/underbase/status.svg?style=flat-square)
+[![build status](https://img.shields.io/travis/sundowndev/underbase/master.svg?style=flat-square)](https://travis-ci.org/sundowndev/underbase)
+[![tag](https://img.shields.io/github/tag/sundowndev/underbase.svg?style=flat-square)](https://github.com/sundowndev/underbase/releases)
+[![dependencies](https://david-dm.org/sundowndev/underbase/status.svg?style=flat-square)](https://david-dm.org/sundowndev/underbase)
 
 >MongoDB migrations done right. Abstract framework and CLI app for writing, executing, and organizing your database migrations.
 
-Look at [underbase-cli]() for command line usage
+Look at [underbase-cli](https://github.com/sundowndev/underbase-cli) for command line usage.
 
 ## Goals
 
