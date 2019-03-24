@@ -1,9 +1,9 @@
-# metro
+# Underbase
 
-![build status](https://img.shields.io/travis/sundowndev/metro/master.svg?style=flat-square)
-![tag](https://img.shields.io/github/tag/sundowndev/metro.svg?style=flat-square)
+![build status](https://img.shields.io/travis/sundowndev/underbase/master.svg?style=flat-square)
+![tag](https://img.shields.io/github/tag/sundowndev/underbase.svg?style=flat-square)
 
-MongoDB migrations made right. Abstract framework and CLI app for writing, executing, and organizing your database migrations.
+MongoDB migrations done right. Abstract framework and CLI app for writing, executing, and organizing your database migrations.
 
 ## Goals
 
@@ -19,16 +19,16 @@ MongoDB migrations made right. Abstract framework and CLI app for writing, execu
 Migrations can be installed through yarn or npm. Type:
 
 ``` sh
-$ npm install metrodb
+$ npm install underbase
 ```
 or
 ``` sh
-$ yarn add metrodb
+$ yarn add underbase
 ```
 
 ## Configuration
 
-You can use json to configure Metro by creating a `metro.json` file at the root of your project :
+You can use json to configure Underbase by creating a `underbase.json` file at the root of your project :
 
 ```json
 {
@@ -43,7 +43,7 @@ You can use json to configure Metro by creating a `metro.json` file at the root 
 Arguments can also be passed to the CLI program :
 
 ```
-$ metrodb --db mongodb://localhost:27017/api --migrations-dir ./migrations
+$ underbase-cli --db mongodb://localhost:27017/api --migrations-dir ./migrations
 ```
 
 ## Usage
@@ -51,7 +51,7 @@ $ metrodb --db mongodb://localhost:27017/api --migrations-dir ./migrations
 CLI commands :
 
 ```
-$ metrodb --help
+$ underbase-cli --help
 
 Usage: cli.js <command> [OPTIONS]
 
@@ -78,7 +78,7 @@ Options:
 Import and use the migration instance - migrator. User the migrator to configure and setup your migration
 
 ``` javascript
-import { migrator } from 'metrodb';
+import { migrator } from 'underbase';
 
 migrator.config({
       // false disables logging
@@ -100,7 +100,7 @@ Or ...
 Define a new instance of migration and configure it as you see fit
 
 ``` javascript
-import { Migration } from 'metrodb';
+import { Migration } from 'underbase';
 
 var migrator = new Migration({
       // false disables logging
