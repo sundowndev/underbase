@@ -1,15 +1,15 @@
 {
-  "name": "metrodb",
-  "version": "1.6.3",
-  "description": "Mongodb schema and data migration library",
+  "name": "underbase",
+  "version": "1.0.0",
+  "description": "MongoDB schema and data migration library",
   "main": "dist/src/cli.js",
   "typings": "dist/src/cli.d.ts",
   "scripts": {
     "lint": "tslint --project .",
     "build": "tsc",
     "build:watch": "rm -rf dist && tsc -w",
-    "docker:start": "npm run build && docker-compose up metro-dev || true",
-    "docker:test": "npm run build && docker-compose up metro-test || true",
+    "docker:start": "npm run build && docker-compose up underbase-dev || true",
+    "docker:test": "npm run build && docker-compose up underbase-test || true",
     "docker:down": "docker-compose down",
     "prestart": "npm run build:watch & sleep 12s",
     "start": "npm run test",
@@ -21,10 +21,10 @@
   "author": "Raphaël Cerveaux <raphael@crvx.fr> (https://twitter.com/sundowndev)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sundowndev/metro"
+    "url": "https://github.com/sundowndev/underbase"
   },
   "bugs": {
-    "url": "https://github.com/sundowndev/metro/issues"
+    "url": "https://github.com/sundowndev/underbase/issues"
   },
   "keywords": [
     "mongo",
