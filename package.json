@@ -42,7 +42,7 @@
     "@types/node": "10.14.3",
     "@types/yargs": "^12.0.10",
     "esm": "^3.2.18",
-    "jest": "24.1.0",
+    "jest": "24.5.0",
     "tslint": "5.12.1",
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "6.0.0",
