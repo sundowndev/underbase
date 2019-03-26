@@ -15,6 +15,7 @@ Look at [underbase-cli](https://github.com/sundowndev/underbase-cli) for command
 - Backup restoration
 - Flexible & easy to configure
 - Provide MongoDB query interface
+- Minimal performance cost for big databases
 
 ## Installation
 
@@ -30,7 +31,7 @@ $ yarn add underbase
 
 ## Usage
 
-Want to use this library in the command-line ? Check the [CLI app](https://github.com/sundowndev/underbase-cli).
+Want to use this library in the command-line ? Look at [underbase-cli](https://github.com/sundowndev/underbase-cli).
 
 ### Basics
 
