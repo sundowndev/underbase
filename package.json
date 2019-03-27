@@ -29,7 +29,8 @@
   "keywords": [
     "mongo",
     "mongodb",
-    "migration"
+    "migration",
+    "node"
   ],
   "license": "ISC",
   "engines": {
