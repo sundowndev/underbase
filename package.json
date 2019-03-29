@@ -1,6 +1,6 @@
 {
   "name": "underbase",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MongoDB schema and data migration library",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -45,7 +45,7 @@
     "tslint": "5.14.0",
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "6.1.0",
-    "typescript": "3.3.1",
+    "typescript": "3.4.1",
     "vrsource-tslint-rules": "6.0.0"
   },
   "dependencies": {
