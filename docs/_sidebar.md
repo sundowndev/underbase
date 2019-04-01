@@ -1,0 +1,10 @@
+- **Getting started**
+  - [Introduction](/)
+  - [Quick start](/quick-start)
+  - [Configuration](/configuration)
+  - [Logging](/logging)
+  - [Advanced](/advanced)
+- **Guide**
+  - [Organizing migrations](/organize)
+  - [Working with backups](/working-with-backups)
+  - [API](/api)
