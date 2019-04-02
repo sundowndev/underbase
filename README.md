@@ -1,9 +1,10 @@
+<p align="center">
+  <img src="docs/logo.svg" width="184" alt="" />
+</p>
+
 <h1 align="center">Underbase</h1>
 
 <p align="center">MongoDB schema and data migration library.</p>
-
-<!-- <p align="center">Abstract framework and CLI app for writing, executing, and organizing your database migrations. -->
-</p>
 
 <div align="center">
   <a href="https://travis-ci.org/sundowndev/underbase">
@@ -27,6 +28,7 @@
 
 ## Goals
 
+- Multi database support
 - Migration versioning
 - Automatic and incremental backups
 - Backup restoration

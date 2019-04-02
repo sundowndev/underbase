@@ -1,4 +1,6 @@
-<!-- ![logo](_media/icon.svg) -->
+<p align="center">
+  <img src="logo.svg" width="184" alt="" />
+</p>
 
 # Underbase <small>v1.0.0</small>
 
