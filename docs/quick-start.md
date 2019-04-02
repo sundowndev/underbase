@@ -34,11 +34,11 @@ Options:
   --version                 Show underbase-cli package version         [boolean]
   --db <url>                MongoDB connection URL
   --migrations-dir <dir>    Migrations versions directory
-  --backups                 Enable automatic backups
+  --backup                  Enable automatic backups
   --backups-dir <dir>       Backups directory
   --collection-name <name>  Migrations state collection
   --logs                    Enable logs
-  --force                   Force migrations execution
+  --rerun                   Force migrations execution
   --chdir <dir>             Change the working directory
   -h, --help                Show this help message                     [boolean]
 ```
