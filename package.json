@@ -5,6 +5,7 @@
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "scripts": {
+    "docs:serve": "./node_modules/docsify-cli/bin/docsify serve ./docs",
     "lint": "tslint --project .",
     "build": "tsc",
     "build:watch": "rm -rf dist && tsc -w",
