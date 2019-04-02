@@ -7,7 +7,7 @@ import { migrator } from 'underbase';
 
 migrator.config({
       // false disables logging
-      log: true,
+      logs: true,
       // null or a function
       logger: (level, ...arg) => console.log(level, ...arg),
       // enable/disable info log "already at latest."
@@ -29,7 +29,7 @@ import { Migration } from 'underbase';
 
 var migrator = new Migration({
       // false disables logging
-      log: true,
+      logs: true,
       // null or a function
       logger: (level, ...arg) => console.log(level, ...arg),
       // enable/disable info log "already at latest."
@@ -185,7 +185,7 @@ You can configure Migration with the `config` method. Defaults are:
 ``` javascript
 migrator.config({
   // Log job run details to console
-  log: true,
+  logs: true,
   // Use a custom logger function (level, ...args) => void
   logger: null,
   // Enable/disable logging "Not migrating, already at version {number}"

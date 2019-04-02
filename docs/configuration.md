@@ -5,7 +5,7 @@ You can configure Migration with the `config` method. Defaults are:
 ``` javascript
 migrator.config({
   // Log job run details to console
-  log: true,
+  logs: true,
   // Use a custom logger function (level, ...args) => void
   logger: null,
   // Enable/disable logging "Not migrating, already at version {number}"
