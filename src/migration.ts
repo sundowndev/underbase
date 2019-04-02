@@ -34,7 +34,7 @@ const check = typeCheck;
 export type SyslogLevels = 'debug' | 'info' | 'notice' | 'warning' | 'error' | 'crit' | 'alert';
 
 export interface IMigrationOptions {
-  log?: boolean;
+  logs?: boolean;
   logger?: (level: SyslogLevels, ...args: any[]) => void;
   logIfLatest?: boolean;
   collectionName?: string;
@@ -69,7 +69,7 @@ export class Migration {
     this._list = [this.defaultMigration];
     this.options = opts ? opts : {
       // False disables logging
-      log: true,
+      logs: true,
       // Null or a function
       logger: null,
       // Enable/disable info log "already at latest."
@@ -92,10 +92,10 @@ export class Migration {
 
     this.options = Object.assign({}, this.options, opts);
 
-    if (!this.options.logger && this.options.log) {
+    if (!this.options.logger && this.options.logs) {
       this.options.logger = (level: string, ...args) => console.log(level, ...args);
     }
-    if (this.options.log === false) {
+    if (this.options.logs === false) {
       // tslint:disable-next-line:no-empty
       this.options.logger = (level: string, ...args) => { };
     }
