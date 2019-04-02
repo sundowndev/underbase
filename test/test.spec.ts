@@ -14,7 +14,7 @@ describe('Migration', () => {
   beforeAll(async () => {
     try {
       migrator = new Migration({
-        log: true,
+        logs: true,
         logIfLatest: true,
         collectionName: '_migration',
         db: dbURL,
