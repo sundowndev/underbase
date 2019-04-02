@@ -16,7 +16,7 @@ describe('Migration', () => {
     beforeAll(() => __awaiter(this, void 0, void 0, function* () {
         try {
             migrator = new src_1.Migration({
-                log: true,
+                logs: true,
                 logIfLatest: true,
                 collectionName: '_migration',
                 db: dbURL,

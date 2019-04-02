@@ -21,7 +21,7 @@ class Migration {
         };
         this._list = [this.defaultMigration];
         this.options = opts ? opts : {
-            log: true,
+            logs: true,
             logger: null,
             logIfLatest: true,
             collectionName: 'migrations',
@@ -31,10 +31,10 @@ class Migration {
     config(opts) {
         return __awaiter(this, void 0, void 0, function* () {
             this.options = Object.assign({}, this.options, opts);
-            if (!this.options.logger && this.options.log) {
+            if (!this.options.logger && this.options.logs) {
                 this.options.logger = (level, ...args) => console.log(level, ...args);
             }
-            if (this.options.log === false) {
+            if (this.options.logs === false) {
                 this.options.logger = (level, ...args) => { };
             }
             if (!(this._db instanceof mongodb_1.Db) && !this.options.db) {
