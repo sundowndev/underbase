@@ -1,25 +1,4 @@
-<div id="underbase" align="center">
-  <img src="https://svgshare.com/i/CAV.svg" width="160" alt="" />
-</div>
-
-<h1 align="center">Underbase</h1>
-
-<p align="center">MongoDB schema and data migration library.</p>
-
-<div align="center">
-  <a href="https://travis-ci.org/sundowndev/underbase">
-    <img src="https://img.shields.io/travis/sundowndev/underbase/master.svg?style=flat-square" alt="build status" />
-  </a>
-  <a href="https://github.com/sundowndev/underbase/releases">
-    <img src="https://img.shields.io/github/release/sundowndev/underbase.svg?style=flat-square" alt="release" />
-  </a>
-  <a href="https://www.npmjs.com/package/underbase">
-    <img alt="npm" src="https://img.shields.io/npm/v/underbase.svg?style=flat-square">
-  </a>
-  <a href="https://david-dm.org/sundowndev/underbase">
-    <img src="https://david-dm.org/sundowndev/underbase/status.svg?style=flat-square" alt="dependencies" />
-  </a>
-</div>
+# Underbase
 
 MongoDB schema migrations done right. Underbase is an abstract framework for writing, executing, and organizing your database migrations.
 
