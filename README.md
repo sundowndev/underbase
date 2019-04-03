@@ -53,3 +53,5 @@ Look at [this tutorial](https://sundowndev.github.io/underbase/#/quick-start)
 This repository is a fork of [emmanuelbuah/mgdb-migrator](https://github.com/emmanuelbuah/mgdb-migrator), which is a generic mongodb migration library based on [percolatestudio/meteor-migrations](https://github.com/percolatestudio/meteor-migrations).
 
 This fork was created in order to provide a CLI program to interact with the library's API and add some features such as automatic backups and MongoDB query interface.
+
+Icon was made by [Fabiana Antonioli](https://thenounproject.com/FafiAC) on [thenounproject](https://thenounproject.com/search/?q=prism&i=2263153).
