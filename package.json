@@ -1,6 +1,6 @@
 {
   "name": "underbase",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "MongoDB schema and data migration library",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@types/bluebird": "3.5.26",
-    "bluebird": "3.5.3",
+    "bluebird": "3.5.4",
     "lodash": "4.17.11",
     "mongodb": "3.2.2",
     "type-check": "0.3.2"
