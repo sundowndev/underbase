@@ -11,6 +11,6 @@
 - Minimal performance cost for big databases
 
 [GitHub](https://github.com/sundowndev/underbase)
-[Get Started](#underbase)
+[Get Started](/intro)
 
 ![color](#f0f0f0)

@@ -69,7 +69,7 @@ Install the Underbase library :
 npm i underbase --save-dev
 ```
 
-#### Basics
+### Basics
 
 Import and use the migration instance - migrator. User the migrator to configure and setup your migration
 
@@ -131,7 +131,7 @@ migrator.migrateTo('latest');
 
 We used ES6 to write examples but you can also write migrations in CommonJS :
 
-##### CommonJS
+### Using CommonJS
 
 ```js
 const { migrator } = require('underbase');
@@ -151,7 +151,7 @@ migrator.config({
   })
 ```
 
-##### ES6
+### Using ES6
 
 ```js
 import { migrator } from 'underbase';
@@ -196,7 +196,8 @@ Executing this will create a migration named `Users` for collection "users" atta
 
 This will create a MongoDB collection named "migrations" to store the current state of migrations.
 
-**IMPORTANT**:
+## Important notice
+
 - You cannot create your own migration at version 0. This version is reserved by migration for
 a 'vanilla' system, that is, one without any migrations applied.
 - If migrating from vT1 to vTz and migration fails from a vTx to vTy, where vTx & vTy are incremental versions
