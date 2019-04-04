@@ -20,7 +20,7 @@ services:
   underbase-db:
     image: mongo:latest
     ports:
-      - "27017:27017"
+      - "27019:27017"
     command: mongod --bind_ip 0.0.0.0 --smallfiles
 
   underbase-test:
