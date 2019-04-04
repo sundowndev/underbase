@@ -20,6 +20,9 @@ export declare class Migration {
     private _db;
     private options;
     constructor(opts?: IMigrationOptions);
+    getConfig(): IMigrationOptions;
+    getMigrations(): any[];
+    isLocked(): Promise<boolean>;
     config(opts?: IMigrationOptions): Promise<void>;
     add(migration: IMigration): void;
     migrateTo(command: string | number): Promise<void>;

@@ -13,15 +13,20 @@ const src_1 = require("../src/");
 const dbURL = process.env.DBURL;
 describe('Migration', () => {
     let migrator;
+    let migrationsList;
+    let configObject;
     beforeAll(() => __awaiter(this, void 0, void 0, function* () {
         try {
-            migrator = new src_1.Migration({
+            configObject = {
                 logs: true,
                 logIfLatest: true,
                 collectionName: '_migration',
                 db: dbURL,
-            });
+                logger: () => { },
+            };
+            migrator = new src_1.Migration(configObject);
             yield migrator.config();
+            migrationsList = [];
         }
         catch (e) {
             console.log(e);
@@ -29,7 +34,12 @@ describe('Migration', () => {
         }
     }));
     beforeEach(() => {
-        migrator.add({
+        migrationsList = [];
+        migrationsList.push({
+            version: 0,
+            up: () => { },
+        });
+        migrationsList.push({
             version: 1,
             name: 'Version 1',
             up: (db) => {
@@ -39,7 +49,8 @@ describe('Migration', () => {
                 return 'done';
             },
         });
-        migrator.add({
+        migrator.add(migrationsList[1]);
+        migrationsList.push({
             version: 2,
             name: 'Version 2',
             up: (db) => {
@@ -49,6 +60,7 @@ describe('Migration', () => {
                 return 'done';
             },
         });
+        migrator.add(migrationsList[2]);
     });
     afterEach(() => __awaiter(this, void 0, void 0, function* () {
         yield migrator.reset();
@@ -192,6 +204,19 @@ describe('Migration', () => {
                 currentVersion = yield migrator.getVersion();
                 expect(currentVersion).toBe(4);
             }));
+        });
+    });
+    describe('#isLocked', () => {
+        test(`should be unlocked`, () => __awaiter(this, void 0, void 0, function* () {
+            const locked = yield migrator.isLocked();
+            expect(locked).toBe(false);
+        }));
+        describe('On Error', () => { });
+    });
+    describe('#getConfig', () => {
+        test('should return config objet', () => {
+            const config = migrator.getConfig();
+            expect(config).toMatchObject(configObject);
         });
     });
 });

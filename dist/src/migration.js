@@ -28,6 +28,21 @@ class Migration {
             db: null,
         };
     }
+    getConfig() {
+        return this.options;
+    }
+    getMigrations() {
+        return this._list;
+    }
+    isLocked() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield this._collection.findOne({
+                _id: 'control',
+                locked: true,
+            });
+            return null !== result;
+        });
+    }
     config(opts) {
         return __awaiter(this, void 0, void 0, function* () {
             this.options = Object.assign({}, this.options, opts);
@@ -92,7 +107,7 @@ class Migration {
             }
             try {
                 if (version === 'latest') {
-                    yield this.execute(_.last(this._list).version);
+                    yield this.execute(_.last(this.getMigrations()).version);
                 }
                 else {
                     yield this.execute(parseFloat(version), (subcommand === 'rerun'));
@@ -106,7 +121,7 @@ class Migration {
         });
     }
     getNumberOfMigrations() {
-        return this._list.length - 1;
+        return this.getMigrations().length - 1;
     }
     getVersion() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -182,8 +197,8 @@ class Migration {
             }
             const startIdx = this.findIndexByVersion(currentVersion);
             const endIdx = this.findIndexByVersion(version);
-            this.options.logger('info', 'Migrating from version ' + this._list[startIdx].version
-                + ' -> ' + this._list[endIdx].version);
+            this.options.logger('info', 'Migrating from version ' + this.getMigrations()[startIdx].version
+                + ' -> ' + this.getMigrations()[endIdx].version);
             if (currentVersion < version) {
                 for (let i = startIdx; i < endIdx; i++) {
                     try {
@@ -248,8 +263,8 @@ class Migration {
         });
     }
     findIndexByVersion(version) {
-        for (let i = 0; i < this._list.length; i++) {
-            if (this._list[i].version === version) {
+        for (let i = 0; i < this.getMigrations().length; i++) {
+            if (this.getMigrations()[i].version === version) {
                 return i;
             }
         }
