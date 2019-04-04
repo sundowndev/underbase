@@ -2,7 +2,7 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
 
-import { Promise as  BlueBirdPromise } from 'bluebird';
+import { Promise as BlueBirdPromise } from 'bluebird';
 import { Migration } from '../src/';
 
 const dbURL = process.env.DBURL;
@@ -10,16 +10,23 @@ const dbURL = process.env.DBURL;
 describe('Migration', () => {
 
   let migrator: Migration;
+  let migrationsList: any[];
+  let configObject: any;
 
   beforeAll(async () => {
     try {
-      migrator = new Migration({
+      configObject = {
         logs: true,
         logIfLatest: true,
         collectionName: '_migration',
         db: dbURL,
-      });
+        logger: () => { },
+      };
+
+      migrator = new Migration(configObject);
       await migrator.config();
+
+      migrationsList = [];
     } catch (e) {
       console.log(e);
       throw e;
@@ -27,7 +34,14 @@ describe('Migration', () => {
   });
 
   beforeEach(() => {
-    migrator.add({
+    migrationsList = [];
+
+    migrationsList.push({
+      version: 0,
+      up: () => { },
+    });
+
+    migrationsList.push({
       version: 1,
       name: 'Version 1',
       up: (db) => {
@@ -38,7 +52,9 @@ describe('Migration', () => {
       },
     });
 
-    migrator.add({
+    migrator.add(migrationsList[1]);
+
+    migrationsList.push({
       version: 2,
       name: 'Version 2',
       up: (db) => {
@@ -48,6 +64,8 @@ describe('Migration', () => {
         return 'done';
       },
     });
+
+    migrator.add(migrationsList[2]);
 
   });
 
@@ -218,5 +236,43 @@ describe('Migration', () => {
     });
 
   });
+
+  describe('#isLocked', () => {
+
+    test(`should be unlocked`, async () => {
+      const locked = await migrator.isLocked();
+      expect(locked).toBe(false);
+    });
+
+    // TODO: test when it's locked
+    // test(`should be locked`, async () => {
+    //   const locked = await migrator.isLocked();
+    //   expect(locked).toBe(false);
+    // });
+
+    describe('On Error', () => { });
+
+  });
+
+  describe('#getConfig', () => {
+
+    test('should return config objet', () => {
+      const config = migrator.getConfig();
+
+      expect(config).toMatchObject(configObject);
+    });
+
+  });
+
+  // TODO: fix this
+  // describe('#getMigrations', () => {
+
+  //   test('should return migrations array', () => {
+  //     const migrations = migrator.getMigrations();
+
+  //     expect(migrations).toEqual(migrationsList);
+  //   });
+
+  // });
 
 });
