@@ -14,7 +14,7 @@
     "docker:down": "docker-compose down",
     "prestart": "npm run build:watch & sleep 12s",
     "start": "npm run test",
-    "test": "jest dist/* --coverage --useStderr --forceExit",
+    "test": "jest dist/* --coverage --useStderr --forceExit --detectOpenHandles",
     "test:debug": "node --inspect=0.0.0.0:5857 node_modules/.bin/jest dist/* --coverage --useStderr --forceExit",
     "test:watch": "jest dist/* --watchAll --useStderr --coverage",
     "test:debug:watch": "node --inspect=0.0.0.0:5857 node_modules/.bin/jest dist/* --coverage --useStderr"
