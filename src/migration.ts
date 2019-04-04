@@ -82,6 +82,16 @@ export class Migration {
   }
 
   /**
+   * Get migration configuration
+   *
+   * @returns {IMigrationOptions}
+   * @memberof Migration
+   */
+  public getConfig(): IMigrationOptions {
+    return this.options;
+  }
+
+  /**
    * Configure migration
    *
    * @param {IMigrationOptions} [opts]
