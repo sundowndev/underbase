@@ -92,6 +92,31 @@ export class Migration {
   }
 
   /**
+   * Get migrations
+   *
+   * @returns {any[]}
+   * @memberof Migration
+   */
+  public getMigrations(): any[] {
+    return this._list;
+  }
+
+  /**
+   * Indicate if the migration state is locked or not
+   *
+   * @returns {Promise<boolean>}
+   * @memberof Migration
+   */
+  public async isLocked(): Promise<boolean> {
+    const result = await this._collection.findOne({
+      _id: 'control',
+      locked: true,
+    });
+
+    return null !== result;
+  }
+
+  /**
    * Configure migration
    *
    * @param {IMigrationOptions} [opts]
@@ -184,7 +209,7 @@ export class Migration {
 
     try {
       if (version === 'latest') {
-        await this.execute(_.last<any>(this._list).version);
+        await this.execute(_.last<any>(this.getMigrations()).version);
       } else {
         await this.execute(parseFloat(version as string), (subcommand === 'rerun'));
       }
@@ -204,7 +229,7 @@ export class Migration {
    */
   public getNumberOfMigrations(): number {
     // Exclude default/base migration v0 since its not a configured migration
-    return this._list.length - 1;
+    return this.getMigrations().length - 1;
   }
 
   /**
@@ -242,12 +267,12 @@ export class Migration {
    * Migrate to the specific version passed in
    *
    * @private
-   * @param {*} version
-   * @param {*} [rerun]
+   * @param {string | number} version
+   * @param {boolean} [rerun]
    * @returns {Promise<void>}
    * @memberof Migration
    */
-  private async execute(version: any, rerun?: any): Promise<void> {
+  private async execute(version: string | number, rerun?: boolean): Promise<void> {
     const self = this;
     const control = await this.getControl(); // Side effect: upserts control document.
     let currentVersion = control.version;
@@ -283,11 +308,11 @@ export class Migration {
         _id: 'control',
         locked: false,
       }, {
-        $set: {
-          locked: true,
-          lockedAt: new Date(),
-        },
-      });
+          $set: {
+            locked: true,
+            lockedAt: new Date(),
+          },
+        });
 
       return null != updateResult.value && 1 === updateResult.ok;
     };
@@ -329,8 +354,8 @@ export class Migration {
     const endIdx = this.findIndexByVersion(version);
 
     // Log.info('startIdx:' + startIdx + ' endIdx:' + endIdx);
-    this.options.logger('info', 'Migrating from version ' + this._list[startIdx].version
-      + ' -> ' + this._list[endIdx].version);
+    this.options.logger('info', 'Migrating from version ' + this.getMigrations()[startIdx].version
+      + ' -> ' + this.getMigrations()[endIdx].version);
 
     if (currentVersion < version) {
       for (let i = startIdx; i < endIdx; i++) {
@@ -413,13 +438,13 @@ export class Migration {
    * Returns the migration index in _list or throws if not found
    *
    * @private
-   * @param {any} version
+   * @param {string | number} version
    * @returns {number}
    * @memberof Migration
    */
-  private findIndexByVersion(version): number {
-    for (let i = 0; i < this._list.length; i++) {
-      if (this._list[i].version === version) {
+  private findIndexByVersion(version: string | number): number {
+    for (let i = 0; i < this.getMigrations().length; i++) {
+      if (this.getMigrations()[i].version === version) {
         return i;
       }
     }
