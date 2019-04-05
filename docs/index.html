@@ -10,17 +10,28 @@
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
 </head>
+<style>
+  .app-name-link img {
+    width: 64px;
+  }
+
+  .sidebar hr {
+    border: 0px;
+    border-top: 1px solid #efefef;
+  }
+</style>
 <body>
   <nav>
     <a href="#/quick-start">Guides</a>
     <a href="#/api">API</a>
     <a href="#/dev-api">Developer API</a>
   </nav>
-  <div id="app">
-  </div>
+  <div id="app"></div>
 </body>
 <script>
   window.$docsify = {
+    loadNavbar: true,
+    logo: 'logo.svg',
     coverpage: true,
     onlyCover: true,
     name: 'Underbase',
