@@ -8,7 +8,11 @@ It is recommended to install `underbase-cli` globally :
 
 ```bash
 npm i underbase-cli -g
-# or
+```
+
+Or...
+
+``` bash
 yarn add underbase-cli
 ```
 
@@ -16,7 +20,11 @@ Verify installation :
 
 ```bash
 underbase-cli --help
-# or
+```
+
+Or...
+
+``` bash
 ./node_modules/underbase-cli/bin/cli.js --help
 ```
 
