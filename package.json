@@ -1,6 +1,6 @@
 {
   "name": "underbase",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "MongoDB schema and data migration library",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -52,7 +52,7 @@
     "@types/bluebird": "3.5.26",
     "bluebird": "3.5.4",
     "lodash": "4.17.11",
-    "mongodb": "3.2.2",
+    "mongodb": "3.2.3",
     "type-check": "0.3.2"
   },
   "jest": {
