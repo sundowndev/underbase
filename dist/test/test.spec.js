@@ -9,6 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const bluebird_1 = require("bluebird");
+const mongodb_1 = require("mongodb");
+const sinon = require("sinon");
 const src_1 = require("../src/");
 const dbURL = process.env.DBURL;
 describe('Migration', () => {
@@ -211,12 +213,29 @@ describe('Migration', () => {
             const locked = yield migrator.isLocked();
             expect(locked).toBe(false);
         }));
-        describe('On Error', () => { });
+        test(`should be locked`, () => __awaiter(this, void 0, void 0, function* () {
+            sinon.stub(mongodb_1.MongoClient.connect.prototype).returns({ findOne: () => true });
+            const locked = yield migrator.isLocked();
+            expect(locked).toBe(true);
+        }));
     });
     describe('#getConfig', () => {
         test('should return config objet', () => {
             const config = migrator.getConfig();
             expect(config).toMatchObject(configObject);
+        });
+    });
+    describe('#getMigrations', () => {
+        test('should return migrations array', () => {
+            const migrations = migrator.getMigrations();
+            migrations.forEach((m) => {
+                expect(m).toHaveProperty('version');
+                expect(m).toHaveProperty('up');
+                if (m.version !== 0) {
+                    expect(m).toHaveProperty('name');
+                    expect(m).toHaveProperty('down');
+                }
+            });
         });
     });
 });

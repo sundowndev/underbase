@@ -3,6 +3,9 @@
 // tslint:disable:no-empty
 
 import { Promise as BlueBirdPromise } from 'bluebird';
+import { Collection, Db, MongoClient } from 'mongodb';
+import * as sinon from 'sinon';
+import { prototype } from 'stack-utils';
 import { Migration } from '../src/';
 
 const dbURL = process.env.DBURL;
@@ -66,7 +69,6 @@ describe('Migration', () => {
     });
 
     migrator.add(migrationsList[2]);
-
   });
 
   afterEach(async () => {
@@ -244,13 +246,16 @@ describe('Migration', () => {
       expect(locked).toBe(false);
     });
 
-    // TODO: test when it's locked
     // test(`should be locked`, async () => {
-    //   const locked = await migrator.isLocked();
-    //   expect(locked).toBe(false);
-    // });
+    //   sinon.stub(Db.prototype.collection).returnsThis({ findOne: () => true });
 
-    describe('On Error', () => { });
+    //   // const stub = sinon.createStubInstance(MongoClient, {
+    //   //   db: sinon.stub().returnsThis(),
+    //   // });
+
+    //   const locked = await migrator.isLocked();
+    //   expect(locked).toBe(true);
+    // });
 
   });
 
@@ -264,15 +269,22 @@ describe('Migration', () => {
 
   });
 
-  // TODO: fix this
-  // describe('#getMigrations', () => {
+  describe('#getMigrations', () => {
 
-  //   test('should return migrations array', () => {
-  //     const migrations = migrator.getMigrations();
+    test('should return migrations array', () => {
+      const migrations = migrator.getMigrations();
 
-  //     expect(migrations).toEqual(migrationsList);
-  //   });
+      migrations.forEach((m) => {
+        expect(m).toHaveProperty('version');
+        expect(m).toHaveProperty('up');
 
-  // });
+        if (m.version !== 0) {
+          expect(m).toHaveProperty('name');
+          expect(m).toHaveProperty('down');
+        }
+      });
+    });
+
+  });
 
 });
