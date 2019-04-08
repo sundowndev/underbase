@@ -1,4 +1,3 @@
-
 // tslint:disable:no-console
 // tslint:disable:no-empty
 
@@ -8,22 +7,31 @@ import * as sinon from 'sinon';
 import { prototype } from 'stack-utils';
 import { Migration } from '../src/';
 
+let dbClient;
+const collectionName = '_migration';
 const dbURL = process.env.DBURL;
 
 describe('Migration', () => {
-
   let migrator: Migration;
   let migrationsList: any[];
   let configObject: any;
 
   beforeAll(async () => {
     try {
+      // sinon.stub(Db.prototype, 'collection').returns(mongoStub as any);
+
+      const client = await MongoClient.connect(dbURL, {
+        useNewUrlParser: true,
+      });
+
+      dbClient = client.db();
+
       configObject = {
         logs: true,
         logIfLatest: true,
-        collectionName: '_migration',
+        collectionName,
         db: dbURL,
-        logger: () => { },
+        logger: () => {},
       };
 
       migrator = new Migration(configObject);
@@ -41,7 +49,7 @@ describe('Migration', () => {
 
     migrationsList.push({
       version: 0,
-      up: () => { },
+      up: () => {},
     });
 
     migrationsList.push({
@@ -76,7 +84,6 @@ describe('Migration', () => {
   });
 
   describe('#migrateTo', () => {
-
     test('1 from 0, should migrate to v1', async () => {
       let currentVersion = await migrator.getVersion();
       expect(currentVersion).toBe(0);
@@ -131,7 +138,6 @@ describe('Migration', () => {
     });
 
     describe('With async(async/await and Promise) up() & down()', () => {
-
       beforeEach(() => {
         migrator.add({
           version: 3,
@@ -154,7 +160,6 @@ describe('Migration', () => {
             return 'done';
           }),
         });
-
       });
 
       test('from 0 to 3, should migrate to v3', async () => {
@@ -172,7 +177,6 @@ describe('Migration', () => {
         currentVersion = await migrator.getVersion();
         expect(currentVersion).toBe(4);
       });
-
     });
 
     describe('On Error', () => {
@@ -180,17 +184,14 @@ describe('Migration', () => {
         migrator.add({
           version: 3,
           name: 'Version 3.',
-          up: async (db) => {
-          },
-          down: async (db) => {
-          },
+          up: async (db) => {},
+          down: async (db) => {},
         });
 
         migrator.add({
           version: 4,
           name: 'Version 4.',
-          up: async (db) => {
-          },
+          up: async (db) => {},
           down: async (db) => {
             throw new Error('Something went wrong');
           },
@@ -202,10 +203,8 @@ describe('Migration', () => {
           up: async (db) => {
             throw new Error('Something went wrong');
           },
-          down: async (db) => {
-          },
+          down: async (db) => {},
         });
-
       });
 
       test('from 0 to 5, should stop migration at v4 due to error from v4 to v5', async () => {
@@ -234,43 +233,46 @@ describe('Migration', () => {
         currentVersion = await migrator.getVersion();
         expect(currentVersion).toBe(4);
       });
-
     });
-
   });
 
   describe('#isLocked', () => {
-
     test(`should be unlocked`, async () => {
       const locked = await migrator.isLocked();
       expect(locked).toBe(false);
     });
 
-    // test(`should be locked`, async () => {
-    //   sinon.stub(Db.prototype.collection).returnsThis({ findOne: () => true });
+    test(`should be locked`, async () => {
+      await dbClient.collection(collectionName).updateOne(
+        {
+          _id: 'control',
+        },
+        {
+          $set: {
+            version: 1,
+            locked: true,
+          },
+        },
+        {
+          upsert: true,
+        },
+      );
 
-    //   // const stub = sinon.createStubInstance(MongoClient, {
-    //   //   db: sinon.stub().returnsThis(),
-    //   // });
+      const locked = await migrator.isLocked();
 
-    //   const locked = await migrator.isLocked();
-    //   expect(locked).toBe(true);
-    // });
-
+      expect(locked).toBe(true);
+    });
   });
 
   describe('#getConfig', () => {
-
     test('should return config objet', () => {
       const config = migrator.getConfig();
 
       expect(config).toMatchObject(configObject);
     });
-
   });
 
   describe('#getMigrations', () => {
-
     test('should return migrations array', () => {
       const migrations = migrator.getMigrations();
 
@@ -284,7 +286,5 @@ describe('Migration', () => {
         }
       });
     });
-
   });
-
 });
