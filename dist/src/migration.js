@@ -20,13 +20,15 @@ class Migration {
             up: () => { },
         };
         this._list = [this.defaultMigration];
-        this.options = opts ? opts : {
-            logs: true,
-            logger: null,
-            logIfLatest: true,
-            collectionName: 'migrations',
-            db: null,
-        };
+        this.options = opts
+            ? opts
+            : {
+                logs: true,
+                logger: null,
+                logIfLatest: true,
+                collectionName: 'migrations',
+                db: null,
+            };
     }
     getConfig() {
         return this.options;
@@ -53,10 +55,10 @@ class Migration {
                 this.options.logger = (level, ...args) => { };
             }
             if (!(this._db instanceof mongodb_1.Db) && !this.options.db) {
-                throw new ReferenceError('Option.db canno\'t be null');
+                throw new ReferenceError("Option.db canno't be null");
             }
             let db;
-            if (typeof (this.options.db) === 'string') {
+            if (typeof this.options.db === 'string') {
                 const client = yield mongodb_1.MongoClient.connect(this.options.db, {
                     promiseLibrary: bluebird_1.Promise,
                     useNewUrlParser: true,
@@ -93,7 +95,9 @@ class Migration {
                 throw new Error('Migration instance has not be configured/initialized.' +
                     ' Call <instance>.config(..) to initialize this instance');
             }
-            if (_.isUndefined(command) || command === '' || this._list.length === 0) {
+            if (_.isUndefined(command) ||
+                command === '' ||
+                this.getMigrations().length === 0) {
                 throw new Error('Cannot migrate using invalid command: ' + command);
             }
             let version;
@@ -110,12 +114,11 @@ class Migration {
                     yield this.execute(_.last(this.getMigrations()).version);
                 }
                 else {
-                    yield this.execute(parseFloat(version), (subcommand === 'rerun'));
+                    yield this.execute(parseFloat(version), subcommand === 'rerun');
                 }
             }
             catch (e) {
-                this.options.
-                    logger('info', `Encountered an error while migrating. Migration failed.`);
+                this.options.logger('info', `Encountered an error while migrating. Migration failed.`);
                 throw e;
             }
         });
@@ -144,7 +147,7 @@ class Migration {
             const control = yield this.getControl();
             let currentVersion = control.version;
             const migrate = (direction, idx) => __awaiter(this, void 0, void 0, function* () {
-                const migration = self._list[idx];
+                const migration = self.getMigrations()[idx];
                 if (typeof migration[direction] !== 'function') {
                     unlock();
                     throw new Error('Cannot migrate ' + direction + ' on version ' + migration.version);
@@ -152,7 +155,11 @@ class Migration {
                 function maybeName() {
                     return migration.name ? ' (' + migration.name + ')' : '';
                 }
-                this.options.logger('info', 'Running ' + direction + '() on version ' + migration.version + maybeName());
+                this.options.logger('info', 'Running ' +
+                    direction +
+                    '() on version ' +
+                    migration.version +
+                    maybeName());
                 yield migration[direction](self._db, migration);
             });
             const lock = () => __awaiter(this, void 0, void 0, function* () {
@@ -197,18 +204,19 @@ class Migration {
             }
             const startIdx = this.findIndexByVersion(currentVersion);
             const endIdx = this.findIndexByVersion(version);
-            this.options.logger('info', 'Migrating from version ' + this.getMigrations()[startIdx].version
-                + ' -> ' + this.getMigrations()[endIdx].version);
+            this.options.logger('info', 'Migrating from version ' +
+                this.getMigrations()[startIdx].version +
+                ' -> ' +
+                this.getMigrations()[endIdx].version);
             if (currentVersion < version) {
                 for (let i = startIdx; i < endIdx; i++) {
                     try {
                         yield migrate('up', i + 1);
-                        currentVersion = self._list[i + 1].version;
+                        currentVersion = self.getMigrations()[i + 1].version;
                         yield updateVersion();
                     }
                     catch (e) {
-                        this.options.
-                            logger('error', `Encountered an error while migrating from ${i} to ${i + 1}`);
+                        this.options.logger('error', `Encountered an error while migrating from ${i} to ${i + 1}`);
                         throw e;
                     }
                 }
@@ -217,12 +225,11 @@ class Migration {
                 for (let i = startIdx; i > endIdx; i--) {
                     try {
                         yield migrate('down', i);
-                        currentVersion = self._list[i - 1].version;
+                        currentVersion = self.getMigrations()[i - 1].version;
                         yield updateVersion();
                     }
                     catch (e) {
-                        this.options.
-                            logger('error', `Encountered an error while migrating from ${i} to ${i - 1}`);
+                        this.options.logger('error', `Encountered an error while migrating from ${i} to ${i - 1}`);
                         throw e;
                     }
                 }
@@ -234,10 +241,11 @@ class Migration {
     getControl() {
         return __awaiter(this, void 0, void 0, function* () {
             const con = yield this._collection.findOne({ _id: 'control' });
-            return con || (yield this.setControl({
-                version: 0,
-                locked: false,
-            }));
+            return (con ||
+                (yield this.setControl({
+                    version: 0,
+                    locked: false,
+                })));
         });
     }
     setControl(control) {
@@ -268,7 +276,7 @@ class Migration {
                 return i;
             }
         }
-        throw new Error('Can\'t find migration version ' + version);
+        throw new Error("Can't find migration version " + version);
     }
 }
 exports.Migration = Migration;

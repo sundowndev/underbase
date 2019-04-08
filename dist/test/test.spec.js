@@ -10,8 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const bluebird_1 = require("bluebird");
 const mongodb_1 = require("mongodb");
-const sinon = require("sinon");
 const src_1 = require("../src/");
+let dbClient;
+const collectionName = '_migration';
 const dbURL = process.env.DBURL;
 describe('Migration', () => {
     let migrator;
@@ -19,10 +20,14 @@ describe('Migration', () => {
     let configObject;
     beforeAll(() => __awaiter(this, void 0, void 0, function* () {
         try {
+            const client = yield mongodb_1.MongoClient.connect(dbURL, {
+                useNewUrlParser: true,
+            });
+            dbClient = client.db();
             configObject = {
                 logs: true,
                 logIfLatest: true,
-                collectionName: '_migration',
+                collectionName,
                 db: dbURL,
                 logger: () => { },
             };
@@ -155,16 +160,13 @@ describe('Migration', () => {
                 migrator.add({
                     version: 3,
                     name: 'Version 3.',
-                    up: (db) => __awaiter(this, void 0, void 0, function* () {
-                    }),
-                    down: (db) => __awaiter(this, void 0, void 0, function* () {
-                    }),
+                    up: (db) => __awaiter(this, void 0, void 0, function* () { }),
+                    down: (db) => __awaiter(this, void 0, void 0, function* () { }),
                 });
                 migrator.add({
                     version: 4,
                     name: 'Version 4.',
-                    up: (db) => __awaiter(this, void 0, void 0, function* () {
-                    }),
+                    up: (db) => __awaiter(this, void 0, void 0, function* () { }),
                     down: (db) => __awaiter(this, void 0, void 0, function* () {
                         throw new Error('Something went wrong');
                     }),
@@ -175,8 +177,7 @@ describe('Migration', () => {
                     up: (db) => __awaiter(this, void 0, void 0, function* () {
                         throw new Error('Something went wrong');
                     }),
-                    down: (db) => __awaiter(this, void 0, void 0, function* () {
-                    }),
+                    down: (db) => __awaiter(this, void 0, void 0, function* () { }),
                 });
             });
             test('from 0 to 5, should stop migration at v4 due to error from v4 to v5', () => __awaiter(this, void 0, void 0, function* () {
@@ -214,7 +215,16 @@ describe('Migration', () => {
             expect(locked).toBe(false);
         }));
         test(`should be locked`, () => __awaiter(this, void 0, void 0, function* () {
-            sinon.stub(mongodb_1.MongoClient.connect.prototype).returns({ findOne: () => true });
+            yield dbClient.collection(collectionName).updateOne({
+                _id: 'control',
+            }, {
+                $set: {
+                    version: 1,
+                    locked: true,
+                },
+            }, {
+                upsert: true,
+            });
             const locked = yield migrator.isLocked();
             expect(locked).toBe(true);
         }));
