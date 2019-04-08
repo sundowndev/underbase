@@ -2,9 +2,8 @@
 // tslint:disable:no-empty
 
 import { Promise as BlueBirdPromise } from 'bluebird';
-import { Collection, Db, MongoClient } from 'mongodb';
-import * as sinon from 'sinon';
-import { prototype } from 'stack-utils';
+import { /*Collection, Db,*/ MongoClient } from 'mongodb';
+// Sinonjs.org - import * as sinon from 'sinon';
 import { Migration } from '../src/';
 
 let dbClient;
