@@ -9,3 +9,4 @@ tsconfig.json
 tslint.json
 docs/
 .travis.yml
+!docs/logo.svg
