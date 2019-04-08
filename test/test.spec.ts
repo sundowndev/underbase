@@ -18,8 +18,6 @@ describe('Migration', () => {
 
   beforeAll(async () => {
     try {
-      // sinon.stub(Db.prototype, 'collection').returns(mongoStub as any);
-
       const client = await MongoClient.connect(dbURL, {
         useNewUrlParser: true,
       });
