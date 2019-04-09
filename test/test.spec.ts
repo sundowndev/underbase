@@ -83,11 +83,11 @@ describe('Migration', () => {
 
   describe('Build', () => {
     test('build file', async () => {
-      const { migrator } = require('../dist/src');
+      const { migratorObj } = require('../dist/src');
 
-      expect(migrator).toHaveProperty('defaultMigration');
-      expect(migrator).toHaveProperty('_list');
-      expect(migrator).toHaveProperty('options');
+      expect(migratorObj).toHaveProperty('defaultMigration');
+      expect(migratorObj).toHaveProperty('_list');
+      expect(migratorObj).toHaveProperty('options');
     });
   });
 
