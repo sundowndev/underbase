@@ -1,11 +1,12 @@
 // tslint:disable:no-var-requires
 // tslint:disable:no-console
 
-import { exec } from 'child_process';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as yargs from 'yargs';
 import { migrator } from '../index';
+import { create } from './backup';
+import { logger } from './utils';
 
 // Enable ES6 module for ES2015
 require = require('esm')(module);
@@ -30,41 +31,6 @@ interface IMigration {
   down: (db: any) => Promise<any> | any;
 }
 
-const logger = (level: string, ...arg: string[]) =>
-  console.log(`[${level}]`, ...arg);
-
-const createBackup = (version: number) =>
-  new Promise((resolve, reject) => {
-    logger('info', 'Creating backup...');
-
-    const host = 'localhost:27017'; // TODO: replace this
-    const database = 'underbase_test'; // TODO: replace this
-
-    const backupFile = [version.toFixed(1), `${Date.now()}.gz`].join('_');
-
-    const cmd = [
-      config.mongodumpBinary,
-      `--host ${host}`,
-      `--archive=${config.backupsDir}/${backupFile}`,
-      `--gzip --db ${database}`,
-    ].join(' ');
-
-    exec(cmd, (error, stdout, stderr) => {
-      if (error) {
-        logger(
-          'error',
-          'An error occured while creating backup... Cancelling.',
-        );
-        console.error(error);
-        process.exit();
-      }
-
-      logger('success', 'Backup created : ' + backupFile);
-
-      return resolve();
-    });
-  });
-
 const argv = yargs
   .scriptName('underbase')
   .usage('Usage: $0 <command> [OPTIONS]')
@@ -72,6 +38,7 @@ const argv = yargs
   // .command('create <migration>', 'Create a new migration')
   .command('list', 'Show all migrations versions')
   .command('status', 'Show migrations status')
+  .command('unlock', 'Unlock migrations state')
   // .command('restore', 'Restore a database backup')
   .describe('db <url>', 'MongoDB connection URL')
   .describe('migrations-dir <dir>', 'Migrations versions directory')
@@ -164,6 +131,8 @@ const config = {
     .readdirSync(config.migrationsDir)
     .filter((v: string) => v.match(new RegExp(/^[\d].[\d]$/))) as string[];
 
+  await migrator.config(config); // Returns a promise
+
   switch (argv._[0]) {
     case 'migrate': {
       const versionsArray = versions.map((v: string) =>
@@ -180,8 +149,6 @@ const config = {
 
       versions = versionsArray.map((v: number) => v.toFixed(1)) as string[];
 
-      await migrator.config(config); // Returns a promise
-
       versions.forEach(async (v: string) => {
         const migrationObj = (await require(`${config.migrationsDir}/${v}`)
           .default) as IMigration;
@@ -192,7 +159,7 @@ const config = {
       if (config.backup) {
         const currentVersion = await migrator.getVersion();
 
-        await createBackup(currentVersion);
+        await create(config.mongodumpBinary, currentVersion, config.backupsDir);
       }
 
       if (argv.rerun) {
@@ -211,11 +178,22 @@ const config = {
       break;
     }
     case 'status': {
-      await migrator.config(config); // Returns a promise
-
       const currentVersion = await migrator.getVersion();
+      const isLocked = (await migrator.isLocked()) ? 'locked' : 'not locked';
 
       logger('info', `Current version is ${currentVersion}`);
+      logger('info', `Migration state is ${isLocked}`);
+
+      break;
+    }
+    case 'unlock': {
+      if (await migrator.isLocked()) {
+        await migrator.unlock(); // Returns a promise
+
+        logger('info', `Migration state unlocked.`);
+      } else {
+        logger('info', `Migration state is already unlocked.`);
+      }
 
       break;
     }
