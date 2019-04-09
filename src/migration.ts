@@ -289,16 +289,13 @@ export class Migration {
    * @returns {Promise<void>}
    * @memberof Migration
    */
-  private async execute(
-    version: string | number,
-    rerun?: boolean,
-  ): Promise<void> {
+  private async execute(version: number, rerun?: boolean): Promise<void> {
     const self = this;
     const control = await this.getControl(); // Side effect: upserts control document.
     let currentVersion = control.version;
 
     // Run the actual migration
-    const migrate = async (direction, idx) => {
+    const migrate = async (direction: string, idx: number) => {
       const migration = self.getMigrations()[idx];
 
       if (typeof migration[direction] !== 'function') {
