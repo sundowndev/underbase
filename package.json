@@ -1,14 +1,13 @@
 {
   "name": "underbase",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "MongoDB schema and data migration library",
   "main": "dist/src/index.js",
-  "typings": "dist/src/index.d.ts",
   "scripts": {
     "docs:serve": "./node_modules/docsify-cli/bin/docsify serve ./docs",
     "lint": "tslint --project .",
-    "build": "tsc",
-    "build:watch": "rm -rf dist && tsc -w",
+    "build": "webpack --mode production --config ./webpack.config.js --progress --color --display-error-details",
+    "build:watch": "rm -rf dist && webpack --mode production --config ./webpack.config.js --watch",
     "docker:start": "npm run build && docker-compose up underbase-dev || true",
     "docker:test": "npm run build && docker-compose up underbase-test || true",
     "docker:down": "docker-compose down",
@@ -30,27 +29,33 @@
   "keywords": [
     "mongo",
     "mongodb",
-    "migration"
+    "migration",
+    "schema"
   ],
   "license": "ISC",
   "engines": {
     "node": ">=7.10.0"
   },
   "devDependencies": {
+    "@types/bluebird": "3.5.26",
     "@types/jest": "24.0.11",
     "@types/lodash": "4.14.123",
     "@types/mongodb": "3.1.22",
     "@types/node": "10.14.4",
     "@types/sinon": "^7.0.11",
+    "@types/type-check": "^0.3.27",
     "docsify-cli": "^4.3.0",
     "jest": "24.5.0",
     "sinon": "^7.3.1",
+    "ts-loader": "^5.3.3",
     "tslint": "5.14.0",
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "6.1.0",
     "typescript": "3.3.1",
     "vrsource-tslint-rules": "6.0.0",
-    "@types/bluebird": "3.5.26"
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
     "bluebird": "3.5.3",
