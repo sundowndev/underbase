@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/logo.svg" width="184" alt="" />
+  <img src="docs/logo.svg" width="164" alt="" />
 </p>
 
 <h1 align="center">Underbase</h1>
