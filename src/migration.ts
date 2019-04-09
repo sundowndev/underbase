@@ -29,6 +29,8 @@ import { Promise as BluebirdPromise } from 'bluebird';
 import * as _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
+import { MongoInterface } from './mongo-interface';
+
 const check = typeCheck;
 
 export type SyslogLevels =
@@ -318,7 +320,7 @@ export class Migration {
           maybeName(),
       );
 
-      await migration[direction](self._db, migration);
+      await migration[direction](new MongoInterface(self._db));
     };
 
     // Returns true if lock was acquired.
