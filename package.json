@@ -3,6 +3,7 @@
   "version": "1.0.5",
   "description": "MongoDB schema and data migration library",
   "main": "dist/src/index.js",
+  "bin": "dist/src/cli.js",
   "scripts": {
     "docs:serve": "./node_modules/docsify-cli/bin/docsify serve ./docs",
     "lint": "tslint --project .",
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@types/bluebird": "3.5.26",
+    "@types/fs-extra": "^5.0.5",
     "@types/jest": "24.0.11",
     "@types/lodash": "4.14.123",
     "@types/mongodb": "3.1.22",
@@ -45,6 +47,7 @@
     "@types/sinon": "^7.0.11",
     "@types/type-check": "^0.3.27",
     "docsify-cli": "^4.3.0",
+    "esm": "^3.2.22",
     "jest": "24.5.0",
     "sinon": "^7.3.1",
     "ts-loader": "^5.3.3",
@@ -55,7 +58,8 @@
     "vrsource-tslint-rules": "6.0.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "yargs": "^13.2.2"
   },
   "dependencies": {
     "bluebird": "3.5.3",
