@@ -3,6 +3,7 @@
 
 import { Promise as BlueBirdPromise } from 'bluebird';
 import { /*Collection, Db,*/ MongoClient } from 'mongodb';
+import * as path from 'path';
 // Sinonjs.org - import * as sinon from 'sinon';
 import { Migration } from '../src/';
 
@@ -78,6 +79,16 @@ describe('Migration', () => {
 
   afterEach(async () => {
     await migrator.reset();
+  });
+
+  describe('Build', () => {
+    test('build file', async () => {
+      const { migrator } = require('../dist/src');
+
+      expect(migrator).toHaveProperty('defaultMigration');
+      expect(migrator).toHaveProperty('_list');
+      expect(migrator).toHaveProperty('options');
+    });
   });
 
   describe('#migrateTo', () => {
