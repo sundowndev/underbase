@@ -145,7 +145,7 @@ export class Migration {
       this.options.logger = (level: string, ...args) => {};
     }
     if (!(this._db instanceof Db) && !this.options.db) {
-      throw new ReferenceError('Option.db canno\'t be null');
+      throw new ReferenceError("Option.db canno't be null");
     }
     let db: string | Db;
     if (typeof this.options.db === 'string') {
@@ -267,8 +267,11 @@ export class Migration {
    *
    * @memberof Migration
    */
-  public unlock(): void {
-    this._collection.updateOne({ _id: 'control' }, { $set: { locked: false } });
+  public async unlock(): Promise<any> {
+    await this._collection.updateOne(
+      { _id: 'control' },
+      { $set: { locked: false } },
+    );
   }
 
   /**
@@ -297,11 +300,11 @@ export class Migration {
     let currentVersion = control.version;
 
     // Run the actual migration
-    const migrate = async (direction: string, idx: number) => {
+    const migrate = async (direction: string, idx: number): Promise<any> => {
       const migration = self.getMigrations()[idx];
 
       if (typeof migration[direction] !== 'function') {
-        unlock();
+        await unlock();
         throw new Error(
           'Cannot migrate ' + direction + ' on version ' + migration.version,
         );
@@ -367,7 +370,7 @@ export class Migration {
 
     if (rerun) {
       this.options.logger('info', 'Rerunning version ' + version);
-      migrate('up', version);
+      await migrate('up', version);
       this.options.logger('info', 'Finished migrating.');
       await unlock();
       return;
@@ -501,6 +504,6 @@ export class Migration {
       }
     }
 
-    throw new Error('Can\'t find migration version ' + version);
+    throw new Error("Can't find migration version " + version);
   }
 }

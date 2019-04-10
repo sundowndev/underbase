@@ -122,7 +122,7 @@ const config = {
     config.logger('info', 'Created migration directory.');
   }
 
-  if (!fs.existsSync(config.backupsDir)) {
+  if (!fs.existsSync(config.backupsDir) && config.backup) {
     fs.mkdirpSync(config.backupsDir);
     config.logger('info', 'Created backup directory.');
   }
