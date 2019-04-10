@@ -7,6 +7,7 @@ import { logger } from './cli/utils';
 export class MongoInterface {
   private collectionName: string;
   private _db: Db;
+  private _collection: Collection;
 
   constructor(db: Db) {
     this._db = db;
@@ -16,20 +17,20 @@ export class MongoInterface {
     return this._db;
   }
 
-  public async cursor(collection: string, query: object, cb: any) {
-    const cursor = this.getClient()
-      .collection(collection)
-      .find(query || {});
+  public async cursor(query: object, cb: any): Promise<any> {
+    const cursor = await this._collection.find(query || {});
 
-    // Iterate over the cursor
-    cursor.forEach(async (doc) => {
-      await cb(doc);
+    await cursor.forEach((doc) => {
+      console.log(doc);
+
+      cb(doc);
     });
   }
 
   public collection(name: string): any {
     const self = this;
     self.collectionName = name;
+    self._collection = self.getClient().collection(name);
 
     const applySchema = (schema: any) => {
       for (const key in schema) {
@@ -61,18 +62,15 @@ export class MongoInterface {
       const execute = () => {
         renameQuery[fieldName] = newFieldName;
 
-        self.cursor(self.collectionName, query || {}, (doc: any) => {
-          self
-            .getClient()
-            .collection(name)
-            .updateOne(
-              {
-                _id: doc._id,
-              },
-              {
-                $rename: renameQuery,
-              },
-            );
+        self.cursor(query, (doc: any) => {
+          self._collection.updateOne(
+            {
+              _id: doc._id,
+            },
+            {
+              $rename: renameQuery,
+            },
+          );
         });
       };
 
@@ -90,12 +88,13 @@ export class MongoInterface {
       const unsetQuery = {};
       let query = {};
 
-      const execute = () => {
-        self.cursor(self.collectionName, query || {}, (doc: any) => {
-          self
-            .getClient()
-            .collection(name)
-            .updateOne(
+      return {
+        where: async (where: any) => {
+          query = where;
+          unsetQuery[fieldName] = 1;
+
+          return await self.cursor(query, (doc: any) => {
+            self._collection.updateOne(
               {
                 _id: doc._id,
               },
@@ -103,15 +102,7 @@ export class MongoInterface {
                 $unset: unsetQuery || {},
               },
             );
-        });
-      };
-
-      return {
-        where: (where: any) => {
-          query = where;
-          unsetQuery[fieldName] = 1;
-
-          return execute();
+          });
         },
       };
     };
