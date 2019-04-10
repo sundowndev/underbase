@@ -9,5 +9,5 @@ export default {
   },
   down: async (db) => {
     await users.down(db);
-  }
+  },
 };

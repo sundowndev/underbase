@@ -1,44 +1,42 @@
 export default {
-  up: (db) =>
-    new Promise((resolve, reject) => {
-      // db.collection('users').drop();
- 
-      // db.collection('users')
-      //   .rename('firstname', 'name')
-      //   .where({});
+  up: async (db) => {
+    db.collection('allo').drop();
 
-      // db.collection('users')
-      //   .unset('isDeleted')
-      //   .where({});
+    db.collection('users')
+      .rename('name', 'firstname')
+      .where({});
 
-      // db.collection('users').applySchema({
-      //   lastname: {
-      //     $delete: {
-      //       $where: { isDeleted: false },
-      //       $limit: 10,
-      //     },
-      //   },
-      //   firstname: {
-      //     $rename: {
-      //       $name: 'name',
-      //       $where: { isDeleted: false },
-      //       $limit: 10,
-      //     },
-      //   },
-      // });
+    await db
+      .collection('users')
+      .unset('dateCreated')
+      .where({});
 
-      // This is the same as...
-      //
-      // db.getClient().collection('users')
-      //   .updateMany(
-      //     {},
-      //     {
-      //       $unset: { isAdmin: 1 },
-      //     }, { multi: true }
-      //   );
+    // db.collection('users').applySchema({
+    //   lastname: {
+    //     $delete: {
+    //       $where: { isDeleted: false },
+    //       $limit: 10,
+    //     },
+    //   },
+    //   firstname: {
+    //     $rename: {
+    //       $name: 'name',
+    //       $where: { isDeleted: false },
+    //       $limit: 10,
+    //     },
+    //   },
+    // });
 
-      return resolve();
-    }),
+    // This is the same as...
+    //
+    // db.getClient().collection('users')
+    //   .updateMany(
+    //     {},
+    //     {
+    //       $unset: { isAdmin: 1 },
+    //     }, { multi: true }
+    //   );
+  },
   down: (db) => {
     db.getClient()
       .collection('users')
