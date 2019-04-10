@@ -7,25 +7,25 @@ First, install the cli app using npm or yarn.
 It is recommended to install `underbase-cli` globally :
 
 ```bash
-npm i underbase-cli -g
+npm i underbase -g
 ```
 
 Or...
 
 ``` bash
-yarn add underbase-cli
+yarn global add underbase
 ```
 
 Verify installation :
 
 ```bash
-underbase-cli --help
+underbase --help
 ```
 
 Or...
 
 ``` bash
-./node_modules/underbase-cli/bin/cli.js --help
+./node_modules/underbase/dist/src/cli.js --help
 ```
 
 It should output this message :
