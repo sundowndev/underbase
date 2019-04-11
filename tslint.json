@@ -38,7 +38,7 @@
     ],
     "arrow-parens": false,
     "ter-arrow-parens": [
-      true,
+      false,
       "as-needed",
       {
         "requireForBlockBody": true
