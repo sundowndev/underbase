@@ -1,33 +1,37 @@
 export default {
   up: async (db) => {
-    db.collection('allo').drop();
+    // db.collection('users').drop();
+
+    // db.collection('users')
+    //   .unset('isDeleted')
+    //   .where({
+    //     isDeleted: {
+    //       $exists: 1,
+    //     },
+    //   });
 
     db.collection('users')
-      .rename('name', 'firstname')
-      .where({});
+      .remove()
+      .where({
+        isDeleted: true,
+      });
 
-    await db
-      .collection('users')
-      .unset('dateCreated')
-      .where({});
+    db.collection('users').applySchema({
+      isDeleted: {
+        $unset: {
+          $where: { isDeleted: { $exists: true } },
+        },
+      },
+      datecreated: {
+        $rename: {
+          $name: 'dateCreated',
+        },
+      },
+    });
 
-    // db.collection('users').applySchema({
-    //   lastname: {
-    //     $delete: {
-    //       $where: { isDeleted: false },
-    //       $limit: 10,
-    //     },
-    //   },
-    //   firstname: {
-    //     $rename: {
-    //       $name: 'name',
-    //       $where: { isDeleted: false },
-    //       $limit: 10,
-    //     },
-    //   },
-    // });
+    await db.save();
 
-    // This is the same as...
+    // You can still use the native client...
     //
     // db.getClient().collection('users')
     //   .updateMany(
@@ -37,15 +41,19 @@ export default {
     //     }, { multi: true }
     //   );
   },
-  down: (db) => {
-    db.getClient()
-      .collection('users')
-      .updateMany(
-        {},
-        {
-          $set: { isAdmin: false },
+  down: async (db) => {
+    db.collection('users')
+      .set('isDeleted', false)
+      .where({
+        isDeleted: {
+          $exists: false,
         },
-        { multi: true },
-      );
+      });
+
+    db.collection('users')
+      .rename('dateCreated', 'datecreated')
+      .where({});
+
+    await db.save();
   },
 };
