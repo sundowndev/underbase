@@ -14,4 +14,5 @@
   - [Continuous integration](/continuous-integration)
 - **API Reference**
   - [API](/api)
+  - [Query interface API](/query-interface-api)
   - [Developer API](/dev-api)

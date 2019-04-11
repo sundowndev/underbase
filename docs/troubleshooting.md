@@ -13,3 +13,9 @@ async (/* ... */) => {
   await migrator.unlock();
 }
 ```
+
+You can also do it from the command-line :
+
+``` bash
+underbase unlock
+```
