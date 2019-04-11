@@ -4,6 +4,16 @@
 import { Collection, Db } from 'mongodb';
 import { logger } from './cli/utils';
 
+interface ICollection {
+  applySchema: (schema: any) => any;
+  rename: (fieldName: string, newFieldName: string) => any;
+  unset: (fieldName: string) => any;
+  set: (fieldName: string, newFieldName: string) => any;
+  drop: () => any;
+  iterate: (query: any, cb: any) => any;
+  remove: () => any;
+}
+
 export class MongoInterface {
   public cursorOptions: any;
 
@@ -27,35 +37,7 @@ export class MongoInterface {
     return this._db;
   }
 
-  public async cursor(query: object, cb: any): Promise<any> {
-    const action = new Promise(async (resolve, reject) => {
-      const cursor = await this._collection.aggregate(
-        [
-          {
-            $match: query || {},
-          },
-        ],
-        this.cursorOptions,
-        null,
-      );
-
-      cursor.on('data', (doc) => {
-        cb(doc);
-      });
-
-      cursor.on('close', () => {
-        return reject('MongoDB closed the connection');
-      });
-
-      cursor.on('end', () => {
-        return resolve();
-      });
-    });
-
-    this._actions.push(action);
-  }
-
-  public collection(name: string): any {
+  public collection(name: string): ICollection {
     const self = this;
     self.collectionName = name;
     self._collection = self.getClient().collection(name);
@@ -160,10 +142,48 @@ export class MongoInterface {
       this._actions.push(action);
     };
 
-    return { applySchema, rename, drop, unset, set, remove };
+    const iterate = (where: any, cb: any): any => {
+      _where = where || {};
+
+      return self.cursor(_where, cb);
+    };
+
+    return { applySchema, rename, unset, set, remove, drop, iterate };
   }
 
-  public save(): Promise<any> {
-    return Promise.all(this._actions).catch((error) => new Error(error));
+  public async save(): Promise<any> {
+    try {
+      return Promise.all(this._actions);
+    } catch (error) {
+      return new Error(error);
+    }
+  }
+
+  private async cursor(query: object, cb: any): Promise<any> {
+    const action = new Promise(async (resolve, reject) => {
+      const cursor = await this._collection.aggregate(
+        [
+          {
+            $match: query || {},
+          },
+        ],
+        this.cursorOptions,
+        null,
+      );
+
+      cursor.on('data', (doc) => {
+        cb(doc);
+      });
+
+      cursor.on('close', () => {
+        return reject('MongoDB closed the connection');
+      });
+
+      cursor.on('end', () => {
+        return resolve();
+      });
+    });
+
+    this._actions.push(action);
   }
 }
