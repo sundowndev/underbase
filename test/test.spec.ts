@@ -5,7 +5,7 @@ import { Promise as BlueBirdPromise } from 'bluebird';
 import { /*Collection, Db,*/ MongoClient } from 'mongodb';
 import * as path from 'path';
 // Sinonjs.org - import * as sinon from 'sinon';
-import { Migration } from '../src/';
+import { Migration } from '../src';
 
 let dbClient;
 const collectionName = '_migration';
