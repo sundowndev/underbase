@@ -5,12 +5,22 @@ import { Collection, Db } from 'mongodb';
 import { logger } from './cli/utils';
 
 export class MongoInterface {
+  public cursorOptions: any;
+
   private collectionName: string;
   private _db: Db;
   private _collection: Collection;
+  private _actions: any[];
 
   constructor(db: Db) {
     this._db = db;
+    this._actions = [];
+    this.cursorOptions = {
+      cursor: {
+        batchSize: 500,
+      },
+      allowDiskUse: true,
+    };
   }
 
   public getClient(): Db {
@@ -18,13 +28,31 @@ export class MongoInterface {
   }
 
   public async cursor(query: object, cb: any): Promise<any> {
-    const cursor = await this._collection.find(query || {});
+    const action = new Promise(async (resolve, reject) => {
+      const cursor = await this._collection.aggregate(
+        [
+          {
+            $match: query || {},
+          },
+        ],
+        this.cursorOptions,
+        null,
+      );
 
-    await cursor.forEach((doc) => {
-      console.log(doc);
+      cursor.on('data', (doc) => {
+        cb(doc);
+      });
 
-      cb(doc);
+      cursor.on('close', () => {
+        return reject('MongoDB closed the connection');
+      });
+
+      cursor.on('end', () => {
+        return resolve();
+      });
     });
+
+    this._actions.push(action);
   }
 
   public collection(name: string): any {
@@ -32,52 +60,44 @@ export class MongoInterface {
     self.collectionName = name;
     self._collection = self.getClient().collection(name);
 
+    let _updateQuery = {};
+    let _where = {};
+
+    const execute = () => {
+      return self.cursor(_where || {}, (doc: any) => {
+        self._collection.updateOne(
+          {
+            _id: doc._id,
+          },
+          _updateQuery,
+        );
+      });
+    };
+
     const applySchema = (schema: any) => {
-      for (const key in schema) {
-        for (const action in schema[key]) {
-          switch (action) {
-            case '$delete': {
-              console.log(
-                `delete field ${key} where`,
-                schema[key][action].$where || {},
-              );
-              break;
-            }
-            case '$rename': {
-              console.log(
-                `rename field ${key} to ${schema[key][action].$name} where`,
-                schema[key][action].$where || {},
-              );
-              break;
-            }
-          }
+      for (const field in schema) {
+        for (const action in schema[field]) {
+          _where = schema[field][action].$where || {};
+          _updateQuery[action] = {};
+          _updateQuery[action][field] =
+            action === '$rename' ? schema[field][action].$name : 1;
+
+          execute();
         }
       }
     };
 
     const rename = (fieldName: string, newFieldName: string): any => {
       const renameQuery = {};
-      let query = {};
-
-      const execute = () => {
-        renameQuery[fieldName] = newFieldName;
-
-        self.cursor(query, (doc: any) => {
-          self._collection.updateOne(
-            {
-              _id: doc._id,
-            },
-            {
-              $rename: renameQuery,
-            },
-          );
-        });
-      };
 
       return {
         where: (where: any) => {
-          query = where;
-          renameQuery[fieldName] = 1;
+          _where = where || {};
+          renameQuery[fieldName] = newFieldName;
+
+          _updateQuery = {
+            $rename: renameQuery,
+          };
 
           return execute();
         },
@@ -86,33 +106,64 @@ export class MongoInterface {
 
     const unset = (fieldName: string): any => {
       const unsetQuery = {};
-      let query = {};
 
       return {
-        where: async (where: any) => {
-          query = where;
+        where: (where: any) => {
           unsetQuery[fieldName] = 1;
+          _where = where || {};
+          _updateQuery = {
+            $unset: unsetQuery || {},
+          };
 
-          return await self.cursor(query, (doc: any) => {
-            self._collection.updateOne(
-              {
-                _id: doc._id,
-              },
-              {
-                $unset: unsetQuery || {},
-              },
-            );
+          return execute();
+        },
+      };
+    };
+
+    const set = (fieldName: string, value: string | boolean | number): any => {
+      const setQuery = {};
+
+      return {
+        where: (where: any) => {
+          setQuery[fieldName] = value;
+          _where = where || {};
+          _updateQuery = {
+            $set: setQuery || {},
+          };
+
+          return execute();
+        },
+      };
+    };
+
+    const remove = (): any => {
+      return {
+        where: (where: any) => {
+          _where = where || {};
+
+          return self.cursor(_where, (doc: any) => {
+            self._collection.deleteOne({
+              _id: doc._id,
+            });
           });
         },
       };
     };
 
-    const drop = async (): Promise<any> => {
-      await self.getClient().dropCollection(name, (err, affect) => null);
+    const drop = (): any => {
+      const action = new Promise(async (resolve, reject) => {
+        await self.getClient().dropCollection(name, (err, affect) => resolve());
 
-      logger('info', 'Deleted collection ' + name);
+        logger('info', 'Deleted collection ' + name);
+      });
+
+      this._actions.push(action);
     };
 
-    return { applySchema, rename, drop, unset };
+    return { applySchema, rename, drop, unset, set, remove };
+  }
+
+  public save(): Promise<any> {
+    return Promise.all(this._actions).catch((error) => new Error(error));
   }
 }
