@@ -1,15 +1,5 @@
 export default {
   up: async (db) => {
-    // db.collection('users').drop();
-
-    // db.collection('users')
-    //   .unset('isDeleted')
-    //   .where({
-    //     isDeleted: {
-    //       $exists: 1,
-    //     },
-    //   });
-
     db.collection('users')
       .remove()
       .where({
@@ -37,7 +27,7 @@ export default {
     //   .updateMany(
     //     {},
     //     {
-    //       $unset: { isAdmin: 1 },
+    //       $unset: { isDeleted: 1 },
     //     }, { multi: true }
     //   );
   },
