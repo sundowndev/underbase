@@ -145,7 +145,7 @@ export class Migration {
       this.options.logger = (level: string, ...args) => {};
     }
     if (!(this._db instanceof Db) && !this.options.db) {
-      throw new ReferenceError("Option.db canno't be null");
+      throw new ReferenceError('Option.db canno\'t be null');
     }
     let db: string | Db;
     if (typeof this.options.db === 'string') {
@@ -504,6 +504,6 @@ export class Migration {
       }
     }
 
-    throw new Error("Can't find migration version " + version);
+    throw new Error('Can\'t find migration version ' + version);
   }
 }
