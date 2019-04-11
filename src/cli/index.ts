@@ -39,7 +39,7 @@ const argv = yargs
   .command('list', 'Show all migrations versions')
   .command('status', 'Show migrations status')
   .command('unlock', 'Unlock migrations state')
-  // .command('restore', 'Restore a database backup')
+  // .command('restore', 'Restore a backup archive')
   .describe('db <url>', 'MongoDB connection URL')
   .describe('migrations-dir <dir>', 'Migrations versions directory')
   .describe('backup', 'Enable automatic backups')
