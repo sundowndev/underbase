@@ -4,42 +4,42 @@
 
 First, install the cli app using npm or yarn.
 
-It is recommended to install `underbase-cli` globally :
+It is recommended to install `underbase` globally :
 
 ```bash
-npm i underbase-cli -g
+npm i underbase -g
 ```
 
 Or...
 
 ``` bash
-yarn add underbase-cli
+yarn global add underbase
 ```
 
 Verify installation :
 
 ```bash
-underbase-cli --help
+underbase --help
 ```
 
 Or...
 
 ``` bash
-./node_modules/underbase-cli/bin/cli.js --help
+./node_modules/underbase/dist/src/cli.js --help
 ```
 
 It should output this message :
 
 ```bash
-Usage: underbase-cli <command> [OPTIONS]
+Usage: underbase <command> [OPTIONS]
 
 Commands:
-  underbase-cli migrate <migration>  Execute migrations
-  underbase-cli list                 Show all migrations versions
-  underbase-cli status               Show migrations status
+  underbase migrate <migration>  Execute migrations
+  underbase list                 Show all migrations versions
+  underbase status               Show migrations status
 
 Options:
-  --version                 Show underbase-cli package version         [boolean]
+  --version                 Show underbase package version         [boolean]
   --db <url>                MongoDB connection URL
   --migrations-dir <dir>    Migrations versions directory
   --backup                  Enable automatic backups
@@ -54,7 +54,7 @@ Options:
 Create your first migration : 
 
 ```
-underbase-cli create 1.0
+underbase create 1.0
 ```
 
 This will create a directory `migrations` and initialize the first version with a example migration.
