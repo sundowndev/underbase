@@ -52,8 +52,8 @@ export interface IMigrationOptions {
 export interface IMigration {
   version: number;
   name: string;
-  up: (db: Db) => Promise<any> | any;
-  down: (db: Db) => Promise<any> | any;
+  up: (db: MongoInterface) => Promise<any> | any;
+  down: (db: MongoInterface) => Promise<any> | any;
 }
 
 export class Migration {
