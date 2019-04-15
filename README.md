@@ -21,11 +21,6 @@
   </a>
 </div>
 
-## Links
-
-- [Documentation](https://sundowndev.github.io/underbase/)
-- [CLI app](https://github.com/sundowndev/underbase-cli)
-
 ## Goals
 
 - Multi database support
@@ -36,9 +31,24 @@
 - Provide MongoDB query interface
 - Minimal performance cost for big databases
 
-## Quick start
+## Table of content
 
-Look at [this tutorial](https://sundowndev.github.io/underbase/#/quick-start)
+- Getting started
+  - [Introduction](https://sundowndev.github.io/underbase/#/intro)
+  - [Quick start](https://sundowndev.github.io/underbase/#/quick-start)
+  - [Configuration](https://sundowndev.github.io/underbase/#/configuration)
+  - [Logging](https://sundowndev.github.io/underbase/#/logging)
+  - [Advanced](https://sundowndev.github.io/underbase/#/advanced)
+  - [Troubleshooting](https://sundowndev.github.io/underbase/#/troubleshooting)
+- Guides
+  - [Organizing migrations](https://sundowndev.github.io/underbase/#/organize)
+  - [Working with backups](https://sundowndev.github.io/underbase/#/working-with-backups)
+  - [Migrating with frameworks](https://sundowndev.github.io/underbase/#/migrating-with-frameworks)
+  - [Continuous integration](https://sundowndev.github.io/underbase/#/continuous-integration)
+- API Reference
+  - [API](https://sundowndev.github.io/underbase/#/api)
+  - [Query interface API](https://sundowndev.github.io/underbase/#/query-interface-api)
+  - [Developer API](https://sundowndev.github.io/underbase/#/dev-api)
 
 ## Contributing
 
@@ -54,4 +64,4 @@ This repository is a fork of [emmanuelbuah/mgdb-migrator](https://github.com/emm
 
 This fork was created in order to provide a CLI program to interact with the library's API and add some features such as automatic backups and MongoDB query interface.
 
-Icon was made by [Fabiana Antonioli](https://thenounproject.com/FafiAC) on [thenounproject](https://thenounproject.com/search/?q=prism&i=2263153).
+Icon was made by [Fabiana Antonioli](https://thenounproject.com/FafiAC) and published on [thenounproject](https://thenounproject.com/search/?q=prism&i=2263153).
