@@ -175,8 +175,6 @@ db.collection('users').iterate(
   },
   (doc) => {
     doc.fullname = `${doc.lastname} ${doc.firstname}`;
-    delete doc.firstname;
-    delete doc.lastname;
 
     db.getClient()
       .collection('users')
