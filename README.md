@@ -4,7 +4,7 @@
 
 <h1 align="center">Underbase</h1>
 
-<p align="center">MongoDB schema and data migration library.</p>
+<p align="center">MongoDB schema and data migration library. Check out <a href="https://sundowndev.github.io/underbase">documentation</a>.</p>
 
 <div align="center">
   <a href="https://travis-ci.org/sundowndev/underbase">
