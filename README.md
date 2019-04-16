@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/logo.svg" width="164" alt="" />
+  <img src="docs/logo.svg" width="128" alt="" />
 </p>
 
 <h1 align="center">Underbase</h1>
@@ -29,7 +29,7 @@
 - Backup restoration
 - Flexible & easy to configure
 - Provide MongoDB query interface
-- Minimal performance cost for big databases
+- Handle scalable environments
 
 ## Table of content
 
