@@ -8,7 +8,7 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
 - Create [documentation](https://sundowndev.github.io/underbase/) using Docsify
 - Init CLI app
 
-### `v1.0.0`
+### `v1.0.0rc1`
 
 - Refactor TS types
 - Improve unit tests (to fit with new features)
@@ -20,15 +20,20 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
 - Rename `log` config option to `logs` to fit with CLI usage
 - Improve CLI app
   - Backup feature
-  - Create command
 - Implement MongoDB query interface (#15)
 
-### `v1.1.0`
+### `v1.0.0rc2`
 
-- Create a license file
 - Improve documentation with better migration process explanation & guides
   - Organizing migrations
   - Working with backups
   - Migrating with frameworks
   - Continuous integration
+- Improve CLI app
+  - Create command
+  - Template option
+
+### `v1.0.0`
+
+- Create a license file
 - Display a warning when migration up/down function is not an asyc function ([mgdb-migrator/issue#5](https://github.com/emmanuelbuah/mgdb-migrator/issues/5))
