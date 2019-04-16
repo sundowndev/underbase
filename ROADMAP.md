@@ -29,11 +29,12 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
   - Working with backups
   - Migrating with frameworks
   - Continuous integration
-- Improve CLI app
-  - Create command
-  - Template option
 
 ### `v1.0.0`
 
+- Improve CLI app
+  - Create command
+  - Template option
+  - `--history` option to save migration history into a .log file
 - Create a license file
 - Display a warning when migration up/down function is not an asyc function ([mgdb-migrator/issue#5](https://github.com/emmanuelbuah/mgdb-migrator/issues/5))
