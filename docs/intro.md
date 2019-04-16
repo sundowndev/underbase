@@ -4,13 +4,11 @@ MongoDB schema migrations done right. Underbase is an abstract framework for wri
 
 ## Goals
 
-- Multi database support
 - Migration versioning
+- Multiple MongoDB databases support
 - Automatic and incremental backups
-- Backup restoration
-- Flexible & easy to configure
 - Provide MongoDB query interface
-- Minimal performance cost for big databases
+- Handle scalable environments
 
 ## Contributing
 
