@@ -56,6 +56,10 @@
 - Push to the branch: git push origin feature/my-new-feature
 - Submit a pull request
 
+## Roadmap
+
+See [ROADMAP.md](ROADMAP.md)
+
 ## Credits
 
 This repository is a fork of [emmanuelbuah/mgdb-migrator](https://github.com/emmanuelbuah/mgdb-migrator), which is a generic mongodb migration library based on [percolatestudio/meteor-migrations](https://github.com/percolatestudio/meteor-migrations).
