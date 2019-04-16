@@ -26,11 +26,9 @@
 - Migration versioning
 - Multiple MongoDB databases support
 - Automatic and incremental backups
-<!-- - Backup restoration
-- Flexible & easy to configure -->
 - Provide MongoDB query interface
 - Handle scalable environments
-
+<!-- - Backup restoration- Flexible & easy to configure -->
 ## Table of content
 
 - Getting started
