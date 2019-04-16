@@ -23,7 +23,7 @@
 
 ### `cursorOptions`
 
-MongoDB aggregator cursor options.
+MongoDB aggregator cursor options. See [MongoDB API reference](http://mongodb.github.io/node-mongodb-native/3.2/api/Collection.html#aggregate).
 
 The default value is :
 
@@ -54,7 +54,9 @@ Get the MongoDB client instance object.
 Example :
 
 ```javascript
-db.getClient().findMany({});
+db.getClient().collection('users').findMany({
+  isDeleted: false,
+});
 ```
 
 ### `collection()`
@@ -205,5 +207,5 @@ Example :
 //   .rename('dateCreated', 'datecreated')
 //   .where({});
 
-db.save();
+await db.save();
 ```
