@@ -60,6 +60,16 @@
 
 See [ROADMAP.md](ROADMAP.md)
 
+## Support
+
+If you like this project and would like to support my work, please consider supporting me on Patreon 👍 Thank you!
+
+<p>
+  <a href="https://www.patreon.com/sundowndev">
+    <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+  </a>
+</p>
+
 ## Credits
 
 This repository is a fork of [emmanuelbuah/mgdb-migrator](https://github.com/emmanuelbuah/mgdb-migrator), which is a generic mongodb migration library based on [percolatestudio/meteor-migrations](https://github.com/percolatestudio/meteor-migrations).
