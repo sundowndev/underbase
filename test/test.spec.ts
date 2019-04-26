@@ -64,7 +64,7 @@ describe('Migration', () => {
     migrator.add(migrationsList[1]);
 
     migrationsList.push({
-      version: 2,
+      version: 2.0,
       name: 'Version 2',
       up: (db) => {
         return 'done';
@@ -83,7 +83,7 @@ describe('Migration', () => {
 
   describe('Build', () => {
     test('build file', async () => {
-      const { migratorObj } = require('../dist/src');
+      const migratorObj = require('../dist/src').migrator;
 
       expect(migratorObj).toHaveProperty('defaultMigration');
       expect(migratorObj).toHaveProperty('_list');
@@ -95,7 +95,7 @@ describe('Migration', () => {
     test('1 from 0, should migrate to v1', async () => {
       let currentVersion = await migrator.getVersion();
       expect(currentVersion).toBe(0);
-      await migrator.migrateTo(1);
+      await migrator.migrateTo(1.0);
       currentVersion = await migrator.getVersion();
       expect(currentVersion).toBe(1);
     });
@@ -148,7 +148,7 @@ describe('Migration', () => {
     describe('With async(async/await and Promise) up() & down()', () => {
       beforeEach(() => {
         migrator.add({
-          version: 3,
+          version: 3.0,
           name: 'Version 3.',
           up: async (db) => {
             return 'done';
@@ -173,7 +173,7 @@ describe('Migration', () => {
       test('from 0 to 3, should migrate to v3', async () => {
         let currentVersion = await migrator.getVersion();
         expect(currentVersion).toBe(0);
-        await migrator.migrateTo(3);
+        await migrator.migrateTo(3.0);
         currentVersion = await migrator.getVersion();
         expect(currentVersion).toBe(3);
       });
@@ -181,7 +181,7 @@ describe('Migration', () => {
       test('from 0 to 4, should migrate to v4', async () => {
         let currentVersion = await migrator.getVersion();
         expect(currentVersion).toBe(0);
-        await migrator.migrateTo(4);
+        await migrator.migrateTo('4.0');
         currentVersion = await migrator.getVersion();
         expect(currentVersion).toBe(4);
       });
@@ -295,4 +295,19 @@ describe('Migration', () => {
       });
     });
   });
+
+  // describe('MongoDB query interface', () => {
+  //   test('#rename', () => {
+  //     migrator.add({
+  //       version: 5,
+  //       name: 'Version 5.',
+  //       up: async (db) => {
+  //         db.collection('users')
+  //           .rename('dateCreated', 'datecreated')
+  //           .where({});
+  //       },
+  //       down: async (db) => {},
+  //     });
+  //   });
+  // });
 });
