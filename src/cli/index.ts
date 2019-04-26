@@ -40,18 +40,19 @@ const argv = yargs
   .command('status', 'Show migrations status')
   .command('unlock', 'Unlock migrations state')
   // .command('restore', 'Restore a backup archive')
+  .describe('config <path>', 'JSON configuration file path')
   .describe('db <url>', 'MongoDB connection URL')
-  .describe('migrations-dir <dir>', 'Migrations versions directory')
+  .describe('migrations-dir <path>', 'Migrations versions directory')
   .describe('backup', 'Enable automatic backups')
-  .describe('backups-dir <dir>', 'Backups directory')
+  .describe('backups-dir <path>', 'Backups directory')
   .describe('collection-name <name>', 'Migrations state collection')
   .describe('logs', 'Enable logs')
   .describe('rerun', 'Force migrations execution')
-  .describe('chdir <dir>', 'Change the working directory')
+  .describe('chdir <path>', 'Change the working directory')
   .describe('version', 'Show package version')
   // .describe('template <file>', 'Template to use for new migration')
   .describe(
-    'mongodumpBinary <bin>',
+    'mongodumpBinary <path>',
     'Binary file for mongodump (it can be a docker exec command)',
   )
   .help('h', 'Show this help message')
