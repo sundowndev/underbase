@@ -37,17 +37,21 @@ Commands:
   underbase migrate <migration>  Execute migrations
   underbase list                 Show all migrations versions
   underbase status               Show migrations status
+  underbase unlock               Unlock migrations state
 
 Options:
-  --version                 Show underbase package version         [boolean]
+  --version                 Show package version                       [boolean]
+  --config <path>           JSON configuration file path
   --db <url>                MongoDB connection URL
-  --migrations-dir <dir>    Migrations versions directory
+  --migrations-dir <path>   Migrations versions directory
   --backup                  Enable automatic backups
-  --backups-dir <dir>       Backups directory
+  --backups-dir <path>      Backups directory
   --collection-name <name>  Migrations state collection
   --logs                    Enable logs
   --rerun                   Force migrations execution
-  --chdir <dir>             Change the working directory
+  --chdir <path>            Change the working directory
+  --mongodumpBinary <path>  Binary file for mongodump (it can be a docker exec
+                            command)
   -h, --help                Show this help message                     [boolean]
 ```
 
@@ -160,6 +164,8 @@ migrator.config({
 ```
 
 ### Using ES6
+
+**Note:** using the CLI app will automatically execute migrations files as ES6 modules. You don't need babel.
 
 ```js
 import { migrator } from 'underbase';

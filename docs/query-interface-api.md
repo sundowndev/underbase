@@ -198,7 +198,7 @@ db.collection('users').iterate(
 
 ### `save()`
 
-Saves changes written to the collection. You always need to call this to save your changes. Returns a promise.
+Saves changes written to the collection. You always need to call this to persist your changes. Returns a promise.
 
 Example :
 
