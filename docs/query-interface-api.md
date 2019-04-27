@@ -77,10 +77,8 @@ Example :
 
 ```javascript
 db.collection('users').applySchema({
-  isDeleted: {
-    // Field
-    $unset: {
-      // MongoDB operation
+  isDeleted: { // Field
+    $unset: { // MongoDB operation
       $where: { isDeleted: { $exists: true } }, // Query selector
     },
   },
@@ -171,27 +169,18 @@ Example :
 // db.collection('users').iterate(query, callback);
 db.collection('users').iterate(
   {
-    fullname: {
-      $exists: false,
-    },
+    fullname: { $exists: false },
   },
   (doc) => {
     doc.fullname = `${doc.lastname} ${doc.firstname}`;
 
-    db.getClient()
-      .collection('users')
-      .updateOne(
-        { _id: doc._id },
-        {
-          $set: {
-            fullname: doc.fullname,
-          },
-          $unset: {
-            firstname: 1,
-            lastname: 1,
-          },
-        },
-      );
+    db.collection('users')
+      .set('fullname', doc.fullname)
+      .where({ _id: doc._id });
+
+    db.collection('users')
+      .unset(['firstname', 'lastname'])
+      .where({ _id: doc._id });
   },
 );
 ```
