@@ -4,8 +4,8 @@ services:
   - docker
 
 node_js:
-  - "7"
   - "8"
+  - "10"
 
 before_script:
   - npm install
