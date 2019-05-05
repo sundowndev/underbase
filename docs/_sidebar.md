@@ -4,7 +4,7 @@
   - [Introduction](/intro)
   - [Quick start](/quick-start)
   - [Configuration](/configuration)
-  <!-- - [Logging](/logging) -->
+  - [Logging](/logging)
   - [Advanced](/advanced)
   - [Troubleshooting](/troubleshooting)
 - **Guides**
