@@ -2,12 +2,12 @@
 // tslint:disable:no-empty
 
 import { Promise as BlueBirdPromise } from 'bluebird';
-import { /*Collection, Db,*/ MongoClient } from 'mongodb';
+import { Collection, Db, MongoClient } from 'mongodb';
 import * as path from 'path';
 // Sinonjs.org - import * as sinon from 'sinon';
 import { Migration } from '../src';
 
-let dbClient;
+let dbClient: Db;
 const collectionName = '_migration';
 const dbURL = process.env.DBURL;
 
@@ -83,7 +83,7 @@ describe('Migration', () => {
 
   describe('Build', () => {
     test('build file', async () => {
-      const migratorObj = require('../dist/src').migrator;
+      const migratorObj = require('../dist/src/index.js').migrator;
 
       expect(migratorObj).toHaveProperty('defaultMigration');
       expect(migratorObj).toHaveProperty('_list');
