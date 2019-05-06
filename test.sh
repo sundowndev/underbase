@@ -11,17 +11,19 @@ echo "// ========= Env variables"
 echo "// ENVIRONMENT: $NODE_ENV"
 echo "////////////////////////////////////////"
 
-case $NODE_ENV in
-    test)
-        echo 'TEST ENVIRONMENT'
-        exec npm run docker:test && npm run docker:down
-        ;;
+# case $NODE_ENV in
+#     test)
+#         echo 'TEST ENVIRONMENT'
+#         exec npm run docker:test && npm run docker:down
+#         ;;
 
-    *)
-        echo 'DEVELOPMENT ENVIRONMENT'
-        exec npm run docker:start && npm run docker:down
-        ;;
-esac
+#     *)
+#         echo 'DEVELOPMENT ENVIRONMENT'
+#         exec npm run docker:start && npm run docker:down
+#         ;;
+# esac
 
-echo "BUG: UNREACHABLE!"
-exit 1
+echo 'DEVELOPMENT ENVIRONMENT'
+exec npm run docker:test
+
+exit $(docker inspect $(docker ps --filter name='underbase' --last 1 -q) --format='{{.State.ExitCode}}')
