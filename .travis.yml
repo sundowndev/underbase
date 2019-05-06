@@ -11,5 +11,6 @@ before_script:
   - npm install
 script:
   - npm run lint
-  - npm run docker:test
-  - npm run docker:down
+  - bash ./test.sh
+  # - npm run docker:test
+  # - npm run docker:down
