@@ -47,14 +47,14 @@ db.cursorOptions = {
 };
 ```
 
-### `getClient()`
+### `getDb()`
 
-Get the MongoDB client instance object.
+Returns the MongoDB database instance object.
 
 Example :
 
 ```javascript
-db.getClient().collection('users').findMany({
+db.getDb().collection('users').findMany({
   isDeleted: false,
 });
 ```
@@ -89,6 +89,18 @@ db.collection('users').applySchema({
   },
 });
 ```
+
+This method support every MongoDB operators :
+
+- $set
+- $unset
+- $currentDate
+- $inc
+- $min
+- $max
+- $mul
+- $rename
+- $setOnInsert
 
 #### `rename()`
 
