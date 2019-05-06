@@ -90,7 +90,7 @@ db.collection('users').applySchema({
 });
 ```
 
-This method support every MongoDB operators :
+This method support every [MongoDB operators](https://docs.mongodb.com/manual/reference/operator/update-field/) :
 
 - $set
 - $unset
