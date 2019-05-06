@@ -17,6 +17,14 @@ jobs:
       - run:
          name: Installation
          command: npm install
+         
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
       - run:
          name: Build
          command: npm run build
