@@ -1,6 +1,6 @@
 # Organizing migrations
 
-Organizing your migrations workflow is quite easy using configuration files and versionned folders. For example, the CLI consider this following structure by default :
+Organizing your migrations workflow is quite easy using configuration files and versionned folders. For example, the CLI consider the following structure by default :
 
 ```
 migrations
@@ -21,7 +21,7 @@ migrations
 └── api.json <-- configuration file
 ```
 
-The index file for each migration version is intended to register the version and execute all migrations. This allows you to choose the execution order and add some middlewares between migrations.
+The index file for each migration version is intended to register the version and execute all migrations. This allows you to choose the execution order and add some actions between migrations.
 
 ```js
 // Import collections mirgations
