@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 
 # Show debug info if requested.
 [ -n "$DEBUG_STARTUP" ] && set -x
@@ -14,13 +13,13 @@ echo "////////////////////////////////////////"
 
 case $NODE_ENV in
     test)
-        alert 'TEST ENVIRONMENT'
-        exec npm test
+        echo 'TEST ENVIRONMENT'
+        exec npm run docker:test && npm run docker:down
         ;;
 
     *)
-        alert 'DEVELOPMENT ENVIRONMENT'
-        exec npm start
+        echo 'DEVELOPMENT ENVIRONMENT'
+        exec npm run docker:start && npm run docker:down
         ;;
 esac
 
