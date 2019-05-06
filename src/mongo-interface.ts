@@ -7,7 +7,7 @@ import { logger } from './cli/utils';
 interface ICollection {
   applySchema: (schema: any) => any;
   rename: (fieldName: string, newFieldName: string) => any;
-  unset: (fieldName: string) => any;
+  unset: (fieldName: string | string[]) => any;
   set: (fieldName: string, newFieldName: string) => any;
   drop: () => any;
   iterate: (query: any, cb: any) => any;
@@ -86,12 +86,23 @@ export class MongoInterface {
       };
     };
 
-    const unset = (fieldName: string): any => {
+    const unset = (fieldName: string | string[]): any => {
       const unsetQuery = {};
 
       return {
         where: (where: any) => {
-          unsetQuery[fieldName] = 1;
+          if (typeof fieldName === 'string') {
+            unsetQuery[fieldName as string] = 1;
+          } else if (Array.isArray(fieldName)) {
+            for (const field of fieldName) {
+              unsetQuery[field] = 1;
+            }
+          } else {
+            throw new Error(
+              'Field name in .unset() must of type string or array.',
+            );
+          }
+
           _where = where || {};
           _updateQuery = {
             $unset: unsetQuery || {},
