@@ -33,14 +33,14 @@ export class MongoInterface {
     };
   }
 
-  public getClient(): Db {
+  public getDb(): Db {
     return this._db;
   }
 
   public collection(name: string): ICollection {
     const self = this;
     self.collectionName = name;
-    self._collection = self.getClient().collection(name);
+    self._collection = self.getDb().collection(name);
 
     let _updateQuery = {};
     let _where = {};
@@ -134,7 +134,7 @@ export class MongoInterface {
 
     const drop = (): any => {
       const action = new Promise(async (resolve, reject) => {
-        await self.getClient().dropCollection(name, (err, affect) => resolve());
+        await self.getDb().dropCollection(name, (err, affect) => resolve());
 
         logger('info', 'Deleted collection ' + name);
       });
