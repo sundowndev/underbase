@@ -112,7 +112,7 @@ const config = {
     'mongodump',
 } as IConfigFile;
 
-(async () => {
+async function main() {
   if (!argv._[0]) {
     logger('error', 'Invalid command. Type --help to show available commands.');
     process.exit();
@@ -208,4 +208,6 @@ const config = {
   }
 
   process.exit();
-})();
+}
+
+main();
