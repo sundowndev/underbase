@@ -35,6 +35,13 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
 
 ### `v1.0.0`
 
+- [ ] Addtional query interface methods
+  - $currentDate
+  - $inc
+  - $min
+  - $max
+  - $mul
+  - $setOnInsert
 - [ ] Fix docker:test build exiting with code 0 when errored ([#29](https://github.com/sundowndev/underbase/issues/29))
 - [ ] Improve CLI program
   - Create command
