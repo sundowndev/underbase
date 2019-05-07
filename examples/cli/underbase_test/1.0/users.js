@@ -14,7 +14,7 @@ export default {
       },
       datecreated: {
         $rename: {
-          $name: 'dateCreated',
+          $value: 'dateCreated',
         },
       },
     });
