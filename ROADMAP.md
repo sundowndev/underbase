@@ -4,30 +4,30 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
 
 ### `v0.9-dev`
 
-- Improve TypeScript & TSlint configuration
-- Create [documentation](https://sundowndev.github.io/underbase/) using Docsify
-- Init CLI app
+- [x] Improve TypeScript & TSlint configuration
+- [x] Create [documentation](https://sundowndev.github.io/underbase/) using Docsify
+- [x] Init CLI app
 
 ### `v1.0.0rc1`
 
-- Refactor TS types
-- Improve unit tests (to fit with new features)
-- Compile library files (including CLI app) using Webpack
-- Add the following API methods (#16) : 
+- [x] Refactor TS types
+- [x] Improve unit tests (to fit with new features)
+- [x] Compile library files (including CLI app) using Webpack
+- [x] Add the following API methods (#16) : 
   - `.isLocked()`
   - `.getMigrations()`
   - `.getConfig()`
-- Rename `log` config option to `logs` to fit with CLI usage
-- Improve CLI app
+- [x] Rename `log` config option to `logs` to fit with CLI usage
+- [x] Improve CLI app
   - Backup feature
-- Implement MongoDB query interface (#15)
+- [x] Implement MongoDB query interface (#15)
 
 ### `v1.0.0rc2`
 
-- Add time spent while executing migration for CLI usage
-- Rename getClient() to getDb() to avoid misleading [(#30)](https://github.com/sundowndev/underbase/issues/30)
-- Allow array in iterate method [(#39)](https://github.com/sundowndev/underbase/issues/39)
-- Improve documentation with better migration process explanation & guides
+- [x] Add time spent while executing migration for CLI usage
+- [x] Rename getClient() to getDb() to avoid misleading [(#30)](https://github.com/sundowndev/underbase/issues/30)
+- [x] Allow array in iterate method [(#39)](https://github.com/sundowndev/underbase/issues/39)
+- [ ] Improve documentation with better migration process explanation & guides
   - Organizing migrations
   - Working with backups
   - Migrating with frameworks
@@ -35,10 +35,10 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
 
 ### `v1.0.0`
 
--  Fix docker:test build exiting with code 0 when errored [(#29)](https://github.com/sundowndev/underbase/issues/29)
-- Improve CLI app
+- [ ] Fix docker:test build exiting with code 0 when errored [(#29)](https://github.com/sundowndev/underbase/issues/29)
+- [ ] Improve CLI app
   - Create command
   - Template option
   - `--history` option to save migration history into a .log file
-- Create a license file
-- Display a warning when migration up/down function is not an async function ([mgdb-migrator/issue#5](https://github.com/emmanuelbuah/mgdb-migrator/issues/5))
+- [ ] Create a license file
+- [ ] Display a warning when migration up/down function is not an async function ([mgdb-migrator/issue#5](https://github.com/emmanuelbuah/mgdb-migrator/issues/5))
