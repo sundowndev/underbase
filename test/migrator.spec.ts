@@ -295,19 +295,4 @@ describe('Migration', () => {
       });
     });
   });
-
-  // describe('MongoDB query interface', () => {
-  //   test('#rename', () => {
-  //     migrator.add({
-  //       version: 5,
-  //       name: 'Version 5.',
-  //       up: async (db) => {
-  //         db.collection('users')
-  //           .rename('dateCreated', 'datecreated')
-  //           .where({});
-  //       },
-  //       down: async (db) => {},
-  //     });
-  //   });
-  // });
 });

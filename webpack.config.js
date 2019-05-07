@@ -50,7 +50,7 @@ const lib = {
 const tests = {
   target: 'node',
   externals: [nodeExternals()],
-  entry: path.resolve(__dirname, './test/test.spec.ts'),
+  entry: path.resolve(__dirname, './test/index.ts'),
   module: {
     rules: [
       {
