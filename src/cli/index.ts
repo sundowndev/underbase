@@ -172,7 +172,7 @@ async function main() {
         await create(config.mongodumpBinary, currentVersion, config.backupsDir);
       }
 
-      const t1 = new Date().getTime();
+      const t0 = new Date().getTime();
 
       if (argv.rerun) {
         await migrator.migrateTo(`${argv.migration},rerun`);
@@ -182,7 +182,7 @@ async function main() {
 
       const t2 = new Date().getTime();
 
-      const time = (t2 - t1) / 1000;
+      const time = (t2 - t0) / 1000;
 
       logger('info', `Time spent: ${time} sec`);
 
@@ -210,14 +210,14 @@ async function main() {
       await setConfig();
 
       if (await migrator.isLocked()) {
-        const t1 = new Date().getTime();
+        const t0 = new Date().getTime();
 
         await migrator.unlock(); // Returns a promise
 
         logger('info', `Migration state unlocked.`);
 
         const t2 = new Date().getTime();
-        const time = (t2 - t1) / 1000;
+        const time = (t2 - t0) / 1000;
 
         logger('info', `Time spent: ${time} sec`);
       } else {
