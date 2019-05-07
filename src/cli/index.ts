@@ -112,27 +112,34 @@ const config = {
     'mongodump',
 } as IConfigFile;
 
+function exit() {
+  process.exit();
+}
+
+async function setConfig() {
+  logger('info', 'Connecting to MongoDB...');
+  await migrator.config(config); // Returns a promise
+}
+
 async function main() {
   if (!argv._[0]) {
     logger('error', 'Invalid command. Type --help to show available commands.');
-    process.exit();
+    exit();
   }
 
   if (!fs.existsSync(config.migrationsDir)) {
     fs.mkdirpSync(config.migrationsDir);
-    config.logger('info', 'Created migration directory.');
+    logger('info', 'Created migration directory.');
   }
 
   if (!fs.existsSync(config.backupsDir) && config.backup) {
     fs.mkdirpSync(config.backupsDir);
-    config.logger('info', 'Created backup directory.');
+    logger('info', 'Created backup directory.');
   }
 
   let versions = fs
     .readdirSync(config.migrationsDir)
     .filter((v: string) => v.match(new RegExp(/^[\d].[\d]$/))) as string[];
-
-  await migrator.config(config); // Returns a promise
 
   switch (argv._[0]) {
     case 'migrate': {
@@ -145,10 +152,12 @@ async function main() {
         versionsArray.indexOf(parseFloat(argv.migration as string)) < 0
       ) {
         logger('error', 'This version does not exists.');
-        process.exit();
+        exit();
       }
 
       versions = versionsArray.map((v: number) => v.toFixed(1)) as string[];
+
+      await setConfig();
 
       versions.forEach(async (v: string) => {
         const migrationObj = (await require(`${config.migrationsDir}/${v}`)
@@ -163,11 +172,19 @@ async function main() {
         await create(config.mongodumpBinary, currentVersion, config.backupsDir);
       }
 
+      const t1 = new Date().getTime();
+
       if (argv.rerun) {
         await migrator.migrateTo(`${argv.migration},rerun`);
       } else {
         await migrator.migrateTo(argv.migration as string);
       }
+
+      const t2 = new Date().getTime();
+
+      const time = (t2 - t1) / 1000;
+
+      logger('info', `Time spent: ${time} sec`);
 
       break;
     }
@@ -179,6 +196,8 @@ async function main() {
       break;
     }
     case 'status': {
+      await setConfig();
+
       const currentVersion = await migrator.getVersion();
       const isLocked = (await migrator.isLocked()) ? 'locked' : 'not locked';
 
@@ -188,10 +207,19 @@ async function main() {
       break;
     }
     case 'unlock': {
+      await setConfig();
+
       if (await migrator.isLocked()) {
+        const t1 = new Date().getTime();
+
         await migrator.unlock(); // Returns a promise
 
         logger('info', `Migration state unlocked.`);
+
+        const t2 = new Date().getTime();
+        const time = (t2 - t1) / 1000;
+
+        logger('info', `Time spent: ${time} sec`);
       } else {
         logger('info', `Migration state is already unlocked.`);
       }
@@ -207,7 +235,7 @@ async function main() {
     }
   }
 
-  process.exit();
+  exit();
 }
 
 main();
