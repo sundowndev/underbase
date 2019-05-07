@@ -13,14 +13,14 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
 - [x] Refactor TS types
 - [x] Improve unit tests (to fit with new features)
 - [x] Compile library files (including CLI app) using Webpack
-- [x] Add the following API methods (#16) : 
+- [x] Add the following API methods ([#16](https://github.com/sundowndev/underbase/issues/16)): 
   - `.isLocked()`
   - `.getMigrations()`
   - `.getConfig()`
 - [x] Rename `log` config option to `logs` to fit with CLI usage
 - [x] Improve CLI app
   - Backup feature
-- [x] Implement MongoDB query interface (#15)
+- [x] Implement MongoDB query interface ([#15](https://github.com/sundowndev/underbase/issues/15))
 
 ### `v1.0.0rc2`
 
