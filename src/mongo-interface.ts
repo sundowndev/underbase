@@ -61,8 +61,21 @@ export class MongoInterface {
         for (const action in schema[field]) {
           _where = schema[field][action].$where || {};
           _updateQuery[action] = {};
-          _updateQuery[action][field] =
-            action === '$rename' ? schema[field][action].$name : 1;
+
+          switch (action) {
+            case '$rename': {
+              _updateQuery[action][field] = schema[field][action].$value;
+            }
+            case '$set': {
+              _updateQuery[action][field] = schema[field][action].$value;
+            }
+            case '$unset': {
+              _updateQuery[action][field] = 1;
+            }
+            default: {
+              _updateQuery[action][field] = schema[field][action];
+            }
+          }
 
           execute();
         }

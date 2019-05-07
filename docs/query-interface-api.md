@@ -54,9 +54,11 @@ Returns the MongoDB database instance object.
 Example :
 
 ```javascript
-db.getDb().collection('users').findMany({
-  isDeleted: false,
-});
+db.getDb()
+  .collection('users')
+  .findMany({
+    isDeleted: false,
+  });
 ```
 
 ### `collection()`
@@ -77,30 +79,31 @@ Example :
 
 ```javascript
 db.collection('users').applySchema({
-  isDeleted: { // Field
-    $unset: { // MongoDB operation
+  isDeleted: {
+    // Field
+    $unset: {
+      // MongoDB operation
       $where: { isDeleted: { $exists: true } }, // Query selector
     },
+    // It could have been..
+    // $set: {
+    //   $value: false,
+    //   $where: { isDeleted: { $exists: true } },
+    // },
   },
   datecreated: {
     $rename: {
-      $name: 'dateCreated',
+      $value: 'dateCreated',
     },
   },
 });
 ```
 
-This method support every [MongoDB operators](https://docs.mongodb.com/manual/reference/operator/update-field/) :
+This method support the following operators :
 
-- $set
-- $unset
-- $currentDate
-- $inc
-- $min
-- $max
-- $mul
-- $rename
-- $setOnInsert
+- \$set
+- \$unset
+- \$rename
 
 #### `rename()`
 
