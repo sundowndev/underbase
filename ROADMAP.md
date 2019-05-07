@@ -26,7 +26,7 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
 
 - [x] Add time spent while executing migration for CLI usage ([#42](https://github.com/sundowndev/underbase/issues/42))
 - [x] Rename getClient() to getDb() to avoid misleading ([#30](https://github.com/sundowndev/underbase/issues/30))
-- [x] Allow array in iterate method ([#39)](https://github.com/sundowndev/underbase/issues/39))
+- [x] Allow array in iterate method ([#39](https://github.com/sundowndev/underbase/issues/39))
 - [ ] Improve documentation with better migration process explanation & guides
   - Organizing migrations
   - Working with backups
@@ -35,7 +35,7 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
 
 ### `v1.0.0`
 
-- [ ] Fix docker:test build exiting with code 0 when errored [(#29)](https://github.com/sundowndev/underbase/issues/29)
+- [ ] Fix docker:test build exiting with code 0 when errored ([#29](https://github.com/sundowndev/underbase/issues/29))
 - [ ] Improve CLI program
   - Create command
   - Template option
