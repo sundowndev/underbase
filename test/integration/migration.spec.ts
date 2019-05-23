@@ -7,7 +7,7 @@ import { Migration } from '../../src';
 
 let dbClient: Db;
 const collectionName = '_migration';
-const dbURL = process.env.DBURL;
+const dbURL = process.env.DBURL || 'mongodb://localhost:27019/underbase-db';
 
 describe('INTEGRATION - Migration', () => {
   let migrator: Migration;
@@ -81,7 +81,7 @@ describe('INTEGRATION - Migration', () => {
 
   describe('Build', () => {
     test('build file', async () => {
-      const migratorObj = require('../../dist/src/index').migrator;
+      const migratorObj = require('../../dist').migrator;
 
       expect(migratorObj).toHaveProperty('defaultMigration');
       expect(migratorObj).toHaveProperty('_list');

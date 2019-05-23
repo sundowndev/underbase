@@ -4,13 +4,13 @@ services:
   - docker
 
 node_js:
-  - "8"
   - "10"
 
 before_script:
+  - set -o pipefail
   - npm install
+
 script:
+  - npm run build
   - npm run lint
-  - bash ./test.sh
-  # - npm run docker:test
-  # - npm run docker:down
+  - npm run docker:test
