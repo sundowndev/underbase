@@ -47,26 +47,4 @@ const lib = {
   },
 };
 
-const tests = {
-  target: 'node',
-  externals: [nodeExternals()],
-  entry: path.resolve(__dirname, './test/index.ts'),
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: path.resolve(__dirname, './node_modules/'),
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-  },
-  output: {
-    filename: 'test.spec.js',
-    path: path.resolve(__dirname, 'dist/test'),
-  },
-};
-
-module.exports = [cli, lib, tests];
+module.exports = [cli, lib];

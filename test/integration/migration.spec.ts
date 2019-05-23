@@ -2,16 +2,14 @@
 // tslint:disable:no-empty
 
 import { Promise as BlueBirdPromise } from 'bluebird';
-import { Collection, Db, MongoClient } from 'mongodb';
-import * as path from 'path';
-// Sinonjs.org - import * as sinon from 'sinon';
-import { Migration } from '../src';
+import { Db, MongoClient } from 'mongodb';
+import { Migration } from '../../src';
 
 let dbClient: Db;
 const collectionName = '_migration';
 const dbURL = process.env.DBURL;
 
-describe('Migration', () => {
+describe('INTEGRATION - Migration', () => {
   let migrator: Migration;
   let migrationsList: any[];
   let configObject: any;
@@ -53,10 +51,10 @@ describe('Migration', () => {
     migrationsList.push({
       version: 1,
       name: 'Version 1',
-      up: (db) => {
+      up: db => {
         return 'done';
       },
-      down: (db) => {
+      down: db => {
         return 'done';
       },
     });
@@ -66,10 +64,10 @@ describe('Migration', () => {
     migrationsList.push({
       version: 2.0,
       name: 'Version 2',
-      up: (db) => {
+      up: db => {
         return 'done';
       },
-      down: (db) => {
+      down: db => {
         return 'done';
       },
     });
@@ -83,7 +81,7 @@ describe('Migration', () => {
 
   describe('Build', () => {
     test('build file', async () => {
-      const migratorObj = require('../dist/src/index.js').migrator;
+      const migratorObj = require('../../dist/src/index').migrator;
 
       expect(migratorObj).toHaveProperty('defaultMigration');
       expect(migratorObj).toHaveProperty('_list');
@@ -150,10 +148,10 @@ describe('Migration', () => {
         migrator.add({
           version: 3.0,
           name: 'Version 3.',
-          up: async (db) => {
+          up: async db => {
             return 'done';
           },
-          down: async (db) => {
+          down: async db => {
             return 'done';
           },
         });
@@ -161,10 +159,10 @@ describe('Migration', () => {
         migrator.add({
           version: 4,
           name: 'Version 4',
-          up: BlueBirdPromise.method((db) => {
+          up: BlueBirdPromise.method(db => {
             return 'done';
           }),
-          down: BlueBirdPromise.method((db) => {
+          down: BlueBirdPromise.method(db => {
             return 'done';
           }),
         });
@@ -192,15 +190,15 @@ describe('Migration', () => {
         migrator.add({
           version: 3,
           name: 'Version 3.',
-          up: async (db) => {},
-          down: async (db) => {},
+          up: async db => {},
+          down: async db => {},
         });
 
         migrator.add({
           version: 4,
           name: 'Version 4.',
-          up: async (db) => {},
-          down: async (db) => {
+          up: async db => {},
+          down: async db => {
             throw new Error('Something went wrong');
           },
         });
@@ -208,10 +206,10 @@ describe('Migration', () => {
         migrator.add({
           version: 5,
           name: 'Version 5.',
-          up: async (db) => {
+          up: async db => {
             throw new Error('Something went wrong');
           },
-          down: async (db) => {},
+          down: async db => {},
         });
       });
 
@@ -284,7 +282,7 @@ describe('Migration', () => {
     test('should return migrations array', () => {
       const migrations = migrator.getMigrations();
 
-      migrations.forEach((m) => {
+      migrations.forEach(m => {
         expect(m).toHaveProperty('version');
         expect(m).toHaveProperty('up');
 

@@ -5,19 +5,18 @@
   "main": "dist/src/index.js",
   "bin": "dist/src/cli.js",
   "scripts": {
-    "docs:serve": "./node_modules/docsify-cli/bin/docsify serve ./docs",
     "lint": "tslint --project .",
     "build": "webpack --mode production --config ./webpack.config.js --progress --color --display-error-details",
     "build:watch": "rm -rf dist && webpack --mode production --config ./webpack.config.js --watch",
-    "docker:start": "npm run build && docker-compose up underbase-dev || true",
-    "docker:test": "npm run build && docker-compose up underbase-test || true",
+    "docker:start": "docker-compose up underbase-dev || true",
     "docker:down": "docker-compose down",
-    "prestart": "npm run build:watch & sleep 12s",
-    "start": "npm run test",
-    "test": "jest dist/* --coverage --useStderr --forceExit --detectOpenHandles",
-    "test:debug": "node --inspect=0.0.0.0:5857 node_modules/.bin/jest dist/* --coverage --useStderr --forceExit",
-    "test:watch": "jest dist/* --watchAll --useStderr --coverage",
-    "test:debug:watch": "node --inspect=0.0.0.0:5857 node_modules/.bin/jest dist/* --coverage --useStderr"
+    "docker:test": "docker-compose up underbase-test || true",
+    "start": "npm run build && npm run lint && npm run test",
+    "test": "cross-env NODE_ENV=test jest ./test --config jest.config.js --coverage --useStderr --forceExit --detectOpenHandles",
+    "test:debug": "cross-env NODE_ENV=test node --inspect=0.0.0.0:5857 jest ./test  --coverage --useStderr --forceExit --detectOpenHandles",
+    "test:watch": "cross-env NODE_ENV=test jest ./test --watchAll --useStderr --coverage",
+    "test:debug:watch": "cross-env NODE_ENV=test node --inspect=0.0.0.0:5857 jest ./test --coverage --useStderr",
+    "docs:serve": "./node_modules/docsify-cli/bin/docsify serve ./docs"
   },
   "author": "Raphaël Cerveaux <raphael@crvx.fr> (https://twitter.com/sundowndev)",
   "repository": {
@@ -40,16 +39,18 @@
   "devDependencies": {
     "@types/bluebird": "3.5.26",
     "@types/fs-extra": "^5.0.5",
-    "@types/jest": "24.0.11",
+    "@types/jest": "^24.0.11",
     "@types/lodash": "4.14.123",
     "@types/mongodb": "3.1.22",
     "@types/node": "10.14.4",
     "@types/sinon": "^7.0.11",
     "@types/type-check": "^0.3.27",
+    "cross-env": "^5.2.0",
     "docsify-cli": "^4.3.0",
     "esm": "^3.2.22",
     "jest": "24.5.0",
     "sinon": "^7.3.1",
+    "ts-jest": "^24.0.2",
     "ts-loader": "^5.3.3",
     "tslint": "5.14.0",
     "tslint-eslint-rules": "5.4.0",
@@ -66,10 +67,5 @@
     "lodash": "4.17.11",
     "mongodb": "3.2.2",
     "type-check": "0.3.2"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "testRegex": "dist/test/*.+(spec|int|unit)\\.js$",
-    "verbose": true
   }
 }
