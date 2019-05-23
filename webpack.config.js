@@ -19,7 +19,7 @@ const cli = {
   },
   output: {
     filename: 'cli.js',
-    path: path.resolve(__dirname, 'dist/src'),
+    path: path.resolve(__dirname, 'dist'),
   },
 };
 
@@ -41,7 +41,7 @@ const lib = {
   },
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, 'dist/src'),
+    path: path.resolve(__dirname, 'dist'),
     library: 'migrator',
     libraryTarget: 'umd',
   },

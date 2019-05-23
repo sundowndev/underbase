@@ -2,8 +2,8 @@
   "name": "underbase",
   "version": "1.0.5",
   "description": "MongoDB schema and data migration library",
-  "main": "dist/src/index.js",
-  "bin": "dist/src/cli.js",
+  "main": "dist/index.js",
+  "bin": "dist/cli.js",
   "scripts": {
     "lint": "tslint --project .",
     "build": "webpack --mode production --config ./webpack.config.js --progress --color --display-error-details",
