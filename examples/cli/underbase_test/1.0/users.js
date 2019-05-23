@@ -1,10 +1,8 @@
 export default {
   up: async (db) => {
-    db.collection('users')
-      .remove()
-      .where({
-        isDeleted: true,
-      });
+    db.collection('users').destroy({
+      isDeleted: true,
+    });
 
     db.collection('users').applySchema({
       isDeleted: {
@@ -23,7 +21,7 @@ export default {
 
     // You can still use the native client...
     //
-    // db.getClient().collection('users')
+    // db.MongoClient().collection('users')
     //   .updateMany(
     //     {},
     //     {
