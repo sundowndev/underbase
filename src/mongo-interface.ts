@@ -11,7 +11,8 @@ interface ICollection {
   set: (fieldName: string, newFieldName: string) => any;
   drop: () => any;
   iterate: (query: any, cb: any) => any;
-  remove: () => any;
+  destroy: (query: any) => any;
+  update: (where: any, schema: any) => any;
 }
 
 export class MongoInterface {
@@ -33,14 +34,14 @@ export class MongoInterface {
     };
   }
 
-  public getDb(): Db {
+  public MongoClient(): Db {
     return this._db;
   }
 
   public collection(name: string): ICollection {
     const self = this;
     self.collectionName = name;
-    self._collection = self.getDb().collection(name);
+    self._collection = self.MongoClient().collection(name);
 
     let _updateQuery = {};
     let _where = {};
@@ -142,28 +143,30 @@ export class MongoInterface {
       };
     };
 
-    const remove = (): any => {
-      return {
-        where: (where: any) => {
-          _where = where || {};
+    const destroy = (where: any): any => {
+      _where = where || {};
 
-          return self.cursor(_where, (doc: any) => {
-            self._collection.deleteOne({
-              _id: doc._id,
-            });
-          });
-        },
-      };
+      return self.cursor(_where, (doc: any) => {
+        self._collection.deleteOne({
+          _id: doc._id,
+        });
+      });
     };
 
     const drop = (): any => {
       const action = new Promise(async (resolve, reject) => {
-        await self.getDb().dropCollection(name, (err, affect) => resolve());
+        await self
+          .MongoClient()
+          .dropCollection(name, (err, affect) => resolve());
 
         logger('info', 'Deleted collection ' + name);
       });
 
       this._actions.push(action);
+    };
+
+    const update = (where: any, schema: any): any => {
+      // TODO
     };
 
     const iterate = (where: any, cb: any): any => {
@@ -172,7 +175,7 @@ export class MongoInterface {
       return self.cursor(_where, cb);
     };
 
-    return { applySchema, rename, unset, set, remove, drop, iterate };
+    return { applySchema, rename, unset, set, destroy, drop, update, iterate };
   }
 
   public async save(): Promise<any> {
@@ -195,7 +198,7 @@ export class MongoInterface {
         null,
       );
 
-      cursor.on('data', (doc) => {
+      cursor.on('data', doc => {
         cb(doc);
       });
 
