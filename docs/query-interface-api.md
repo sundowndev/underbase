@@ -47,14 +47,14 @@ db.cursorOptions = {
 };
 ```
 
-### `getDb()`
+### `MongoClient()`
 
-Returns the MongoDB database instance object.
+Returns the MongoDB client instance.
 
 Example :
 
 ```javascript
-db.getDb()
+db.MongoClient()
   .collection('users')
   .findMany({
     isDeleted: false,
