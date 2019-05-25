@@ -1,6 +1,6 @@
 {
   "name": "underbase",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "MongoDB schema and data migration library",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -49,8 +49,8 @@
     "vrsource-tslint-rules": "6.0.0"
   },
   "dependencies": {
-    "@types/bluebird": "3.5.26",
-    "bluebird": "3.5.4",
+    "@types/bluebird": "3.5.27",
+    "bluebird": "3.5.5",
     "lodash": "4.17.11",
     "mongodb": "3.2.3",
     "type-check": "0.3.2"
