@@ -36,10 +36,14 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
   - Organizing migrations
   - Working with backups
   - Migrating with frameworks
-  - Continuous integration
+  - Continuous integration/delivery
 
 ### `v1.0.0`
 
+- [ ] Improve CLI program
+  - Create command
+  - Template option
+- [ ] Create a license file
 - [ ] Addtional query interface methods
   - $currentDate
   - $inc
@@ -47,7 +51,3 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
   - $max
   - $mul
   - $setOnInsert
-- [ ] Improve CLI program
-  - Create command
-  - Template option
-- [ ] Create a license file
