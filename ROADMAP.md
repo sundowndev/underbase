@@ -1,6 +1,6 @@
 # Roadmap
 
-Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and added few features, the very first thing to do is to make a stable version of this fork. The initial state for this fork is `v0.9-dev`.
+Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), before adding new features, the very first thing to do is to make a stable version of this fork. The initial state for this fork is `v0.9-dev`. My goal with this project is to maintain this repository with a good workflow using CI and unit/integration tests, as well as having ~100% coverage and ensure support for node 8,10,11, the last version of [mongodb](https://docs.mongodb.com/manual/release-notes/) (currently 4.0), and [node-mongodb-native](https://github.com/mongodb/node-mongodb-native) 3.x.
 
 ### `v0.9-dev`
 
@@ -32,11 +32,6 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
 - [ ] Display a warning when migration up/down function is not an async function ([mgdb-migrator/issue#5](https://github.com/emmanuelbuah/mgdb-migrator/issues/5), see [this](https://stackoverflow.com/a/38510353))
 - [ ] CLI: `--history` option to save migration history into a .log file
 - [ ] Rename `mongo-interface.ts` to `query-interface.ts`
-- [ ] Improve documentation with better migration process explanation & guides
-  - Organizing migrations
-  - Working with backups
-  - Migrating with frameworks
-  - Continuous integration/delivery
 
 ### `v1.0.0`
 
@@ -44,10 +39,19 @@ Since I forked the work of [emmanuelbuah](https://github.com/emmanuelbuah) and a
   - Create command
   - Template option
 - [ ] Create a license file
-- [ ] Addtional query interface methods
+- [ ] Improve documentation with better migration process explanation & guides
+  - Organizing migrations
+  - Working with backups
+  - Migrating with frameworks
+  - Continuous integration/delivery
+<!--- [ ] Addtional query interface methods
   - $currentDate
   - $inc
   - $min
   - $max
   - $mul
-  - $setOnInsert
+  - $setOnInsert-->
+
+### `v2.0.0`
+
+- [ ] Create our own mongodump library
