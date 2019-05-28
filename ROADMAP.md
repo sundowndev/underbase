@@ -18,8 +18,6 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
   - `.getMigrations()`
   - `.getConfig()`
 - [x] Rename `log` config option to `logs` to fit with CLI usage
-- [x] Improve CLI app
-  - Backup feature
 - [x] Implement MongoDB query interface ([#15](https://github.com/sundowndev/underbase/issues/15))
 
 ### `v1.0.0rc2`
@@ -32,6 +30,7 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [ ] Display a warning when migration up/down function is not an async function ([mgdb-migrator/issue#5](https://github.com/emmanuelbuah/mgdb-migrator/issues/5), see [this](https://stackoverflow.com/a/38510353))
 - [ ] CLI: `--history` option to save migration history into a .log file
 - [ ] Rename `mongo-interface.ts` to `query-interface.ts`
+- [ ] Backup feature
 
 ### `v1.0.0`
 
@@ -41,7 +40,7 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [ ] Create a license file
 - [ ] Improve documentation with better migration process explanation & guides
   - Organizing migrations
-  - Working with backups
+  - Working with snapshots
   - Migrating with frameworks
   - Continuous integration/delivery
 <!--- [ ] Addtional query interface methods
