@@ -69,7 +69,7 @@ if (argv.config) {
   ));
 }
 
-if (configFile.chdir) {
+if (!argv.chdir && configFile.chdir) {
   workingDirectory = configFile.chdir;
 }
 
