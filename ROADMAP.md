@@ -26,6 +26,8 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [x] Rename getClient() to getDb() to avoid misleading ([#30](https://github.com/sundowndev/underbase/issues/30))
 - [x] Allow array in iterate method ([#39](https://github.com/sundowndev/underbase/issues/39))
 - [x] Fix docker:test build exiting with code 0 when errored ([#29](https://github.com/sundowndev/underbase/issues/29))
+- [x] Init command
+- [ ] Config command
 - [ ] Improve migration organization; see object injection ([#55](https://github.com/sundowndev/underbase/issues/55))
 - [ ] Display a warning when migration up/down function is not an async function ([mgdb-migrator/issue#5](https://github.com/emmanuelbuah/mgdb-migrator/issues/5), see [this](https://stackoverflow.com/a/38510353))
 - [ ] CLI: `--history` option to save migration history into a .log file
