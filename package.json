@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@types/jest": "24.0.13",
-    "@types/lodash": "4.14.132",
+    "@types/lodash": "4.14.133",
     "@types/mongodb": "3.1.23",
     "@types/node": "10.14.8",
     "jest": "24.8.0",
