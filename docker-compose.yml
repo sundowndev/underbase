@@ -21,7 +21,7 @@ services:
   underbase-db:
     image: mongo:latest
     ports:
-      - '27019:27017'
+      - '27017:27017'
     command: mongod --bind_ip 0.0.0.0 --smallfiles
 
   underbase-test:
@@ -31,7 +31,7 @@ services:
     depends_on:
       - underbase-db
     environment:
-      - 'DBURL=mongodb://underbase-db:27017/underbase-db'
+      - 'DBURL=mongodb://underbase-db:27017/underbase_test'
       - 'NODE_ENV=test'
     volumes:
       - '.:/usr/src/underbase'

@@ -7,7 +7,7 @@ import { Migration } from '../../src';
 
 let dbClient: Db;
 const collectionName = '_migration';
-const dbURL = process.env.DBURL || 'mongodb://localhost:27019/underbase-db';
+const dbURL = process.env.DBURL || 'mongodb://localhost:27017/underbase_test';
 
 describe('INTEGRATION - Migration', () => {
   let migrator: Migration;
