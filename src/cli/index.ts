@@ -6,7 +6,7 @@ import * as path from 'path';
 import * as yargs from 'yargs';
 import { migrator } from '../index';
 import { create } from './backup';
-import { logger } from './utils';
+import { logger, timer } from './utils';
 
 // Enable ES6 module for ES2015
 require = require('esm')(module);
@@ -36,6 +36,7 @@ const argv = yargs
   .usage('Usage: $0 <command> [OPTIONS]')
   .command('migrate <migration>', 'Execute migrations')
   // .command('create <migration>', 'Create a new migration')
+  .command('init', 'Initiate migration environment')
   .command('list', 'Show all migrations versions')
   .command('status', 'Show migrations status')
   .command('unlock', 'Unlock migrations state')
@@ -128,8 +129,7 @@ async function main() {
   }
 
   if (!fs.existsSync(config.migrationsDir)) {
-    fs.mkdirpSync(config.migrationsDir);
-    logger('info', 'Created migration directory.');
+    logger('info', 'Migration directory does not exists. Please run underbase init.');
   }
 
   if (!fs.existsSync(config.backupsDir) && config.backup) {
@@ -172,7 +172,7 @@ async function main() {
         await create(config.mongodumpBinary, currentVersion, config.backupsDir);
       }
 
-      const t0 = new Date().getTime();
+      const time = timer();
 
       if (argv.rerun) {
         await migrator.migrateTo(`${argv.migration},rerun`);
@@ -180,11 +180,7 @@ async function main() {
         await migrator.migrateTo(argv.migration as string);
       }
 
-      const t2 = new Date().getTime();
-
-      const time = (t2 - t0) / 1000;
-
-      logger('info', `Time spent: ${time} sec`);
+      logger('info', `Time spent: ${time.spent()} sec`);
 
       break;
     }
@@ -210,20 +206,35 @@ async function main() {
       await setConfig();
 
       if (await migrator.isLocked()) {
-        const t0 = new Date().getTime();
+        const time = timer();
 
         await migrator.unlock(); // Returns a promise
 
         logger('info', `Migration state unlocked.`);
 
-        const t2 = new Date().getTime();
-        const time = (t2 - t0) / 1000;
-
-        logger('info', `Time spent: ${time} sec`);
+        logger('info', `Time spent: ${time.spent()} sec`);
       } else {
         logger('info', `Migration state is already unlocked.`);
       }
 
+      break;
+    }
+    case 'init': {
+      if (!fs.existsSync(config.migrationsDir)) {
+        await fs.mkdirpSync(config.migrationsDir);
+        logger('info', 'Created migration directory.');
+      } else {
+        logger('info', 'Migration directory already exists.');
+      }
+
+      if (!fs.existsSync(config.backupsDir) && config.backup) {
+        await fs.mkdirpSync(config.backupsDir);
+        logger('info', 'Created backup directory.');
+      } else {
+        logger('info', 'Backup directory already exists.');
+      }
+
+      logger('info', 'Successfully initialized migration environment.');
       break;
     }
     default: {
