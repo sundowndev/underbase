@@ -230,8 +230,6 @@ async function main() {
       if (!fs.existsSync(config.backupsDir) && config.backup) {
         await fs.mkdirpSync(config.backupsDir);
         logger('info', 'Created backup directory.');
-      } else {
-        logger('info', 'Backup directory already exists.');
       }
 
       logger('info', 'Successfully initialized migration environment.');
