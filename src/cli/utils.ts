@@ -8,10 +8,9 @@ export const timer = () => {
 
   return {
     spent() {
-      const t2 = new Date().getTime();
-      const time = (t2 - t0) / 1000;
-
-      return time;
+      const t1 = new Date().getTime();
+      
+      return (t1 - t0) / 1000;
     },
   };
 };
