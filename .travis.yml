@@ -4,13 +4,16 @@ services:
   - docker
 
 node_js:
-  - "10"
+  - "8"
+  - "11"
 
 before_script:
   - set -o pipefail
   - npm install
+  - npm install codecov -g
 
 script:
   - npm run build
   - npm run lint
   - npm run docker:test
+  - codecov -f coverage/*.json
