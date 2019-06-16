@@ -9,7 +9,7 @@ export const timer = () => {
   return {
     spent() {
       const t1 = new Date().getTime();
-      
+
       return (t1 - t0) / 1000;
     },
   };
