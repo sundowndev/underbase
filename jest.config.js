@@ -3,5 +3,7 @@ module.exports = {
   testEnvironment: 'node',
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
-  coveragePathIgnorePatterns: ['/node_modules/', '/dist/'],
+  collectCoverageFrom: [
+    './src/**/*.ts',
+  ],
 };
