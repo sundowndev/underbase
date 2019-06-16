@@ -10,12 +10,15 @@
   <a href="https://travis-ci.org/sundowndev/underbase">
     <img src="https://img.shields.io/travis/sundowndev/underbase/master.svg?style=flat-square" alt="build status" />
   </a>
+  <a href="https://codecov.io/gh/sundowndev/underbase">
+    <img src="https://img.shields.io/codecov/c/gh/sundowndev/underbase/develop.svg?style=flat-square" alt="code coverage" />
+  </a>
   <a href="https://github.com/sundowndev/underbase/releases">
     <img src="https://img.shields.io/github/release/sundowndev/underbase.svg?style=flat-square" alt="release" />
   </a>
-  <a href="https://www.npmjs.com/package/underbase">
+  <!--<a href="https://www.npmjs.com/package/underbase">
     <img alt="npm" src="https://img.shields.io/npm/v/underbase.svg?style=flat-square">
-  </a>
+  </a>-->
   <a href="https://david-dm.org/sundowndev/underbase">
     <img src="https://david-dm.org/sundowndev/underbase/status.svg?style=flat-square" alt="dependencies" />
   </a>
