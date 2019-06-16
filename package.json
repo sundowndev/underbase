@@ -44,7 +44,7 @@
   "devDependencies": {
     "@commitlint/cli": "8.0.0",
     "@commitlint/config-conventional": "8.0.0",
-    "@types/bluebird": "3.5.26",
+    "@types/bluebird": "3.5.27",
     "@types/fs-extra": "5.1.0",
     "@types/jest": "24.0.15",
     "@types/lodash": "4.14.123",
@@ -71,7 +71,7 @@
     "yargs": "13.2.4"
   },
   "dependencies": {
-    "bluebird": "3.5.3",
+    "bluebird": "3.5.5",
     "lodash": "4.17.11",
     "mongodb": "3.2.2",
     "type-check": "0.3.2"
