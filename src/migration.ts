@@ -29,12 +29,21 @@ import { Promise as BluebirdPromise } from 'bluebird';
 import * as _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
+import { MongoInterface } from './mongo-interface';
+
 const check = typeCheck;
 
-export type SyslogLevels = 'debug' | 'info' | 'notice' | 'warning' | 'error' | 'crit' | 'alert';
+export type SyslogLevels =
+  | 'debug'
+  | 'info'
+  | 'notice'
+  | 'warning'
+  | 'error'
+  | 'crit'
+  | 'alert';
 
 export interface IMigrationOptions {
-  log?: boolean;
+  logs?: boolean;
   logger?: (level: SyslogLevels, ...args: any[]) => void;
   logIfLatest?: boolean;
   collectionName?: string;
@@ -43,16 +52,15 @@ export interface IMigrationOptions {
 export interface IMigration {
   version: number;
   name: string;
-  up: (db: Db) => Promise<any> | any;
-  down: (db: Db) => Promise<any> | any;
+  up: (db: MongoInterface) => Promise<any> | any;
+  down: (db: MongoInterface) => Promise<any> | any;
 }
 
 export class Migration {
-
   private defaultMigration = {
     version: 0,
     // tslint:disable-next-line:no-empty
-    up: () => { },
+    up: () => {},
   };
   private _list: any[];
   private _collection: Collection;
@@ -67,18 +75,55 @@ export class Migration {
   constructor(opts?: IMigrationOptions) {
     // Since we'll be at version 0 by default, we should have a migration set for it.
     this._list = [this.defaultMigration];
-    this.options = opts ? opts : {
-      // False disables logging
-      log: true,
-      // Null or a function
-      logger: null,
-      // Enable/disable info log "already at latest."
-      logIfLatest: true,
-      // Migrations collection name
-      collectionName: 'migrations',
-      // Mongdb url or mongo Db instance
-      db: null,
-    };
+    this.options = opts
+      ? opts
+      : {
+          // False disables logging
+          logs: true,
+          // Null or a function
+          logger: null,
+          // Enable/disable info log "already at latest."
+          logIfLatest: true,
+          // Migrations collection name
+          collectionName: 'migrations',
+          // Mongdb url or mongo Db instance
+          db: null,
+        };
+  }
+
+  /**
+   * Get migration configuration
+   *
+   * @returns {IMigrationOptions}
+   * @memberof Migration
+   */
+  public getConfig(): IMigrationOptions {
+    return this.options;
+  }
+
+  /**
+   * Get migrations
+   *
+   * @returns {any[]}
+   * @memberof Migration
+   */
+  public getMigrations(): any[] {
+    return this._list;
+  }
+
+  /**
+   * Indicate if the migration state is locked or not
+   *
+   * @returns {Promise<boolean>}
+   * @memberof Migration
+   */
+  public async isLocked(): Promise<boolean> {
+    const result = await this._collection.findOne({
+      _id: 'control',
+      locked: true,
+    });
+
+    return null !== result;
   }
 
   /**
@@ -89,21 +134,21 @@ export class Migration {
    * @memberof Migration
    */
   public async config(opts?: IMigrationOptions): Promise<void> {
-
     this.options = Object.assign({}, this.options, opts);
 
-    if (!this.options.logger && this.options.log) {
-      this.options.logger = (level: string, ...args) => console.log(level, ...args);
+    if (!this.options.logger && this.options.logs) {
+      this.options.logger = (level: string, ...args) =>
+        console.log(level, ...args);
     }
-    if (this.options.log === false) {
+    if (this.options.logs === false) {
       // tslint:disable-next-line:no-empty
-      this.options.logger = (level: string, ...args) => { };
+      this.options.logger = (level: string, ...args) => {};
     }
     if (!(this._db instanceof Db) && !this.options.db) {
       throw new ReferenceError('Option.db canno\'t be null');
     }
     let db: string | Db;
-    if (typeof (this.options.db) === 'string') {
+    if (typeof this.options.db === 'string') {
       const client = await MongoClient.connect(this.options.db, {
         promiseLibrary: BluebirdPromise,
         useNewUrlParser: true,
@@ -123,7 +168,6 @@ export class Migration {
    * @memberof Migration
    */
   public add(migration: IMigration): void {
-
     if (typeof migration.up !== 'function') {
       throw new Error('Migration must supply an up function.');
     }
@@ -155,11 +199,17 @@ export class Migration {
    */
   public async migrateTo(command: string | number): Promise<void> {
     if (!this._db) {
-      throw new Error('Migration instance has not be configured/initialized.' +
-        ' Call <instance>.config(..) to initialize this instance');
+      throw new Error(
+        'Migration instance has not be configured/initialized.' +
+          ' Call <instance>.config(..) to initialize this instance',
+      );
     }
 
-    if (_.isUndefined(command) || command === '' || this._list.length === 0) {
+    if (
+      _.isUndefined(command) ||
+      command === '' ||
+      this.getMigrations().length === 0
+    ) {
       throw new Error('Cannot migrate using invalid command: ' + command);
     }
 
@@ -174,16 +224,20 @@ export class Migration {
 
     try {
       if (version === 'latest') {
-        await this.execute(_.last<any>(this._list).version);
+        await this.execute(_.last<any>(this.getMigrations()).version);
       } else {
-        await this.execute(parseFloat(version as string), (subcommand === 'rerun'));
+        await this.execute(
+          parseFloat(version as string),
+          subcommand === 'rerun',
+        );
       }
     } catch (e) {
-      this.options.
-        logger('info', `Encountered an error while migrating. Migration failed.`);
+      this.options.logger(
+        'info',
+        `Encountered an error while migrating. Migration failed.`,
+      );
       throw e;
     }
-
   }
 
   /**
@@ -194,7 +248,7 @@ export class Migration {
    */
   public getNumberOfMigrations(): number {
     // Exclude default/base migration v0 since its not a configured migration
-    return this._list.length - 1;
+    return this.getMigrations().length - 1;
   }
 
   /**
@@ -213,8 +267,11 @@ export class Migration {
    *
    * @memberof Migration
    */
-  public unlock(): void {
-    this._collection.updateOne({ _id: 'control' }, { $set: { locked: false } });
+  public async unlock(): Promise<any> {
+    await this._collection.updateOne(
+      { _id: 'control' },
+      { $set: { locked: false } },
+    );
   }
 
   /**
@@ -232,34 +289,41 @@ export class Migration {
    * Migrate to the specific version passed in
    *
    * @private
-   * @param {*} version
-   * @param {*} [rerun]
+   * @param {string | number} version
+   * @param {boolean} [rerun]
    * @returns {Promise<void>}
    * @memberof Migration
    */
-  private async execute(version: any, rerun?: any): Promise<void> {
+  private async execute(version: number, rerun?: boolean): Promise<void> {
     const self = this;
     const control = await this.getControl(); // Side effect: upserts control document.
     let currentVersion = control.version;
 
     // Run the actual migration
-    const migrate = async (direction, idx) => {
-      const migration = self._list[idx];
+    const migrate = async (direction: string, idx: number): Promise<any> => {
+      const migration = self.getMigrations()[idx];
 
       if (typeof migration[direction] !== 'function') {
-        unlock();
-        throw new Error('Cannot migrate ' + direction + ' on version ' + migration.version);
+        await unlock();
+        throw new Error(
+          'Cannot migrate ' + direction + ' on version ' + migration.version,
+        );
       }
 
       function maybeName() {
         return migration.name ? ' (' + migration.name + ')' : '';
       }
 
-      this.options.logger('info',
-        'Running ' + direction + '() on version ' + migration.version + maybeName());
+      this.options.logger(
+        'info',
+        'Running ' +
+          direction +
+          '() on version ' +
+          migration.version +
+          maybeName(),
+      );
 
-      await migration[direction](self._db, migration);
-
+      await migration[direction](new MongoInterface(self._db));
     };
 
     // Returns true if lock was acquired.
@@ -269,30 +333,35 @@ export class Migration {
        * object and thus be able to update it.  All other simultaneous callers will not match the
        * object and thus will have null return values in the result of the operation.
        */
-      const updateResult = await self._collection.findOneAndUpdate({
-        _id: 'control',
-        locked: false,
-      }, {
-        $set: {
-          locked: true,
-          lockedAt: new Date(),
+      const updateResult = await self._collection.findOneAndUpdate(
+        {
+          _id: 'control',
+          locked: false,
         },
-      });
+        {
+          $set: {
+            locked: true,
+            lockedAt: new Date(),
+          },
+        },
+      );
 
       return null != updateResult.value && 1 === updateResult.ok;
     };
 
     // Side effect: saves version.
-    const unlock = () => self.setControl({
-      locked: false,
-      version: currentVersion,
-    });
+    const unlock = () =>
+      self.setControl({
+        locked: false,
+        version: currentVersion,
+      });
 
     // Side effect: saves version.
-    const updateVersion = async () => await self.setControl({
-      locked: true,
-      version: currentVersion,
-    });
+    const updateVersion = async () =>
+      await self.setControl({
+        locked: true,
+        version: currentVersion,
+      });
 
     if ((await lock()) === false) {
       this.options.logger('info', 'Not migrating, control is locked.');
@@ -301,7 +370,7 @@ export class Migration {
 
     if (rerun) {
       this.options.logger('info', 'Rerunning version ' + version);
-      migrate('up', version);
+      await migrate('up', version);
       this.options.logger('info', 'Finished migrating.');
       await unlock();
       return;
@@ -309,7 +378,10 @@ export class Migration {
 
     if (currentVersion === version) {
       if (this.options.logIfLatest) {
-        this.options.logger('info', 'Not migrating, already at version ' + version);
+        this.options.logger(
+          'info',
+          'Not migrating, already at version ' + version,
+        );
       }
       await unlock();
       return;
@@ -319,18 +391,25 @@ export class Migration {
     const endIdx = this.findIndexByVersion(version);
 
     // Log.info('startIdx:' + startIdx + ' endIdx:' + endIdx);
-    this.options.logger('info', 'Migrating from version ' + this._list[startIdx].version
-      + ' -> ' + this._list[endIdx].version);
+    this.options.logger(
+      'info',
+      'Migrating from version ' +
+        this.getMigrations()[startIdx].version +
+        ' -> ' +
+        this.getMigrations()[endIdx].version,
+    );
 
     if (currentVersion < version) {
       for (let i = startIdx; i < endIdx; i++) {
         try {
           await migrate('up', i + 1);
-          currentVersion = self._list[i + 1].version;
+          currentVersion = self.getMigrations()[i + 1].version;
           await updateVersion();
         } catch (e) {
-          this.options.
-            logger('error', `Encountered an error while migrating from ${i} to ${i + 1}`);
+          this.options.logger(
+            'error',
+            `Encountered an error while migrating from ${i} to ${i + 1}`,
+          );
           throw e;
         }
       }
@@ -338,11 +417,13 @@ export class Migration {
       for (let i = startIdx; i > endIdx; i--) {
         try {
           await migrate('down', i);
-          currentVersion = self._list[i - 1].version;
+          currentVersion = self.getMigrations()[i - 1].version;
           await updateVersion();
         } catch (e) {
-          this.options.
-            logger('error', `Encountered an error while migrating from ${i} to ${i - 1}`);
+          this.options.logger(
+            'error',
+            `Encountered an error while migrating from ${i} to ${i - 1}`,
+          );
           throw e;
         }
       }
@@ -359,12 +440,15 @@ export class Migration {
    * @returns {Promise<{ version: number, locked: boolean }>}
    * @memberof Migration
    */
-  private async getControl(): Promise<{ version: number, locked: boolean }> {
+  private async getControl(): Promise<{ version: number; locked: boolean }> {
     const con = await this._collection.findOne({ _id: 'control' });
-    return con || (await this.setControl({
-      version: 0,
-      locked: false,
-    }));
+    return (
+      con ||
+      (await this.setControl({
+        version: 0,
+        locked: false,
+      }))
+    );
   }
 
   /**
@@ -375,22 +459,28 @@ export class Migration {
    * @returns {(Promise<{ version: number, locked: boolean } | null>)}
    * @memberof Migration
    */
-  private async setControl(control: { version: number, locked: boolean }):
-    Promise<{ version: number, locked: boolean } | null> {
+  private async setControl(control: {
+    version: number;
+    locked: boolean;
+  }): Promise<{ version: number; locked: boolean } | null> {
     // Be quite strict
     check('Number', control.version);
     check('Boolean', control.locked);
 
-    const updateResult = await this._collection.updateOne({
-      _id: 'control',
-    }, {
+    const updateResult = await this._collection.updateOne(
+      {
+        _id: 'control',
+      },
+      {
         $set: {
           version: control.version,
           locked: control.locked,
         },
-      }, {
+      },
+      {
         upsert: true,
-      });
+      },
+    );
 
     if (updateResult && updateResult.result.ok) {
       return control;
@@ -403,18 +493,17 @@ export class Migration {
    * Returns the migration index in _list or throws if not found
    *
    * @private
-   * @param {any} version
+   * @param {string | number} version
    * @returns {number}
    * @memberof Migration
    */
-  private findIndexByVersion(version): number {
-    for (let i = 0; i < this._list.length; i++) {
-      if (this._list[i].version === version) {
+  private findIndexByVersion(version: string | number): number {
+    for (let i = 0; i < this.getMigrations().length; i++) {
+      if (this.getMigrations()[i].version === version) {
         return i;
       }
     }
 
     throw new Error('Can\'t find migration version ' + version);
   }
-
 }

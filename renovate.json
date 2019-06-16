@@ -13,6 +13,5 @@
   "automerge": true,
   "major": {
     "automerge": false
-  },
-  "bumpVersion": "patch"
+  }
 }
