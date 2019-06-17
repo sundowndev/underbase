@@ -46,11 +46,11 @@ const commands = {
 const argv = yargs
   .scriptName('underbase')
   .usage('Usage: $0 <command> [OPTIONS]')
-  .command('migrate <migration>', commands.migrate.describe)
-  .command('init', commands.init.describe)
-  .command('list', commands.list.describe)
-  .command('status', commands.status.describe)
-  .command('unlock', commands.unlock.describe)
+  .command('migrate <migration>', commands['migrate'].describe)
+  .command('init', commands['init'].describe)
+  .command('list', commands['list'].describe)
+  .command('status', commands['status'].describe)
+  .command('unlock', commands['unlock'].describe)
   .describe('config <path>', 'JSON configuration file path')
   .describe('db <url>', 'MongoDB connection URL')
   .describe('migrations-dir <path>', 'Migrations versions directory')
@@ -71,19 +71,15 @@ const argv = yargs
   .parse();
 
 let configFile = {} as IConfigFile;
-let workingDirectory = (argv.chdir as string) || process.cwd();
+const workingDirectory =
+  (argv.chdir as string) || (configFile.chdir as string) || process.cwd();
 
 if (argv.config) {
-  configFile = require(path.resolve(
-    path.join(workingDirectory as string, argv.config as string),
-  ));
-}
-
-if (!argv.chdir && configFile.chdir) {
-  workingDirectory = configFile.chdir;
+  configFile = require(path.resolve(argv.config as string));
 }
 
 const config = {
+  workingDirectory,
   // False disables logging
   logs: (argv.logs as boolean) || (configFile.logs as boolean) || true,
   // Null or a function
