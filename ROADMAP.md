@@ -27,19 +27,18 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [x] Allow array in iterate method ([#39](https://github.com/sundowndev/underbase/issues/39))
 - [x] Fix docker:test build exiting with code 0 when errored ([#29](https://github.com/sundowndev/underbase/issues/29))
 - [x] Init command
-- [ ] Config command
-- [ ] Improve migration organization; see object injection ([#55](https://github.com/sundowndev/underbase/issues/55))
-- [ ] Display a warning when migration up/down function is not an async function ([mgdb-migrator/issue#5](https://github.com/emmanuelbuah/mgdb-migrator/issues/5), see [this](https://stackoverflow.com/a/38510353))
+- [x] Improve migration organization; see object injection ([#55](https://github.com/sundowndev/underbase/issues/55))
+- [x] Display a warning when migration up/down function is not an async function ([mgdb-migrator/issue#5](https://github.com/emmanuelbuah/mgdb-migrator/issues/5), see [this](https://stackoverflow.com/a/38510353))
 - [ ] CLI: `--history` option to save migration history into a .log file
-- [ ] Rename `mongo-interface.ts` to `query-interface.ts`
+- [x] Rename `mongo-interface.ts` to `query-interface.ts`
 - [ ] Backup feature
+- [x] Create a license file
 
 ### `v1.0.0`
 
 - [ ] Improve CLI program
   - Create command
   - Template option
-- [ ] Create a license file
 - [ ] Improve documentation with better migration process explanation & guides
   - Organizing migrations
   - Working with snapshots
