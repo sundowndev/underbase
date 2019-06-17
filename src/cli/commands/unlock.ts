@@ -1,8 +1,8 @@
-import { setConfig } from '../common/utils';
+import { initMigrator } from '../common/utils';
 import { logger, timer } from '../common/utils';
 
 export default async ({ config }) => {
-  const migrator = await setConfig(config);
+  const migrator = await initMigrator(config);
 
   if (await migrator.isLocked()) {
     const time = timer();

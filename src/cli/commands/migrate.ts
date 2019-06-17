@@ -1,6 +1,6 @@
 import { create } from '../common/backup';
 import { IMigration } from '../common/interfaces';
-import { setConfig } from '../common/utils';
+import { initMigrator } from '../common/utils';
 import { exit, logger, timer } from '../common/utils';
 
 // Enable ES6 module for migrations files
@@ -19,7 +19,9 @@ export default async ({ config, versions, argv }) => {
 
   versions = versionsArray.map((v: number) => v.toFixed(1)) as string[];
 
-  const migrator = await setConfig(config);
+  versions.sort((a: number, b: number) => a - b);
+
+  const migrator = await initMigrator(config);
 
   versions.forEach(async (v: string) => {
     const migrationObj = (await require(`${config.migrationsDir}/${v}`)

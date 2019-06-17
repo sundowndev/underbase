@@ -2,7 +2,7 @@
 import { migrator } from '../../index';
 import { IConfigFile } from '../common/interfaces';
 
-export const setConfig = async (config: IConfigFile) => {
+export const initMigrator = async (config: IConfigFile) => {
   logger('info', 'Connecting to MongoDB...');
 
   await migrator.config(config); // Returns a promise
