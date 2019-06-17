@@ -315,20 +315,20 @@ export class Migration {
         migrate: async (migrations: any[]) => {
           const migrationsPromises = [];
 
-          migrations.forEach(migration => {
-            if (migration[direction].constructor.name !== 'AsyncFunction') {
+          migrations.forEach(childMigration => {
+            if (childMigration[direction].constructor.name !== 'AsyncFunction') {
               this.options.logger(
                 'warning',
                 'One of your up functions are not async',
-                `(${migration.describe || 'not described'})`,
+                `(${childMigration.describe || 'not described'})`,
               );
             }
 
-            if (migration.describe) {
-              this.options.logger(migration.describe);
+            if (childMigration.describe) {
+              this.options.logger(childMigration.describe);
             }
 
-            migrationsPromises.push(migration[direction](injectedObject));
+            migrationsPromises.push(childMigration[direction](injectedObject));
           });
 
           return Promise.all(migrationsPromises);

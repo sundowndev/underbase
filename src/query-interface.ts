@@ -34,10 +34,6 @@ export class QueryInterface {
     };
   }
 
-  public MongoClient(): Db {
-    return this._db;
-  }
-
   public collection(name: string): ICollection {
     const self = this;
     self.collectionName = name;
@@ -184,6 +180,10 @@ export class QueryInterface {
     } catch (error) {
       return new Error(error);
     }
+  }
+
+  private MongoClient(): Db {
+    return this._db;
   }
 
   private async cursor(query: object, cb: any): Promise<any> {
