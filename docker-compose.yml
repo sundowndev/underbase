@@ -9,7 +9,7 @@ services:
       - underbase-db
     environment:
       - 'DBURL=mongodb://underbase-db:27017/underbase-db'
-      - 'NODE_ENV=developoment'
+      - 'NODE_ENV=development'
     volumes:
       - '.:/usr/src/underbase'
     ports:
