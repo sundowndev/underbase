@@ -15,7 +15,7 @@ interface ICollection {
   update: (where: any, schema: any) => any;
 }
 
-export class MongoInterface {
+export class QueryInterface {
   public cursorOptions: any;
 
   private collectionName: string;
