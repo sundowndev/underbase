@@ -49,6 +49,7 @@ export interface IMigrationOptions {
   collectionName?: string;
   db: string | Db;
 }
+
 export interface IMigration {
   version: number;
   name: string;

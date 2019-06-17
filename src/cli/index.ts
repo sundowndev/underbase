@@ -1,46 +1,56 @@
 // tslint:disable:no-var-requires
 // tslint:disable:no-console
-
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as yargs from 'yargs';
 import { migrator } from '../index';
-import { create } from './backup';
-import { logger, timer } from './utils';
+import { IConfigFile } from './common/interfaces';
+import { exit, logger } from './common/utils';
 
-// Enable ES6 module for ES2015
+// Middlewares
+import * as validation from './middlewares/validation';
+
+// Commands
+import initCmd from './commands/init';
+import listCmd from './commands/list';
+import migrateCmd from './commands/migrate';
+import statusCmd from './commands/status';
+import unlockCmd from './commands/unlock';
+
+// Enable ES6 module for migrations files
 require = require('esm')(module);
 
-interface IConfigFile {
-  collectionName?: string;
-  backup?: boolean;
-  backupsDir?: string;
-  migrationsDir?: string;
-  db: string;
-  logs: boolean;
-  logger: any;
-  logIfLatest?: boolean;
-  chdir?: string;
-  mongodumpBinary: string;
-}
-
-interface IMigration {
-  version: number;
-  name: string;
-  up: (db: any) => Promise<any> | any;
-  down: (db: any) => Promise<any> | any;
-}
+const commands = {
+  migrate: {
+    describe: 'Initiate migration environment',
+    callback: migrateCmd,
+  },
+  init: {
+    describe: 'Initiate migration environment',
+    callback: initCmd,
+  },
+  list: {
+    describe: 'Show available migrations versions',
+    callback: listCmd,
+  },
+  status: {
+    describe: 'Show migrations status',
+    callback: statusCmd,
+  },
+  unlock: {
+    describe: 'Unlock migrations state',
+    callback: unlockCmd,
+  },
+};
 
 const argv = yargs
   .scriptName('underbase')
   .usage('Usage: $0 <command> [OPTIONS]')
-  .command('migrate <migration>', 'Execute migrations')
-  // .command('create <migration>', 'Create a new migration')
-  .command('init', 'Initiate migration environment')
-  .command('list', 'Show all migrations versions')
-  .command('status', 'Show migrations status')
-  .command('unlock', 'Unlock migrations state')
-  // .command('restore', 'Restore a backup archive')
+  .command('migrate <migration>', commands.migrate.describe)
+  .command('init', commands.init.describe)
+  .command('list', commands.list.describe)
+  .command('status', commands.status.describe)
+  .command('unlock', commands.unlock.describe)
   .describe('config <path>', 'JSON configuration file path')
   .describe('db <url>', 'MongoDB connection URL')
   .describe('migrations-dir <path>', 'Migrations versions directory')
@@ -51,7 +61,6 @@ const argv = yargs
   .describe('rerun', 'Force migrations execution')
   .describe('chdir <path>', 'Change the working directory')
   .describe('version', 'Show package version')
-  // .describe('template <file>', 'Template to use for new migration')
   .describe(
     'mongodumpBinary <path>',
     'Binary file for mongodump (it can be a docker exec command)',
@@ -113,135 +122,26 @@ const config = {
     'mongodump',
 } as IConfigFile;
 
-function exit() {
-  process.exit();
-}
-
-async function setConfig() {
-  logger('info', 'Connecting to MongoDB...');
-  await migrator.config(config); // Returns a promise
-}
-
 async function main() {
-  if (!argv._[0]) {
-    logger('error', 'Invalid command. Type --help to show available commands.');
-    exit();
-  }
+  validation.checkNoArgPassed(argv);
+  validation.checkMigrationDirExists(config);
+  validation.createbackupDir(config);
 
-  if (!fs.existsSync(config.migrationsDir)) {
-    logger('info', 'Migration directory does not exists. Please run underbase init.');
-  }
+  const versions = fs.existsSync(config.migrationsDir)
+    ? (fs
+        .readdirSync(config.migrationsDir)
+        .filter((v: string) => v.match(new RegExp(/^[\d].[\d]$/))) as string[])
+    : [];
 
-  if (!fs.existsSync(config.backupsDir) && config.backup) {
-    fs.mkdirpSync(config.backupsDir);
-    logger('info', 'Created backup directory.');
-  }
-
-  let versions = fs
-    .readdirSync(config.migrationsDir)
-    .filter((v: string) => v.match(new RegExp(/^[\d].[\d]$/))) as string[];
-
-  switch (argv._[0]) {
-    case 'migrate': {
-      const versionsArray = versions.map((v: string) =>
-        parseFloat(v),
-      ) as number[];
-
-      if (
-        argv.migration !== 0 &&
-        versionsArray.indexOf(parseFloat(argv.migration as string)) < 0
-      ) {
-        logger('error', 'This version does not exists.');
-        exit();
-      }
-
-      versions = versionsArray.map((v: number) => v.toFixed(1)) as string[];
-
-      await setConfig();
-
-      versions.forEach(async (v: string) => {
-        const migrationObj = (await require(`${config.migrationsDir}/${v}`)
-          .default) as IMigration;
-
-        await migrator.add(migrationObj);
-      });
-
-      if (config.backup) {
-        const currentVersion = await migrator.getVersion();
-
-        await create(config.mongodumpBinary, currentVersion, config.backupsDir);
-      }
-
-      const time = timer();
-
-      if (argv.rerun) {
-        await migrator.migrateTo(`${argv.migration},rerun`);
-      } else {
-        await migrator.migrateTo(argv.migration as string);
-      }
-
-      logger('info', `Time spent: ${time.spent()} sec`);
-
-      break;
-    }
-    case 'list': {
-      logger('info', 'Versions list based on folders');
-
-      versions.forEach((v: string) => console.log(v));
-
-      break;
-    }
-    case 'status': {
-      await setConfig();
-
-      const currentVersion = await migrator.getVersion();
-      const isLocked = (await migrator.isLocked()) ? 'locked' : 'not locked';
-
-      logger('info', `Current version is ${currentVersion}`);
-      logger('info', `Migration state is ${isLocked}`);
-
-      break;
-    }
-    case 'unlock': {
-      await setConfig();
-
-      if (await migrator.isLocked()) {
-        const time = timer();
-
-        await migrator.unlock(); // Returns a promise
-
-        logger('info', `Migration state unlocked.`);
-
-        logger('info', `Time spent: ${time.spent()} sec`);
-      } else {
-        logger('info', `Migration state is already unlocked.`);
-      }
-
-      break;
-    }
-    case 'init': {
-      if (!fs.existsSync(config.migrationsDir)) {
-        await fs.mkdirpSync(config.migrationsDir);
-        logger('info', 'Created migration directory.');
-      } else {
-        logger('info', 'Migration directory already exists.');
-      }
-
-      if (!fs.existsSync(config.backupsDir) && config.backup) {
-        await fs.mkdirpSync(config.backupsDir);
-        logger('info', 'Created backup directory.');
-      }
-
-      logger('info', 'Successfully initialized migration environment.');
-      break;
-    }
-    default: {
-      logger(
-        'error',
-        'Invalid command. Type --help to show available commands.',
-      );
-      break;
-    }
+  if (Object.keys(commands).indexOf(argv._[0]) > -1) {
+    await commands[argv._[0]].callback({
+      config,
+      versions,
+      argv,
+      migrator,
+    });
+  } else {
+    logger('info', 'Invalid command. Use --help to show available commands.');
   }
 
   exit();

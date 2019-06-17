@@ -2,7 +2,7 @@
 // tslint:disable:forin
 
 import { Collection, Db } from 'mongodb';
-import { logger } from './cli/utils';
+import { logger } from './cli/common/utils';
 
 interface ICollection {
   applySchema: (schema: any) => any;
