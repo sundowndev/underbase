@@ -32,6 +32,7 @@
 - Provide MongoDB query interface
 - Handle scalable environments
 <!-- - Backup restoration- Flexible & easy to configure -->
+
 ## Table of content
 
 - Getting started
@@ -65,13 +66,7 @@ See [ROADMAP.md](ROADMAP.md)
 
 ## Support
 
-If you like this project and would like to support my work, please consider supporting me on Patreon 👍 Thank you!
-
-<p>
-  <a href="https://www.patreon.com/sundowndev">
-    <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-  </a>
-</p>
+Underbase is being tested in continuous integration using node 8, 10 and 11, the latest version of the mongodb nodejs driver and the latest version of the MongoDB docker image. Dependencies are checked as soon as they are changed.
 
 ## Credits
 
