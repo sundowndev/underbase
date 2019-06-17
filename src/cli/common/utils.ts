@@ -10,8 +10,13 @@ export const initMigrator = async (config: IConfigFile) => {
   return migrator;
 };
 
-export const logger = (level: string, ...arg: string[]) =>
-  console.log(`[${level.toUpperCase()}]`, ...arg);
+export const logger = (level: string, ...args: string[]) => {
+  if (!args[0]) {
+    console.log(level);
+  } else {
+    console.log(`[${level.toUpperCase()}]`, ...args);
+  }
+};
 
 export const timer = () => {
   const t0 = new Date().getTime();
