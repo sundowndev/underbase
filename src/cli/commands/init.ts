@@ -11,8 +11,7 @@ export default async ({ config }) => {
 
   if (!fs.existsSync(config.backupsDir) && config.backup) {
     await fs.mkdirpSync(config.backupsDir);
+    
     logger('info', 'Created backup directory.');
   }
-
-  logger('info', 'Successfully initialized migration environment.');
 };
