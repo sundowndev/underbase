@@ -1,6 +1,6 @@
 {
   "name": "underbase",
-  "version": "1.0.5",
+  "version": "1.0.4",
   "description": "MongoDB schema and data migration library",
   "main": "dist/index.js",
   "bin": "dist/cli.js",
