@@ -29,7 +29,7 @@ import { Promise as BluebirdPromise } from 'bluebird';
 import * as _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
-import { MongoInterface } from './mongo-interface';
+import { MongoInterface } from './query-interface';
 
 const check = typeCheck;
 
