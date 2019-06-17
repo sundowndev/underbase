@@ -29,33 +29,10 @@ import { Promise as BluebirdPromise } from 'bluebird';
 import * as _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
-import { MongoInterface } from './query-interface';
+import { IMigration, IMigrationOptions } from './cli/common/interfaces';
+import { QueryInterface } from './query-interface';
 
 const check = typeCheck;
-
-export type SyslogLevels =
-  | 'debug'
-  | 'info'
-  | 'notice'
-  | 'warning'
-  | 'error'
-  | 'crit'
-  | 'alert';
-
-export interface IMigrationOptions {
-  logs?: boolean;
-  logger?: (level: SyslogLevels, ...args: any[]) => void;
-  logIfLatest?: boolean;
-  collectionName?: string;
-  db: string | Db;
-}
-
-export interface IMigration {
-  version: number;
-  name: string;
-  up: (db: MongoInterface) => Promise<any> | any;
-  down: (db: MongoInterface) => Promise<any> | any;
-}
 
 export class Migration {
   private defaultMigration = {
@@ -141,14 +118,18 @@ export class Migration {
       this.options.logger = (level: string, ...args) =>
         console.log(level, ...args);
     }
+
     if (this.options.logs === false) {
       // tslint:disable-next-line:no-empty
       this.options.logger = (level: string, ...args) => {};
     }
+
     if (!(this._db instanceof Db) && !this.options.db) {
       throw new ReferenceError('Option.db canno\'t be null');
     }
+
     let db: string | Db;
+
     if (typeof this.options.db === 'string') {
       const client = await MongoClient.connect(this.options.db, {
         promiseLibrary: BluebirdPromise,
@@ -158,6 +139,7 @@ export class Migration {
     } else {
       db = this.options.db;
     }
+
     this._collection = db.collection(this.options.collectionName);
     this._db = db;
   }
@@ -311,20 +293,51 @@ export class Migration {
         );
       }
 
-      function maybeName() {
-        return migration.name ? ' (' + migration.name + ')' : '';
-      }
-
       this.options.logger(
         'info',
-        'Running ' +
-          direction +
-          '() on version ' +
-          migration.version +
-          maybeName(),
+        'Running ' + direction + '() on version ' + migration.version,
       );
 
-      await migration[direction](new MongoInterface(self._db));
+      if (migration.describe) {
+        this.options.logger(migration.describe);
+      }
+
+      if (migration[direction].constructor.name !== 'AsyncFunction') {
+        this.options.logger(
+          'warning',
+          'One of your up functions are not async',
+          `(${migration.describe || 'not described'})`,
+        );
+      }
+
+      const injectedObject = {
+        MongoClient: this._db,
+        migrate: async (migrations: any[]) => {
+          const migrationsPromises = [];
+
+          migrations.forEach(migration => {
+            if (migration[direction].constructor.name !== 'AsyncFunction') {
+              this.options.logger(
+                'warning',
+                'One of your up functions are not async',
+                `(${migration.describe || 'not described'})`,
+              );
+            }
+
+            if (migration.describe) {
+              this.options.logger(migration.describe);
+            }
+
+            migrationsPromises.push(migration[direction](injectedObject));
+          });
+
+          return Promise.all(migrationsPromises);
+        },
+        queryInterface: new QueryInterface(self._db),
+        logger: this.options.logger,
+      };
+
+      await migration[direction](injectedObject);
     };
 
     // Returns true if lock was acquired.
