@@ -1,3 +1,23 @@
+import { Db } from 'mongodb';
+import { QueryInterface } from '../../query-interface';
+
+export type SyslogLevels =
+  | 'debug'
+  | 'info'
+  | 'notice'
+  | 'warning'
+  | 'error'
+  | 'crit'
+  | 'alert';
+
+export interface IMigrationOptions {
+  logs?: boolean;
+  logger?: (level: SyslogLevels, ...args: any[]) => void;
+  logIfLatest?: boolean;
+  collectionName?: string;
+  db: string | Db;
+}
+
 export interface IConfigFile {
   collectionName?: string;
   backup?: boolean;
@@ -13,7 +33,7 @@ export interface IConfigFile {
 
 export interface IMigration {
   version: number;
-  name: string;
-  up: (db: any) => Promise<any> | any;
-  down: (db: any) => Promise<any> | any;
+  describe: string;
+  up: (db: QueryInterface) => Promise<any> | any;
+  down: (db: QueryInterface) => Promise<any> | any;
 }

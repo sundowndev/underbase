@@ -1,4 +1,5 @@
-import { IMigrationOptions, Migration, SyslogLevels } from './migration';
+import { IMigrationOptions, SyslogLevels } from './cli/common/interfaces';
+import { Migration } from './migration';
 
 const migrator = new Migration();
 
