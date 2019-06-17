@@ -11,6 +11,7 @@ export default async ({ config, versions, argv }) => {
 
   if (
     argv.migration !== 0 &&
+    argv.migration !== 'latest' &&
     versionsArray.indexOf(parseFloat(argv.migration as string)) < 0
   ) {
     logger('error', 'This version does not exists.');
@@ -39,7 +40,7 @@ export default async ({ config, versions, argv }) => {
   const time = timer();
 
   if (argv.rerun) {
-    await migrator.migrateTo(`${argv.migration},rerun`);
+    await migrator.migrateTo(`${argv.migration as string},rerun`);
   } else {
     await migrator.migrateTo(argv.migration as string);
   }
