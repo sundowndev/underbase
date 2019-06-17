@@ -50,7 +50,7 @@ describe('INTEGRATION - Migration', () => {
 
     migrationsList.push({
       version: 1,
-      name: 'Version 1',
+      describe: 'Version 1',
       up: db => {
         return 'done';
       },
@@ -63,7 +63,7 @@ describe('INTEGRATION - Migration', () => {
 
     migrationsList.push({
       version: 2.0,
-      name: 'Version 2',
+      describe: 'Version 2',
       up: db => {
         return 'done';
       },
@@ -147,7 +147,7 @@ describe('INTEGRATION - Migration', () => {
       beforeEach(() => {
         migrator.add({
           version: 3.0,
-          name: 'Version 3.',
+          describe: 'Version 3.',
           up: async db => {
             return 'done';
           },
@@ -158,7 +158,7 @@ describe('INTEGRATION - Migration', () => {
 
         migrator.add({
           version: 4,
-          name: 'Version 4',
+          describe: 'Version 4',
           up: BlueBirdPromise.method(db => {
             return 'done';
           }),
@@ -189,14 +189,14 @@ describe('INTEGRATION - Migration', () => {
       beforeEach(() => {
         migrator.add({
           version: 3,
-          name: 'Version 3.',
+          describe: 'Version 3.',
           up: async db => {},
           down: async db => {},
         });
 
         migrator.add({
           version: 4,
-          name: 'Version 4.',
+          describe: 'Version 4.',
           up: async db => {},
           down: async db => {
             throw new Error('Something went wrong');
@@ -205,7 +205,7 @@ describe('INTEGRATION - Migration', () => {
 
         migrator.add({
           version: 5,
-          name: 'Version 5.',
+          describe: 'Version 5.',
           up: async db => {
             throw new Error('Something went wrong');
           },
@@ -287,7 +287,7 @@ describe('INTEGRATION - Migration', () => {
         expect(m).toHaveProperty('up');
 
         if (m.version !== 0) {
-          expect(m).toHaveProperty('name');
+          expect(m).toHaveProperty('describe');
           expect(m).toHaveProperty('down');
         }
       });
