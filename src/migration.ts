@@ -317,25 +317,27 @@ export class Migration {
         MongoClient: this._db as Db,
         migrate: async (migrations: any[]) => {
           for (const i in migrations) {
-            if (
-              migrations[i][direction].constructor.name !== 'AsyncFunction' &&
-              migrations[i][direction].constructor.name !== 'Promise'
-            ) {
-              this.options.logger(
-                'warning',
-                `One of the ${direction} functions is nor Async or Promise`,
-                `(${migrations[i].describe || 'not described'})`,
-              );
-            }
+            if (migrations.hasOwnProperty(i)) {
+              if (
+                migrations[i][direction].constructor.name !== 'AsyncFunction' &&
+                migrations[i][direction].constructor.name !== 'Promise'
+              ) {
+                this.options.logger(
+                  'warning',
+                  `One of the ${direction} functions is nor Async or Promise`,
+                  `(${migrations[i].describe || 'not described'})`,
+                );
+              }
 
-            if (migrations[i].describe) {
-              this.options.logger(migrations[i].describe);
-            }
+              if (migrations[i].describe) {
+                this.options.logger(migrations[i].describe);
+              }
 
-            try {
-              await migrations[i][direction](injectedObject);
-            } catch (error) {
-              throw new Error(error);
+              try {
+                await migrations[i][direction](injectedObject);
+              } catch (error) {
+                throw new Error(error);
+              }
             }
           }
         },
