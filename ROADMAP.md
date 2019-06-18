@@ -29,29 +29,16 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [x] Init command
 - [x] Improve migration organization; see object injection ([#55](https://github.com/sundowndev/underbase/issues/55))
 - [x] Display a warning when migration up/down function is not an async function ([mgdb-migrator/issue#5](https://github.com/emmanuelbuah/mgdb-migrator/issues/5), see [this](https://stackoverflow.com/a/38510353))
-- [ ] CLI: `--history` option to save migration history into a .log file
 - [x] Rename `mongo-interface.ts` to `query-interface.ts`
-- [ ] Backup feature
 - [x] Create a license file
+- [ ] Backup feature
+- [ ] CLI: `--history` option to save migration history into a .log file
 
 ### `v1.0.0`
 
-- [ ] Improve CLI program
-  - Create command
-  - Template option
 - [ ] Improve documentation with better migration process explanation & guides
   - Organizing migrations
-  - Working with snapshots
+  - Working with backups
   - Migrating with frameworks
   - Continuous integration/delivery
-<!--- [ ] Addtional query interface methods
-  - $currentDate
-  - $inc
-  - $min
-  - $max
-  - $mul
-  - $setOnInsert-->
-
-### `v2.0.0`
-
-- [ ] Create our own mongodump library
+  - Usage with Typescript
