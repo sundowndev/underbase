@@ -33,6 +33,7 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [x] Create a license file
 - [ ] Backup feature
 - [ ] CLI: `--history` option to save migration history into a .log file
+- [ ] Move `src` to `lib` and `dist` to `build`
 
 ### `v1.0.0`
 
