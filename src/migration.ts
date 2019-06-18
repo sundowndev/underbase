@@ -384,7 +384,7 @@ export class Migration {
 
     if (rerun) {
       this.options.logger('info', 'Rerunning version ' + version);
-      await migrate('up', version);
+      await migrate('up', this.findIndexByVersion(version));
       this.options.logger('info', 'Finished migrating.');
       await unlock();
       return;
@@ -422,7 +422,7 @@ export class Migration {
         } catch (e) {
           this.options.logger(
             'error',
-            `Encountered an error while migrating from ${i} to ${i + 1}`,
+            `Encountered an error while migrating from ${currentVersion} to ${version}`,
           );
           throw e;
         }
@@ -436,7 +436,7 @@ export class Migration {
         } catch (e) {
           this.options.logger(
             'error',
-            `Encountered an error while migrating from ${i} to ${i - 1}`,
+            `Encountered an error while migrating from ${currentVersion} to ${version}`,
           );
           throw e;
         }
