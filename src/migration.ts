@@ -302,42 +302,52 @@ export class Migration {
         this.options.logger(migration.describe);
       }
 
-      if (migration[direction].constructor.name !== 'AsyncFunction') {
+      if (
+        migration[direction].constructor.name !== 'AsyncFunction' &&
+        migration[direction].constructor.name !== 'Promise'
+      ) {
         this.options.logger(
           'warning',
-          'One of your up functions are not async',
+          `One of the ${direction} functions is nor Async or Promise`,
           `(${migration.describe || 'not described'})`,
         );
       }
 
       const injectedObject = {
-        MongoClient: this._db,
+        MongoClient: this._db as Db,
         migrate: async (migrations: any[]) => {
-          const migrationsPromises = [];
-
-          migrations.forEach(childMigration => {
-            if (childMigration[direction].constructor.name !== 'AsyncFunction') {
+          for (const i in migrations) {
+            if (
+              migrations[i][direction].constructor.name !== 'AsyncFunction' &&
+              migrations[i][direction].constructor.name !== 'Promise'
+            ) {
               this.options.logger(
                 'warning',
-                'One of your up functions are not async',
-                `(${childMigration.describe || 'not described'})`,
+                `One of the ${direction} functions is nor Async or Promise`,
+                `(${migrations[i].describe || 'not described'})`,
               );
             }
 
-            if (childMigration.describe) {
-              this.options.logger(childMigration.describe);
+            if (migrations[i].describe) {
+              this.options.logger(migrations[i].describe);
             }
 
-            migrationsPromises.push(childMigration[direction](injectedObject));
-          });
-
-          return Promise.all(migrationsPromises);
+            try {
+              await migrations[i][direction](injectedObject);
+            } catch (error) {
+              throw new Error(error);
+            }
+          }
         },
-        queryInterface: new QueryInterface(self._db),
+        queryInterface: new QueryInterface(self._db) as QueryInterface,
         logger: this.options.logger,
       };
 
-      await migration[direction](injectedObject);
+      try {
+        await migration[direction](injectedObject);
+      } catch (error) {
+        throw new Error(error);
+      }
     };
 
     // Returns true if lock was acquired.
