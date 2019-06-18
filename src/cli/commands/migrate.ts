@@ -1,4 +1,4 @@
-import { create } from '../common/backup';
+import * as backup from '../common/backup';
 import { IMigration } from '../common/interfaces';
 import { initMigrator } from '../common/utils';
 import { exit, logger, timer } from '../common/utils';
@@ -25,24 +25,36 @@ export default async ({ config, versions, argv }) => {
   const migrator = await initMigrator(config);
 
   versions.forEach(async (v: string) => {
-    const migrationObj = (await require(`${config.migrationsDir}/${v}`)
-      .default) as IMigration;
+    try {
+      const migrationObj = (await require(`${config.migrationsDir}/${v}`)
+        .default) as IMigration;
 
-    await migrator.add(migrationObj);
+      await migrator.add(migrationObj);
+    } catch (error) {
+      throw new Error(error);
+    }
   });
 
   if (config.backup) {
     const currentVersion = await migrator.getVersion();
 
-    await create(config.mongodumpBinary, currentVersion, config.backupsDir);
+    await backup.create(
+      config.mongodumpBinary,
+      currentVersion,
+      config.backupsDir,
+    );
   }
 
   const time = timer();
 
-  if (argv.rerun) {
-    await migrator.migrateTo(`${argv.migration as string},rerun`);
-  } else {
-    await migrator.migrateTo(argv.migration as string);
+  try {
+    await migrator.migrateTo(
+      argv.rerun
+        ? `${argv.migration as string},rerun`
+        : (argv.migration as string),
+    );
+  } catch (error) {
+    throw new Error(error);
   }
 
   logger('info', `Time spent: ${time.spent()} sec`);
