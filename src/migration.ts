@@ -30,6 +30,7 @@ import * as _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
 import { IMigration, IMigrationOptions } from './cli/common/interfaces';
+import { logger } from './cli/common/utils';
 import { QueryInterface } from './query-interface';
 
 const check = typeCheck;
@@ -115,8 +116,7 @@ export class Migration {
     this.options = Object.assign({}, this.options, opts);
 
     if (!this.options.logger && this.options.logs) {
-      this.options.logger = (level: string, ...args) =>
-        console.log(level, ...args);
+      this.options.logger = logger;
     }
 
     if (this.options.logs === false) {
