@@ -2,7 +2,7 @@
 // tslint:disable:no-empty
 
 import { Collection, Db, MongoClient } from 'mongodb';
-import { QueryInterface } from '../../src/query-interface';
+import { QueryInterface } from '../../lib/query-interface';
 
 describe('UNIT - Query interface', () => {
   beforeAll(async () => {});

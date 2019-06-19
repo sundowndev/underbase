@@ -3,7 +3,7 @@
 
 import { Promise as BlueBirdPromise } from 'bluebird';
 import { Db, MongoClient } from 'mongodb';
-import { Migration } from '../../src';
+import { Migration } from '../../lib';
 
 let dbClient: Db;
 const collectionName = '_migration';
@@ -81,7 +81,7 @@ describe('INTEGRATION - Migration', () => {
 
   describe('Build', () => {
     test('build file', async () => {
-      const migratorObj = require('../../dist').migrator;
+      const migratorObj = require('../../build').migrator;
 
       expect(migratorObj).toHaveProperty('defaultMigration');
       expect(migratorObj).toHaveProperty('_list');

@@ -4,7 +4,7 @@ const nodeExternals = require('webpack-node-externals');
 const cli = {
   target: 'node',
   externals: [nodeExternals()],
-  entry: path.resolve(__dirname, './src/cli'),
+  entry: path.resolve(__dirname, './lib/cli'),
   module: {
     rules: [
       {
@@ -19,14 +19,14 @@ const cli = {
   },
   output: {
     filename: 'cli.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
   },
 };
 
 const lib = {
   target: 'node',
   externals: [nodeExternals()],
-  entry: path.resolve(__dirname, './src/index.ts'),
+  entry: path.resolve(__dirname, './lib/index.ts'),
   module: {
     rules: [
       {
@@ -41,7 +41,7 @@ const lib = {
   },
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
     library: 'migrator',
     libraryTarget: 'umd',
   },
