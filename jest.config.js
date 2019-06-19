@@ -4,6 +4,6 @@ module.exports = {
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
   collectCoverageFrom: [
-    './src/**/*.ts',
+    './lib/**/*.ts',
   ],
 };

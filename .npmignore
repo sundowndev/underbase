@@ -1,5 +1,5 @@
 examples/
-src/
+lib/
 coverage/
 .vscode/
 docker-compose.yml
