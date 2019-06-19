@@ -16,7 +16,8 @@
     "test:debug": "cross-env NODE_ENV=test node --inspect=0.0.0.0:5857 jest ./test  --coverage --useStderr --forceExit --detectOpenHandles",
     "test:watch": "cross-env NODE_ENV=test jest ./test --watchAll --useStderr --coverage",
     "test:debug:watch": "cross-env NODE_ENV=test node --inspect=0.0.0.0:5857 jest ./test --coverage --useStderr",
-    "docs:serve": "./node_modules/docsify-cli/bin/docsify serve ./docs"
+    "docs:serve": "./node_modules/docsify-cli/bin/docsify serve ./docs",
+    "docs:ts": "typedoc --out ts-docs ./lib --theme default --readme none --exclude './lib/cli/**/*.ts'"
   },
   "author": "Raphaël Cerveaux <raphael@crvx.fr> (https://twitter.com/sundowndev)",
   "repository": {
@@ -63,6 +64,7 @@
     "tslint": "5.14.0",
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "6.1.0",
+    "typedoc": "^0.14.2",
     "typescript": "3.3.1",
     "vrsource-tslint-rules": "6.0.0",
     "webpack": "4.34.0",
