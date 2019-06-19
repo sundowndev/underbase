@@ -1,5 +1,5 @@
 import { Db } from 'mongodb';
-import { QueryInterface } from '../../query-interface';
+import { QueryInterface } from '../../queryInterface';
 
 export type SyslogLevels =
   | 'debug'
