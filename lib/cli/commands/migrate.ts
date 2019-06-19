@@ -1,5 +1,5 @@
 import * as backup from '../common/backup';
-import { IMigration } from '../common/interfaces';
+import { IMigration } from '../../interfaces';
 import { initMigrator } from '../common/utils';
 import { exit, logger, timer } from '../common/utils';
 

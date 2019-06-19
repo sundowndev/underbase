@@ -29,8 +29,8 @@ import { Promise as BluebirdPromise } from 'bluebird';
 import * as _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
-import { IMigration, IMigrationOptions } from './cli/common/interfaces';
 import { logger } from './cli/common/utils';
+import { IMigration, IMigrationOptions } from './interfaces';
 import { QueryInterface } from './queryInterface';
 
 const check = typeCheck;

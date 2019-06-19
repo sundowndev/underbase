@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra';
-import { IConfigFile } from '../common/interfaces';
+import { IConfigFile } from '../../interfaces';
 import { exit, logger } from '../common/utils';
 
 export const checkNoArgPassed = (argv: any) => {

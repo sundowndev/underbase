@@ -1,6 +1,6 @@
 // tslint:disable:no-console
 import { migrator } from '../../index';
-import { IConfigFile } from '../common/interfaces';
+import { IConfigFile } from '../../interfaces';
 
 export const initMigrator = async (config: IConfigFile) => {
   logger('info', 'Connecting to MongoDB...');

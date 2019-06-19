@@ -4,7 +4,7 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as yargs from 'yargs';
 import { migrator } from '../index';
-import { IConfigFile } from './common/interfaces';
+import { IConfigFile } from '../interfaces';
 import { exit, logger } from './common/utils';
 
 // Middlewares
