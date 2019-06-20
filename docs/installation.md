@@ -3,10 +3,6 @@ id: installation
 title: Installation
 ---
 
-## CLI usage
-
-### Installation
-
 First, install the cli app using npm or yarn.
 
 It is recommended to install `underbase` globally :
@@ -40,14 +36,4 @@ Usage: underbase <command> [OPTIONS]
 [...]
 ```
 
-## Module usage
-
-### Installation
-
-Install the Underbase library :
-
-```bash
-npm i underbase --save-dev
-```
-
-See [module usage](module-usage) to learn how to use the module.
+See [module usage](module-usage) to learn how to use the library as a module.
