@@ -4,7 +4,7 @@
         <title>Underbase Blog</title>
         <link>https://sundowndev.github.io/underbase/blog</link>
         <description>The best place to stay up-to-date with the latest Underbase news and events.</description>
-        <lastBuildDate>Mon, 10 Apr 2017 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 20 Jun 2019 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -14,20 +14,11 @@
         </image>
         <copyright>Copyright © 2019 Your Name or Your Company Name</copyright>
         <item>
-            <title><![CDATA[New Blog Post]]></title>
-            <link>https://sundowndev.github.io/underbase/blog/2017/04/10/blog-post-two.html</link>
-            <guid>https://sundowndev.github.io/underbase/blog/2017/04/10/blog-post-two.html</guid>
-            <pubDate>Mon, 10 Apr 2017 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum massa eget nulla aliquet sagittis. Proin odio tortor, vulputate ut odio in, ultrices ultricies augue. Cras ornare ultrices lorem malesuada iaculis. Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.</p>
-]]></description>
-        </item>
-        <item>
-            <title><![CDATA[Blog Title]]></title>
-            <link>https://sundowndev.github.io/underbase/blog/2016/03/11/blog-post.html</link>
-            <guid>https://sundowndev.github.io/underbase/blog/2016/03/11/blog-post.html</guid>
-            <pubDate>Fri, 11 Mar 2016 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum massa eget nulla aliquet sagittis. Proin odio tortor, vulputate ut odio in, ultrices ultricies augue. Cras ornare ultrices lorem malesuada iaculis. Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.</p>
-]]></description>
+            <title><![CDATA[v1.0.0 release]]></title>
+            <link>https://sundowndev.github.io/underbase/blog/2019/06/20/v1.0.0.html</link>
+            <guid>https://sundowndev.github.io/underbase/blog/2019/06/20/v1.0.0.html</guid>
+            <pubDate>Thu, 20 Jun 2019 06:00:00 GMT</pubDate>
+            <description><![CDATA[<ul> <li>Added time spent while executing migration for CLI usage (<a href="https://github.com/sundowndev/underbase/issues/42">#42</a>)</li> <li>Allow array in unset query interface method (<a href="https://github.com/sundowndev/underbase/issues/39">#39</a>)</li> <li>Fix docker:test build exiting with code 0 when errored in TravisCI (<a href="https://github.com/sundowndev/underbase/issues/29">#29</a>)</li> <li>Created init command</li> <li>Improved migration organization with objec...</li></ul>]]></description>
         </item>
     </channel>
 </rss>
