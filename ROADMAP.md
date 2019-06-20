@@ -31,15 +31,15 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [x] Display a warning when migration up/down function is not an async function ([mgdb-migrator/issue#5](https://github.com/emmanuelbuah/mgdb-migrator/issues/5), see [this](https://stackoverflow.com/a/38510353))
 - [x] Rename `mongo-interface.ts` to `query-interface.ts`
 - [x] Create a license file
+- [x] Move `src` to `lib` and `dist` to `build`
 - [ ] Backup feature
 - [ ] CLI: `--history` option to save migration history into a .log file
-- [ ] Move `src` to `lib` and `dist` to `build`
 
 ### `v1.0.0`
 
 - [ ] Improve documentation with better migration process explanation & guides
   - Organizing migrations
   - Working with backups
-  - Migrating with frameworks
-  - Continuous integration/delivery
+  <!-- Migrating with frameworks-->
+  - Working with continuous deployment
   - Usage with Typescript
