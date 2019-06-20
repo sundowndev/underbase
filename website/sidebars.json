@@ -1,0 +1,14 @@
+{
+  "docs": {
+    "Get started": [
+      "installation",
+      "configuration",
+      "writting-migrations",
+      "advanced",
+      "module-usage",
+      "troubleshooting"
+    ],
+    "Guides": ["organize"],
+    "API": ["api", "query-api", "api-dev"]
+  }
+}

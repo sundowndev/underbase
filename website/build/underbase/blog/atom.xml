@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://sundowndev.github.io/underbase/blog</id>
+    <title>Underbase Blog</title>
+    <updated>2017-04-10T06:00:00Z</updated>
+    <generator>Feed for Node.js</generator>
+    <link rel="alternate" href="https://sundowndev.github.io/underbase/blog"/>
+    <subtitle>The best place to stay up-to-date with the latest Underbase news and events.</subtitle>
+    <logo>https://sundowndev.github.io/underbase/img/logo.svg</logo>
+    <rights>Copyright © 2019 Your Name or Your Company Name</rights>
+    <entry>
+        <title type="html"><![CDATA[New Blog Post]]></title>
+        <id>https://sundowndev.github.io/underbase/blog/2017/04/10/blog-post-two.html</id>
+        <link href="https://sundowndev.github.io/underbase/blog/2017/04/10/blog-post-two.html">
+        </link>
+        <updated>2017-04-10T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum massa eget nulla aliquet sagittis. Proin odio tortor, vulputate ut odio in, ultrices ultricies augue. Cras ornare ultrices lorem malesuada iaculis. Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.</p>
+]]></summary>
+        <author>
+            <name>Blog Author</name>
+            <uri>http://twitter.com/</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Blog Title]]></title>
+        <id>https://sundowndev.github.io/underbase/blog/2016/03/11/blog-post.html</id>
+        <link href="https://sundowndev.github.io/underbase/blog/2016/03/11/blog-post.html">
+        </link>
+        <updated>2016-03-11T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum massa eget nulla aliquet sagittis. Proin odio tortor, vulputate ut odio in, ultrices ultricies augue. Cras ornare ultrices lorem malesuada iaculis. Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.</p>
+]]></summary>
+        <author>
+            <name>Blog Author</name>
+            <uri>http://twitter.com/</uri>
+        </author>
+    </entry>
+</feed>
