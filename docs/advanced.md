@@ -45,13 +45,15 @@ migrator.add({
   up: Promise.method(function({ MongoClient, Query, Migrate, Logger }) {
     // use `MongoClient`(mongo driver Db instance) for migration setup to version 1.
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
-    return MongoClient.collections('someCollection')....
+    // Remember MongoClient was Promisified!
+    const allUsers = MongoClient.collections('Users').find({});
   }),
   down: Promise.method(function({ MongoClient, Query, Migrate, Logger }) {
     // use `MongoClient`(mongo driver Db instance) for migration setup to version 0
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
-    return MongoClient.collections('someCollection')....
-  })
+    // Remember MongoClient was Promisified!
+    const allUsers = MongoClient.collections('Users').find({});
+  }),
 });
 ```
 
@@ -64,12 +66,14 @@ migrator.add({
   up: async function({ MongoClient, Query, Migrate, Logger }) {
     // use `MongoClient`(mongo driver Db instance) for migration setup to version 2
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
-     await MongoClient.collections('someCollection')....
+    // Remember MongoClient was Promisified!
+    const allUsers = await MongoClient.collections('Users').find({});
   },
   down: async function({ MongoClient, Query, Migrate, Logger }) {
     // use `MongoClient`(mongo driver Db instance) for migration setup to version 1
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
-    await MongoClient.collections('someCollection')....
-  }
+    // Remember MongoClient was Promisified!
+    const allUsers = await MongoClient.collections('Users').find({});
+  },
 });
 ```

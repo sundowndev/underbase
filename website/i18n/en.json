@@ -17,11 +17,20 @@
       "query-api": {
         "title": "Query Interface API reference"
       },
+      "backups": {
+        "title": "Working with backups"
+      },
       "configuration": {
         "title": "Configuration"
       },
+      "continuous-deployment": {
+        "title": "Working with continuous deployment"
+      },
       "installation": {
         "title": "Installation"
+      },
+      "logging": {
+        "title": "Logging"
       },
       "module-usage": {
         "title": "Module usage"

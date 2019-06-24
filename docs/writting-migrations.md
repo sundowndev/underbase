@@ -5,7 +5,13 @@ title: Writting migrations
 
 Now underbase is configured as your needs, start writting migrations !
 
-By default, the CLI tool automatically support ES6 for migrations files. You don't have to use Babel or such things. To start, let's create a new version and a migration file :
+By default, the CLI tool automatically support ES6 for migrations files. You don't have to use Babel. To start, create the migrations folder :
+
+```shell
+underbase init
+```
+
+Let's create a new version and a migration file :
 
 ```shell
 mkdir ./migrations/1.0
@@ -15,7 +21,7 @@ touch ./migrations/1.0/index.js
 The entry file for our new version will look like this. Underbase always need an index file to run migrations.
 
 ```js
-// index.js
+// migrations/1.0/index.js
 import users from './users';
 
 export default {
@@ -36,8 +42,8 @@ export default {
 };
 ```
 
-To run this migration, use the `migrate` :
+To run this migration, use the `migrate` command :
 
 ```shell
-underbase --config config.js migrate 1.0
+underbase migrate 1.0 --config config.js
 ```

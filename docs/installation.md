@@ -25,15 +25,9 @@ yarn add underbase --dev
 ```bash
 underbase --help
 # or...
-./node_modules/underbase/dist/src/cli.js --help
+./node_modules/underbase/build/cli.js --help
 ```
 
-It should output this message :
-
-```bash
-Usage: underbase <command> [OPTIONS]
-
-[...]
-```
+It should output the help message.
 
 See [module usage](module-usage) to learn how to use the library as a module.

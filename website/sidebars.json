@@ -6,9 +6,15 @@
       "writting-migrations",
       "advanced",
       "module-usage",
+      "logging",
       "troubleshooting"
     ],
-    "Guides": ["organize"],
+    "Guides": [
+      "organize",
+      "backups",
+      "continuous-deployment",
+      "typescript-usage"
+    ],
     "API": ["api", "query-api", "api-dev"]
   }
 }
