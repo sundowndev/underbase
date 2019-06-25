@@ -9,9 +9,9 @@
     <logo>https://sundowndev.github.io/underbase/img/logo.svg</logo>
     <rights>Copyright © 2019 Your Name or Your Company Name</rights>
     <entry>
-        <title type="html"><![CDATA[v1.0.0 release]]></title>
-        <id>https://sundowndev.github.io/underbase/blog/2019/06/20/v1.0.0.html</id>
-        <link href="https://sundowndev.github.io/underbase/blog/2019/06/20/v1.0.0.html">
+        <title type="html"><![CDATA[v1.0.4 release]]></title>
+        <id>https://sundowndev.github.io/underbase/blog/2019/06/20/v1.0.4.html</id>
+        <link href="https://sundowndev.github.io/underbase/blog/2019/06/20/v1.0.4.html">
         </link>
         <updated>2019-06-20T06:00:00Z</updated>
         <summary type="html"><![CDATA[<ul> <li>Added time spent while executing migration for CLI usage (<a href="https://github.com/sundowndev/underbase/issues/42">#42</a>)</li> <li>Allow array in unset query interface method (<a href="https://github.com/sundowndev/underbase/issues/39">#39</a>)</li> <li>Fix docker:test build exiting with code 0 when errored in TravisCI (<a href="https://github.com/sundowndev/underbase/issues/29">#29</a>)</li> <li>Created init command</li> <li>Improved migration organization with objec...</li></ul>]]></summary>

@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>v1.0.4 release · Underbase</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="- Added time spent while executing migration for CLI usage ([#42](https://github.com/sundowndev/underbase/issues/42))"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="v1.0.4 release · Underbase"/><meta property="og:type" content="website"/><meta property="og:url" content="https://sundowndev.github.io/underbase/blog/2019/06/20/v1.0.4"/><meta property="og:description" content="- Added time spent while executing migration for CLI usage ([#42](https://github.com/sundowndev/underbase/issues/42))"/><meta property="og:image" content="https://sundowndev.github.io/underbase/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://sundowndev.github.io/underbase/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/underbase/img/logo.svg"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://sundowndev.github.io/underbase/blog/atom.xml" title="Underbase Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://sundowndev.github.io/underbase/blog/feed.xml" title="Underbase Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/underbase/js/scrollSpy.js"></script><link rel="stylesheet" href="/underbase/css/main.css"/><script src="/underbase/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/underbase/"><img class="logo" src="/underbase/img/logo.svg" alt="Underbase"/><h2 class="headerTitleWithLogo">Underbase</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/underbase/docs/installation" target="_self">Guides</a></li><li class=""><a href="/underbase/docs/api" target="_self">API</a></li><li class="siteNavGroupActive"><a href="/underbase/blog/" target="_self">Release notes</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Recent Posts</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Recent Posts</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/underbase/blog/2019/06/20/v1.0.4">v1.0.4 release</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer postContainer blogContainer"><div class="wrapper"><div class="lonePost"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/underbase/blog/2019/06/20/v1.0.4">v1.0.4 release</a></h1><p class="post-meta">June 20, 2019</p><div class="authorBlock"></div></header><div><span><ul>
+<li>Added time spent while executing migration for CLI usage (<a href="https://github.com/sundowndev/underbase/issues/42">#42</a>)</li>
+<li>Allow array in unset query interface method (<a href="https://github.com/sundowndev/underbase/issues/39">#39</a>)</li>
+<li>Fix docker:test build exiting with code 0 when errored in TravisCI (<a href="https://github.com/sundowndev/underbase/issues/29">#29</a>)</li>
+<li>Created init command</li>
+<li>Improved migration organization with object injection (<a href="https://github.com/sundowndev/underbase/issues/55">#55</a>)</li>
+<li>Displaying a warning when migration up/down function is not an async function (<a href="https://github.com/emmanuelbuah/mgdb-migrator/issues/5">mgdb-migrator/issue#5</a>)</li>
+<li>Added <code>--history</code> option to save migration history into a .log file</li>
+<li>Renamed <code>mongo-interface.ts</code> to <code>query-interface.ts</code></li>
+<li>Improved backup feature</li>
+<li>Created a license file</li>
+<li>Improved query interface</li>
+<li>Minor TS types refactor</li>
+<li>Improved unit tests</li>
+<li>Compile library files using Webpack</li>
+<li>Created <a href="https://sundowndev.github.io/underbase/">documentation</a> using Docsify</li>
+<li>Added the following API methods (#16) :
+<ul>
+<li><code>.isLocked()</code></li>
+<li><code>.getMigrations()</code></li>
+<li><code>.getConfig()</code></li>
+</ul></li>
+<li>Renamed <code>log</code> config option to <code>logs</code> to fit with CLI usage</li>
+<li>Implemented CLI app</li>
+<li>Implemented MongoDB query interface (#15)</li>
+<li>Parse version string as float instead of integer (<a href="https://github.com/sundowndev/underbase/commit/87dccd71f36dfbe86957fc3cc3220fca272cfc13#diff-f95ed04008fb015d90c8213da5334dba">87dccd71f36dfbe86957fc3cc3220fca272cfc13</a>)</li>
+<li>Improve TypeScript &amp; TSlint configuration</li>
+<li>Create documentation using Docsify</li>
+<li>Init CLI app</li>
+</ul>
+</span></div></div><div class="blogSocialSection"></div></div><div class="blog-recent"><a class="button" href="/underbase/blog">Recent Posts</a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/underbase/" class="nav-home"><img src="/underbase/img/logo.svg" alt="Underbase" width="64" height="auto"/></a><div><h5>Guides</h5><a href="/underbase/docs/backups">Working with backups</a><a href="/underbase/docs/continuous-deployment">Working with continuous deployment</a><a href="/underbase/docs/api">API Reference</a></div><div><h5>Community</h5><a href="https://stackoverflow.com/questions/tagged/underbase" target="_blank" rel="noreferrer noopener">Stack Overflow</a><a href="https://twitter.com/sundowndev" target="_blank" rel="noreferrer noopener">Twitter</a></div><div><h5>More</h5><a href="/underbase/blog">Release notes</a><a href="https://github.com/sundowndev/underbase">GitHub</a></div></section></footer></div></body></html>
