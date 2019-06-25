@@ -1,6 +1,6 @@
 ---
 id: api-dev
-title: Development module API
+title: Module for development
 ---
 
 This documentation is intended for developers who want to contribute to Underbase. All of the above properties and methods are private.

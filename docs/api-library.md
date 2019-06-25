@@ -1,6 +1,6 @@
 ---
 id: api
-title: Module API reference
+title: Module
 ---
 
 The following API reference describes the public methods exposed by the Underbase library.

@@ -1,6 +1,6 @@
 ---
 id: query-api
-title: Query Interface API reference
+title: Query Interface
 ---
 
 ## Reference
