@@ -24,13 +24,17 @@
   </a>
 </div>
 
+## What's this ?
+
+Underbase is a MongoDB schema and data migration library that provides an easy-to-use abstract interface for writting, organizing and executing your database migrations. Usable both in the CLI and as a module, you can easily implement it your framework's code base.
+
 ## Goals
 
-- Migration versioning
+- Migration versioning (major and minor)
 - Multiple MongoDB databases support
 - Automatic and incremental backups
-- Provide MongoDB query interface
-- Handle scalable environments
+- Provide additional MongoDB query interface
+- Handle scalable environments by design
 <!-- - Backup restoration- Flexible & easy to configure -->
 
 ## Example
