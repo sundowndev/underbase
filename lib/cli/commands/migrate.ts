@@ -1,9 +1,9 @@
-import * as backup from '../common/backup';
 import { IMigration } from '../../interfaces';
-import { initMigrator } from '../common/utils';
-import { exit, logger, timer } from '../common/utils';
+import * as backup from '../common/backup';
+import { exit, initMigrator, logger, timer } from '../common/utils';
 
 // Enable ES6 module for migrations files
+// tslint:disable-next-line: no-var-requires
 require = require('esm')(module);
 
 export default async ({ config, versions, argv }) => {

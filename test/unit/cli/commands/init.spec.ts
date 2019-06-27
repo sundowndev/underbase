@@ -14,8 +14,7 @@ describe('UNIT - CLI/Commands', () => {
   });
 
   afterEach(() => {
-    mockedExistsSync.mockRestore();
-    mockedMkdirSync.mockRestore();
+    jest.restoreAllMocks();
   });
 
   describe('Init', () => {
