@@ -2,9 +2,9 @@ import * as fs from 'fs-extra';
 import { IConfigFile } from '../../interfaces';
 import { exit, logger } from '../common/utils';
 
-export const checkNoArgPassed = (argv: any) => {
+export const checkNoArgPassed = (yargs: any, argv: any) => {
   if (!argv._[0]) {
-    logger('info', 'Use --help to show available commands.');
+    yargs.showHelp();
     exit();
   }
 };
