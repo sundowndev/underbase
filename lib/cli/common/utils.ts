@@ -2,6 +2,12 @@
 import { migrator } from '../../index';
 import { IConfigFile } from '../../interfaces';
 
+/**
+ * Initialize migrator constructor
+ * @param {IConfigFile} config - Config object
+ * @ignore
+ * @private
+ */
 export const initMigrator = async (config: IConfigFile) => {
   logger('info', 'Connecting to MongoDB...');
 
@@ -10,6 +16,13 @@ export const initMigrator = async (config: IConfigFile) => {
   return migrator;
 };
 
+/**
+ * CLI logging
+ * @param {string} level - Log level
+ * @param {string[]} args - Message(s)
+ * @ignore
+ * @private
+ */
 export const logger = (level: string, ...args: string[]) => {
   if (!args[0]) {
     console.log(level);
@@ -18,6 +31,11 @@ export const logger = (level: string, ...args: string[]) => {
   }
 };
 
+/**
+ * Runtime timer
+ * @ignore
+ * @private
+ */
 export const timer = () => {
   const t0 = new Date().getTime();
 
@@ -30,6 +48,27 @@ export const timer = () => {
   };
 };
 
-export const exit = () => {
+/**
+ * Exits Underbase
+ * @param {number} code - Exit code; typically # of failures
+ * @ignore
+ * @private
+ */
+export const exit = (code: number = 0) => {
   process.exit();
+};
+
+/**
+ * Import migration files
+ * @param {string} path - Path to file to be imported
+ * @ignore
+ * @private
+ */
+export const importFile = async (path: string) => {
+  // tslint:disable-next-line: no-var-requires
+  require = require('esm')(module);
+
+  const file = await require(path);
+
+  return file.default;
 };
