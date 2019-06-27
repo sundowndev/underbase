@@ -68,7 +68,11 @@ export const importFile = async (path: string) => {
   // tslint:disable-next-line: no-var-requires
   require = require('esm')(module);
 
-  const file = await require(path);
+  try {
+    const file = await require(path);
 
-  return file.default;
+    return file.default;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
