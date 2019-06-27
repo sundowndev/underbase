@@ -1,25 +1,32 @@
 // tslint:disable no-console
 
 import { exec } from 'child_process';
+import { IConfigFile } from '../../interfaces';
 import { logger } from './utils';
 
-export const create = (
-  mongodumpBinary: string,
-  version: number,
-  backupsDir: string,
-) =>
+export const create = (config: IConfigFile, version: number) =>
   new Promise((resolve, reject) => {
     logger('info', 'Creating backup...');
 
-    const host = 'localhost:27017'; // TODO: replace this
-    const database = 'underbase_test'; // TODO: replace this
+    const dbUrlSegments = config.db.split('/');
+
+    let host: string;
+    let database: string;
+
+    if (dbUrlSegments[0] === 'mongodb:' && dbUrlSegments[1] === '') {
+      host = dbUrlSegments[2];
+      database = dbUrlSegments[3];
+    } else {
+      host = dbUrlSegments[0];
+      database = dbUrlSegments[1];
+    }
 
     const backupFile = [version.toFixed(1), `${Date.now()}.gz`].join('_');
 
     const cmd = [
-      mongodumpBinary,
+      config.mongodumpBinary,
       `--host ${host}`,
-      `--archive=${backupsDir}/${backupFile}`,
+      `--archive=${config.backupsDir}/${backupFile}`,
       `--gzip --db ${database}`,
     ].join(' ');
 
@@ -33,7 +40,7 @@ export const create = (
         process.exit();
       }
 
-      logger('success', 'Backup created : ' + backupFile);
+      logger('info', `Backup created : ${config.backupsDir}/${backupFile}`);
 
       return resolve();
     });
