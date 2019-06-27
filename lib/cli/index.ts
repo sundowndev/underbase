@@ -46,11 +46,11 @@ const commands = {
 const argv = yargs
   .scriptName('underbase')
   .usage('Usage: $0 <command> [OPTIONS]')
-  .command('migrate <migration>', commands['migrate'].describe)
-  .command('init', commands['init'].describe)
-  .command('list', commands['list'].describe)
-  .command('status', commands['status'].describe)
-  .command('unlock', commands['unlock'].describe)
+  .command('migrate <migration>', commands.migrate.describe)
+  .command('init', commands.init.describe)
+  .command('list', commands.list.describe)
+  .command('status', commands.status.describe)
+  .command('unlock', commands.unlock.describe)
   .describe('config <path>', 'JSON configuration file path')
   .describe('db <url>', 'MongoDB connection URL')
   .describe('migrations-dir <path>', 'Migrations versions directory')
@@ -105,12 +105,9 @@ const config = {
     ),
   ),
   migrationsDir: path.resolve(
-    path.join(
-      workingDirectory,
-      (argv.migrationsDir as string) ||
-        (configFile.migrationsDir as string) ||
-        './migrations',
-    ),
+    (argv.migrationsDir as string) ||
+      (configFile.migrationsDir as string) ||
+      './migrations',
   ),
   mongodumpBinary:
     (argv.mongodumpBinary as string) ||
@@ -119,7 +116,7 @@ const config = {
 } as IConfigFile;
 
 async function main() {
-  validation.checkNoArgPassed(argv);
+  validation.checkNoArgPassed(yargs, argv);
   validation.checkMigrationDirExists(config);
   validation.createbackupDir(config);
 
