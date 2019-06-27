@@ -1,5 +1,4 @@
-import { initMigrator } from '../common/utils';
-import { logger, timer } from '../common/utils';
+import { initMigrator, logger, timer } from '../common/utils';
 
 export default async ({ config }) => {
   const migrator = await initMigrator(config);

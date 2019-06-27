@@ -1,19 +1,9 @@
-# API
+---
+id: api
+title: Module
+---
 
-## Methods
-
-- [migrateTo()](#migrateTo)
-- [getVersion()](#getVersion)
-- [getNumberOfMigrations()](#getNumberOfMigrations)
-- [getMigrations()](#getMigrations)
-- [getConfig()](#getConfig)
-- [unlock()](#unlock)
-- [isLocked()](#isLocked)
-- [reset()](#reset)
-- [config()](#config)
-- [add()](#add)
-
-----
+The following API reference describes the public methods exposed by the Underbase library.
 
 ## Reference
 
@@ -91,14 +81,17 @@ Indicate if the migration state is locked or not.
 ```javascript
 // Declaration : async isLocked(): Promise<boolean>
 // returns a promise
-if (await migrator.isLocked()) { /* ... */ }
+if (await migrator.isLocked()) {
+  /* ... */
+}
 
 // or...
 
-migrator.isLocked()
-  .then((locked) => {
-    if (locked) { /* ... */ }
-  });
+migrator.isLocked().then(locked => {
+  if (locked) {
+    /* ... */
+  }
+});
 ```
 
 ### `reset()`
@@ -141,13 +134,13 @@ Register a new migration.
 // returns a promise
 migrator.add({
   version: 1,
-  up: function(db) {
+  up: async ({ MongoClient }) => {
     // use `db`(mongo driver Db instance) for migration setup to version 1
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
   },
-  down: function(db) {
+  down: async ({ MongoClient }) => {
     // use `db`(mongo driver Db instance) for migration setup to version 1
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
-  }
+  },
 });
 ```

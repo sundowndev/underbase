@@ -5,6 +5,6 @@ export default async ({ config, versions }) => {
   if (fs.existsSync(config.migrationsDir)) {
     logger('info', 'Versions list based on folders');
 
-    versions.forEach((v: string) => console.log(`- ${v}`));
+    versions.forEach((v: string) => logger(`- ${v}`));
   }
 };

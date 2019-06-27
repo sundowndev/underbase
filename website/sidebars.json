@@ -1,0 +1,20 @@
+{
+  "docs": {
+    "Get started": [
+      "installation",
+      "configuration",
+      "writting-migrations",
+      "advanced",
+      "module-usage",
+      "logging",
+      "troubleshooting"
+    ],
+    "Guides": [
+      "organize",
+      "backups",
+      "continuous-deployment",
+      "typescript-usage"
+    ],
+    "API": ["api", "query-api", "api-dev"]
+  }
+}

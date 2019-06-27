@@ -1,23 +1,9 @@
-# Developer API
+---
+id: api-dev
+title: Module for development
+---
 
 This documentation is intended for developers who want to contribute to Underbase. All of the above properties and methods are private.
-
-## Properties
-
-- [defaultMigration](#defaultMigration)
-- [_list](#_list)
-- [_collection](#_collection)
-- [_db](#_db)
-- [options](#options)
-
-## Methods
-
-- [execute()](#execute)
-- [getControl](#getControl)
-- [setControl](#setControl)
-- [findIndexByVersion](#findIndexByVersion)
-
-----
 
 ## Reference
 

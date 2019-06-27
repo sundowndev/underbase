@@ -1,72 +1,79 @@
-# Advanced
+---
+id: advanced
+title: Advanced usage
+---
 
 A more complete set of migrations might look like:
 
-``` javascript
+```javascript
 migrator.add({
-  version: 1,
-  name: 'Name for this migration',
-  up: function(db) {
-    // use `db`(mongo driver Db instance) for migration setup to version 1.
+  version: 1.0,
+  describe: 'Name for this migration',
+  up: function({ MongoClient, Query, Migrate, Logger }) {
+    // use `MongoClient`(mongo driver Db instance) for migration setup to version 1.
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
   },
-  down: function(db) {
-    // use `db`(mongo driver Db instance) for migration setup to version 0
+  down: function({ MongoClient, Query, Migrate, Logger }) {
+    // use `MongoClient`(mongo driver Db instance) for migration setup to version 0
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
-  }
+  },
 });
 
 migrator.add({
-  version: 2,
-  name: 'Name for this migration',
-  up: function(db) {
-    // use `db`(mongo driver Db instance) for migration setup to version 2
+  version: 1.1,
+  describe: 'Name for this migration',
+  up: function({ MongoClient, Query, Migrate, Logger }) {
+    // use `MongoClient`(mongo driver Db instance) for migration setup to version 2
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
   },
-  down: function(db) {
-    // use `db`(mongo driver Db instance) for migration setup to version 1
+  down: function({ MongoClient, Query, Migrate, Logger }) {
+    // use `MongoClient`(mongo driver Db instance) for migration setup to version 1
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
-  }
+  },
 });
 ```
 
 Control execution flow with promises:
 
-``` javascript
+```javascript
 // using bluebird promise lib
 import { Promise } from 'bluebird';
 
 migrator.add({
-  version: 1,
-  name: 'Name for this migration',
-  up: Promise.method(function(db) {
-    // use `db`(mongo driver Db instance) for migration setup to version 1.
+  version: 1.3,
+  describe: 'Name for this migration',
+  up: Promise.method(function({ MongoClient, Query, Migrate, Logger }) {
+    // use `MongoClient`(mongo driver Db instance) for migration setup to version 1.
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
-    return db.collections('someCollection')....
+    // Remember MongoClient was Promisified!
+    const allUsers = MongoClient.collections('Users').find({});
   }),
-  down: Promise.method(function(db) {
-    // use `db`(mongo driver Db instance) for migration setup to version 0
+  down: Promise.method(function({ MongoClient, Query, Migrate, Logger }) {
+    // use `MongoClient`(mongo driver Db instance) for migration setup to version 0
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
-    return db.collections('someCollection')....
-  })
+    // Remember MongoClient was Promisified!
+    const allUsers = MongoClient.collections('Users').find({});
+  }),
 });
 ```
 
 Control execution flow with async/await:
 
-``` javascript
+```javascript
 migrator.add({
-  version: 2,
-  name: 'Name for this migration',
-  up: async function(db) {
-    // use `db`(mongo driver Db instance) for migration setup to version 2
+  version: 2.0,
+  describe: 'Name for this migration',
+  up: async function({ MongoClient, Query, Migrate, Logger }) {
+    // use `MongoClient`(mongo driver Db instance) for migration setup to version 2
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
-     await db.collections('someCollection')....
+    // Remember MongoClient was Promisified!
+    const allUsers = await MongoClient.collections('Users').find({});
   },
-  down: async function(db) {
-    // use `db`(mongo driver Db instance) for migration setup to version 1
+  down: async function({ MongoClient, Query, Migrate, Logger }) {
+    // use `MongoClient`(mongo driver Db instance) for migration setup to version 1
     // See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api
-    await db.collections('someCollection')....
-  }
+    // Remember MongoClient was Promisified!
+    const allUsers = await MongoClient.collections('Users').find({});
+  },
 });
 ```
