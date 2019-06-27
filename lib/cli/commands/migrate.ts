@@ -1,10 +1,6 @@
 import { IMigration } from '../../interfaces';
 import * as backup from '../common/backup';
-import { exit, initMigrator, logger, timer } from '../common/utils';
-
-// Enable ES6 module for migrations files
-// tslint:disable-next-line: no-var-requires
-require = require('esm')(module);
+import { exit, importFile, initMigrator, logger, timer } from '../common/utils';
 
 export default async ({ config, versions, argv }) => {
   const versionsArray = versions.map((v: string) => parseFloat(v)) as number[];
@@ -15,7 +11,7 @@ export default async ({ config, versions, argv }) => {
     versionsArray.indexOf(parseFloat(argv.migration as string)) < 0
   ) {
     logger('error', 'This version does not exists.');
-    exit();
+    return exit();
   }
 
   versions = versionsArray.map((v: number) => v.toFixed(1)) as string[];
@@ -26,8 +22,9 @@ export default async ({ config, versions, argv }) => {
 
   versions.forEach(async (v: string) => {
     try {
-      const migrationObj = (await require(`${config.migrationsDir}/${v}`)
-        .default) as IMigration;
+      const migrationObj: IMigration = await importFile(
+        `${config.migrationsDir}/${v}`,
+      );
 
       await migrator.add(migrationObj);
     } catch (error) {
