@@ -35,11 +35,7 @@ export default async ({ config, versions, argv }) => {
   if (config.backup) {
     const currentVersion = await migrator.getVersion();
 
-    await backup.create(
-      config.mongodumpBinary,
-      currentVersion,
-      config.backupsDir,
-    );
+    await backup.create(config, currentVersion);
   }
 
   const time = timer();

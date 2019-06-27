@@ -162,14 +162,9 @@ describe('UNIT - CLI/Commands', () => {
       });
 
       mockedBackup.mockImplementation(
-        (
-          mongodumpBinary: string,
-          currentVersion: number,
-          backupsDir: string,
-        ) => {
-          expect(mongodumpBinary).toBe(config.mongodumpBinary);
+        (configObject: IConfigFile, currentVersion: number) => {
+          expect(configObject).toBe(config);
           expect(currentVersion).toBe(0);
-          expect(backupsDir).toBe(config.backupsDir);
 
           return Promise.resolve();
         },
@@ -285,16 +280,16 @@ describe('UNIT - CLI/Commands', () => {
           `${config.migrationsDir}/1.2`,
         ]);
 
-        return Promise.reject('test');
+        throw new Error('test');
       });
 
-      expect(async () => {
-        try {
-          await migrateCmd({ config, versions, argv });
-        } catch (e) {
-          throw new Error(e);
-        }
-      }).toThrow(Error);
+      try {
+        await migrateCmd({ config, versions, argv });
+      } catch (e) {
+        expect(e).toEqual({
+          error: 'User with 1 not found.',
+        });
+      }
 
       expect(mockedImportFile).toReject();
       expect(mockedBackup).toHaveBeenCalledTimes(0);
