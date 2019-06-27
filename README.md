@@ -33,24 +33,9 @@
 - Handle scalable environments
 <!-- - Backup restoration- Flexible & easy to configure -->
 
-## Table of content
+## Example
 
-- Getting started
-  - [Introduction](https://sundowndev.github.io/underbase/#/intro)
-  - [Quick start](https://sundowndev.github.io/underbase/#/quick-start)
-  - [Configuration](https://sundowndev.github.io/underbase/#/configuration)
-  - [Logging](https://sundowndev.github.io/underbase/#/logging)
-  - [Advanced](https://sundowndev.github.io/underbase/#/advanced)
-  - [Troubleshooting](https://sundowndev.github.io/underbase/#/troubleshooting)
-- Guides
-  - [Organizing migrations](https://sundowndev.github.io/underbase/#/organize)
-  - [Working with backups](https://sundowndev.github.io/underbase/#/working-with-backups)
-  - [Migrating with frameworks](https://sundowndev.github.io/underbase/#/migrating-with-frameworks)
-  - [Continuous integration](https://sundowndev.github.io/underbase/#/continuous-integration)
-- API Reference
-  - [API](https://sundowndev.github.io/underbase/#/api)
-  - [Query interface API](https://sundowndev.github.io/underbase/#/query-interface-api)
-  - [Developer API](https://sundowndev.github.io/underbase/#/dev-api)
+Check out this [example repository](https://github.com/sundowndev/underbase-example) for a real-world use case.
 
 ## Contributing
 
