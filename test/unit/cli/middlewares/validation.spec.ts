@@ -88,9 +88,6 @@ describe('UNIT - CLI/Middlewares', () => {
 
         mockedLogger.mockImplementation((level: string, ...args: string[]) => {
           expect(level).toBe('info');
-          expect(args[0]).toBe(
-            'Migration directory does not exists. Please run underbase init.',
-          );
         });
 
         validation.checkMigrationDirExists(config as any);
@@ -128,7 +125,6 @@ describe('UNIT - CLI/Middlewares', () => {
 
         mockedLogger.mockImplementation((level: string, ...args: string[]) => {
           expect(level).toBe('info');
-          expect(args[0]).toBe('Created backup directory.');
         });
 
         validation.createbackupDir(config as any);
