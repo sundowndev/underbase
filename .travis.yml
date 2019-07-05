@@ -1,4 +1,6 @@
 language: node_js
+dist: trusty
+os: linux
 
 services:
   - docker
@@ -31,7 +33,6 @@ jobs:
       script: npm run lint
       
     - stage: test
-      script: npm run test
-
-after_script:
-  - codecov -f coverage/*.json
+      script:
+        - npm run test
+        - codecov -f coverage/*.json
