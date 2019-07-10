@@ -80,7 +80,7 @@
   },
   "dependencies": {
     "bluebird": "3.5.5",
-    "lodash": "4.17.13",
+    "lodash": "4.17.14",
     "mongodb": "3.2.2",
     "type-check": "0.3.2"
   }
