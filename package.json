@@ -74,7 +74,7 @@
     "typescript": "3.5.3",
     "vrsource-tslint-rules": "6.0.0",
     "webpack": "4.35.3",
-    "webpack-cli": "3.3.5",
+    "webpack-cli": "3.3.6",
     "webpack-node-externals": "1.7.2",
     "yargs": "13.2.4"
   },
