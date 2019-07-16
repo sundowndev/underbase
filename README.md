@@ -49,13 +49,17 @@ Check out this [example repository](https://github.com/sundowndev/underbase-exam
 - Push to the branch: git push origin feature/my-new-feature
 - Submit a pull request
 
+## Support
+
+Underbase is being tested in continuous integration using node 8, 10 and 11, the latest version of the mongodb nodejs driver and the latest version of the MongoDB docker image. Dependencies are checked as soon as they are changed.
+
 ## Roadmap
 
 See [ROADMAP.md](ROADMAP.md)
 
-## Support
+## Security
 
-Underbase is being tested in continuous integration using node 8, 10 and 11, the latest version of the mongodb nodejs driver and the latest version of the MongoDB docker image. Dependencies are checked as soon as they are changed.
+See [SECURITY.md](SECURITY.md)
 
 ## Credits
 
