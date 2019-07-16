@@ -9,7 +9,27 @@ Since this project is 100% free and open source, risks come mostly from dependen
 - [mongodb](https://www.npmjs.com/package/mongodb) ~1.2M weekly downloads
 - [type-check](https://www.npmjs.com/package/type-check) ~7M weekly downloads
 
-All of these packages are very popular and frenquently used by the community.
+All of these packages are very popular and frenquently used by the community. You can see the dependency graph described below.
+
+```
+$ npm-remote-ls -n underbase -d false
+└─ underbase@1.0.3
+   ├─ type-check@0.3.2
+   │  └─ prelude-ls@1.1.2
+   ├─ lodash@4.17.11
+   ├─ bluebird@3.5.3
+   └─ mongodb@3.2.2
+      ├─ safe-buffer@5.2.0
+      └─ mongodb-core@3.2.2
+         ├─ saslprep@1.0.3
+         │  └─ sparse-bitfield@3.0.3
+         │     └─ memory-pager@1.5.0
+         ├─ require_optional@1.0.1
+         │  ├─ resolve-from@2.0.0
+         │  └─ semver@5.7.0
+         ├─ safe-buffer@5.2.0
+         └─ bson@1.1.1
+```
 
 ## Security check
 
