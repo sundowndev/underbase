@@ -60,7 +60,6 @@
     "@types/type-check": "0.3.27",
     "cross-env": "5.2.0",
     "docsify-cli": "4.3.0",
-    "esm": "^3.2.25",
     "husky": "3.0.0",
     "jest": "24.5.0",
     "jest-extended": "0.11.2",
@@ -76,12 +75,13 @@
     "webpack": "4.35.3",
     "webpack-cli": "3.3.6",
     "webpack-node-externals": "1.7.2",
-    "yargs": "^13.3.0"
   },
   "dependencies": {
     "bluebird": "3.5.5",
     "lodash": "4.17.14",
     "mongodb": "3.2.2",
-    "type-check": "0.3.2"
+    "type-check": "0.3.2",
+    "esm": "3.2.25",
+    "yargs": "13.3.0"
   }
 }
