@@ -6,7 +6,7 @@ import { logger } from './utils';
 
 export const create = (config: IConfigFile, version: number) =>
   new Promise((resolve, reject) => {
-    logger('info', 'Creating backup...');
+    logger('[INFO]', 'Creating backup...');
 
     const dbUrlSegments = config.db.split('/');
 
@@ -40,7 +40,7 @@ export const create = (config: IConfigFile, version: number) =>
         process.exit();
       }
 
-      logger('info', `Backup created : ${config.backupsDir}/${backupFile}`);
+      logger('[INFO]', `Backup created : ${config.backupsDir}/${backupFile}`);
 
       return resolve();
     });

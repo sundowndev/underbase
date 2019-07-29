@@ -50,5 +50,6 @@ export default async ({ config, versions, argv }) => {
     throw new Error(error);
   }
 
-  logger('info', `Time spent: ${time.spent()} sec`);
+  logger('');
+  logger('⌛', `Time spent: ${time.spent()} sec`);
 };

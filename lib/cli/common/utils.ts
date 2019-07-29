@@ -9,7 +9,7 @@ import { IConfigFile } from '../../interfaces';
  * @private
  */
 export const initMigrator = async (config: IConfigFile) => {
-  logger('info', 'Connecting to MongoDB...');
+  logger('[INFO]', 'Connecting to MongoDB...');
 
   await migrator.config(config); // Returns a promise
 
@@ -23,12 +23,8 @@ export const initMigrator = async (config: IConfigFile) => {
  * @ignore
  * @private
  */
-export const logger = (level: string, ...args: string[]) => {
-  if (!args[0]) {
-    console.log(level);
-  } else {
-    console.log(`[${level.toUpperCase()}]`, ...args);
-  }
+export const logger = (...args: string[]) => {
+  console.log(...args);
 };
 
 /**

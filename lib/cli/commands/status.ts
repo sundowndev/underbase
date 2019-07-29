@@ -7,6 +7,6 @@ export default async ({ config }) => {
   const currentVersion = await migrator.getVersion();
   const isLocked = (await migrator.isLocked()) ? 'locked' : 'not locked';
 
-  logger('info', `Current version is ${currentVersion}`);
-  logger('info', `Migration state is ${isLocked}`);
+  logger('[INFO]', `Current version is ${currentVersion}`);
+  logger('[INFO]', `Migration state is ${isLocked}`);
 };

@@ -12,7 +12,7 @@ export const checkNoArgPassed = (yargs: any, argv: any) => {
 export const checkMigrationDirExists = (config: IConfigFile) => {
   if (!fs.existsSync(config.migrationsDir)) {
     logger(
-      'info',
+      '[INFO]',
       'Migration directory does not exists. Please run underbase init.',
     );
   }
@@ -21,6 +21,6 @@ export const checkMigrationDirExists = (config: IConfigFile) => {
 export const createbackupDir = (config: IConfigFile) => {
   if (!fs.existsSync(config.backupsDir) && config.backup) {
     fs.mkdirpSync(config.backupsDir);
-    logger('info', 'Created backup directory.');
+    logger('[INFO]', 'Created backup directory.');
   }
 };

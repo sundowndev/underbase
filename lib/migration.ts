@@ -216,7 +216,7 @@ export class Migration {
       }
     } catch (e) {
       this.options.logger(
-        'info',
+        '[INFO]',
         `Encountered an error while migrating. Migration failed.`,
       );
       throw e;
@@ -294,12 +294,13 @@ export class Migration {
       }
 
       this.options.logger(
-        'info',
+        '\n',
+        '📌',
         'Running ' + direction + '() on version ' + migration.version,
       );
 
       if (migration.describe) {
-        this.options.logger(migration.describe);
+        this.options.logger(' '.repeat(4), migration.describe);
       }
 
       if (
@@ -312,6 +313,8 @@ export class Migration {
           `(${migration.describe || 'not described'})`,
         );
       }
+
+      const logLevel = 8;
 
       const injectedObject = {
         MongoClient: this._db as Db,
@@ -330,7 +333,10 @@ export class Migration {
               }
 
               if (migrations[i].describe) {
-                this.options.logger(migrations[i].describe);
+                this.options.logger(
+                  ' '.repeat(logLevel),
+                  migrations[i].describe,
+                );
               }
 
               try {
@@ -342,11 +348,13 @@ export class Migration {
           }
         },
         Query: new QueryInterface(self._db) as QueryInterface,
-        Logger: this.options.logger,
+        Logger: (...args: string[]) =>
+          this.options.logger(' '.repeat(logLevel), ...args),
       };
 
       try {
         await migration[direction](injectedObject);
+        this.options.logger('');
       } catch (error) {
         throw new Error(error);
       }
@@ -390,14 +398,14 @@ export class Migration {
       });
 
     if ((await lock()) === false) {
-      this.options.logger('info', 'Not migrating, control is locked.');
+      this.options.logger('[INFO]', 'Not migrating, control is locked.');
       return;
     }
 
     if (rerun) {
-      this.options.logger('info', 'Rerunning version ' + version);
+      this.options.logger('[INFO]', 'Rerunning version ' + version);
       await migrate('up', this.findIndexByVersion(version));
-      this.options.logger('info', 'Finished migrating.');
+      this.options.logger('✔️ ', 'Finished migrating.');
       await unlock();
       return;
     }
@@ -405,7 +413,7 @@ export class Migration {
     if (currentVersion === version) {
       if (this.options.logIfLatest) {
         this.options.logger(
-          'info',
+          '❌',
           'Not migrating, already at version ' + version,
         );
       }
@@ -418,7 +426,7 @@ export class Migration {
 
     // Log.info('startIdx:' + startIdx + ' endIdx:' + endIdx);
     this.options.logger(
-      'info',
+      '[INFO]',
       'Migrating from version ' +
         this.getMigrations()[startIdx].version +
         ' -> ' +
@@ -433,7 +441,7 @@ export class Migration {
           await updateVersion();
         } catch (e) {
           this.options.logger(
-            'error',
+            '❌',
             `Encountered an error while migrating from ${currentVersion} to ${version}`,
           );
           throw e;
@@ -447,7 +455,7 @@ export class Migration {
           await updateVersion();
         } catch (e) {
           this.options.logger(
-            'error',
+            '❌',
             `Encountered an error while migrating from ${currentVersion} to ${version}`,
           );
           throw e;
@@ -456,7 +464,7 @@ export class Migration {
     }
 
     await unlock();
-    this.options.logger('info', 'Finished migrating.');
+    this.options.logger('✔️ ', 'Finished migrating.');
   }
 
   /**
