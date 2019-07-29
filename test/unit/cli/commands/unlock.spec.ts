@@ -51,7 +51,7 @@ describe('UNIT - CLI/Commands', () => {
       });
 
       mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-        expect(level).toBe('info');
+        expect(level).toBe('[INFO]');
         expect(args[0]).toBeOneOf([
           `Migration state unlocked.`,
           `Time spent: 5 sec`,
@@ -90,7 +90,7 @@ describe('UNIT - CLI/Commands', () => {
       });
 
       mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-        expect(level).toBe('info');
+        expect(level).toBe('[INFO]');
         expect(args[0]).toBeOneOf([`Migration state is already unlocked.`]);
       });
 

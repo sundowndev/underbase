@@ -47,7 +47,7 @@ describe('UNIT - CLI/Commands', () => {
       });
 
       mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-        expect(level).toBe('info');
+        expect(level).toBe('[INFO]');
         expect(args[0]).toBeOneOf([
           `Current version is ${currentVersion}`,
           `Migration state is locked`,
@@ -87,7 +87,7 @@ describe('UNIT - CLI/Commands', () => {
       });
 
       mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-        expect(level).toBe('info');
+        expect(level).toBe('[INFO]');
         expect(args[0]).toBeOneOf([
           `Current version is ${currentVersion}`,
           `Migration state is not locked`,

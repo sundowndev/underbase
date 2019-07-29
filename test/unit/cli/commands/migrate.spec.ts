@@ -106,7 +106,7 @@ describe('UNIT - CLI/Commands', () => {
       await migrateCmd({ config, versions, argv });
 
       expect(mockedBackup).toHaveBeenCalledTimes(0);
-      expect(mockedLogger).toHaveBeenCalledTimes(1);
+      expect(mockedLogger).toHaveBeenCalledTimes(2);
     });
 
     test('should create backup then execute migrations', async () => {
@@ -173,7 +173,7 @@ describe('UNIT - CLI/Commands', () => {
       await migrateCmd({ config, versions, argv });
 
       expect(mockedBackup).toHaveBeenCalledTimes(1);
-      expect(mockedLogger).toHaveBeenCalledTimes(1);
+      expect(mockedLogger).toHaveBeenCalledTimes(2);
     });
 
     test('should rerun migration', async () => {
@@ -231,7 +231,7 @@ describe('UNIT - CLI/Commands', () => {
       await migrateCmd({ config, versions, argv });
 
       expect(mockedBackup).toHaveBeenCalledTimes(0);
-      expect(mockedLogger).toHaveBeenCalledTimes(1);
+      expect(mockedLogger).toHaveBeenCalledTimes(2);
     });
 
     test.skip('should catch error while running migration', async () => {});

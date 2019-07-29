@@ -87,7 +87,7 @@ describe('UNIT - CLI/Middlewares', () => {
         });
 
         mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-          expect(level).toBe('info');
+          expect(level).toBe('[INFO]');
         });
 
         validation.checkMigrationDirExists(config as any);
@@ -124,7 +124,7 @@ describe('UNIT - CLI/Middlewares', () => {
         });
 
         mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-          expect(level).toBe('info');
+          expect(level).toBe('[INFO]');
         });
 
         validation.createbackupDir(config as any);

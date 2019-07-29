@@ -51,7 +51,7 @@ describe('UNIT - CLI/Common', () => {
 
       test('should print both level and message', async () => {
         mockedConsoleLog.mockImplementation((...args: string[]) => {
-          expect(args).toStrictEqual(['[TEST]', 'message']);
+          expect(args).toStrictEqual(['test', 'message']);
         });
 
         utils.logger('test', 'message');
