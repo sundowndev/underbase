@@ -74,7 +74,7 @@
     "vrsource-tslint-rules": "6.0.0",
     "webpack": "4.35.3",
     "webpack-cli": "3.3.6",
-    "webpack-node-externals": "1.7.2",
+    "webpack-node-externals": "1.7.2"
   },
   "dependencies": {
     "bluebird": "3.5.5",
