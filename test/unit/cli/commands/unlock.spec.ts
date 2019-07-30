@@ -12,7 +12,7 @@ describe('UNIT - CLI/Commands', () => {
 
   beforeEach(() => {
     mockedInitMigrator = jest.spyOn(utils, 'initMigrator');
-    mockedLogger = jest.spyOn(utils, 'logger');
+    mockedLogger = jest.spyOn(utils.logger, 'info');
     mockedTimer = jest.spyOn(utils, 'timer');
   });
 
@@ -50,14 +50,6 @@ describe('UNIT - CLI/Commands', () => {
         return { spent: () => '5' };
       });
 
-      mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-        expect(level).toBe('[INFO]');
-        expect(args[0]).toBeOneOf([
-          `Migration state unlocked.`,
-          `Time spent: 5 sec`,
-        ]);
-      });
-
       await unlockCmd({ config });
 
       expect(mockedInitMigrator).toHaveBeenCalledTimes(1);
@@ -87,11 +79,6 @@ describe('UNIT - CLI/Commands', () => {
             return Promise.resolve(false);
           },
         });
-      });
-
-      mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-        expect(level).toBe('[INFO]');
-        expect(args[0]).toBeOneOf([`Migration state is already unlocked.`]);
       });
 
       await unlockCmd({ config });

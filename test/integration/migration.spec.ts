@@ -27,7 +27,13 @@ describe('INTEGRATION - Migration', () => {
         logIfLatest: true,
         collectionName,
         db: dbURL,
-        logger: () => {},
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
       };
 
       migrator = new Migration(configObject);

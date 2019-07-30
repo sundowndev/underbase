@@ -1,5 +1,6 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
+import chalk from 'chalk';
 import 'jest-extended';
 import * as utils from '../../../../lib/cli/common/utils';
 import { Migration } from '../../../../lib/migration';
@@ -23,10 +24,6 @@ describe('UNIT - CLI/Common', () => {
         const config = {};
 
         jest
-          .spyOn(utils, 'logger')
-          .mockImplementation((level: string, ...args: string[]) => {});
-
-        jest
           .spyOn(Migration.prototype, 'config')
           .mockImplementation((configObject: any) => {
             expect(configObject).toBe(config);
@@ -39,24 +36,71 @@ describe('UNIT - CLI/Common', () => {
     });
 
     describe('logger', () => {
-      test('should only print level', async () => {
-        mockedConsoleLog.mockImplementation((...args: string[]) => {
-          expect(args).toStrictEqual(['test']);
+      describe('#log()', () => {
+        test('should log successfully', async () => {
+          mockedConsoleLog.mockImplementation((...args: string[]) => {
+            expect(args).toStrictEqual(['test', 'test2']);
+          });
+
+          utils.logger.log('test', 'test2');
+
+          expect(mockedConsoleLog).toHaveBeenCalledTimes(1);
         });
-
-        utils.logger('test');
-
-        expect(mockedConsoleLog).toHaveBeenCalledTimes(1);
       });
 
-      test('should print both level and message', async () => {
-        mockedConsoleLog.mockImplementation((...args: string[]) => {
-          expect(args).toStrictEqual(['test', 'message']);
+      describe('#info()', () => {
+        test('should log successfully', async () => {
+          mockedConsoleLog.mockImplementation((...args: string[]) => {
+            expect(args).toStrictEqual([chalk.bold('[INFO]'), 'test', 'test2']);
+          });
+
+          utils.logger.info('test', 'test2');
+
+          expect(mockedConsoleLog).toHaveBeenCalledTimes(1);
         });
+      });
 
-        utils.logger('test', 'message');
+      describe('#warn()', () => {
+        test('should log successfully', async () => {
+          mockedConsoleLog.mockImplementation((...args: string[]) => {
+            expect(args).toStrictEqual([
+              chalk.bold('[WARNING]'),
+              'test',
+              'test2',
+            ]);
+          });
 
-        expect(mockedConsoleLog).toHaveBeenCalledTimes(1);
+          utils.logger.warn('test', 'test2');
+
+          expect(mockedConsoleLog).toHaveBeenCalledTimes(1);
+        });
+      });
+
+      describe('#error()', () => {
+        test('should log successfully', async () => {
+          mockedConsoleLog.mockImplementation((...args: string[]) => {
+            expect(args).toStrictEqual([
+              chalk.bgRed('ERROR'),
+              chalk.red('test test2'),
+            ]);
+          });
+
+          utils.logger.error('test', 'test2');
+
+          expect(mockedConsoleLog).toHaveBeenCalledTimes(1);
+        });
+      });
+
+      describe('#success()', () => {
+        test('should log successfully', async () => {
+          mockedConsoleLog.mockImplementation((...args: string[]) => {
+            expect(args).toStrictEqual([chalk.green('✔ test test2')]);
+          });
+
+          utils.logger.success('test', 'test2');
+
+          expect(mockedConsoleLog).toHaveBeenCalledTimes(1);
+        });
       });
     });
 

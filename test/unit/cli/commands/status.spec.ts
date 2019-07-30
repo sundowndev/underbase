@@ -11,7 +11,7 @@ describe('UNIT - CLI/Commands', () => {
 
   beforeEach(() => {
     mockedInitMigrator = jest.spyOn(utils, 'initMigrator');
-    mockedLogger = jest.spyOn(utils, 'logger');
+    mockedLogger = jest.spyOn(utils.logger, 'info');
   });
 
   afterEach(() => {
@@ -46,14 +46,6 @@ describe('UNIT - CLI/Commands', () => {
         });
       });
 
-      mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-        expect(level).toBe('[INFO]');
-        expect(args[0]).toBeOneOf([
-          `Current version is ${currentVersion}`,
-          `Migration state is locked`,
-        ]);
-      });
-
       await statusCmd({ config });
 
       expect(mockedLogger).toHaveBeenCalledTimes(2);
@@ -84,14 +76,6 @@ describe('UNIT - CLI/Commands', () => {
             return Promise.resolve(isLocked);
           },
         });
-      });
-
-      mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-        expect(level).toBe('[INFO]');
-        expect(args[0]).toBeOneOf([
-          `Current version is ${currentVersion}`,
-          `Migration state is not locked`,
-        ]);
       });
 
       await statusCmd({ config });

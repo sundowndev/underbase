@@ -13,7 +13,7 @@ describe('UNIT - CLI/Common', () => {
   let mockedConsoleError: any;
 
   beforeEach(() => {
-    mockedLogger = jest.spyOn(utils, 'logger');
+    mockedLogger = jest.spyOn(utils.logger, 'info');
     mockedExec = jest.spyOn(child_process, 'exec');
     mockedProcessExit = jest.spyOn(process, 'exit');
     mockedConsoleError = jest.spyOn(console, 'error');
@@ -85,10 +85,6 @@ describe('UNIT - CLI/Common', () => {
         };
         const version = 1.0;
 
-        mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-          expect(args[0]).toBeString();
-        });
-
         mockedExec.mockImplementation((cmd: string, cb: any) => {
           expect(cmd).toMatch(
             // tslint:disable-next-line: ter-max-len
@@ -108,7 +104,7 @@ describe('UNIT - CLI/Common', () => {
 
         await backup.create(config, version);
 
-        expect(mockedLogger).toHaveBeenCalledTimes(3);
+        expect(mockedLogger).toHaveBeenCalledTimes(2);
         expect(mockedExec).toHaveBeenCalledTimes(1);
         expect(mockedConsoleError).toHaveBeenCalledTimes(1);
         expect(mockedProcessExit).toHaveBeenCalledTimes(1);

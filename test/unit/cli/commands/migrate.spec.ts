@@ -8,14 +8,12 @@ import { IConfigFile, IMigration } from '../../../../lib/interfaces';
 
 describe('UNIT - CLI/Commands', () => {
   let mockedInitMigrator: any;
-  let mockedLogger: any;
   let mockedExit: any;
   let mockedImportFile: any;
   let mockedBackup: any;
 
   beforeEach(() => {
     mockedInitMigrator = jest.spyOn(utils, 'initMigrator');
-    mockedLogger = jest.spyOn(utils, 'logger');
     mockedExit = jest.spyOn(utils, 'exit');
     mockedImportFile = jest.spyOn(utils, 'importFile');
     mockedBackup = jest.spyOn(backup, 'create');
@@ -36,18 +34,12 @@ describe('UNIT - CLI/Commands', () => {
       const versions = ['1.0', '1.2'];
       const argv = { migration: '3.0' };
 
-      mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-        expect(level).toBe('error');
-        expect(args[0]).toBe('This version does not exists.');
-      });
-
       mockedExit.mockImplementation(() => {
         return;
       });
 
       await migrateCmd({ config, versions, argv });
 
-      expect(mockedLogger).toHaveBeenCalledTimes(1);
       expect(mockedExit).toHaveBeenCalledTimes(1);
     });
 
@@ -106,7 +98,6 @@ describe('UNIT - CLI/Commands', () => {
       await migrateCmd({ config, versions, argv });
 
       expect(mockedBackup).toHaveBeenCalledTimes(0);
-      expect(mockedLogger).toHaveBeenCalledTimes(2);
     });
 
     test('should create backup then execute migrations', async () => {
@@ -173,7 +164,6 @@ describe('UNIT - CLI/Commands', () => {
       await migrateCmd({ config, versions, argv });
 
       expect(mockedBackup).toHaveBeenCalledTimes(1);
-      expect(mockedLogger).toHaveBeenCalledTimes(2);
     });
 
     test('should rerun migration', async () => {
@@ -231,7 +221,6 @@ describe('UNIT - CLI/Commands', () => {
       await migrateCmd({ config, versions, argv });
 
       expect(mockedBackup).toHaveBeenCalledTimes(0);
-      expect(mockedLogger).toHaveBeenCalledTimes(2);
     });
 
     test.skip('should catch error while running migration', async () => {});
@@ -293,7 +282,6 @@ describe('UNIT - CLI/Commands', () => {
 
       expect(mockedImportFile).toReject();
       expect(mockedBackup).toHaveBeenCalledTimes(0);
-      expect(mockedLogger).toHaveBeenCalledTimes(1);
     });
   });
 });

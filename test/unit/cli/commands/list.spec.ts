@@ -7,13 +7,11 @@ import * as utils from '../../../../lib/cli/common/utils';
 
 describe('UNIT - CLI/Commands', () => {
   let mockedExistsSync: any;
-  let mockedMkdirSync: any;
   let mockedLogger: any;
 
   beforeEach(() => {
     mockedExistsSync = jest.spyOn(fs, 'existsSync');
-    mockedMkdirSync = jest.spyOn(fs, 'mkdirpSync');
-    mockedLogger = jest.spyOn(utils, 'logger');
+    mockedLogger = jest.spyOn(utils.logger, 'log');
   });
 
   afterEach(() => {
@@ -35,7 +33,7 @@ describe('UNIT - CLI/Commands', () => {
 
       await listCmd({ config, versions });
 
-      expect(mockedLogger).toHaveBeenCalledTimes(4);
+      expect(mockedLogger).toHaveBeenCalledTimes(3);
       expect(mockedExistsSync).toHaveBeenCalledTimes(1);
     });
 

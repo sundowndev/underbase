@@ -14,7 +14,7 @@ describe('UNIT - CLI/Middlewares', () => {
   beforeEach(() => {
     mockedExistsSync = jest.spyOn(fs, 'existsSync');
     mockedMkdirpSync = jest.spyOn(fs, 'mkdirpSync');
-    mockedLogger = jest.spyOn(utils, 'logger');
+    mockedLogger = jest.spyOn(utils.logger, 'info');
     mockedExit = jest.spyOn(utils, 'exit');
   });
 
@@ -86,10 +86,6 @@ describe('UNIT - CLI/Middlewares', () => {
           return false;
         });
 
-        mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-          expect(level).toBe('[INFO]');
-        });
-
         validation.checkMigrationDirExists(config as any);
 
         expect(mockedExistsSync).toHaveBeenCalledTimes(1);
@@ -121,10 +117,6 @@ describe('UNIT - CLI/Middlewares', () => {
           expect(path).toBe(config.backupsDir);
 
           return false;
-        });
-
-        mockedLogger.mockImplementation((level: string, ...args: string[]) => {
-          expect(level).toBe('[INFO]');
         });
 
         validation.createbackupDir(config as any);
