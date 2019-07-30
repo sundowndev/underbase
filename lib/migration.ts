@@ -310,7 +310,7 @@ export class Migration {
       ) {
         this.options.logger.log(
           ' '.repeat(4),
-          '[WARNING]',
+          chalk.bold('[WARNING]'),
           chalk.yellow(
             `One of the ${direction} functions is nor Async or Promise (${migration.describe ||
               'not described'})`,
@@ -361,6 +361,7 @@ export class Migration {
 
       try {
         await migration[direction](injectedObject);
+        this.options.logger.log('');
       } catch (error) {
         throw new Error(error);
       }
@@ -466,7 +467,6 @@ export class Migration {
     }
 
     await unlock();
-    this.options.logger.log('');
     this.options.logger.success('Finished migrating.');
   }
 

@@ -26,10 +26,10 @@ export const initMigrator = async (config: IConfigFile) => {
  */
 export const logger: any = {
   info: (...args: string[]) => {
-    console.log('[INFO]', ...args);
+    console.log(chalk.bold('[INFO]'), ...args);
   },
   warn: (...args: string[]) => {
-    console.log(chalk.bgYellow('WARNING'), ...args);
+    console.log(chalk.bold('[WARNING]'), ...args);
   },
   success: (...args: string[]) => {
     console.log(chalk.green(`✔ ${args.join(' ')}`));
