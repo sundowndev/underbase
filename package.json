@@ -69,7 +69,7 @@
     "tslint": "5.18.0",
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "6.1.0",
-    "typedoc": "0.14.2",
+    "typedoc": "^0.15.0",
     "typescript": "3.5.3",
     "vrsource-tslint-rules": "6.0.0",
     "webpack": "4.35.3",
