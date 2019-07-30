@@ -8,10 +8,10 @@ export default async ({ config }) => {
 
     await migrator.unlock(); // Returns a promise
 
-    logger('[INFO]', `Migration state unlocked.`);
+    logger.info(`Migration state unlocked.`);
 
-    logger('[INFO]', `Time spent: ${time.spent()} sec`);
+    logger.info(`Time spent: ${time.spent()} sec`);
   } else {
-    logger('[INFO]', `Migration state is already unlocked.`);
+    logger.info(`Migration state is already unlocked.`);
   }
 };

@@ -26,6 +26,7 @@
 // tslint:disable:no-console
 
 import { Promise as BluebirdPromise } from 'bluebird';
+import chalk from 'chalk';
 import * as _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
@@ -121,7 +122,7 @@ export class Migration {
 
     if (this.options.logs === false) {
       // tslint:disable-next-line:no-empty
-      this.options.logger = (level: string, ...args) => {};
+      this.options.logger = (...args) => {};
     }
 
     if (!(this._db instanceof Db) && !this.options.db) {
@@ -215,8 +216,7 @@ export class Migration {
         );
       }
     } catch (e) {
-      this.options.logger(
-        '[INFO]',
+      this.options.logger.info(
         `Encountered an error while migrating. Migration failed.`,
       );
       throw e;
@@ -293,24 +293,28 @@ export class Migration {
         );
       }
 
-      this.options.logger(
+      this.options.logger.log(
         '\n',
-        '📌',
-        'Running ' + direction + '() on version ' + migration.version,
+        chalk.yellow(
+          'Running ' + direction + '() on version ' + migration.version,
+        ),
       );
 
       if (migration.describe) {
-        this.options.logger(' '.repeat(4), migration.describe);
+        this.options.logger.log(' '.repeat(4), chalk.grey(migration.describe));
       }
 
       if (
         migration[direction].constructor.name !== 'AsyncFunction' &&
         migration[direction].constructor.name !== 'Promise'
       ) {
-        this.options.logger(
-          'warning',
-          `One of the ${direction} functions is nor Async or Promise`,
-          `(${migration.describe || 'not described'})`,
+        this.options.logger.log(
+          ' '.repeat(4),
+          '[WARNING]',
+          chalk.yellow(
+            `One of the ${direction} functions is nor Async or Promise (${migration.describe ||
+              'not described'})`,
+          ),
         );
       }
 
@@ -325,17 +329,16 @@ export class Migration {
                 migrations[i][direction].constructor.name !== 'AsyncFunction' &&
                 migrations[i][direction].constructor.name !== 'Promise'
               ) {
-                this.options.logger(
-                  'warning',
+                this.options.logger.warn(
                   `One of the ${direction} functions is nor Async or Promise`,
                   `(${migrations[i].describe || 'not described'})`,
                 );
               }
 
               if (migrations[i].describe) {
-                this.options.logger(
+                this.options.logger.log(
                   ' '.repeat(logLevel),
-                  migrations[i].describe,
+                  chalk.grey(migrations[i].describe),
                 );
               }
 
@@ -349,12 +352,15 @@ export class Migration {
         },
         Query: new QueryInterface(self._db) as QueryInterface,
         Logger: (...args: string[]) =>
-          this.options.logger(' '.repeat(logLevel), ...args),
+          this.options.logger.log(
+            ' '.repeat(logLevel),
+            chalk.inverse('LOGGER'),
+            ...args,
+          ),
       };
 
       try {
         await migration[direction](injectedObject);
-        this.options.logger('');
       } catch (error) {
         throw new Error(error);
       }
@@ -398,22 +404,21 @@ export class Migration {
       });
 
     if ((await lock()) === false) {
-      this.options.logger('[INFO]', 'Not migrating, control is locked.');
+      this.options.logger.info('Not migrating, control is locked.');
       return;
     }
 
     if (rerun) {
-      this.options.logger('[INFO]', 'Rerunning version ' + version);
+      this.options.logger.info('Rerunning version ' + version);
       await migrate('up', this.findIndexByVersion(version));
-      this.options.logger('✔️ ', 'Finished migrating.');
+      this.options.logger.success('Finished migrating');
       await unlock();
       return;
     }
 
     if (currentVersion === version) {
       if (this.options.logIfLatest) {
-        this.options.logger(
-          '❌',
+        this.options.logger.error(
           'Not migrating, already at version ' + version,
         );
       }
@@ -425,8 +430,7 @@ export class Migration {
     const endIdx = this.findIndexByVersion(version);
 
     // Log.info('startIdx:' + startIdx + ' endIdx:' + endIdx);
-    this.options.logger(
-      '[INFO]',
+    this.options.logger.info(
       'Migrating from version ' +
         this.getMigrations()[startIdx].version +
         ' -> ' +
@@ -440,8 +444,7 @@ export class Migration {
           currentVersion = self.getMigrations()[i + 1].version;
           await updateVersion();
         } catch (e) {
-          this.options.logger(
-            '❌',
+          this.options.logger.error(
             `Encountered an error while migrating from ${currentVersion} to ${version}`,
           );
           throw e;
@@ -454,8 +457,7 @@ export class Migration {
           currentVersion = self.getMigrations()[i - 1].version;
           await updateVersion();
         } catch (e) {
-          this.options.logger(
-            '❌',
+          this.options.logger.error(
             `Encountered an error while migrating from ${currentVersion} to ${version}`,
           );
           throw e;
@@ -464,7 +466,8 @@ export class Migration {
     }
 
     await unlock();
-    this.options.logger('✔️ ', 'Finished migrating.');
+    this.options.logger.log('');
+    this.options.logger.success('Finished migrating.');
   }
 
   /**

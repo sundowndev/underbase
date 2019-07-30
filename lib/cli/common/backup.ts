@@ -6,7 +6,7 @@ import { logger } from './utils';
 
 export const create = (config: IConfigFile, version: number) =>
   new Promise((resolve, reject) => {
-    logger('[INFO]', 'Creating backup...');
+    logger.info('Creating backup...');
 
     const dbUrlSegments = config.db.split('/');
 
@@ -32,15 +32,12 @@ export const create = (config: IConfigFile, version: number) =>
 
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
-        logger(
-          'error',
-          'An error occured while creating backup... Cancelling.',
-        );
+        logger.error('An error occured while creating backup... Cancelling.');
         console.error(error);
         process.exit();
       }
 
-      logger('[INFO]', `Backup created : ${config.backupsDir}/${backupFile}`);
+      logger.info(`Backup created : ${config.backupsDir}/${backupFile}`);
 
       return resolve();
     });

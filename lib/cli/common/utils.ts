@@ -1,4 +1,5 @@
 // tslint:disable:no-console
+import chalk from 'chalk';
 import { migrator } from '../../index';
 import { IConfigFile } from '../../interfaces';
 
@@ -9,7 +10,7 @@ import { IConfigFile } from '../../interfaces';
  * @private
  */
 export const initMigrator = async (config: IConfigFile) => {
-  logger('[INFO]', 'Connecting to MongoDB...');
+  logger.info('Connecting to MongoDB...');
 
   await migrator.config(config); // Returns a promise
 
@@ -18,13 +19,27 @@ export const initMigrator = async (config: IConfigFile) => {
 
 /**
  * CLI logging
- * @param {string} level - Log level
- * @param {string[]} args - Message(s)
+ *
  * @ignore
  * @private
+ * @returns object
  */
-export const logger = (...args: string[]) => {
-  console.log(...args);
+export const logger: any = {
+  info: (...args: string[]) => {
+    console.log('[INFO]', ...args);
+  },
+  warn: (...args: string[]) => {
+    console.log(chalk.bgYellow('WARNING'), ...args);
+  },
+  success: (...args: string[]) => {
+    console.log(chalk.green(`✔ ${args.join(' ')}`));
+  },
+  error: (...args: string[]) => {
+    console.log(chalk.bgRed('ERROR'), chalk.red(`${args.join(' ')}`));
+  },
+  log: (...args: string[]) => {
+    console.log(...args);
+  },
 };
 
 /**

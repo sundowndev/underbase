@@ -10,7 +10,7 @@ export default async ({ config, versions, argv }) => {
     argv.migration !== 'latest' &&
     versionsArray.indexOf(parseFloat(argv.migration as string)) < 0
   ) {
-    logger('error', 'This version does not exists.');
+    logger.error('This version does not exists.');
     return exit();
   }
 
@@ -50,6 +50,6 @@ export default async ({ config, versions, argv }) => {
     throw new Error(error);
   }
 
-  logger('');
-  logger('⌛', `Time spent: ${time.spent()} sec`);
+  logger.log('');
+  logger.log('⌛', `Time spent: ${time.spent()} sec`);
 };

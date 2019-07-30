@@ -134,7 +134,7 @@ async function main() {
       migrator,
     });
   } else {
-    logger('[INFO]', 'Invalid command. Use --help to show available commands.');
+    logger.info('Invalid command. Use --help to show available commands.');
   }
 
   exit();

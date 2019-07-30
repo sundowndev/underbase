@@ -12,7 +12,7 @@ export type SyslogLevels =
 
 export interface IMigrationOptions {
   logs?: boolean;
-  logger?: (level: string, ...args: any[]) => void;
+  logger?: any;
   logIfLatest?: boolean;
   collectionName?: string;
   db: string | Db;
