@@ -66,7 +66,7 @@ export const timer = () => {
  * @private
  */
 export const exit = (code: number = 0) => {
-  process.exit();
+  process.exit(code);
 };
 
 /**
@@ -80,9 +80,7 @@ export const importFile = async (path: string) => {
   require = require('esm')(module);
 
   try {
-    const file = await require(path);
-
-    return file.default;
+    return await require(path).default;
   } catch (error) {
     throw new Error(error);
   }
