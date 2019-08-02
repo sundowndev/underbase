@@ -32,14 +32,18 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [x] Rename `mongo-interface.ts` to `query-interface.ts`
 - [x] Create a license file
 - [x] Move `src` to `lib` and `dist` to `build`
+- [x] Rerun command
 - [ ] Backup feature
-- [ ] CLI: `--history` option to save migration history into a .log file
 
 ### `v1.0.0`
 
 - [ ] Improve documentation with better migration process explanation & guides
-  - Organizing migrations
-  - Working with backups
+  - [ ] Organizing migrations
+  - [ ] Working with backups
   <!-- Migrating with frameworks-->
-  - Working with continuous deployment
-  - Usage with Typescript
+  - [ ] Working with continuous deployment
+  - [ ] Usage with Typescript
+
+### `v1.1.0`
+
+- [ ] CLI: `--history` option to save migration history into a .log file
