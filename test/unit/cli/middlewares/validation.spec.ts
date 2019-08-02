@@ -89,7 +89,6 @@ describe('UNIT - CLI/Middlewares', () => {
         validation.checkMigrationDirExists(config as any);
 
         expect(mockedExistsSync).toHaveBeenCalledTimes(1);
-        expect(mockedLogger).toHaveBeenCalledTimes(1);
       });
     });
 
