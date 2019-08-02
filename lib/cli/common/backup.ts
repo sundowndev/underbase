@@ -2,7 +2,7 @@
 
 import { exec } from 'child_process';
 import { IConfigFile } from '../../interfaces';
-import { logger } from './utils';
+import { exit, logger } from './utils';
 
 export const create = (config: IConfigFile, version: number) =>
   new Promise((resolve, reject) => {
@@ -32,9 +32,9 @@ export const create = (config: IConfigFile, version: number) =>
 
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
-        logger.error('An error occured while creating backup... Cancelling.');
+        logger.error('An error occured while creating backup... Cancelling migration.');
         console.error(error);
-        process.exit();
+        exit();
       }
 
       logger.info(`Backup created : ${config.backupsDir}/${backupFile}`);
