@@ -11,7 +11,7 @@ export const checkNoArgPassed = (yargs: any, argv: any) => {
 
 export const checkMigrationDirExists = (config: IConfigFile) => {
   if (!fs.existsSync(config.migrationsDir)) {
-    logger.info(
+    logger.warn(
       'Migration directory does not exists. Please run underbase init.',
     );
   }
