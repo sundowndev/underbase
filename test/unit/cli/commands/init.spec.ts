@@ -2,7 +2,7 @@
 // tslint:disable:no-empty
 
 import * as fs from 'fs-extra';
-import initCmd from '../../../../lib/cli/commands/init';
+import * as initCmd from '../../../../lib/cli/commands/init';
 
 describe('UNIT - CLI/Commands', () => {
   let mockedExistsSync: any;
@@ -37,7 +37,7 @@ describe('UNIT - CLI/Commands', () => {
         return Promise.resolve();
       });
 
-      await initCmd({ config });
+      await initCmd.action({ config });
 
       expect(mockedExistsSync).toHaveBeenCalledTimes(2);
       expect(mockedMkdirSync).toHaveBeenCalledTimes(2);
@@ -62,7 +62,7 @@ describe('UNIT - CLI/Commands', () => {
         return Promise.resolve();
       });
 
-      await initCmd({ config });
+      await initCmd.action({ config });
 
       expect(mockedExistsSync).toHaveBeenCalledTimes(2);
       expect(mockedMkdirSync).toHaveBeenCalledTimes(1);
@@ -87,7 +87,7 @@ describe('UNIT - CLI/Commands', () => {
         return Promise.resolve();
       });
 
-      await initCmd({ config });
+      await initCmd.action({ config });
 
       expect(mockedExistsSync).toHaveBeenCalledTimes(2);
       expect(mockedMkdirSync).toHaveBeenCalledTimes(1);
@@ -112,7 +112,7 @@ describe('UNIT - CLI/Commands', () => {
         return Promise.resolve();
       });
 
-      await initCmd({ config });
+      await initCmd.action({ config });
 
       expect(mockedExistsSync).toHaveBeenCalledTimes(2);
       expect(mockedMkdirSync).toHaveBeenCalledTimes(0);

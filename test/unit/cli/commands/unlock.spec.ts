@@ -1,7 +1,7 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
 import 'jest-extended';
-import unlockCmd from '../../../../lib/cli/commands/unlock';
+import * as unlockCmd from '../../../../lib/cli/commands/unlock';
 import * as utils from '../../../../lib/cli/common/utils';
 import { IConfigFile } from '../../../../lib/interfaces';
 
@@ -50,7 +50,7 @@ describe('UNIT - CLI/Commands', () => {
         return { spent: () => '5' };
       });
 
-      await unlockCmd({ config });
+      await unlockCmd.action({ config });
 
       expect(mockedInitMigrator).toHaveBeenCalledTimes(1);
       expect(mockedLogger).toHaveBeenCalledTimes(2);
@@ -81,7 +81,7 @@ describe('UNIT - CLI/Commands', () => {
         });
       });
 
-      await unlockCmd({ config });
+      await unlockCmd.action({ config });
 
       expect(mockedInitMigrator).toHaveBeenCalledTimes(1);
       expect(mockedLogger).toHaveBeenCalledTimes(1);

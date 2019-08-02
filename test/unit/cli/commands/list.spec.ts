@@ -2,7 +2,7 @@
 // tslint:disable:no-empty
 
 import * as fs from 'fs-extra';
-import listCmd from '../../../../lib/cli/commands/list';
+import * as listCmd from '../../../../lib/cli/commands/list';
 import * as utils from '../../../../lib/cli/common/utils';
 
 describe('UNIT - CLI/Commands', () => {
@@ -31,7 +31,7 @@ describe('UNIT - CLI/Commands', () => {
       };
       const versions = ['1.0', '1.2', '2.0'];
 
-      await listCmd({ config, versions });
+      await listCmd.action({ config, versions });
 
       expect(mockedLogger).toHaveBeenCalledTimes(3);
       expect(mockedExistsSync).toHaveBeenCalledTimes(1);
@@ -49,7 +49,7 @@ describe('UNIT - CLI/Commands', () => {
       };
       const versions = ['1.0', '1.2', '2.0'];
 
-      await listCmd({ config, versions });
+      await listCmd.action({ config, versions });
 
       expect(mockedLogger).toHaveBeenCalledTimes(0);
       expect(mockedExistsSync).toHaveBeenCalledTimes(1);

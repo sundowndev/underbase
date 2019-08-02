@@ -1,7 +1,7 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
 import 'jest-extended';
-import statusCmd from '../../../../lib/cli/commands/status';
+import * as statusCmd from '../../../../lib/cli/commands/status';
 import * as utils from '../../../../lib/cli/common/utils';
 import { IConfigFile } from '../../../../lib/interfaces';
 
@@ -46,7 +46,7 @@ describe('UNIT - CLI/Commands', () => {
         });
       });
 
-      await statusCmd({ config });
+      await statusCmd.action({ config });
 
       expect(mockedLogger).toHaveBeenCalledTimes(2);
     });
@@ -78,7 +78,7 @@ describe('UNIT - CLI/Commands', () => {
         });
       });
 
-      await statusCmd({ config });
+      await statusCmd.action({ config });
 
       expect(mockedLogger).toHaveBeenCalledTimes(2);
     });

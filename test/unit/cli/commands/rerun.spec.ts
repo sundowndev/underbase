@@ -1,10 +1,10 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
 import 'jest-extended';
-import * as migrateCmd from '../../../../lib/cli/commands/migrate';
+import * as rerunCmd from '../../../../lib/cli/commands/rerun';
 import * as backup from '../../../../lib/cli/common/backup';
 import * as utils from '../../../../lib/cli/common/utils';
-import { IConfigFile } from '../../../../lib/interfaces';
+import { IConfigFile, IMigration } from '../../../../lib/interfaces';
 
 describe('UNIT - CLI/Commands', () => {
   let mockedInitMigrator: any;
@@ -23,37 +23,20 @@ describe('UNIT - CLI/Commands', () => {
     jest.restoreAllMocks();
   });
 
-  describe('Migrate', () => {
-    test('this version does not exists', async () => {
+  describe('Rerun', () => {
+    test('should rerun current version', async () => {
       const config: IConfigFile = {
         db: '',
         logs: false,
         logger: () => {},
         mongodumpBinary: '',
+        backup: false,
       };
       const versions = ['1.0', '1.2'];
-      const argv = { migration: '3.0' };
 
       mockedExit.mockImplementation(() => {
         return;
       });
-
-      await migrateCmd.action({ config, versions, argv });
-
-      expect(mockedExit).toHaveBeenCalledTimes(1);
-    });
-
-    test('should import then run migrations', async () => {
-      const config: IConfigFile = {
-        db: '',
-        logs: false,
-        logger: () => {},
-        mongodumpBinary: '',
-        migrationsDir: './test',
-        backup: false,
-      };
-      const versions = ['1.0', '1.2'];
-      const argv = { migration: '1.0' };
 
       mockedInitMigrator.mockImplementation((configObject: IConfigFile) => {
         expect(config).toBe(configObject);
@@ -70,11 +53,11 @@ describe('UNIT - CLI/Commands', () => {
             return Promise.resolve();
           },
           getVersion: () => {
-            expect(1).toBe(0);
-            return Promise.resolve(0);
+            // Expect(1).toBe(0);
+            return Promise.resolve(1.2);
           },
           migrateTo: (version: string) => {
-            expect(version).toBe('1.0');
+            expect(version).toBe('1.2,rerun');
 
             return Promise.resolve();
           },
@@ -95,12 +78,14 @@ describe('UNIT - CLI/Commands', () => {
         });
       });
 
-      await migrateCmd.action({ config, versions, argv });
+      await rerunCmd.action({ config, versions });
 
-      expect(mockedBackup).toHaveBeenCalledTimes(0);
+      expect(mockedInitMigrator).toHaveBeenCalledTimes(1);
+      expect(mockedImportFile).toHaveBeenCalledTimes(2);
+      expect(mockedExit).toHaveBeenCalledTimes(0);
     });
 
-    test('should create backup then execute migrations', async () => {
+    test('should create backup then rerun current version', async () => {
       const config: IConfigFile = {
         db: '',
         logs: false,
@@ -111,7 +96,6 @@ describe('UNIT - CLI/Commands', () => {
         backupsDir: './backup',
       };
       const versions = ['1.0', '1.2'];
-      const argv = { migration: '1.0' };
 
       mockedInitMigrator.mockImplementation((configObject: IConfigFile) => {
         expect(config).toBe(configObject);
@@ -128,10 +112,10 @@ describe('UNIT - CLI/Commands', () => {
             return Promise.resolve();
           },
           getVersion: () => {
-            return Promise.resolve(0);
+            return Promise.resolve(1.2);
           },
           migrateTo: (version: string) => {
-            expect(version).toBe('1.0');
+            expect(version).toBe('1.2,rerun');
 
             return Promise.resolve();
           },
@@ -155,76 +139,15 @@ describe('UNIT - CLI/Commands', () => {
       mockedBackup.mockImplementation(
         (configObject: IConfigFile, currentVersion: number) => {
           expect(configObject).toBe(config);
-          expect(currentVersion).toBe(0);
+          expect(currentVersion).toBe(1.2);
 
           return Promise.resolve();
         },
       );
 
-      await migrateCmd.action({ config, versions, argv });
+      await rerunCmd.action({ config, versions });
 
       expect(mockedBackup).toHaveBeenCalledTimes(1);
-    });
-
-    test.skip('should catch error while running migration', async () => {});
-
-    test.skip('should catch error while importing migration', async () => {
-      const config: IConfigFile = {
-        db: '',
-        logs: false,
-        logger: () => {},
-        mongodumpBinary: '',
-        migrationsDir: './test',
-        backup: true,
-        backupsDir: './backup',
-      };
-      const versions = ['1.0', '1.2'];
-      const argv = { migration: '1.0' };
-
-      mockedInitMigrator.mockImplementation((configObject: IConfigFile) => {
-        expect(config).toBe(configObject);
-
-        return Promise.resolve({
-          add: (migration: any) => {
-            expect(migration).toContainKeys([
-              'version',
-              'describe',
-              'up',
-              'down',
-            ]);
-
-            return Promise.resolve();
-          },
-          getVersion: () => {
-            return Promise.resolve(0);
-          },
-          migrateTo: (version: string) => {
-            expect(version).toBe('1.0');
-
-            return Promise.resolve();
-          },
-        });
-      });
-
-      mockedImportFile.mockImplementation((path: string) => {
-        expect(path).toBeOneOf([
-          `${config.migrationsDir}/1.0`,
-          `${config.migrationsDir}/1.2`,
-        ]);
-
-        throw new Error('test');
-      });
-
-      try {
-        await migrateCmd.action({ config, versions, argv });
-      } catch (e) {
-        expect(e).toEqual({
-          error: 'User with 1 not found.',
-        });
-      }
-
-      expect(mockedImportFile).toReject();
-      expect(mockedBackup).toHaveBeenCalledTimes(0);
     });
   });
 });
