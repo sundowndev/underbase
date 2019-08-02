@@ -199,6 +199,7 @@ export class Migration {
 
     let version: string | number;
     let subcommand: string;
+
     if (typeof command === 'number') {
       version = command;
     } else {
