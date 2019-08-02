@@ -1,23 +1,13 @@
 import { IMigration } from '../../interfaces';
 import * as backup from '../common/backup';
-import { exit, importFile, initMigrator, logger, timer } from '../common/utils';
+import { importFile, initMigrator, logger, timer } from '../common/utils';
 
-export const describe = 'Migrate to a specified version';
+export const describe = 'Rerun the current version';
 
-export const action = async ({ config, versions, argv }) => {
+export const action = async ({ config, versions }) => {
   const versionsArray = versions.map((v: string) => parseFloat(v)) as number[];
 
-  if (
-    argv.migration !== 0 &&
-    argv.migration !== 'latest' &&
-    versionsArray.indexOf(parseFloat(argv.migration as string)) < 0
-  ) {
-    logger.error('This version does not exists.');
-    return exit();
-  }
-
   versions = versionsArray.map((v: number) => v.toFixed(1)) as string[];
-
   versions.sort((a: number, b: number) => a - b);
 
   const migrator = await initMigrator(config);
@@ -32,15 +22,15 @@ export const action = async ({ config, versions, argv }) => {
     }
   }
 
-  if (config.backup) {
-    const currentVersion = await migrator.getVersion();
+  const currentVersion = await migrator.getVersion();
 
+  if (config.backup) {
     await backup.create(config, currentVersion);
   }
 
   const time = timer();
 
-  await migrator.migrateTo(argv.migration as number);
+  await migrator.migrateTo(`${currentVersion as number},rerun`);
 
   logger.log('');
   logger.log('⌛', `Time spent: ${time.spent()} sec`);

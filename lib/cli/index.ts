@@ -11,54 +11,41 @@ import { exit, logger } from './common/utils';
 import * as validation from './middlewares/validation';
 
 // Commands
-import initCmd from './commands/init';
-import listCmd from './commands/list';
-import migrateCmd from './commands/migrate';
-import statusCmd from './commands/status';
-import unlockCmd from './commands/unlock';
+import * as initCmd from './commands/init';
+import * as listCmd from './commands/list';
+import * as migrateCmd from './commands/migrate';
+import * as rerunCmd from './commands/rerun';
+import * as statusCmd from './commands/status';
+import * as unlockCmd from './commands/unlock';
+
+const commands = {
+  init: initCmd,
+  list: listCmd,
+  migrate: migrateCmd,
+  status: statusCmd,
+  unlock: unlockCmd,
+  rerun: rerunCmd,
+};
 
 // Enable ES6 module for migrations files
 require = require('esm')(module);
 
-const commands = {
-  migrate: {
-    describe: 'Initiate migration environment',
-    callback: migrateCmd,
-  },
-  init: {
-    describe: 'Initiate migration environment',
-    callback: initCmd,
-  },
-  list: {
-    describe: 'Show available migrations versions',
-    callback: listCmd,
-  },
-  status: {
-    describe: 'Show migrations status',
-    callback: statusCmd,
-  },
-  unlock: {
-    describe: 'Unlock migrations state',
-    callback: unlockCmd,
-  },
-};
-
 const argv = yargs
   .scriptName('underbase')
   .usage('Usage: $0 <command> [OPTIONS]')
-  .command('migrate <migration>', commands.migrate.describe)
-  .command('init', commands.init.describe)
-  .command('list', commands.list.describe)
-  .command('status', commands.status.describe)
-  .command('unlock', commands.unlock.describe)
-  .describe('config <path>', 'JSON configuration file path')
+  .command('migrate <migration>', migrateCmd.describe)
+  .command('init', initCmd.describe)
+  .command('list', listCmd.describe)
+  .command('status', statusCmd.describe)
+  .command('unlock', unlockCmd.describe)
+  .command('rerun', rerunCmd.describe)
+  .describe('config <path>', 'Configuration file path')
   .describe('db <url>', 'MongoDB connection URL')
   .describe('migrations-dir <path>', 'Migrations versions directory')
   .describe('backup', 'Enable automatic backups')
   .describe('backups-dir <path>', 'Backups directory')
   .describe('collection-name <name>', 'Migrations state collection')
   .describe('logs', 'Enable logs')
-  .describe('rerun', 'Force migrations execution')
   .describe('chdir <path>', 'Change the working directory')
   .describe('version', 'Show package version')
   .describe(
@@ -97,12 +84,9 @@ const config = {
   backup: (argv.backup as boolean) || (configFile.backup as boolean) || false,
   // Directory to save backups
   backupsDir: path.resolve(
-    path.join(
-      workingDirectory,
-      (argv.backupsDir as string) ||
-        (configFile.backupsDir as string) ||
-        './migrations/backups',
-    ),
+    (argv.backupsDir as string) ||
+      (configFile.backupsDir as string) ||
+      './migrations/backups',
   ),
   migrationsDir: path.resolve(
     (argv.migrationsDir as string) ||
@@ -117,8 +101,6 @@ const config = {
 
 async function main() {
   validation.checkNoArgPassed(yargs, argv);
-  validation.checkMigrationDirExists(config);
-  validation.createbackupDir(config);
 
   const versions = fs.existsSync(config.migrationsDir)
     ? (fs
@@ -127,14 +109,19 @@ async function main() {
     : [];
 
   if (Object.keys(commands).indexOf(argv._[0]) > -1) {
-    await commands[argv._[0]].callback({
+    validation.checkMigrationDirExists(config);
+    validation.createbackupDir(config);
+
+    await commands[argv._[0]].action({
       config,
       versions,
       argv,
       migrator,
     });
   } else {
-    logger.info('Invalid command. Use --help to show available commands.');
+    logger.error(
+      'Invalid command. Use --help option to show available commands.',
+    );
   }
 
   exit();

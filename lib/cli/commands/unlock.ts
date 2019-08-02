@@ -1,6 +1,8 @@
 import { initMigrator, logger, timer } from '../common/utils';
 
-export default async ({ config }) => {
+export const describe = 'Unlock migrations state';
+
+export const action = async ({ config }) => {
   const migrator = await initMigrator(config);
 
   if (await migrator.isLocked()) {

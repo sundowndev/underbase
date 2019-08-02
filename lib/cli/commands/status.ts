@@ -1,7 +1,9 @@
 import { IConfigFile } from '../../interfaces';
 import { initMigrator, logger } from '../common/utils';
 
-export default async ({ config }) => {
+export const describe = 'Show migrations status';
+
+export const action = async ({ config }) => {
   const migrator = await initMigrator(config as IConfigFile);
 
   const currentVersion = await migrator.getVersion();

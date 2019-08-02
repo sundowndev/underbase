@@ -1,7 +1,9 @@
 import * as fs from 'fs-extra';
 import { logger } from '../common/utils';
 
-export default async ({ config }) => {
+export const describe = 'Initiate migration environment';
+
+export const action = async ({ config }) => {
   if (!fs.existsSync(config.migrationsDir)) {
     await fs.mkdirpSync(config.migrationsDir);
     logger.info('Created migration directory.');
