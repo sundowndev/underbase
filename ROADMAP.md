@@ -40,10 +40,17 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [ ] Improve documentation with better migration process explanation & guides
   - [ ] Organizing migrations
   - [ ] Working with backups
-  <!-- Migrating with frameworks-->
+  - [ ] Migrating with frameworks
   - [ ] Working with continuous deployment
-  - [ ] Usage with Typescript
 
 ### `v1.1.0`
 
-- [ ] CLI: `--history` option to save migration history into a .log file
+<!--- [ ] CLI: `--history` option to save migration history into a .log file-->
+- [ ] Init monorepo using Lerna with the following packages
+  - [ ] underbase
+  - [ ] underbase-cli
+  - [ ] babel-underbase
+  - [ ] babel-preset-underbase
+- [ ] Support for ES6, ES7, ES8, ES9 and Typescript
+- [ ] Update documentation
+  - [ ] Usage with Typescript
