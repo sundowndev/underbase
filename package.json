@@ -33,7 +33,7 @@
     "migration",
     "schema"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "engines": {
     "node": ">=7.10.0"
   },
