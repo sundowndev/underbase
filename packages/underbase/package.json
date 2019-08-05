@@ -1,0 +1,53 @@
+{
+  "name": "underbase",
+  "version": "1.0.5",
+  "description": "Abstract framework to write and execute MongoDB schema migration",
+  "main": "build/index.js",
+  "types": "build/index.d.js",
+  "scripts": {
+    "lint": "tslint --project . -e *.js",
+    "build": "webpack --mode production --config ./webpack.config.js --progress --color --display-error-details",
+    "build:watch": "rm -rf build && webpack --mode production --config ./webpack.config.js --watch"
+  },
+  "author": "Raphaël Cerveaux <raphael@crvx.fr>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sundowndev/underbase"
+  },
+  "bugs": {
+    "url": "https://github.com/sundowndev/underbase/issues"
+  },
+  "keywords": [
+    "mongo",
+    "mongodb",
+    "migration",
+    "schema"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.16.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "jest-extended"
+    ]
+  },
+  "devDependencies": {
+    "@types/bluebird": "3.5.27",
+    "@types/type-check": "0.3.27",
+    "@types/lodash": "4.14.136",
+    "@types/mongodb": "3.1.22"
+  },
+  "dependencies": {
+    "bluebird": "3.5.5",
+    "chalk": "^2.4.2",
+    "lodash": "4.17.15",
+    "mongodb": "3.2.2",
+    "type-check": "0.3.2"
+  }
+}

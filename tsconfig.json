@@ -2,17 +2,31 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "rootDir": ".",
-    "outDir": "build",
-    "baseUrl": ".",
+    // "declaration": true,
     "sourceMap": true,
-    "allowJs": true,
-    "typeRoots": ["node_modules/@types"],
     "pretty": true,
     "removeComments": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "strict": true,
+    "composite": true,
+
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
-  "include": ["**/*.spec.ts"],
-  "exclude": ["node_modules", "build"]
+  "exclude": [
+    "**/*.js",
+    "node_modules",
+    ".yarn/releases/*",
+    "**/__tests__/**/*",
+    "**/build/**/*",
+    "**/build-es5/**/*"
+  ]
 }
