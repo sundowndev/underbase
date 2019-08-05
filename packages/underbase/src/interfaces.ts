@@ -1,15 +1,6 @@
 import { Db } from 'mongodb';
 import { QueryInterface } from './queryInterface';
 
-export type SyslogLevels =
-  | 'debug'
-  | 'info'
-  | 'notice'
-  | 'warning'
-  | 'error'
-  | 'crit'
-  | 'alert';
-
 export interface IMigrationOptions {
   logs?: boolean;
   logger?: any;
@@ -31,9 +22,16 @@ export interface IConfigFile {
   mongodumpBinary: string;
 }
 
+export interface IMigrationUtils {
+  MongoClient: Db;
+  Migrate: any;
+  Query: QueryInterface;
+  Logger: (...args: string[]) => {};
+}
+
 export interface IMigration {
   version: number;
   describe: string;
-  up: (db: QueryInterface) => Promise<any> | any;
-  down: (db: QueryInterface) => Promise<any> | any;
+  up: (db: IMigrationUtils) => Promise<any> | any;
+  down: (db: IMigrationUtils) => Promise<any> | any;
 }

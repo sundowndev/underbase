@@ -31,7 +31,7 @@ import * as _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
 import { logger } from '../../underbase-cli/src/common/utils';
-import { IMigration, IMigrationOptions } from './interfaces';
+import { IMigration, IMigrationOptions, IMigrationUtils } from './interfaces';
 import { QueryInterface } from './queryInterface';
 
 const check = typeCheck;
@@ -321,7 +321,7 @@ export class Migration {
 
       const logLevel = 8;
 
-      const injectedObject = {
+      const _MigrationUtils = {
         MongoClient: this._db as Db,
         Migrate: async (migrations: any[]) => {
           for (const i in migrations) {
@@ -344,7 +344,7 @@ export class Migration {
               }
 
               try {
-                await migrations[i][direction](injectedObject);
+                await migrations[i][direction](_MigrationUtils);
               } catch (error) {
                 throw new Error(error);
               }
@@ -361,7 +361,7 @@ export class Migration {
       };
 
       try {
-        await migration[direction](injectedObject);
+        await migration[direction](_MigrationUtils as IMigrationUtils);
         this.options.logger.log('');
       } catch (error) {
         throw new Error(error);

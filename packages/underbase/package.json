@@ -6,13 +6,17 @@
   "types": "build/index.d.js",
   "scripts": {
     "lint": "tslint --project . -e *.js",
-    "build": "webpack --mode production --config ./webpack.config.js --progress --color --display-error-details",
+    "build": "webpack-cli --mode production --config ./webpack.config.js --progress --color --display-error-details",
     "build:watch": "rm -rf build && webpack --mode production --config ./webpack.config.js --watch"
   },
   "author": "Raphaël Cerveaux <raphael@crvx.fr>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sundowndev/underbase"
+    "url": "git+https://github.com/sundowndev/underbase.git",
+    "directory": "packages/underbase"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "bugs": {
     "url": "https://github.com/sundowndev/underbase/issues"
@@ -41,7 +45,10 @@
     "@types/bluebird": "3.5.27",
     "@types/type-check": "0.3.27",
     "@types/lodash": "4.14.136",
-    "@types/mongodb": "3.1.22"
+    "@types/mongodb": "3.1.22",
+    "webpack": "4.39.1",
+    "webpack-cli": "3.3.6",
+    "webpack-node-externals": "1.7.2"
   },
   "dependencies": {
     "bluebird": "3.5.5",
