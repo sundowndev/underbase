@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    // "declaration": true,
+    "declaration": true,
     "sourceMap": true,
     "pretty": true,
     "removeComments": true,
@@ -22,11 +22,9 @@
     "resolveJsonModule": true
   },
   "exclude": [
-    "**/*.js",
     "node_modules",
     ".yarn/releases/*",
     "**/__tests__/**/*",
-    "**/build/**/*",
-    "**/build-es5/**/*"
+    "**/build/**/*"
   ]
 }
