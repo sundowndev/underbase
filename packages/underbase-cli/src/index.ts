@@ -56,7 +56,7 @@ const argv = yargs
   .locale('en_US')
   .parse();
 
-let configFile = {} as IConfigFile;
+let configFile: IConfigFile;
 const workingDirectory =
   (argv.chdir as string) || (configFile.chdir as string) || process.cwd();
 
@@ -96,7 +96,7 @@ const config = {
     (argv.mongodumpBinary as string) ||
     (configFile.mongodumpBinary as string) ||
     'mongodump',
-} as IConfigFile;
+};
 
 async function main() {
   validation.checkNoArgPassed(yargs, argv);
