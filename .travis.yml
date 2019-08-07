@@ -11,23 +11,17 @@ node_js:
   - '11'
 
 stages:
-  - install
   - lint
   - build
   - test
 
 before_script:
   - set -o pipefail
-  - npm install codecov -g
-  - docker-compose up -d underbase-db
+  - npm install
+  - npm run bootstrap
 
 jobs:
   include:
-    - stage: install
-      script:
-        - npm install
-        - npm run bootstrap
-
     - stage: lint
       script: npm run lint
 
@@ -36,5 +30,7 @@ jobs:
 
     - stage: test
       script:
+        - npm install codecov -g
+        - docker-compose up -d underbase-db
         - npm test
         - codecov -f coverage/*.json
