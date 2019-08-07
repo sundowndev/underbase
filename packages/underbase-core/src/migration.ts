@@ -34,7 +34,7 @@ import {
 import { logger } from '@underbase/utils';
 import { Promise as BluebirdPromise } from 'bluebird';
 import chalk from 'chalk';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
 
