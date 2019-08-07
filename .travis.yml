@@ -24,7 +24,9 @@ before_script:
 jobs:
   include:
     - stage: install
-      script: npm install
+      script:
+        - npm install
+        - npm run bootstrap
 
     - stage: build
       script: npm run build
@@ -34,5 +36,5 @@ jobs:
       
     - stage: test
       script:
-        - npm run test
+        - npm test
         - codecov -f coverage/*.json
