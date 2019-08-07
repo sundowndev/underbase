@@ -1,10 +1,10 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
+import { IConfigFile } from '@underbase/types';
+import * as utils from '@underbase/utils';
 import * as child_process from 'child_process';
 import 'jest-extended';
-import { IConfigFile } from 'underbase/src/interfaces';
 import * as backup from '../../common/backup';
-import * as utils from '../../common/utils';
 
 describe('UNIT - CLI/Common', () => {
   let mockedLogger: any;

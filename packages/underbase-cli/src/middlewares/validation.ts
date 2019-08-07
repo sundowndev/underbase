@@ -1,6 +1,6 @@
+import { IConfigFile } from '@underbase/types';
+import { exit, logger } from '@underbase/utils';
 import * as fs from 'fs-extra';
-import { IConfigFile } from 'underbase/src/interfaces';
-import { exit, logger } from '../common/utils';
 
 export const checkNoArgPassed = (yargs: any, argv: any) => {
   if (!argv._[0]) {

@@ -1,16 +1,16 @@
 {
-  "name": "underbase-cli",
-  "version": "1.0.5",
-  "description": "A CLI tool for Underbase library",
+  "name": "@underbase/cli",
+  "version": "1.0.0",
   "main": "build/index.js",
-  "types": "build/index.d.ts",
-  "bin": {
-    "underbase": "./bin/index.js"
-  },
+  "types": "build/index",
+  "files": [
+    "build"
+  ],
   "scripts": {
-    "lint": "tslint --project . -e *.js",
-    "build": "webpack-cli --mode production --config ./webpack.config.js --progress --color --display-error-details",
-    "build:watch": "rm -rf build && webpack --mode production --config ./webpack.config.js --watch"
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./build",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build"
   },
   "author": "Raphaël Cerveaux <raphael@crvx.fr>",
   "repository": {
@@ -24,38 +24,18 @@
   "bugs": {
     "url": "https://github.com/sundowndev/underbase/issues"
   },
-  "keywords": [
-    "mongodb",
-    "migration",
-    "schema",
-    "cli"
-  ],
-  "license": "MIT",
-  "engines": {
-    "node": ">=8.16.0"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "jest-extended"
-    ]
-  },
   "devDependencies": {
-    "@types/fs-extra": "8.0.0",
-    "@types/yargs": "^13.0.0",
-    "webpack": "4.39.1",
-    "webpack-cli": "3.3.6",
-    "webpack-node-externals": "1.7.2"
+    "@types/fs-extra": "^8.0.0",
+    "@types/yargs": "^13.0.2",
+    "typescript": "3.5.3"
   },
   "dependencies": {
+    "@underbase/core": "^1.0.0",
+    "@underbase/types": "^1.0.0",
+    "@underbase/utils": "^1.0.0",
     "chalk": "^2.4.2",
     "esm": "3.2.25",
     "fs-extra": "8.1.0",
-    "underbase": "file:../underbase",
     "yargs": "13.3.0"
   }
 }

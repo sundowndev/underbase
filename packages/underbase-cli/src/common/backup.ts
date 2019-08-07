@@ -1,8 +1,8 @@
 // tslint:disable no-console
 
+import { IConfigFile } from '@underbase/types';
+import { exit, logger } from '@underbase/utils';
 import { exec } from 'child_process';
-import { IConfigFile } from 'underbase/src/interfaces';
-import { exit, logger } from './utils';
 
 export const create = (config: IConfigFile, version: number) =>
   new Promise(resolve => {

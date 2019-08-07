@@ -1,9 +1,10 @@
-import { IConfigFile } from 'underbase/src/interfaces';
-import { initMigrator, logger } from '../common/utils';
+import { IConfigFile } from '@underbase/types';
+import { logger } from '@underbase/utils';
+import { initMigrator } from '../common/utils';
 
 export const describe = 'Show migrations status';
 
-export const action = async ({ config }) => {
+export const action = async ({ config }: { config: any }) => {
   const migrator = await initMigrator(config as IConfigFile);
 
   const currentVersion = await migrator.getVersion();

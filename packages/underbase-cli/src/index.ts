@@ -1,10 +1,10 @@
 // tslint:disable:no-var-requires
 // tslint:disable:no-console
+import { IConfigFile } from '@underbase/types';
+import { exit, logger } from '@underbase/utils';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { IConfigFile } from 'underbase/src/interfaces';
 import * as yargs from 'yargs';
-import { exit, logger } from './common/utils';
 
 // Middlewares
 import * as validation from './middlewares/validation';
@@ -17,7 +17,7 @@ import * as rerunCmd from './commands/rerun';
 import * as statusCmd from './commands/status';
 import * as unlockCmd from './commands/unlock';
 
-const commands = {
+const commands: any = {
   init: initCmd,
   list: listCmd,
   migrate: migrateCmd,
@@ -57,12 +57,15 @@ const argv = yargs
   .parse();
 
 let configFile: IConfigFile;
-const workingDirectory =
-  (argv.chdir as string) || (configFile.chdir as string) || process.cwd();
 
 if (argv.config) {
   configFile = require(path.resolve(argv.config as string));
+} else {
+  configFile = {} as any;
 }
+
+const workingDirectory =
+  (argv.chdir as string) || (configFile.chdir as string) || process.cwd();
 
 const config = {
   workingDirectory,
@@ -96,7 +99,7 @@ const config = {
     (argv.mongodumpBinary as string) ||
     (configFile.mongodumpBinary as string) ||
     'mongodump',
-};
+} as IConfigFile;
 
 async function main() {
   validation.checkNoArgPassed(yargs, argv);

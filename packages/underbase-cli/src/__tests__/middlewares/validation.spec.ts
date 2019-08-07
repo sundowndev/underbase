@@ -1,8 +1,8 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
+import * as utils from '@underbase/utils';
 import * as fs from 'fs-extra';
 import 'jest-extended';
-import * as utils from '../../common/utils';
 import * as validation from '../../middlewares/validation';
 
 describe('UNIT - CLI/Middlewares', () => {

@@ -1,9 +1,9 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
+import { Migration } from '@underbase/core';
+import * as utils from '@underbase/utils';
 import chalk from 'chalk';
 import 'jest-extended';
-import { Migration } from 'underbase/src/migration';
-import * as utils from '../../common/utils';
 
 describe('UNIT - CLI/Common', () => {
   let mockedProcessExit: any;

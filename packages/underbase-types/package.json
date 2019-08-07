@@ -1,0 +1,35 @@
+{
+  "name": "@underbase/types",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "types": "build/index",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./build",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "Raphaël Cerveaux <raphael@crvx.fr>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sundowndev/underbase.git",
+    "directory": "packages/underbase-types"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/sundowndev/underbase/issues"
+  },
+  "devDependencies": {
+    "@types/mongodb": "^3.1.31",
+    "typescript": "3.5.3"
+  },
+  "dependencies": {
+    "@underbase/query-interface": "^1.0.0",
+    "mongodb": "^3.3.0-beta2"
+  }
+}

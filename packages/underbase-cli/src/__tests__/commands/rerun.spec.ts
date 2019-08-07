@@ -1,10 +1,10 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
+import { IConfigFile } from '@underbase/types';
+import * as utils from '@underbase/utils';
 import 'jest-extended';
-import { IConfigFile, IMigration } from 'underbase/src/interfaces';
 import * as rerunCmd from '../../commands/rerun';
 import * as backup from '../../common/backup';
-import * as utils from '../../common/utils';
 
 describe('UNIT - CLI/Commands', () => {
   let mockedInitMigrator: any;

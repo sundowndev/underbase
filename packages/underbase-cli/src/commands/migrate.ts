@@ -1,10 +1,24 @@
-import { IMigration } from 'underbase/src/interfaces';
+import { IMigration } from '@underbase/types';
+import {
+  exit,
+  importFile,
+  logger,
+  timer,
+} from '@underbase/utils';
 import * as backup from '../common/backup';
-import { exit, importFile, initMigrator, logger, timer } from '../common/utils';
+import { initMigrator } from '../common/utils';
 
 export const describe = 'Migrate to a specified version';
 
-export const action = async ({ config, versions, argv }) => {
+export const action = async ({
+  config,
+  versions,
+  argv,
+}: {
+  config: any;
+  versions: string[];
+  argv: any;
+}) => {
   const versionsArray = versions.map((v: string) => parseFloat(v)) as number[];
 
   if (
@@ -17,8 +31,7 @@ export const action = async ({ config, versions, argv }) => {
   }
 
   versions = versionsArray.map((v: number) => v.toFixed(1)) as string[];
-
-  versions.sort((a: number, b: number) => a - b);
+  versionsArray.sort((a: number, b: number) => a - b);
 
   const migrator = await initMigrator(config);
 

@@ -1,0 +1,139 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-eslint-rules"
+  ],
+  "rulesDirectory": [
+    "node_modules/vrsource-tslint-rules/rules"
+  ],
+  "rules": {
+    "prefer-const": true,
+    "no-var-keyword": true,
+    "object-literal-sort-keys": false,
+    "object-literal-shorthand": true,
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
+    ],
+    "quotemark": [
+      true,
+      "single",
+      "jsx-double"
+    ],
+    "no-eval": true,
+    "space-before-function-paren": [
+      true,
+      {
+        "anonymous": "always",
+        "named": "never"
+      }
+    ],
+    "align": [
+      true,
+      "parameters",
+      "statements"
+    ],
+    "ter-prefer-arrow-callback": [
+      true
+    ],
+    "arrow-parens": false,
+    "ter-arrow-parens": [
+      false,
+      "as-needed",
+      {
+        "requireForBlockBody": true
+      }
+    ],
+    "one-variable-per-declaration": [
+      true,
+      "ignore-for-loop"
+    ],
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "brace-style": [
+      true,
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "comment-format": {
+      "options": [
+        "check-space",
+        "check-uppercase"
+      ],
+      "severity": "warning"
+    },
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-type"
+    ],
+    "eofline": true,
+    "space-in-parens": [
+      true,
+      "never"
+    ],
+    "array-bracket-spacing": [
+      true,
+      "never"
+    ],
+    "object-curly-spacing": [
+      true,
+      "always"
+    ],
+    "ter-max-len": [
+      true,
+      100,
+      2,
+      {
+        "ignoreComments": true,
+        "ignoreStrings": true
+      }
+    ],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    ],
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "radix": true,
+    "no-construct": true,
+    "variable-name": [
+      true,
+      "check-format"
+    ],
+    "class-name": true,
+    "prefer-case-blocks": true,
+    "no-duplicate-imports": true,
+    "max-params": [
+      true,
+      5
+    ]
+  },
+  "jsRules": {
+    "ter-max-len": [
+      true,
+      100,
+      2,
+      {
+        "ignoreComments": true,
+        "ignoreStrings": true
+      }
+    ]
+  }
+}

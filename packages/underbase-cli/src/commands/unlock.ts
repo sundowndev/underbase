@@ -1,8 +1,9 @@
-import { initMigrator, logger, timer } from '../common/utils';
+import { logger, timer } from '@underbase/utils';
+import { initMigrator } from '../common/utils';
 
 export const describe = 'Unlock migrations state';
 
-export const action = async ({ config }) => {
+export const action = async ({ config }: { config: any }) => {
   const migrator = await initMigrator(config);
 
   if (await migrator.isLocked()) {
