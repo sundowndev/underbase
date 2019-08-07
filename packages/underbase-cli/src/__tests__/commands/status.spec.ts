@@ -4,13 +4,14 @@ import { IConfigFile } from '@underbase/types';
 import * as utils from '@underbase/utils';
 import 'jest-extended';
 import * as statusCmd from '../../commands/status';
+import * as cliUtils from '../../common/utils';
 
 describe('UNIT - CLI/Commands', () => {
   let mockedInitMigrator: any;
   let mockedLogger: any;
 
   beforeEach(() => {
-    mockedInitMigrator = jest.spyOn(utils, 'initMigrator');
+    mockedInitMigrator = jest.spyOn(cliUtils, 'initMigrator');
     mockedLogger = jest.spyOn(utils.logger, 'info');
   });
 

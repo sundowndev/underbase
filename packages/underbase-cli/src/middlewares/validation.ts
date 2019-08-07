@@ -17,7 +17,7 @@ export const checkMigrationDirExists = (config: IConfigFile) => {
   }
 };
 
-export const createbackupDir = (config: IConfigFile) => {
+export const createBackupDir = (config: IConfigFile) => {
   if (!fs.existsSync(config.backupsDir as fs.PathLike) && config.backup) {
     fs.mkdirpSync(config.backupsDir as string);
     logger.info('Created backup directory.');

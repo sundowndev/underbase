@@ -112,7 +112,7 @@ async function main() {
 
   if (Object.keys(commands).indexOf(argv._[0]) > -1) {
     validation.checkMigrationDirExists(config);
-    validation.createbackupDir(config);
+    validation.createBackupDir(config);
 
     await commands[argv._[0]].action({
       config,

@@ -5,6 +5,7 @@ import * as utils from '@underbase/utils';
 import 'jest-extended';
 import * as migrateCmd from '../../commands/migrate';
 import * as backup from '../../common/backup';
+import * as cliUtils from '../../common/utils';
 
 describe('UNIT - CLI/Commands', () => {
   let mockedInitMigrator: any;
@@ -13,7 +14,7 @@ describe('UNIT - CLI/Commands', () => {
   let mockedBackup: any;
 
   beforeEach(() => {
-    mockedInitMigrator = jest.spyOn(utils, 'initMigrator');
+    mockedInitMigrator = jest.spyOn(cliUtils, 'initMigrator');
     mockedExit = jest.spyOn(utils, 'exit');
     mockedImportFile = jest.spyOn(utils, 'importFile');
     mockedBackup = jest.spyOn(backup, 'create');

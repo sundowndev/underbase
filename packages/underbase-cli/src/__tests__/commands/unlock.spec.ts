@@ -4,6 +4,7 @@ import { IConfigFile } from '@underbase/types';
 import * as utils from '@underbase/utils';
 import 'jest-extended';
 import * as unlockCmd from '../../commands/unlock';
+import * as cliUtils from '../../common/utils';
 
 describe('UNIT - CLI/Commands', () => {
   let mockedInitMigrator: any;
@@ -11,7 +12,7 @@ describe('UNIT - CLI/Commands', () => {
   let mockedTimer: any;
 
   beforeEach(() => {
-    mockedInitMigrator = jest.spyOn(utils, 'initMigrator');
+    mockedInitMigrator = jest.spyOn(cliUtils, 'initMigrator');
     mockedLogger = jest.spyOn(utils.logger, 'info');
     mockedTimer = jest.spyOn(utils, 'timer');
   });

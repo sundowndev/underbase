@@ -1,4 +1,4 @@
-import { migrator } from '@underbase/core';
+import { Migration, migrator } from '@underbase/core';
 import { IConfigFile } from '@underbase/types';
 import { logger } from '@underbase/utils';
 
@@ -8,7 +8,7 @@ import { logger } from '@underbase/utils';
  * @ignore
  * @private
  */
-export const initMigrator = async (config: IConfigFile) => {
+export const initMigrator = async (config: IConfigFile): Promise<Migration> => {
   logger.info('Connecting to MongoDB...');
 
   await migrator.config(config); // Returns a promise

@@ -36,7 +36,7 @@ export const create = (config: IConfigFile, version: number) =>
           'An error occured while creating backup... Cancelling migration.',
         );
         console.error(error);
-        exit();
+        exit(1);
       }
 
       logger.info(`Backup created : ${config.backupsDir}/${backupFile}`);

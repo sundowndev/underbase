@@ -92,7 +92,7 @@ describe('UNIT - CLI/Middlewares', () => {
       });
     });
 
-    describe('createbackupDir', () => {
+    describe('createBackupDir', () => {
       test('backup directory exists', async () => {
         const config = { backupsDir: './test', backup: true };
 
@@ -102,7 +102,7 @@ describe('UNIT - CLI/Middlewares', () => {
           return true;
         });
 
-        validation.createbackupDir(config as any);
+        validation.createBackupDir(config as any);
 
         expect(mockedExistsSync).toHaveBeenCalledTimes(1);
         expect(mockedMkdirpSync).toHaveBeenCalledTimes(0);
@@ -118,7 +118,7 @@ describe('UNIT - CLI/Middlewares', () => {
           return false;
         });
 
-        validation.createbackupDir(config as any);
+        validation.createBackupDir(config as any);
 
         expect(mockedExistsSync).toHaveBeenCalledTimes(1);
         expect(mockedMkdirpSync).toHaveBeenCalledTimes(1);
@@ -134,7 +134,7 @@ describe('UNIT - CLI/Middlewares', () => {
           return false;
         });
 
-        validation.createbackupDir(config as any);
+        validation.createBackupDir(config as any);
 
         expect(mockedExistsSync).toHaveBeenCalledTimes(1);
         expect(mockedMkdirpSync).toHaveBeenCalledTimes(0);
