@@ -4,4 +4,5 @@ module.exports = {
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
   collectCoverageFrom: ['./packages/**/*.ts'],
+  testMatch: ['**/__tests__/**/?(*.)+(spec|test).ts'],
 };
