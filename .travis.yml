@@ -6,14 +6,14 @@ services:
   - docker
 
 node_js:
-  - "8"
-  - "10"
-  - "11"
+  - '8'
+  - '10'
+  - '11'
 
 stages:
   - install
-  - build
   - lint
+  - build
   - test
 
 before_script:
@@ -28,12 +28,12 @@ jobs:
         - npm install
         - npm run bootstrap
 
-    - stage: build
-      script: npm run build
-      
     - stage: lint
       script: npm run lint
-      
+
+    - stage: build
+      script: npm run build:clean
+
     - stage: test
       script:
         - npm test
