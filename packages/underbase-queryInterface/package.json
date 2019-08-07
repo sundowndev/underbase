@@ -29,6 +29,6 @@
     "typescript": "3.5.3"
   },
   "dependencies": {
-    "mongodb": "3.2.2"
+    "mongodb": "3.3.0-beta2"
   }
 }
