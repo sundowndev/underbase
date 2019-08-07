@@ -3,3 +3,4 @@ coverage/
 .vscode/
 /**/backups/
 website/build
+build
