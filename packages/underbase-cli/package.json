@@ -33,7 +33,6 @@
     "@underbase/core": "^1.1.1-alpha.0",
     "@underbase/types": "^1.1.1-alpha.0",
     "@underbase/utils": "^1.1.1-alpha.0",
-    "chalk": "^2.4.2",
     "esm": "3.2.25",
     "fs-extra": "8.1.0",
     "yargs": "13.3.0"
