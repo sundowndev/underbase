@@ -1,6 +1,6 @@
 {
   "name": "@underbase/core",
-  "version": "1.0.0",
+  "version": "1.1.1-alpha.0",
   "description": "Abstract framework to write and execute MongoDB schema migration",
   "main": "build/index.js",
   "types": "build/index",
@@ -33,9 +33,9 @@
     "typescript": "3.5.3"
   },
   "dependencies": {
-    "@underbase/types": "^1.0.0",
-    "@underbase/query-interface": "^1.0.0",
-    "@underbase/utils": "^1.0.0",
+    "@underbase/query-interface": "^1.1.1-alpha.0",
+    "@underbase/types": "^1.1.1-alpha.0",
+    "@underbase/utils": "^1.1.1-alpha.0",
     "bluebird": "3.5.5",
     "chalk": "^2.4.2",
     "lodash": "4.17.15",
