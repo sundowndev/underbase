@@ -1,0 +1,9 @@
+{
+  "dependencies": {},
+  "devDependencies": {
+    "underbase": "*"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
