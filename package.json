@@ -7,7 +7,7 @@
     "build": "lerna run build",
     "build:clean": "rm -rf ./packages/*/build ./packages/*/build-es5 ./packages/*/coverage && npm run build",
     "clean": "lerna run clean",
-    "clean-all": "rm -rf ./node_modules ./packages/*/node_modules ./packages/*/coverage",
+    "clean-all": "rm -rf ./node_modules ./packages/*/node_modules ./packages/*/coverage ./packages/*/build",
     "pub": "lerna publish",
     "test": "cross-env NODE_ENV=test jest --config jest.config.js --coverage --useStderr --forceExit --detectOpenHandles",
     "test:debug": "cross-env NODE_ENV=test node --inspect=0.0.0.0:5857 jest --coverage --useStderr --forceExit --detectOpenHandles",
