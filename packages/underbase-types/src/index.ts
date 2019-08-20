@@ -20,6 +20,7 @@ interface IConfigFile {
   logIfLatest?: boolean;
   chdir?: string;
   mongodumpBinary: string;
+  compiler: string;
 }
 
 interface IMigrationUtils {

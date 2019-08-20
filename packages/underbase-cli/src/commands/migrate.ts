@@ -1,10 +1,5 @@
 import { IMigration } from '@underbase/types';
-import {
-  exit,
-  importFile,
-  logger,
-  timer,
-} from '@underbase/utils';
+import { exit, importFile, logger, timer } from '@underbase/utils';
 import * as backup from '../common/backup';
 import { initMigrator } from '../common/utils';
 
@@ -39,6 +34,7 @@ export const action = async ({
     if (versions.hasOwnProperty(i)) {
       const migrationObj: IMigration = await importFile(
         `${config.migrationsDir}/${versions[i]}`,
+        config.compiler,
       );
 
       await migrator.add(migrationObj);

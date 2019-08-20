@@ -60,12 +60,35 @@ export const exit = (code: number = 0) => {
  * @ignore
  * @private
  */
-export const importFile = async (path: string) => {
-  // tslint:disable-next-line: no-var-requires
-  require = require('esm')(module);
+export const importFile = async (path: string, compiler?: string) => {
+  const registerCompiler = (module: string) => {
+    switch (module) {
+      case 'babel-register': {
+        require('@babel/register')({
+          extensions: ['.js'],
+          cache: false,
+        });
+        return;
+      }
+      case 'ts-node': {
+        require('ts-node').register({ transpileOnly: true });
+        return;
+      }
+    }
+  };
+
+  if (compiler) {
+    registerCompiler(compiler);
+  }
 
   try {
-    return await require(path).default;
+    const file = await import(path);
+
+    if (file.default.up) {
+      return file.default;
+    } else {
+      return file;
+    }
   } catch (error) {
     throw new Error(error);
   }

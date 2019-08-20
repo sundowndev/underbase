@@ -28,9 +28,6 @@ const commands: any = {
   rerun: rerunCmd,
 };
 
-// Enable ES6 module for migrations files
-require = require('esm')(module);
-
 const argv = yargs
   .scriptName('underbase')
   .usage('Usage: $0 <command> [OPTIONS]')
@@ -48,6 +45,11 @@ const argv = yargs
   .describe('collection-name <name>', 'Migrations state collection')
   .describe('logs', 'Enable logs')
   .describe('chdir <path>', 'Change the working directory')
+  .describe(
+    'compiler <name>',
+    'Use a compiler register to fetch migration files',
+  )
+  .choices('compiler', ['babel-register', 'ts-node'])
   .describe('version', 'Show package version')
   .describe(
     'mongodumpBinary <path>',
@@ -101,6 +103,7 @@ const config = {
     (argv.mongodumpBinary as string) ||
     (configFile.mongodumpBinary as string) ||
     'mongodump',
+  compiler: argv.compiler || configFile.compiler || undefined,
 } as IConfigFile;
 
 async function main() {
