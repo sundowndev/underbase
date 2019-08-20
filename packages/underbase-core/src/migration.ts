@@ -34,6 +34,7 @@ import {
 import { logger } from '@underbase/utils';
 import { Promise as BluebirdPromise } from 'bluebird';
 import chalk from 'chalk';
+import events, { EventEmitter } from 'events';
 import _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
@@ -50,6 +51,7 @@ export class Migration {
   private _collection: Collection;
   private _db: Db;
   private options: IMigrationOptions;
+  private _emitter: EventEmitter;
 
   /**
    * Creates an instance of Migration.
@@ -75,6 +77,19 @@ export class Migration {
           // Mongdb url or mongo Db instance
           db: null as any,
         };
+    this._emitter = new events.EventEmitter();
+  }
+
+  /**
+   * Register an event
+   *
+   * @param {string} event
+   * @param {any} callback
+   * @returns {void}
+   * @memberof Migration
+   */
+  public registerEvent(event: string, callback: any): void {
+    this._emitter.addListener(event, callback);
   }
 
   /**
@@ -152,6 +167,8 @@ export class Migration {
     }
 
     this._db = db;
+
+    this.emitEvent('start');
   }
 
   /**
@@ -185,10 +202,14 @@ export class Migration {
   }
 
   /**
-   * Run the migrations using command in the form of:
+   * Run the migrations
+   *
    * @example 'latest' - migrate to latest, 2, '2,rerun'
    * @example 2 - migrate to version 2
    * @example '2,rerun' - if at version 2, re-run up migration
+   *
+   * @param {string | number} command
+   * @memberof Migration
    */
   public async migrateTo(command: string | number): Promise<void> {
     if (!this._db) {
@@ -276,6 +297,17 @@ export class Migration {
   public async reset(): Promise<void> {
     this._list = [this.defaultMigration];
     await this._collection.deleteMany({});
+  }
+
+  /**
+   * Emit an event
+   *
+   * @returns {void}
+   * @param {string} event
+   * @memberof Migration
+   */
+  private emitEvent(event: string): void {
+    this._emitter.emit(event);
   }
 
   /**
@@ -447,6 +479,8 @@ export class Migration {
         ' -> ' +
         this.getMigrations()[endIdx].version,
     );
+
+    this.emitEvent(rerun ? 'rerun' : 'migrate');
 
     if (currentVersion < version) {
       for (let i = startIdx; i < endIdx; i++) {
