@@ -1,7 +1,7 @@
 import { QueryInterface } from '@underbase/query-interface';
 import { Db } from 'mongodb';
 
-export interface IMigrationOptions {
+interface IMigrationOptions {
   logs?: boolean;
   logger?: any;
   logIfLatest?: boolean;
@@ -9,7 +9,7 @@ export interface IMigrationOptions {
   db: string | Db;
 }
 
-export interface IConfigFile {
+interface IConfigFile {
   collectionName?: string;
   backup?: boolean;
   backupsDir?: string;
@@ -22,16 +22,33 @@ export interface IConfigFile {
   mongodumpBinary: string;
 }
 
-export interface IMigrationUtils {
+interface IMigrationUtils {
   MongoClient: Db;
   Migrate: any;
   Query: QueryInterface;
   Logger: (...args: string[]) => {};
 }
 
-export interface IMigration {
+interface IMigration {
   version: number;
   describe: string;
   up: (db: IMigrationUtils) => Promise<any> | any;
   down: (db: IMigrationUtils) => Promise<any> | any;
 }
+
+interface ILogger {
+  info: (...args: string[]) => void;
+  warn: (...args: string[]) => void;
+  success: (...args: string[]) => void;
+  error: (...args: string[]) => void;
+  log: (...args: string[]) => void;
+}
+
+export {
+  IMigrationOptions,
+  IConfigFile,
+  IMigrationUtils,
+  IMigration,
+  ILogger,
+  QueryInterface,
+};

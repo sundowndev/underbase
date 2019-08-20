@@ -1,4 +1,5 @@
 // tslint:disable:no-console
+import { ILogger } from '@underbase/types';
 import chalk from 'chalk';
 
 /**
@@ -8,7 +9,7 @@ import chalk from 'chalk';
  * @private
  * @returns object
  */
-export const logger: any = {
+export const logger: ILogger = {
   info: (...args: string[]) => {
     console.log(chalk.bold('[INFO]'), ...args);
   },

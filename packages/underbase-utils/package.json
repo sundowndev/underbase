@@ -28,6 +28,7 @@
     "typescript": "3.5.3"
   },
   "dependencies": {
-    "chalk": "^2.4.2"
+    "chalk": "^2.4.2",
+    "@underbase/types": "^1.1.2-alpha.0"
   }
 }
