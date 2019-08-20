@@ -1,4 +1,4 @@
-import { QueryInterface } from '@underbase/underbase-queryInterface';
+import { QueryInterface } from '@underbase/underbase-types';
 import tasks from './tasks';
 import users from './users';
 
