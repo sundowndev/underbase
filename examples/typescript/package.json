@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "mongodb": "*"
+  },
+  "devDependencies": {
+    "@underbase/cli": "*",
+    "@underbase/query-interface": "*"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
