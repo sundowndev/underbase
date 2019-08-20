@@ -61,18 +61,15 @@ export const exit = (code: number = 0) => {
  * @private
  */
 export const importFile = async (path: string, compiler?: string) => {
-  const registerCompiler = (module: string) => {
+  const registerCompiler = async (module: string) => {
     switch (module) {
       case 'babel-register': {
-        require('@babel/register')({
-          extensions: ['.js'],
-          cache: false,
-        });
-        return;
+        const babel = require('@babel/register');
+        return babel({ extensions: ['.js'], cache: false });
       }
       case 'ts-node': {
-        require('ts-node').register({ transpileOnly: true });
-        return;
+        const tsNode = require('ts-node');
+        return tsNode({ transpileOnly: true });
       }
     }
   };
@@ -84,10 +81,17 @@ export const importFile = async (path: string, compiler?: string) => {
   try {
     const file = await import(path);
 
-    if (file.default.up) {
+    if (typeof file.default.up === 'function') {
       return file.default;
-    } else {
+    } else if (typeof file.up === 'function') {
       return file;
+    } else {
+      logger.error(
+        `Underbase was not able to validate the migration object for file`,
+        path,
+        'Did you forget the default keyword ?',
+      );
+      exit(1);
     }
   } catch (error) {
     throw new Error(error);
