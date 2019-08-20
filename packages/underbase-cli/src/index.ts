@@ -12,7 +12,7 @@ import * as yargs from 'yargs';
 import * as args from './args';
 
 // Middlewares
-import * as validation from './middlewares/validation';
+import * as validators from './middlewares/validators';
 
 const argv = yargs
   .scriptName('underbase')
@@ -38,7 +38,7 @@ async function main() {
     configFile = await import(path.resolve(argv.config));
   }
 
-  const config = {
+  const config: IConfigFile = {
     // False disables logging
     logs: (argv.logs as boolean) || (configFile.logs as boolean) || true,
     // Null or a function
@@ -49,17 +49,17 @@ async function main() {
     collectionName: configFile.collectionName
       ? (configFile.collectionName as string)
       : (argv.collectionName as string),
-    // MongDB url
+    // MongDB connection url
     db: configFile.db ? (configFile.db as string) : (argv.db as string),
     migrationsDir: path.resolve(
       configFile.migrationsDir
         ? (configFile.migrationsDir as string)
         : (argv.migrationsDir as string),
     ),
-    compiler: argv.compiler || configFile.compiler || undefined,
-  } as IConfigFile;
+    compiler: argv.compiler || configFile.compiler,
+  };
 
-  validation.checkNoArgPassed(yargs, argv);
+  validators.checkNoArgPassed(yargs, argv);
 
   const versions = fs.existsSync(config.migrationsDir as fs.PathLike)
     ? (fs
@@ -68,7 +68,7 @@ async function main() {
     : [];
 
   if (Object.keys(args.commands).indexOf(argv._[0]) > -1) {
-    validation.checkMigrationDirExists(config);
+    validators.checkMigrationDirExists(config);
 
     await args.commands[argv._[0]].action({
       config,
