@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // tslint:disable:no-var-requires
 // tslint:disable:no-console
 import { IConfigFile } from '@underbase/types';
