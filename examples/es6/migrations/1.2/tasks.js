@@ -3,25 +3,25 @@ export default {
   async up({ MongoClient }) {
     const Tasks = MongoClient.collection('Tasks');
 
-    await Tasks.find({}).forEach(async doc => {
-      const labels = [doc.label];
+    for (task of await Tasks.find({})) {
+      const labels = [task.label];
 
       await Tasks.updateOne(
-        { _id: doc._id },
+        { _id: task._id },
         { $unset: { label: 1 }, $set: { labels } },
       );
-    });
+    }
   },
   async down({ MongoClient }) {
     const Tasks = MongoClient.collection('Tasks');
 
-    await Tasks.find({}).forEach(async doc => {
-      const label = doc.labels[0];
+    for (task of await Tasks.find({})) {
+      const label = task.labels[0];
 
       await Tasks.updateOne(
-        { _id: doc._id },
+        { _id: task._id },
         { $unset: { labels: 1 }, $set: { label: label } },
       );
-    });
+    }
   },
 };

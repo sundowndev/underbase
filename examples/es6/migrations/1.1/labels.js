@@ -4,40 +4,39 @@ export default {
     const Tasks = MongoClient.collection('Tasks');
     const Labels = MongoClient.collection('Labels');
 
-    await Tasks.find({}).forEach(async (doc) => {
-      const label = doc.label;
-
+    for (task of await Tasks.find({})) {
+      const label = task.label;
       const labelDoc = await Labels.findOneAndUpdate(
         { name: label },
         { $setOnInsert: { name: label } },
         {
           returnOriginal: false,
           upsert: true,
-        }
+        },
       );
 
       await Tasks.updateOne(
-        { _id: doc._id },
+        { _id: task._id },
         {
           $set: {
             label: labelDoc.value._id,
           },
-        }
+        },
       );
-    });
+    }
   },
   async down({ MongoClient, Query }) {
     const Tasks = MongoClient.collection('Tasks');
     const Labels = MongoClient.collection('Labels');
 
-    await Tasks.find({}).forEach(async (doc) => {
-      const labelDoc = await Labels.findOne({ _id: doc.label });
+    for (task of await Tasks.find({})) {
+      const labelDoc = await Labels.findOne({ _id: task.label });
 
       await MongoClient.collection('Tasks').updateOne(
-        { _id: doc._id },
-        { $set: { label: labelDoc.name } }
+        { _id: task._id },
+        { $set: { label: labelDoc.name } },
       );
-    });
+    }
 
     await Query.collection('Labels').drop();
   },
