@@ -9,7 +9,7 @@
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./build",
-    "compile": "tsc -p tsconfig.build.json",
+    "compile": "tsc -p tsconfig.json",
     "prepublishOnly": "npm run build"
   },
   "author": "Raphaël Cerveaux <raphael@crvx.fr>",
