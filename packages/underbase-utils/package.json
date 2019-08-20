@@ -25,6 +25,7 @@
     "url": "https://github.com/sundowndev/underbase/issues"
   },
   "devDependencies": {
+    "@types/node": "^12.7.2",
     "typescript": "3.5.3"
   },
   "dependencies": {
