@@ -1,6 +1,6 @@
 {
   "name": "@underbase/types",
-  "version": "1.1.1-alpha.0",
+  "version": "1.1.2-alpha.0",
   "main": "build/index.js",
   "types": "build/index",
   "files": [
@@ -29,7 +29,7 @@
     "typescript": "3.5.3"
   },
   "dependencies": {
-    "@underbase/query-interface": "^1.1.1-alpha.0",
+    "@underbase/query-interface": "^1.1.2-alpha.0",
     "mongodb": "^3.3.0-beta2"
   }
 }
