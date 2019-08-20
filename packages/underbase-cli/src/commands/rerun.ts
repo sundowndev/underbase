@@ -1,8 +1,8 @@
 import { IMigration } from '@underbase/types';
 import { importFile, logger, timer } from '@underbase/utils';
-import * as backup from '../common/backup';
 import { initMigrator } from '../common/utils';
 
+export const command = 'rerun';
 export const describe = 'Rerun the current version';
 
 export const action = async ({
@@ -30,10 +30,6 @@ export const action = async ({
   }
 
   const currentVersion = await migrator.getVersion();
-
-  if (config.backup) {
-    await backup.create(config, currentVersion);
-  }
 
   const time = timer();
 

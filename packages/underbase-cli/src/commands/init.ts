@@ -1,6 +1,7 @@
 import { logger } from '@underbase/utils';
 import * as fs from 'fs-extra';
 
+export const command = 'init';
 export const describe = 'Initiate migration environment';
 
 export const action = async ({ config }: { config: any }) => {

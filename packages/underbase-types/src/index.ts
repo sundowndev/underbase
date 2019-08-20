@@ -11,15 +11,11 @@ interface IMigrationOptions {
 
 interface IConfigFile {
   collectionName?: string;
-  backup?: boolean;
-  backupsDir?: string;
   migrationsDir?: string;
   db: string;
   logs: boolean;
   logger: any;
   logIfLatest?: boolean;
-  chdir?: string;
-  mongodumpBinary: string;
   compiler: string;
 }
 

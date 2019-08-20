@@ -1,8 +1,8 @@
 import { IMigration } from '@underbase/types';
 import { exit, importFile, logger, timer } from '@underbase/utils';
-import * as backup from '../common/backup';
 import { initMigrator } from '../common/utils';
 
+export const command = 'migrate <migration>';
 export const describe = 'Migrate to a specified version';
 
 export const action = async ({
@@ -39,12 +39,6 @@ export const action = async ({
 
       await migrator.add(migrationObj);
     }
-  }
-
-  if (config.backup) {
-    const currentVersion = await migrator.getVersion();
-
-    await backup.create(config, currentVersion);
   }
 
   const time = timer();

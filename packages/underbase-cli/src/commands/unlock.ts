@@ -1,6 +1,7 @@
 import { logger, timer } from '@underbase/utils';
 import { initMigrator } from '../common/utils';
 
+export const command = 'unlock';
 export const describe = 'Unlock migrations state';
 
 export const action = async ({ config }: { config: any }) => {

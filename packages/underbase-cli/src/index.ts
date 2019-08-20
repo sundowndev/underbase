@@ -8,105 +8,57 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as yargs from 'yargs';
 
+// CLI arguments
+import * as args from './args';
+
 // Middlewares
 import * as validation from './middlewares/validation';
 
-// Commands
-import * as initCmd from './commands/init';
-import * as listCmd from './commands/list';
-import * as migrateCmd from './commands/migrate';
-import * as rerunCmd from './commands/rerun';
-import * as statusCmd from './commands/status';
-import * as unlockCmd from './commands/unlock';
-
-const commands: any = {
-  init: initCmd,
-  list: listCmd,
-  migrate: migrateCmd,
-  status: statusCmd,
-  unlock: unlockCmd,
-  rerun: rerunCmd,
-};
-
 const argv = yargs
   .scriptName('underbase')
-  .usage('Usage: $0 <command> [OPTIONS]')
-  .command('migrate <migration>', migrateCmd.describe)
-  .command('init', initCmd.describe)
-  .command('list', listCmd.describe)
-  .command('status', statusCmd.describe)
-  .command('unlock', unlockCmd.describe)
-  .command('rerun', rerunCmd.describe)
-  .describe('config <path>', 'Configuration file path')
-  .describe('db <url>', 'MongoDB connection URL')
-  .describe('migrations-dir <path>', 'Migrations versions directory')
-  .describe('backup', 'Enable automatic backups')
-  .describe('backups-dir <path>', 'Backups directory')
-  .describe('collection-name <name>', 'Migrations state collection')
-  .describe('logs', 'Enable logs')
-  .describe('chdir <path>', 'Change the working directory')
-  .describe(
-    'compiler <name>',
-    'Use a compiler register to fetch migration files',
-  )
-  .choices('compiler', ['babel-register', 'ts-node'])
+  .usage(args.usage)
+  .command(args.commands.migrate.command, args.commands.migrate.describe)
+  .command(args.commands.init.command, args.commands.init.describe)
+  .command(args.commands.list.command, args.commands.list.describe)
+  .command(args.commands.status.command, args.commands.status.describe)
+  .command(args.commands.unlock.command, args.commands.unlock.describe)
+  .command(args.commands.rerun.command, args.commands.rerun.describe)
+  .options(args.options)
   .describe('version', 'Show package version')
-  .describe(
-    'mongodumpBinary <path>',
-    'Binary file for mongodump (it can be a docker exec command)',
-  )
   .help('h', 'Show this help message')
   .alias('h', 'help')
   .locale('en_US')
+  .epilogue(args.docs)
   .parse();
 
-let configFile: IConfigFile;
-
-if (argv.config) {
-  configFile = require(path.resolve(argv.config as string));
-} else {
-  configFile = {} as any;
-}
-
-const workingDirectory =
-  (argv.chdir as string) || (configFile.chdir as string) || process.cwd();
-
-const config = {
-  workingDirectory,
-  // False disables logging
-  logs: (argv.logs as boolean) || (configFile.logs as boolean) || true,
-  // Null or a function
-  logger: logger as any,
-  // Enable/disable info log "already at latest."
-  logIfLatest: true,
-  // Migrations collection name. Defaults to 'migrations'
-  collectionName:
-    (argv.collectionName as string) ||
-    (configFile.collectionName as string) ||
-    'migrations',
-  // MongDB url
-  db: (argv.db as string) || (configFile.db as string) || null,
-  // Enable automatic backups
-  backup: (argv.backup as boolean) || (configFile.backup as boolean) || false,
-  // Directory to save backups
-  backupsDir: path.resolve(
-    (argv.backupsDir as string) ||
-      (configFile.backupsDir as string) ||
-      './migrations/backups',
-  ),
-  migrationsDir: path.resolve(
-    (argv.migrationsDir as string) ||
-      (configFile.migrationsDir as string) ||
-      './migrations',
-  ),
-  mongodumpBinary:
-    (argv.mongodumpBinary as string) ||
-    (configFile.mongodumpBinary as string) ||
-    'mongodump',
-  compiler: argv.compiler || configFile.compiler || undefined,
-} as IConfigFile;
+let configFile: IConfigFile | any = {};
 
 async function main() {
+  if (fs.existsSync(path.resolve(argv.config))) {
+    configFile = await import(path.resolve(argv.config));
+  }
+
+  const config = {
+    // False disables logging
+    logs: (argv.logs as boolean) || (configFile.logs as boolean) || true,
+    // Null or a function
+    logger: logger as any,
+    // Enable/disable info log "already at latest."
+    logIfLatest: true,
+    // Migrations collection name. Defaults to 'migrations'
+    collectionName: configFile.collectionName
+      ? (configFile.collectionName as string)
+      : (argv.collectionName as string),
+    // MongDB url
+    db: configFile.db ? (configFile.db as string) : (argv.db as string),
+    migrationsDir: path.resolve(
+      configFile.migrationsDir
+        ? (configFile.migrationsDir as string)
+        : (argv.migrationsDir as string),
+    ),
+    compiler: argv.compiler || configFile.compiler || undefined,
+  } as IConfigFile;
+
   validation.checkNoArgPassed(yargs, argv);
 
   const versions = fs.existsSync(config.migrationsDir as fs.PathLike)
@@ -115,11 +67,10 @@ async function main() {
         .filter((v: string) => v.match(new RegExp(/^[\d].[\d]$/))) as string[])
     : [];
 
-  if (Object.keys(commands).indexOf(argv._[0]) > -1) {
+  if (Object.keys(args.commands).indexOf(argv._[0]) > -1) {
     validation.checkMigrationDirExists(config);
-    validation.createBackupDir(config);
 
-    await commands[argv._[0]].action({
+    await args.commands[argv._[0]].action({
       config,
       versions,
       argv,
