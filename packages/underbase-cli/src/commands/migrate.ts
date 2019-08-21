@@ -32,12 +32,12 @@ export const action = async ({
 
   for (const i in versions) {
     if (versions.hasOwnProperty(i)) {
-      const migrationObj: IMigration = await importFile(
-        `${config.migrationsDir}/${versions[i]}`,
+      const migration: IMigration = await importFile(
+        `${config.migrationsDir}/${versions[i]}/index`,
         config.compiler,
       );
 
-      await migrator.add(migrationObj);
+      await migrator.add(migration);
     }
   }
 

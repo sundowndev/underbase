@@ -16,7 +16,7 @@ import * as validators from './middlewares/validators';
 
 let configFile: IConfigFile | any = {};
 
-async function main() {
+export async function main() {
   const commands = await args.getCommands();
 
   const argv = yargs

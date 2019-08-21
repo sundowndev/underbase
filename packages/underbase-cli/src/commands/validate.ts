@@ -57,12 +57,12 @@ const checkMigrationPaths = async (config: IConfigFile, versions: string[]) => {
         logger.warn(
           'File',
           `${config.migrationsDir}/${versions[i]}`,
-          'does match pattern the default pattern ([0-9]*\.[0-9]+|[0-9]+).',
+          'does match pattern the default pattern ([0-9]*.[0-9]+|[0-9]+).',
         );
       }
 
       const migration: IMigration = await importFile(
-        `${config.migrationsDir}/${versions[i]}`,
+        `${config.migrationsDir}/${versions[i]}/index`,
         config.compiler,
       );
 
