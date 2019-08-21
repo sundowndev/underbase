@@ -14,26 +14,28 @@ import * as args from './args';
 // Middlewares
 import * as validators from './middlewares/validators';
 
-const argv = yargs
-  .scriptName('underbase')
-  .usage(args.usage)
-  .command(args.commands.migrate.command, args.commands.migrate.describe)
-  .command(args.commands.init.command, args.commands.init.describe)
-  .command(args.commands.list.command, args.commands.list.describe)
-  .command(args.commands.status.command, args.commands.status.describe)
-  .command(args.commands.unlock.command, args.commands.unlock.describe)
-  .command(args.commands.rerun.command, args.commands.rerun.describe)
-  .options(args.options)
-  .describe('version', 'Show package version')
-  .help('h', 'Show this help message')
-  .alias('h', 'help')
-  .locale('en_US')
-  .epilogue(args.docs)
-  .parse();
-
 let configFile: IConfigFile | any = {};
 
 async function main() {
+  const commands = await args.getCommands();
+
+  const argv = yargs
+    .scriptName('underbase')
+    .usage(args.usage)
+    .command(commands.migrate.command, commands.migrate.describe)
+    .command(commands.init.command, commands.init.describe)
+    .command(commands.list.command, commands.list.describe)
+    .command(commands.status.command, commands.status.describe)
+    .command(commands.unlock.command, commands.unlock.describe)
+    .command(commands.rerun.command, commands.rerun.describe)
+    .options(args.options)
+    .describe('version', 'Show package version')
+    .help('h', 'Show this help message')
+    .alias('h', 'help')
+    .locale('en_US')
+    .epilogue(args.docs)
+    .parse();
+
   if (fs.existsSync(path.resolve(argv.config))) {
     configFile = await import(path.resolve(argv.config));
   }
@@ -67,11 +69,12 @@ async function main() {
         .readdirSync(config.migrationsDir as fs.PathLike)
         .filter((v: string) => v.match(new RegExp(/^[\d].[\d]$/))) as string[])
     : [];
+  const targetCommand = commands[argv._[0]];
 
-  if (Object.keys(args.commands).indexOf(argv._[0]) > -1) {
+  if (targetCommand) {
     validators.checkMigrationDirExists(config);
 
-    await args.commands[argv._[0]].action({
+    await targetCommand.action({
       config,
       versions,
       argv,

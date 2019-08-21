@@ -1,22 +1,23 @@
-// Commands
-import * as unlock from './commands/force-unlock';
-import * as init from './commands/init';
-import * as list from './commands/list';
-import * as migrate from './commands/migrate';
-import * as rerun from './commands/rerun';
-import * as status from './commands/status';
+import * as fs from 'fs';
+import * as path from 'path';
+
+export async function getCommands(): Promise<any> {
+  const commandsList: any = {};
+  const commandFiles = fs
+    .readdirSync(path.join(__dirname, 'commands'))
+    .filter((f: string) => f.match(new RegExp(/^(.*).(js)$/)));
+
+  for (const cmd of commandFiles) {
+    const object = await import(path.join(__dirname, 'commands', cmd));
+    Object.assign(object, { name: cmd.replace('.js', '') });
+    commandsList[object.name] = object;
+  }
+
+  return commandsList;
+}
 
 export const usage = 'Usage: $0 <command> [OPTIONS]';
 export const docs = 'Documentation: https://sundowndev.github.io/underbase/';
-
-export const commands: any = {
-  init,
-  list,
-  migrate,
-  status,
-  unlock,
-  rerun,
-};
 
 export const options = {
   config: {
