@@ -1,0 +1,40 @@
+{
+  "name": "underbase",
+  "version": "1.1.2-alpha.0",
+  "main": "build/index",
+  "types": "build/index",
+  "files": [
+    "build"
+  ],
+  "bin": {
+    "underbase": "./bin/underbase.js"
+  },
+  "dependencies": {
+    "@underbase/cli": "^1.1.2-alpha.0",
+    "@underbase/core": "^1.1.2-alpha.0",
+    "import-local": "^3.0.2"
+  },
+  "author": "Raphaël Cerveaux <raphael@crvx.fr>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sundowndev/underbase.git",
+    "directory": "packages/underbase-cli"
+  },
+  "keywords": [
+    "underbase",
+    "cli",
+    "schema",
+    "mongodb",
+    "migration",
+    "database"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">= 6"
+  },
+  "bugs": {
+    "url": "https://github.com/sundowndev/underbase/issues"
+  }
+}
