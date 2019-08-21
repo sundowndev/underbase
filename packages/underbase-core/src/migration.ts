@@ -168,7 +168,7 @@ export class Migration {
 
     this._db = db;
 
-    this.emitEvent('start');
+    this.emitEvent('connect');
   }
 
   /**
