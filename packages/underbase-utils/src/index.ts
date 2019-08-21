@@ -11,16 +11,16 @@ import chalk from 'chalk';
  */
 export const logger: ILogger = {
   info: (...args: string[]) => {
-    console.log(chalk.bold('[INFO]'), ...args);
+    console.log(chalk.bold('[i]'), ...args);
   },
   warn: (...args: string[]) => {
-    console.log(chalk.bold('[WARNING]'), ...args);
+    console.log(chalk.inverse('WARN'), chalk.grey(`${args.join(' ')}`));
   },
   success: (...args: string[]) => {
     console.log(chalk.green(`✔ ${args.join(' ')}`));
   },
   error: (...args: string[]) => {
-    console.log(chalk.bgRed('ERROR'), chalk.red(`${args.join(' ')}`));
+    console.log(chalk.red('✗'), chalk.red(`${args.join(' ')}`));
   },
   log: (...args: string[]) => {
     console.log(...args);
@@ -93,7 +93,6 @@ export const importFile = async (path: string, compiler?: string) => {
       logger.error(
         `Underbase was not able to validate the migration object for file`,
         path,
-        'Did you forget the default keyword ?',
       );
       exit(1);
     }
