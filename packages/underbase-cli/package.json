@@ -1,6 +1,6 @@
 {
   "name": "@underbase/cli",
-  "version": "1.1.2-alpha.0",
+  "version": "2.0.0-alpha.0",
   "main": "build/index",
   "types": "build/index",
   "files": [
@@ -21,9 +21,9 @@
     "typescript": "3.5.3"
   },
   "dependencies": {
-    "@underbase/core": "^1.1.2-alpha.0",
-    "@underbase/types": "^1.1.2-alpha.0",
-    "@underbase/utils": "^1.1.2-alpha.0",
+    "@underbase/core": "^2.0.0-alpha.0",
+    "@underbase/types": "^2.0.0-alpha.0",
+    "@underbase/utils": "^2.0.0-alpha.0",
     "esm": "3.2.25",
     "fs-extra": "8.1.0",
     "yargs": "13.3.0"
