@@ -32,5 +32,5 @@ jobs:
       script:
         - npm install codecov -g
         - docker-compose up -d underbase-db
-        - npm test
+        # - npm test
         - codecov -f coverage/*.json
