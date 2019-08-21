@@ -64,15 +64,16 @@ export const importFile = async (path: string, compiler?: string) => {
   const registerCompiler = async (module: string) => {
     switch (module) {
       case 'babel-register': {
-        const babel = require('@babel/register');
-        return babel({ extensions: ['.js'], cache: false });
+        return require('@babel/register')({
+          extensions: ['.js', '.ts'],
+          cache: false,
+        });
       }
       case 'ts-node': {
-        const tsNode = require('ts-node');
-        return tsNode({ transpileOnly: true });
+        return require('ts-node')({ transpileOnly: true });
       }
       default: {
-        logger.warn('Compiler was not reconized, skipping.');
+        logger.error('Compiler was not reconized, skipping.');
       }
     }
   };
