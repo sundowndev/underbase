@@ -1,7 +1,9 @@
 {
   "dependencies": {},
   "devDependencies": {
-    "@underbase/cli": "*"
+    "@babel/core": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "@underbase/cli": "1.1.4-alpha.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
