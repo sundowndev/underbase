@@ -1,7 +1,7 @@
 {
   "name": "@underbase/types",
   "version": "1.1.2-alpha.0",
-  "main": "build/index.js",
+  "main": "build/index",
   "types": "build/index",
   "files": [
     "build"

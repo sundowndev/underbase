@@ -2,7 +2,7 @@
   "name": "@underbase/core",
   "version": "1.1.2-alpha.0",
   "description": "Abstract framework to write and execute MongoDB schema migration",
-  "main": "build/index.js",
+  "main": "build/index",
   "types": "build/index",
   "files": [
     "build"
