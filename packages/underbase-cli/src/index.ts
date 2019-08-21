@@ -57,6 +57,7 @@ async function main() {
         : (argv.migrationsDir as string),
     ),
     compiler: argv.compiler || configFile.compiler,
+    supportFile: argv.supportFile || configFile.supportFile,
   };
 
   validators.checkNoArgPassed(yargs, argv);

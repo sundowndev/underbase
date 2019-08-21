@@ -16,7 +16,8 @@ interface IConfigFile {
   logs: boolean;
   logger: any;
   logIfLatest?: boolean;
-  compiler: string;
+  compiler: string | undefined;
+  supportFile: string | undefined;
 }
 
 interface IMigrationUtils {

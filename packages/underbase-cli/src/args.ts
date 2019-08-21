@@ -1,21 +1,21 @@
 // Commands
-import * as initCmd from './commands/init';
-import * as listCmd from './commands/list';
-import * as migrateCmd from './commands/migrate';
-import * as rerunCmd from './commands/rerun';
-import * as statusCmd from './commands/status';
-import * as unlockCmd from './commands/unlock';
+import * as init from './commands/init';
+import * as list from './commands/list';
+import * as migrate from './commands/migrate';
+import * as rerun from './commands/rerun';
+import * as status from './commands/status';
+import * as unlock from './commands/unlock';
 
 export const usage = 'Usage: $0 <command> [OPTIONS]';
 export const docs = 'Documentation: https://sundowndev.github.io/underbase/';
 
 export const commands: any = {
-  init: initCmd,
-  list: listCmd,
-  migrate: migrateCmd,
-  status: statusCmd,
-  unlock: unlockCmd,
-  rerun: rerunCmd,
+  init,
+  list,
+  migrate,
+  status,
+  unlock,
+  rerun,
 };
 
 export const options = {
@@ -49,5 +49,10 @@ export const options = {
     description: 'Use a compiler register to fetch migration files.',
     type: 'string' as 'string',
     choices: ['babel-register', 'ts-node'],
+  },
+  supportFile: {
+    default: undefined,
+    description: 'Support file path.',
+    type: 'string' as 'string',
   },
 };

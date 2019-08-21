@@ -11,10 +11,4 @@ export const action = async ({ config }: { config: any }) => {
   } else {
     logger.info('Migration directory already exists.');
   }
-
-  if (!fs.existsSync(config.backupsDir) && config.backup) {
-    await fs.mkdirpSync(config.backupsDir);
-
-    logger.info('Created backup directory.');
-  }
 };
