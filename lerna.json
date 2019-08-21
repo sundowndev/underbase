@@ -10,7 +10,7 @@
         "ignored-file",
         "*.md"
       ],
-      "message": "feat(release): publish"
+      "message": "build(release): publish"
     },
     "bootstrap": {
       "npmClientArgs": [
