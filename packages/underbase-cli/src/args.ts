@@ -1,10 +1,10 @@
 // Commands
+import * as unlock from './commands/force-unlock';
 import * as init from './commands/init';
 import * as list from './commands/list';
 import * as migrate from './commands/migrate';
 import * as rerun from './commands/rerun';
 import * as status from './commands/status';
-import * as unlock from './commands/unlock';
 
 export const usage = 'Usage: $0 <command> [OPTIONS]';
 export const docs = 'Documentation: https://sundowndev.github.io/underbase/';
