@@ -1,4 +1,4 @@
-import { IMigration } from '@underbase/types';
+import { IConfigFile, IMigration } from '@underbase/types';
 import { importFile, logger, timer } from '@underbase/utils';
 import { initMigrator } from '../common/utils';
 
@@ -9,13 +9,13 @@ export const action = async ({
   config,
   versions,
 }: {
-  config: any;
+  config: IConfigFile;
   versions: string[];
 }) => {
   const versionsArray = versions.map((v: string) => parseFloat(v)) as number[];
 
-  versions = versionsArray.map((v: number) => v.toFixed(1)) as string[];
   versionsArray.sort((a: number, b: number) => a - b);
+  versions = versionsArray.map((v: number) => v.toFixed(1)) as string[];
 
   const migrator = await initMigrator(config);
 

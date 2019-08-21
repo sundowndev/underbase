@@ -28,6 +28,7 @@ async function main() {
     .command(commands.status.command, commands.status.describe)
     .command(commands.unlock.command, commands.unlock.describe)
     .command(commands.rerun.command, commands.rerun.describe)
+    .command(commands.validate.command, commands.validate.describe)
     .options(args.options)
     .describe('version', 'Show package version')
     .help('h', 'Show this help message')
