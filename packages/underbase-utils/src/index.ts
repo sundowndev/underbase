@@ -71,6 +71,9 @@ export const importFile = async (path: string, compiler?: string) => {
         const tsNode = require('ts-node');
         return tsNode({ transpileOnly: true });
       }
+      default: {
+        logger.warn('Compiler was not reconized, skipping.');
+      }
     }
   };
 
