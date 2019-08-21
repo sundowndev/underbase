@@ -3,8 +3,10 @@
     "mongodb": "*"
   },
   "devDependencies": {
-    "@underbase/cli": "*",
-    "@underbase/types": "*"
+    "@babel/core": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "@underbase/cli": "file:../../packages/underbase-cli",
+    "@underbase/types": "file:../../packages/underbase-types"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

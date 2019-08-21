@@ -4,7 +4,7 @@ import tasks from './tasks';
 export default {
   version: 1.0,
   describe: 'Fix minor typo in fields',
-  up: async ({ Migrate, Query, Logger }) => {
+  async up({ Migrate, Query, Logger }) {
     const NumberOfUsers = await Query.collection('Users').count();
     const NumberOfTasks = await Query.collection('Tasks').count();
 
@@ -14,7 +14,7 @@ export default {
 
     Logger('Finished migrating 1.0!');
   },
-  down: async ({ Migrate }) => {
+  async down({ Migrate }) {
     await Migrate([users, tasks]);
   },
 };
