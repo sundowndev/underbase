@@ -45,5 +45,5 @@ exports.action = async ({
   await migrator.migrateTo(argv.migration as number);
 
   logger.log('');
-  logger.log('⌛', `Time spent: ${time.spent()} sec`);
+  logger.log('✦', `Time spent: ${time.spent()} sec`);
 };

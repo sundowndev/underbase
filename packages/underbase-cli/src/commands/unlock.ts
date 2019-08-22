@@ -13,7 +13,7 @@ exports.action = async ({ config }: { config: any }) => {
 
     logger.info(`Migration state unlocked.`);
 
-    logger.info(`Time spent: ${time.spent()} sec`);
+    logger.log('✦', `Time spent: ${time.spent()} sec`);
   } else {
     logger.info(`Migration state is already unlocked.`);
   }

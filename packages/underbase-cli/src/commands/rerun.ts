@@ -35,5 +35,5 @@ exports.action = async ({
   await migrator.migrateTo(`${currentVersion as number},rerun`);
 
   logger.log('');
-  logger.log('⌛', `Time spent: ${time.spent()} sec`);
+  logger.log('✦', `Time spent: ${time.spent()} sec`);
 };

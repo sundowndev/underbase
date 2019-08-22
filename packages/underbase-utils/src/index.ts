@@ -11,7 +11,7 @@ import chalk from 'chalk';
  */
 export const logger: ILogger = {
   info: (...args: string[]) => {
-    console.log(chalk.bold('[i]'), ...args);
+    console.log(chalk.inverse('INFO'), ...args);
   },
   warn: (...args: string[]) => {
     console.log(chalk.inverse('WARN'), chalk.grey(`${args.join(' ')}`));
@@ -79,7 +79,7 @@ export const importFile = async (path: string, compiler?: string) => {
   };
 
   if (compiler) {
-    registerCompiler(compiler);
+    await registerCompiler(compiler);
   }
 
   try {
