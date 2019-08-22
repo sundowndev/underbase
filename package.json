@@ -15,7 +15,7 @@
     "test:watch": "cross-env NODE_ENV=test jest --watchAll --useStderr --coverage",
     "test:debug:watch": "cross-env NODE_ENV=test node --inspect=0.0.0.0:5857 jest --coverage --useStderr",
     "docs:serve": "./node_modules/docsify-cli/bin/docsify serve ./docs",
-    "docs:ts": "typedoc --out ts-docs ./packages/**/*.ts --theme default --readme none --exclude './packages/underbase-cli/**/*.ts'",
+    "docs:ts": "typedoc --out ts-docs ./packages/**/* --theme default --readme none --exclude './packages/underbase-cli/**/*'",
     "docker:start": "docker-compose up underbase-dev",
     "docker:down": "docker-compose down",
     "docker:test": "docker-compose run underbase-test"
