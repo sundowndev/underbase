@@ -1,30 +1,22 @@
 {
   "name": "@underbase/cli",
   "version": "2.0.0-alpha.0",
-  "main": "build/index",
-  "types": "build/index",
+  "main": "build/src/index",
+  "types": "build/src/index",
   "files": [
     "build"
   ],
   "bin": {
-    "underbase": "./build/index.js"
-  },
-  "scripts": {
-    "build": "npm run clean && npm run compile",
-    "clean": "rm -rf ./build",
-    "compile": "tsc -p tsconfig.json",
-    "prepublishOnly": "npm run build"
+    "underbase": "./build/src/index.js"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.0.0",
-    "@types/yargs": "^13.0.2",
-    "typescript": "3.5.3"
+    "@types/yargs": "^13.0.2"
   },
   "dependencies": {
     "@underbase/core": "^2.0.0-alpha.0",
     "@underbase/types": "^2.0.0-alpha.0",
     "@underbase/utils": "^2.0.0-alpha.0",
-    "esm": "3.2.25",
     "fs-extra": "8.1.0",
     "yargs": "13.3.0"
   },
