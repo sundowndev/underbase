@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "@underbase/cli": "file:../../packages/underbase-cli"
+  },
+  "scripts": {
+    "migrations:status": "underbase status --config migrations/config.js",
+    "migrations:run": "underbase migrate latest --config migrations/config.js",
+    "migrations:validate": "underbase validate --config migrations/config.js"
+  }
+}
