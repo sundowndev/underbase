@@ -52,6 +52,6 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
   - [ ] Organizing migrations
   - [ ] Usage with Typescript
   - [ ] Working with backups
-  - [ ] Migrating with frameworks
-  ~~- [ ] Working with continuous deployment~~
+  - [ ] Working with continuous deployment
   - [ ] Testing your migrations (assert)
+  
