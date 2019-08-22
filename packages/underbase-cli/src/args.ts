@@ -2,15 +2,17 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 export async function getCommands(): Promise<any> {
-  const commandsList: any = {};
+  const commandsList: any[] = [];
   const commandFiles = fs
     .readdirSync(path.join(__dirname, 'commands'))
     .filter((f: string) => f.match(new RegExp(/^(.*).(js)$/)));
 
   for (const cmd of commandFiles) {
     const object = await import(path.join(__dirname, 'commands', cmd));
-    Object.assign(object, { name: cmd.replace('.js', '') });
-    commandsList[object.name] = object;
+    Object.assign(object, {
+      name: object.command.replace(/( )\<([\w]*)\>/, ''),
+    });
+    commandsList.push(object);
   }
 
   return commandsList;

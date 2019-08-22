@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-// tslint:disable:no-var-requires
-// tslint:disable:no-console
 import { IConfigFile } from '@underbase/types';
 import { exit, logger } from '@underbase/utils';
 import * as fs from 'fs-extra';
@@ -22,13 +20,8 @@ export async function main() {
   const argv = yargs
     .scriptName('underbase')
     .usage(args.usage)
-    .command(commands.migrate.command, commands.migrate.describe)
-    .command(commands.init.command, commands.init.describe)
-    .command(commands.list.command, commands.list.describe)
-    .command(commands.status.command, commands.status.describe)
-    .command(commands.unlock.command, commands.unlock.describe)
-    .command(commands.rerun.command, commands.rerun.describe)
-    .command(commands.validate.command, commands.validate.describe)
+    .commandDir('commands')
+    .strict()
     .options(args.options)
     .describe('version', 'Show package version')
     .help('h', 'Show this help message')
@@ -70,7 +63,7 @@ export async function main() {
         .readdirSync(config.migrationsDir as fs.PathLike)
         .filter((v: string) => v.match(new RegExp(/^[\d].[\d]$/))) as string[])
     : [];
-  const targetCommand = commands[argv._[0]];
+  const targetCommand = commands.find((c: any) => c.name === argv._[0]);
 
   if (targetCommand) {
     validators.checkMigrationDirExists(config);

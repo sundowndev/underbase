@@ -2,10 +2,9 @@ import { IConfigFile, IMigration } from '@underbase/types';
 import { importFile, logger, timer } from '@underbase/utils';
 import { initMigrator } from '../common/utils';
 
-export const command = 'rerun';
-export const describe = 'Rerun the current version';
-
-export const action = async ({
+exports.command = 'rerun';
+exports.describe = 'Rerun the current version';
+exports.action = async ({
   config,
   versions,
 }: {
