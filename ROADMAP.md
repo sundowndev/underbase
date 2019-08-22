@@ -40,9 +40,18 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 <!--- [ ] CLI: `--history` option to save migration history into a .log file-->
 - [x] Init monorepo using Lerna with the following packages
 - [x] Support for ES6 and Typescript
-- [ ] Update documentation
-  - [ ] Usage with Typescript
+- [x] Validate command
+- [x] Event isteners
+- [x] Refactor yargs implementation ([#131](https://github.com/sundowndev/underbase/issues/131))
+- [ ] Create examples ([#132](https://github.com/sundowndev/underbase/issues/132))
+  - [x] commonjs
+  - [x] babel-async-await
+  - [x] typescript
+  - [ ] docker-backup
+- [ ] Update documentation (guides)
   - [ ] Organizing migrations
+  - [ ] Usage with Typescript
   - [ ] Working with backups
   - [ ] Migrating with frameworks
-  - [ ] Working with continuous deployment
+  ~~- [ ] Working with continuous deployment~~
+  - [ ] Testing your migrations (assert)
