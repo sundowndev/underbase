@@ -3,12 +3,16 @@
     "mongodb": "*"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/register": "^7.5.5",
+    "@babel/core": "*",
+    "@babel/preset-env": "*",
+    "@babel/preset-typescript": "*",
+    "@babel/register": "*",
     "@underbase/cli": "file:../../packages/underbase-cli",
     "@underbase/types": "file:../../packages/underbase-types"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "migrations:status": "underbase status --config migrations/config.js",
+    "migrations:run": "underbase migrate latest --config migrations/config.js",
+    "migrations:validate": "underbase validate --config migrations/config.js"
   }
 }
