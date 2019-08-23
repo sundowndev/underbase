@@ -47,6 +47,12 @@ export const options = {
     description: 'Enable logs.',
     type: 'boolean' as 'boolean',
   },
+  logIfLatest: {
+    default: true,
+    description:
+      'Log in the terminal if you are already at the specified version.',
+    type: 'boolean' as 'boolean',
+  },
   compiler: {
     default: undefined,
     description: 'Use a compiler register to fetch migration files.',

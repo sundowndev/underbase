@@ -36,11 +36,17 @@ export async function main() {
 
   const config: IConfigFile = {
     // False disables logging
-    logs: (argv.logs as boolean) || (configFile.logs as boolean) || true,
+    logs:
+      configFile.logs !== undefined
+        ? (configFile.logs as boolean)
+        : (argv.logs as boolean),
     // Null or a function
     logger: logger as any,
     // Enable/disable info log "already at latest."
-    logIfLatest: true,
+    logIfLatest:
+      configFile.logIfLatest !== undefined
+        ? (configFile.logIfLatest as boolean)
+        : (argv.logIfLatest as boolean),
     // Migrations collection name. Defaults to 'migrations'
     collectionName: configFile.collectionName
       ? (configFile.collectionName as string)
@@ -52,8 +58,8 @@ export async function main() {
         ? (configFile.migrationsDir as string)
         : (argv.migrationsDir as string),
     ),
-    compiler: argv.compiler || configFile.compiler,
-    supportFile: argv.supportFile || configFile.supportFile,
+    compiler: configFile.compiler || argv.compiler,
+    supportFile: configFile.supportFile || argv.supportFile,
   };
 
   validators.checkNoArgPassed(yargs, argv);
