@@ -1,9 +1,9 @@
 import { logger, timer } from '@underbase/utils';
 import { initMigrator } from '../common/utils';
 
-exports.command = 'force-unlock';
-exports.describe = 'Force unlock migrations state';
-exports.action = async ({ config }: { config: any }) => {
+export const command = 'force-unlock';
+export const describe = 'Force unlock migrations state';
+export const action = async ({ config }: { config: any }) => {
   const migrator = await initMigrator(config);
 
   if (await migrator.isLocked()) {

@@ -2,9 +2,9 @@ import { IConfigFile, IMigration } from '@underbase/types';
 import { exit, importFile, logger, timer } from '@underbase/utils';
 import { initMigrator } from '../common/utils';
 
-exports.command = 'migrate <migration>';
-exports.desc = 'Migrate to a specified version';
-exports.action = async ({
+export const command = 'migrate <migration>';
+export const desc = 'Migrate to a specified version';
+export const action = async ({
   config,
   versions,
   argv,

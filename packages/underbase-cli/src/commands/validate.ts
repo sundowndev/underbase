@@ -2,9 +2,9 @@ import { IConfigFile, IMigration } from '@underbase/types';
 import { importFile, logger } from '@underbase/utils';
 import * as fs from 'fs-extra';
 
-exports.command = 'validate';
-exports.describe = 'Validate migration files and configuration.';
-exports.action = async ({
+export const command = 'validate';
+export const describe = 'Validate migration files and configuration.';
+export const action = async ({
   config,
   versions,
 }: {

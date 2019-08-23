@@ -1,9 +1,9 @@
 import { logger } from '@underbase/utils';
 import * as fs from 'fs-extra';
 
-exports.command = 'list';
-exports.describe = 'Show available migrations versions';
-exports.action = async ({
+export const command = 'list';
+export const describe = 'Show available migrations versions';
+export const action = async ({
   config,
   versions,
 }: {
