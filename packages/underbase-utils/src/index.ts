@@ -85,17 +85,7 @@ export const importFile = async (path: string, compiler?: string) => {
   try {
     const file = await import(path);
 
-    if (typeof file.default.up === 'function') {
-      return file.default;
-    } else if (typeof file.up === 'function') {
-      return file;
-    } else {
-      logger.error(
-        `Underbase was not able to validate the migration object for file`,
-        path,
-      );
-      exit(1);
-    }
+    return typeof file.default === 'object' ? file.default : file;
   } catch (error) {
     throw new Error(error);
   }

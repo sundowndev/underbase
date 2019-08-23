@@ -114,12 +114,44 @@ describe('UNIT - CLI/Common', () => {
       });
     });
 
-    /*describe.skip('importFile', () => {
-      test('import specified file', async () => {
-        jest.spyOn(module, 'require');
+    describe('importFile', () => {
+      test('file has default export', async () => {
+        const file = await utils.importFile(
+          __dirname + '/__fixtures__/hasDefaultExport',
+        );
 
-        const file = await utils.importFile('./test');
+        expect(file).toHaveProperty('up');
+        expect(file).toHaveProperty('down');
       });
-    });*/
+
+      test('file has up,down exports', async () => {
+        const file = await utils.importFile(
+          __dirname + '/__fixtures__/hasExports',
+        );
+
+        expect(file).toHaveProperty('up');
+        expect(file).toHaveProperty('down');
+      });
+
+      test('file does not exists', async () => {
+        try {
+          await utils.importFile('./test');
+          expect(0).toBe(1);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+      });
+
+      test('migration object is not valid', async () => {
+        try {
+          await utils.importFile(__dirname + '/__fixtures__/notValidExports');
+          expect(0).toBe(1);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+      });
+    });
   });
 });
