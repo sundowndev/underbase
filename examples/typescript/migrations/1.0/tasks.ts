@@ -1,10 +1,8 @@
-import { QueryInterface } from '@underbase/underbase-queryInterface';
+import { IMigrationUtils } from '@underbase/underbase-queryInterface';
 
 export default {
   describe: 'Fix typo in Tasks collection',
-  async up({ Query }: {
-    Query: QueryInterface;
-  }) {
+  async up({ Query }: IMigrationUtils) {
     const tasks = Query.collection('Tasks');
 
     await tasks.rename('datecreated', 'dateCreated').where({
@@ -13,9 +11,7 @@ export default {
       },
     });
   },
-  async down({ Query }: {
-    Query: QueryInterface;
-  }) {
+  async down({ Query }: IMigrationUtils) {
     const tasks = Query.collection('Tasks');
 
     await tasks.rename('dateCreated', 'datecreated').where({

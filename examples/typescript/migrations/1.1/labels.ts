@@ -1,9 +1,8 @@
-import { QueryInterface } from '@underbase/underbase-queryInterface';
-import { Db } from 'mongodb';
+import { IMigrationUtils } from '@underbase/underbase-queryInterface';
 
 export default {
   describe: 'Move tasks labels to a dedicated collection',
-  async up({ MongoClient }: { MongoClient: Db }) {
+  async up({ MongoClient }: IMigrationUtils) {
     const tasks = MongoClient.collection('Tasks');
     const labels = MongoClient.collection('Labels');
 
@@ -29,13 +28,7 @@ export default {
       );
     });
   },
-  async down({
-    MongoClient,
-    Query,
-  }: {
-    MongoClient: Db;
-    Query: QueryInterface;
-  }) {
+  async down({ MongoClient, Query }: IMigrationUtils) {
     const tasks = MongoClient.collection('Tasks');
     const labels = MongoClient.collection('Labels');
 

@@ -1,11 +1,11 @@
-import { Db } from 'mongodb';
+import { IMigrationUtils } from '@underbase-types';
 
 export default {
   describe: 'Transform label field to array',
-  async up({ MongoClient }: { MongoClient: Db }) {
+  async up({ MongoClient }: IMigrationUtils) {
     const tasks = MongoClient.collection('Tasks');
 
-    await tasks.find({}).forEach(async doc => {
+    await tasks.find({}).forEach(async (doc: any) => {
       const labels = [doc.label];
 
       await tasks.updateOne(
@@ -14,7 +14,7 @@ export default {
       );
     });
   },
-  async down({ MongoClient }: { MongoClient: Db }) {
+  async down({ MongoClient }: IMigrationUtils) {
     const tasks = MongoClient.collection('Tasks');
 
     await tasks.find({}).forEach(async (doc: any) => {
