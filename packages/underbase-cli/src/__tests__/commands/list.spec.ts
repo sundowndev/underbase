@@ -1,9 +1,9 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
 
+import * as utils from '@underbase/utils';
 import * as fs from 'fs-extra';
 import * as listCmd from '../../commands/list';
-import * as utils from '@underbase/utils';
 
 describe('UNIT - CLI/Commands', () => {
   let mockedExistsSync: any;

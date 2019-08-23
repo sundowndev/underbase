@@ -22,13 +22,16 @@ describe('UNIT - CLI/Commands', () => {
   describe('Status', () => {
     test('should return status (locked)', async () => {
       const config: IConfigFile = {
-        logger: () => {},
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
         db: 'mongodb://localhost:27017/underbase_test',
         migrationsDir: './migrations/underbase_test',
         collectionName: 'migrations',
-        backupsDir: './migrations/underbase_test/backups',
-        mongodumpBinary: 'mongodump',
-        backup: false,
         logs: true,
       };
       const currentVersion = '1.0';
@@ -54,13 +57,16 @@ describe('UNIT - CLI/Commands', () => {
 
     test('should return status (unlocked)', async () => {
       const config: IConfigFile = {
-        logger: () => {},
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
         db: 'mongodb://localhost:27017/underbase_test',
         migrationsDir: './migrations/underbase_test',
         collectionName: 'migrations',
-        backupsDir: './migrations/underbase_test/backups',
-        mongodumpBinary: 'mongodump',
-        backup: false,
         logs: true,
       };
       const currentVersion = '2.1';

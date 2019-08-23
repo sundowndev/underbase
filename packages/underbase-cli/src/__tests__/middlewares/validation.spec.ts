@@ -3,7 +3,7 @@
 import * as utils from '@underbase/utils';
 import * as fs from 'fs-extra';
 import 'jest-extended';
-import * as validation from '../../middlewares/validation';
+import * as validation from '../../middlewares/validators';
 
 describe('UNIT - CLI/Middlewares', () => {
   let mockedExistsSync: any;
@@ -89,56 +89,6 @@ describe('UNIT - CLI/Middlewares', () => {
         validation.checkMigrationDirExists(config as any);
 
         expect(mockedExistsSync).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('createBackupDir', () => {
-      test('backup directory exists', async () => {
-        const config = { backupsDir: './test', backup: true };
-
-        mockedExistsSync.mockImplementation((path: string) => {
-          expect(path).toBe(config.backupsDir);
-
-          return true;
-        });
-
-        validation.createBackupDir(config as any);
-
-        expect(mockedExistsSync).toHaveBeenCalledTimes(1);
-        expect(mockedMkdirpSync).toHaveBeenCalledTimes(0);
-        expect(mockedLogger).toHaveBeenCalledTimes(0);
-      });
-
-      test('backup directory does not exists', async () => {
-        const config = { backupsDir: './test', backup: true };
-
-        mockedExistsSync.mockImplementation((path: string) => {
-          expect(path).toBe(config.backupsDir);
-
-          return false;
-        });
-
-        validation.createBackupDir(config as any);
-
-        expect(mockedExistsSync).toHaveBeenCalledTimes(1);
-        expect(mockedMkdirpSync).toHaveBeenCalledTimes(1);
-        expect(mockedLogger).toHaveBeenCalledTimes(1);
-      });
-
-      test('backup directory does not exists', async () => {
-        const config = { backupsDir: './test', backup: false };
-
-        mockedExistsSync.mockImplementation((path: string) => {
-          expect(path).toBe(config.backupsDir);
-
-          return false;
-        });
-
-        validation.createBackupDir(config as any);
-
-        expect(mockedExistsSync).toHaveBeenCalledTimes(1);
-        expect(mockedMkdirpSync).toHaveBeenCalledTimes(0);
-        expect(mockedLogger).toHaveBeenCalledTimes(0);
       });
     });
   });

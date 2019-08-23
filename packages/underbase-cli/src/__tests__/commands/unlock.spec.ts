@@ -24,13 +24,16 @@ describe('UNIT - CLI/Commands', () => {
   describe('Unlock', () => {
     test('should unlock state', async () => {
       const config: IConfigFile = {
-        logger: () => {},
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
         db: 'mongodb://localhost:27017/underbase_test',
         migrationsDir: './migrations/underbase_test',
         collectionName: 'migrations',
-        backupsDir: './migrations/underbase_test/backups',
-        mongodumpBinary: 'mongodump',
-        backup: false,
         logs: true,
       };
 
@@ -59,13 +62,16 @@ describe('UNIT - CLI/Commands', () => {
 
     test('state already unlocked', async () => {
       const config: IConfigFile = {
-        logger: () => {},
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
         db: 'mongodb://localhost:27017/underbase_test',
         migrationsDir: './migrations/underbase_test',
         collectionName: 'migrations',
-        backupsDir: './migrations/underbase_test/backups',
-        mongodumpBinary: 'mongodump',
-        backup: false,
         logs: true,
       };
 

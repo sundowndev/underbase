@@ -4,20 +4,17 @@ import { IConfigFile } from '@underbase/types';
 import * as utils from '@underbase/utils';
 import 'jest-extended';
 import * as rerunCmd from '../../commands/rerun';
-import * as backup from '../../common/backup';
 import * as cliUtils from '../../common/utils';
 
 describe('UNIT - CLI/Commands', () => {
   let mockedInitMigrator: any;
   let mockedExit: any;
   let mockedImportFile: any;
-  let mockedBackup: any;
 
   beforeEach(() => {
     mockedInitMigrator = jest.spyOn(cliUtils, 'initMigrator');
     mockedExit = jest.spyOn(utils, 'exit');
     mockedImportFile = jest.spyOn(utils, 'importFile');
-    mockedBackup = jest.spyOn(backup, 'create');
   });
 
   afterEach(() => {
@@ -29,9 +26,13 @@ describe('UNIT - CLI/Commands', () => {
       const config: IConfigFile = {
         db: '',
         logs: false,
-        logger: () => {},
-        mongodumpBinary: '',
-        backup: false,
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
       };
       const versions = ['1.0', '1.2'];
 
@@ -84,71 +85,6 @@ describe('UNIT - CLI/Commands', () => {
       expect(mockedInitMigrator).toHaveBeenCalledTimes(1);
       expect(mockedImportFile).toHaveBeenCalledTimes(2);
       expect(mockedExit).toHaveBeenCalledTimes(0);
-    });
-
-    test('should create backup then rerun current version', async () => {
-      const config: IConfigFile = {
-        db: '',
-        logs: false,
-        logger: () => {},
-        mongodumpBinary: '',
-        migrationsDir: './test',
-        backup: true,
-        backupsDir: './backup',
-      };
-      const versions = ['1.0', '1.2'];
-
-      mockedInitMigrator.mockImplementation((configObject: IConfigFile) => {
-        expect(config).toBe(configObject);
-
-        return Promise.resolve({
-          add: (migration: any) => {
-            expect(migration).toContainKeys([
-              'version',
-              'describe',
-              'up',
-              'down',
-            ]);
-
-            return Promise.resolve();
-          },
-          getVersion: () => {
-            return Promise.resolve(1.2);
-          },
-          migrateTo: (version: string) => {
-            expect(version).toBe('1.2,rerun');
-
-            return Promise.resolve();
-          },
-        });
-      });
-
-      mockedImportFile.mockImplementation((path: string) => {
-        expect(path).toBeOneOf([
-          `${config.migrationsDir}/1.0`,
-          `${config.migrationsDir}/1.2`,
-        ]);
-
-        return Promise.resolve({
-          version: 1,
-          describe: 'test',
-          up: () => {},
-          down: () => {},
-        });
-      });
-
-      mockedBackup.mockImplementation(
-        (configObject: IConfigFile, currentVersion: number) => {
-          expect(configObject).toBe(config);
-          expect(currentVersion).toBe(1.2);
-
-          return Promise.resolve();
-        },
-      );
-
-      await rerunCmd.action({ config, versions });
-
-      expect(mockedBackup).toHaveBeenCalledTimes(1);
     });
   });
 });

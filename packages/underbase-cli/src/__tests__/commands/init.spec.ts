@@ -21,18 +21,16 @@ describe('UNIT - CLI/Commands', () => {
     test('should create both folders', async () => {
       const config = {
         migrationsDir: 'migrationsTest',
-        backupsDir: 'backupTest',
-        backup: true,
       };
 
       mockedExistsSync.mockImplementation((path: any) => {
-        expect(path).toMatch(/(migrationsTest|backupTest)/);
+        expect(path).toMatch(/(migrationsTest)/);
 
         return false;
       });
 
       mockedMkdirSync.mockImplementation((path: any) => {
-        expect(path).toMatch(/(migrationsTest|backupTest)/);
+        expect(path).toMatch(/(migrationsTest)/);
 
         return Promise.resolve();
       });
@@ -46,12 +44,10 @@ describe('UNIT - CLI/Commands', () => {
     test('should only create migrations folder', async () => {
       const config = {
         migrationsDir: 'migrationsTest',
-        backupsDir: 'backupTest',
-        backup: false,
       };
 
       mockedExistsSync.mockImplementation((path: any) => {
-        expect(path).toMatch(/(migrationsTest|backupTest)/);
+        expect(path).toMatch(/(migrationsTest)/);
 
         return false;
       });
@@ -68,42 +64,15 @@ describe('UNIT - CLI/Commands', () => {
       expect(mockedMkdirSync).toHaveBeenCalledTimes(1);
     });
 
-    test('should only create backup folder', async () => {
-      const config = {
-        migrationsDir: 'migrationsTest',
-        backupsDir: 'backupTest',
-        backup: true,
-      };
-
-      mockedExistsSync.mockImplementation((path: any) => {
-        expect(path).toMatch(/(migrationsTest|backupTest)/);
-
-        return path === 'backupTest' ? false : true;
-      });
-
-      mockedMkdirSync.mockImplementation((path: any) => {
-        expect(path).toMatch(/(backupTest)/);
-
-        return Promise.resolve();
-      });
-
-      await initCmd.action({ config });
-
-      expect(mockedExistsSync).toHaveBeenCalledTimes(2);
-      expect(mockedMkdirSync).toHaveBeenCalledTimes(1);
-    });
-
     test('should create any folder', async () => {
       const config = {
         migrationsDir: 'migrationsTest',
-        backupsDir: 'backupTest',
-        backup: false,
       };
 
       mockedExistsSync.mockImplementation((path: any) => {
-        expect(path).toMatch(/(migrationsTest|backupTest)/);
+        expect(path).toMatch(/(migrationsTest)/);
 
-        return path === 'backupTest' ? false : true;
+        return true;
       });
 
       mockedMkdirSync.mockImplementation((path: any) => {

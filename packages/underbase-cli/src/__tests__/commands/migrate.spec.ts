@@ -4,20 +4,17 @@ import { IConfigFile } from '@underbase/types';
 import * as utils from '@underbase/utils';
 import 'jest-extended';
 import * as migrateCmd from '../../commands/migrate';
-import * as backup from '../../common/backup';
 import * as cliUtils from '../../common/utils';
 
 describe('UNIT - CLI/Commands', () => {
   let mockedInitMigrator: any;
   let mockedExit: any;
   let mockedImportFile: any;
-  let mockedBackup: any;
 
   beforeEach(() => {
     mockedInitMigrator = jest.spyOn(cliUtils, 'initMigrator');
     mockedExit = jest.spyOn(utils, 'exit');
     mockedImportFile = jest.spyOn(utils, 'importFile');
-    mockedBackup = jest.spyOn(backup, 'create');
   });
 
   afterEach(() => {
@@ -29,8 +26,13 @@ describe('UNIT - CLI/Commands', () => {
       const config: IConfigFile = {
         db: '',
         logs: false,
-        logger: () => {},
-        mongodumpBinary: '',
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
       };
       const versions = ['1.0', '1.2'];
       const argv = { migration: '3.0' };
@@ -48,10 +50,14 @@ describe('UNIT - CLI/Commands', () => {
       const config: IConfigFile = {
         db: '',
         logs: false,
-        logger: () => {},
-        mongodumpBinary: '',
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
         migrationsDir: './test',
-        backup: false,
       };
       const versions = ['1.0', '1.2'];
       const argv = { migration: '1.0' };
@@ -97,74 +103,6 @@ describe('UNIT - CLI/Commands', () => {
       });
 
       await migrateCmd.action({ config, versions, argv });
-
-      expect(mockedBackup).toHaveBeenCalledTimes(0);
-    });
-
-    test('should create backup then execute migrations', async () => {
-      const config: IConfigFile = {
-        db: '',
-        logs: false,
-        logger: () => {},
-        mongodumpBinary: '',
-        migrationsDir: './test',
-        backup: true,
-        backupsDir: './backup',
-      };
-      const versions = ['1.0', '1.2'];
-      const argv = { migration: '1.0' };
-
-      mockedInitMigrator.mockImplementation((configObject: IConfigFile) => {
-        expect(config).toBe(configObject);
-
-        return Promise.resolve({
-          add: (migration: any) => {
-            expect(migration).toContainKeys([
-              'version',
-              'describe',
-              'up',
-              'down',
-            ]);
-
-            return Promise.resolve();
-          },
-          getVersion: () => {
-            return Promise.resolve(0);
-          },
-          migrateTo: (version: string) => {
-            expect(version).toBe('1.0');
-
-            return Promise.resolve();
-          },
-        });
-      });
-
-      mockedImportFile.mockImplementation((path: string) => {
-        expect(path).toBeOneOf([
-          `${config.migrationsDir}/1.0`,
-          `${config.migrationsDir}/1.2`,
-        ]);
-
-        return Promise.resolve({
-          version: 1,
-          describe: 'test',
-          up: () => {},
-          down: () => {},
-        });
-      });
-
-      mockedBackup.mockImplementation(
-        (configObject: IConfigFile, currentVersion: number) => {
-          expect(configObject).toBe(config);
-          expect(currentVersion).toBe(0);
-
-          return Promise.resolve();
-        },
-      );
-
-      await migrateCmd.action({ config, versions, argv });
-
-      expect(mockedBackup).toHaveBeenCalledTimes(1);
     });
 
     test.skip('should catch error while running migration', async () => {});
@@ -173,11 +111,14 @@ describe('UNIT - CLI/Commands', () => {
       const config: IConfigFile = {
         db: '',
         logs: false,
-        logger: () => {},
-        mongodumpBinary: '',
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
         migrationsDir: './test',
-        backup: true,
-        backupsDir: './backup',
       };
       const versions = ['1.0', '1.2'];
       const argv = { migration: '1.0' };
@@ -225,7 +166,6 @@ describe('UNIT - CLI/Commands', () => {
       }
 
       expect(mockedImportFile).toReject();
-      expect(mockedBackup).toHaveBeenCalledTimes(0);
     });
   });
 });
