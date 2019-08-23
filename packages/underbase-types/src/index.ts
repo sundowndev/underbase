@@ -3,7 +3,7 @@ import { Db } from 'mongodb';
 
 interface IMigrationOptions {
   logs?: boolean;
-  logger?: any;
+  logger: ILogger;
   logIfLatest?: boolean;
   collectionName?: string;
   db: string | Db;
@@ -14,15 +14,15 @@ interface IConfigFile {
   migrationsDir?: string;
   db: string;
   logs: boolean;
-  logger: any;
+  logger: ILogger;
   logIfLatest?: boolean;
-  compiler: string | undefined;
-  supportFile: string | undefined;
+  compiler?: string | undefined;
+  supportFile?: string | undefined;
 }
 
 interface IMigrationUtils {
   MongoClient: Db;
-  Migrate: any;
+  Migrate: (migrations: any[]) => {};
   Query: QueryInterface;
   Logger: (...args: string[]) => {};
 }
@@ -35,11 +35,11 @@ interface IMigration {
 }
 
 interface ILogger {
-  info: (...args: string[]) => void;
-  warn: (...args: string[]) => void;
-  success: (...args: string[]) => void;
-  error: (...args: string[]) => void;
-  log: (...args: string[]) => void;
+  info: (...args: any[]) => void;
+  warn: (...args: any[]) => void;
+  success: (...args: any[]) => void;
+  error: (...args: any[]) => void;
+  log: (...args: any[]) => void;
 }
 
 export {
