@@ -4,7 +4,7 @@ Although Underbase is mostly used in development, it is intended to be used in p
 
 To ensure releases are official and authentic, every tags and release commit are signed using a PGP key (linked below). When a vulnerabilty is disclosed, GitHub automatic alerts are triggered and a audit is performed as soon as possible. A pull request is created for the fix, the version is bumped as a patch (x.x.1) then the package is deployed again on the npm registry.
 
-Since this project is 100% free and open source, risks come mostly from dependencies and maintainer intentions. Underbase depends on [the following packages](https://github.com/sundowndev/underbase/blob/develop/package.json#L79) :
+Since this project is 100% free and open source, risks come mostly from dependencies and maintainer intentions. Underbase depends on [the following packages](https://www.npmjs.com/package/@underbase/core?activeTab=dependencies) :
 
 - [yargs](https://www.npmjs.com/package/yargs) ~27M weekly downloads
 - [chalk](https://www.npmjs.com/package/chalk) ~25M weekly downloads
@@ -24,6 +24,7 @@ $ npm-remote-ls -n @underbase/cli -d false
    │  │  └─ graceful-fs@4.2.2
    │  ├─ universalify@0.1.2
    │  └─ graceful-fs@4.2.2
+   │
    ├─ yargs@13.3.0
    │  ├─ get-caller-file@2.0.5
    │  ├─ require-directory@2.1.1
