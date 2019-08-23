@@ -1,6 +1,7 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
 
+import { logger } from '@underbase/utils';
 import { Promise as BlueBirdPromise } from 'bluebird';
 import { Db, MongoClient } from 'mongodb';
 import { Migration } from '../index';
@@ -21,32 +22,30 @@ describe('INTEGRATION - Migration', () => {
       });
 
       dbClient = client.db();
-
-      configObject = {
-        logs: true,
-        logIfLatest: true,
-        collectionName,
-        db: dbURL,
-        logger: {
-          info: () => {},
-          error: () => {},
-          warn: () => {},
-          success: () => {},
-          log: () => {},
-        },
-      };
-
-      migrator = new Migration(configObject);
-      await migrator.config();
-
-      migrationsList = [];
     } catch (e) {
       console.log(e);
       throw e;
     }
   });
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    configObject = {
+      logs: true,
+      logIfLatest: true,
+      collectionName,
+      db: dbURL,
+      logger: {
+        info: () => {},
+        error: () => {},
+        warn: () => {},
+        success: () => {},
+        log: () => {},
+      },
+    };
+
+    migrator = new Migration(configObject);
+    await migrator.config();
+
     migrationsList = [];
 
     migrationsList.push({
@@ -83,6 +82,88 @@ describe('INTEGRATION - Migration', () => {
 
   afterEach(async () => {
     await migrator.reset();
+    await migrator.config(configObject);
+  });
+
+  describe('#config', () => {
+    describe('logs option', () => {
+      test('enable', async () => {
+        configObject.logs = false;
+
+        await migrator.config(configObject);
+
+        expect(migrator.getConfig().logs).toBe(false);
+      });
+
+      test('disable', async () => {
+        configObject.logs = true;
+
+        await migrator.config(configObject);
+
+        expect(migrator.getConfig().logs).toBe(true);
+      });
+    });
+
+    describe('logger option', () => {
+      test('default', async () => {
+        configObject.logger = null;
+
+        await migrator.config(configObject);
+
+        expect(migrator.getConfig().logger).toBe(logger);
+      });
+
+      test('custom', async () => {
+        configObject.logger = {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        };
+
+        await migrator.config(configObject);
+
+        expect(migrator.getConfig().logger).toBe(configObject.logger);
+      });
+    });
+
+    describe('db option', () => {
+      test('custom db client connection', async () => {
+        configObject.db = dbClient;
+
+        await migrator.config(configObject);
+
+        expect(migrator.getConfig().db).toBe(configObject.db);
+      });
+
+      test('db is null', async () => {
+        const config = {
+          logs: true,
+          logIfLatest: true,
+          collectionName,
+          db: null as any,
+          logger: {
+            info: () => {},
+            error: () => {},
+            warn: () => {},
+            success: () => {},
+            log: () => {},
+          },
+        };
+        const migratorB = new Migration();
+
+        try {
+          await migratorB.config(config);
+          expect(0).toBe(1);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(ReferenceError);
+        }
+
+        expect(migratorB.getConfig().db).toBe(config.db);
+      });
+    });
   });
 
   describe('#migrateTo', () => {
@@ -235,6 +316,70 @@ describe('INTEGRATION - Migration', () => {
         currentVersion = await migrator.getVersion();
         expect(currentVersion).toBe(4);
       });
+
+      test('version does not exists', async () => {
+        try {
+          await migrator.migrateTo(6);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+      });
+
+      test('already on that version', async () => {
+        await migrator.migrateTo(4);
+        let currentVersion = await migrator.getVersion();
+        expect(currentVersion).toBe(4);
+        try {
+          await migrator.migrateTo(4);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+        currentVersion = await migrator.getVersion();
+        expect(currentVersion).toBe(4);
+      });
+
+      test('control is locked', async () => {
+        await migrator.migrateTo(4);
+        let currentVersion = await migrator.getVersion();
+        expect(currentVersion).toBe(4);
+        try {
+          await migrator.migrateTo(3);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+        currentVersion = await migrator.getVersion();
+        expect(currentVersion).toBe(4);
+
+        try {
+          await migrator.migrateTo(3);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+      });
+
+      test('instance has not be configured', async () => {
+        const migratorB = new Migration();
+        try {
+          await migratorB.migrateTo(3);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+      });
+
+      test('cannot migrate using invalid command', async () => {
+        await migrator.reset();
+        try {
+          await migrator.migrateTo('');
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+      });
     });
   });
 
@@ -285,6 +430,83 @@ describe('INTEGRATION - Migration', () => {
         if (m.version !== 0) {
           expect(m).toHaveProperty('describe');
           expect(m).toHaveProperty('down');
+        }
+      });
+    });
+  });
+
+  describe('#getNumberOfMigrations', () => {
+    test('returns the number of migrations (0)', async () => {
+      await migrator.reset();
+      const count = migrator.getNumberOfMigrations();
+      expect(count).toBe(0);
+    });
+
+    test('returns the number of migrations (2)', () => {
+      const count = migrator.getNumberOfMigrations();
+      expect(count).toBe(2);
+    });
+  });
+
+  describe('#add', () => {
+    describe('OnError', () => {
+      test('must supply an up function', () => {
+        try {
+          migrator.add({
+            version: 1,
+            describe: 'Version 1.',
+            up: null as any,
+            down: async () => {},
+          });
+          expect(0).toBe(1);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+      });
+
+      test('must supply a down function', () => {
+        try {
+          migrator.add({
+            version: 1,
+            describe: 'Version 1.',
+            up: async () => {},
+            down: null as any,
+          });
+          expect(0).toBe(1);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+      });
+
+      test('must supply a version number', () => {
+        try {
+          migrator.add({
+            version: '1' as any,
+            describe: 'Version 1.',
+            up: async () => {},
+            down: async () => {},
+          });
+          expect(0).toBe(1);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
+        }
+      });
+
+      test('version must be greater than 0', () => {
+        try {
+          migrator.add({
+            version: 0,
+            describe: 'Version 1.',
+            up: async () => {},
+            down: async () => {},
+          });
+          expect(0).toBe(1);
+        } catch (e) {
+          expect(e).toBeTruthy();
+          expect(e).toBeInstanceOf(Error);
         }
       });
     });

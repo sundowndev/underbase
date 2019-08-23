@@ -69,7 +69,7 @@ export class Migration {
           // False disables logging
           logs: true,
           // Null or a function
-          logger: null,
+          logger: null as any,
           // Enable/disable info log "already at latest."
           logIfLatest: true,
           // Migrations collection name
@@ -137,16 +137,26 @@ export class Migration {
   public async config(opts?: IMigrationOptions): Promise<void> {
     this.options = Object.assign({}, this.options, opts);
 
-    if (!this.options.logger && this.options.logs) {
+    if (this.options.logger === null && this.options.logs === true) {
       this.options.logger = logger;
     }
 
     if (this.options.logs === false) {
-      // tslint:disable-next-line:no-empty
-      this.options.logger = () => {};
+      this.options.logger = {
+        // tslint:disable-next-line:no-empty
+        success: () => {},
+        // tslint:disable-next-line:no-empty
+        error: () => {},
+        // tslint:disable-next-line:no-empty
+        warn: () => {},
+        // tslint:disable-next-line:no-empty
+        info: () => {},
+        // tslint:disable-next-line:no-empty
+        log: () => {},
+      };
     }
 
-    if (!(this._db instanceof Db) && !this.options.db) {
+    if (this.options.db === null) {
       throw new ReferenceError('Option.db canno\'t be null');
     }
 
@@ -361,8 +371,7 @@ export class Migration {
       }
 
       const logLevel = 8;
-
-      const _MigrationUtils = {
+      const _MigrationUtils: IMigrationUtils = {
         MongoClient: this._db as Db,
         Migrate: async (migrations: any[]) => {
           for (const i in migrations) {
@@ -392,7 +401,7 @@ export class Migration {
             }
           }
         },
-        Query: new QueryInterface(self._db) as QueryInterface,
+        Query: new QueryInterface(self._db),
         Logger: (...args: string[]) =>
           this.options.logger.log(
             ' '.repeat(logLevel),
@@ -402,7 +411,7 @@ export class Migration {
       };
 
       try {
-        await migration[direction](_MigrationUtils as IMigrationUtils);
+        await migration[direction](_MigrationUtils);
         this.options.logger.log('');
       } catch (error) {
         throw new Error(error);
@@ -563,11 +572,7 @@ export class Migration {
       },
     );
 
-    if (updateResult && updateResult.result.ok) {
-      return control;
-    } else {
-      return null;
-    }
+    return updateResult && updateResult.result.ok ? control : null;
   }
 
   /**
