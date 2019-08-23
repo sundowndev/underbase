@@ -22,9 +22,9 @@ interface IConfigFile {
 
 interface IMigrationUtils {
   MongoClient: Db;
-  Migrate: (migrations: any[]) => {};
+  Migrate: (migrations: any[]) => void;
   Query: QueryInterface;
-  Logger: (...args: string[]) => {};
+  Logger: (...args: string[]) => void;
 }
 
 interface IMigration {
