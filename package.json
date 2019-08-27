@@ -53,7 +53,7 @@
     "@types/bluebird": "3.5.27",
     "@types/fs-extra": "8.0.0",
     "@types/jest": "24.0.17",
-    "@types/lodash": "4.14.136",
+    "@types/lodash": "4.14.138",
     "@types/mongodb": "3.1.22",
     "@types/node": "10.14.15",
     "@types/sinon": "7.0.13",
