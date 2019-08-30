@@ -120,6 +120,6 @@ const checkMigrationPaths = async (config: IConfigFile, versions: string[]) => {
   }
 
   if (success) {
-    logger.success('Valided migrations files.');
+    logger.success('Validated migrations files.');
   }
 };
