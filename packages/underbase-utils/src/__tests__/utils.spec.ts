@@ -35,7 +35,7 @@ describe('UNIT - CLI/Common', () => {
         test('should log successfully', async () => {
           mockedConsoleLog.mockImplementation((...args: string[]) => {
             expect(args).toStrictEqual([
-              chalk.inverse('INFO'),
+              chalk.reset.inverse(' INFO '),
               'test',
               'test2',
             ]);
@@ -51,7 +51,7 @@ describe('UNIT - CLI/Common', () => {
         test('should log successfully', async () => {
           mockedConsoleLog.mockImplementation((...args: string[]) => {
             expect(args).toStrictEqual([
-              chalk.inverse('WARN'),
+              chalk.reset.inverse(' WARN '),
               chalk.grey('test test2'),
             ]);
           });
@@ -66,8 +66,9 @@ describe('UNIT - CLI/Common', () => {
         test('should log successfully', async () => {
           mockedConsoleLog.mockImplementation((...args: string[]) => {
             expect(args).toStrictEqual([
-              chalk.red('✗'),
-              chalk.red('test test2'),
+              chalk.reset.inverse.bold.red(` ERROR `),
+              'test',
+              'test2',
             ]);
           });
 
@@ -80,7 +81,11 @@ describe('UNIT - CLI/Common', () => {
       describe('#success()', () => {
         test('should log successfully', async () => {
           mockedConsoleLog.mockImplementation((...args: string[]) => {
-            expect(args).toStrictEqual([chalk.green('✔ test test2')]);
+            expect(args).toStrictEqual([
+              chalk.reset.inverse.bold.green(` SUCCESS `),
+              'test',
+              'test2',
+            ]);
           });
 
           utils.logger.success('test', 'test2');
