@@ -19,7 +19,7 @@
     "url": "https://github.com/sundowndev/underbase/issues"
   },
   "devDependencies": {
-    "@types/mongodb": "^3.1.31"
+    "@types/mongodb": "3.3.1"
   },
   "dependencies": {
     "mongodb": "3.3.0-beta2"
