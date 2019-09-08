@@ -90,8 +90,8 @@ describe('UNIT - CLI/Commands', () => {
 
       mockedImportFile.mockImplementation((path: string) => {
         expect(path).toBeOneOf([
-          `${config.migrationsDir}/1.0`,
-          `${config.migrationsDir}/1.2`,
+          `${config.migrationsDir}/1.0/index`,
+          `${config.migrationsDir}/1.2/index`,
         ]);
 
         return Promise.resolve({

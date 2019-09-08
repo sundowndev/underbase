@@ -7,13 +7,11 @@ import * as validation from '../../middlewares/validators';
 
 describe('UNIT - CLI/Middlewares', () => {
   let mockedExistsSync: any;
-  let mockedMkdirpSync: any;
   let mockedLogger: any;
   let mockedExit: any;
 
   beforeEach(() => {
     mockedExistsSync = jest.spyOn(fs, 'existsSync');
-    mockedMkdirpSync = jest.spyOn(fs, 'mkdirpSync');
     mockedLogger = jest.spyOn(utils.logger, 'info');
     mockedExit = jest.spyOn(utils, 'exit');
   });
