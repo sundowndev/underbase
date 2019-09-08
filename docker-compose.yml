@@ -21,8 +21,8 @@ services:
   underbase-db:
     image: mongo:latest
     ports:
-      - '27017:27017'
-    command: mongod --bind_ip 0.0.0.0 --smallfiles
+      - 27017:27017
+    command: mongod --bind_ip 0.0.0.0
 
   underbase-test:
     container_name: underbase_test
