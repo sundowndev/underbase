@@ -7,8 +7,8 @@
 <p align="center">MongoDB schema and data migration library. Check out <a href="https://sundowndev.github.io/underbase">documentation</a>.</p>
 
 <div align="center">
-  <a href="https://travis-ci.org/sundowndev/underbase">
-    <img src="https://img.shields.io/travis/sundowndev/underbase/master.svg?style=flat-square" alt="build status" />
+  <a href="https://github.com/sundowndev/underbase/actions">
+    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/underbase/badge?ref=develop&style=flat-square" alt="build status" />
   </a>
   <a href="https://codecov.io/gh/sundowndev/underbase">
     <img src="https://img.shields.io/codecov/c/gh/sundowndev/underbase/develop.svg?style=flat-square" alt="code coverage" />
