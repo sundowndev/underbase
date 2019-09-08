@@ -35,22 +35,23 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [x] Rerun command
 - [ ] Backup feature
 
-### `v1.0.0`
-
-- [ ] Improve documentation with better migration process explanation & guides
-  - [ ] Organizing migrations
-  - [ ] Working with backups
-  - [ ] Migrating with frameworks
-  - [ ] Working with continuous deployment
-
-### `v1.1.0`
+### `v1.0.0` (mvp)
 
 <!--- [ ] CLI: `--history` option to save migration history into a .log file-->
-- [ ] Init monorepo using Lerna with the following packages
-  - [ ] underbase
-  - [ ] underbase-cli
-  - [ ] babel-underbase
-  - [ ] babel-preset-underbase
-- [ ] Support for ES6, ES7, ES8, ES9 and Typescript
-- [ ] Update documentation
+- [x] Init monorepo using Lerna with the following packages
+- [x] Support for ES6 and Typescript
+- [x] Validate command
+- [x] Event isteners
+- [x] Refactor yargs implementation ([#131](https://github.com/sundowndev/underbase/issues/131))
+- [ ] Create examples ([#132](https://github.com/sundowndev/underbase/issues/132))
+  - [x] commonjs
+  - [x] babel-async-await
+  - [x] typescript
+  - [ ] docker-backup
+- [ ] Update documentation (guides)
+  - [ ] Organizing migrations
   - [ ] Usage with Typescript
+  - [ ] Working with backups
+  - [ ] Working with continuous deployment
+  - [ ] Testing your migrations (assert)
+  

@@ -7,8 +7,8 @@
 <p align="center">MongoDB schema and data migration library. Check out <a href="https://sundowndev.github.io/underbase">documentation</a>.</p>
 
 <div align="center">
-  <a href="https://travis-ci.org/sundowndev/underbase">
-    <img src="https://img.shields.io/travis/sundowndev/underbase/master.svg?style=flat-square" alt="build status" />
+  <a href="https://github.com/sundowndev/underbase/actions">
+    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/underbase/badge?ref=develop&style=flat-square" alt="build status" />
   </a>
   <a href="https://codecov.io/gh/sundowndev/underbase">
     <img src="https://img.shields.io/codecov/c/gh/sundowndev/underbase/develop.svg?style=flat-square" alt="code coverage" />
@@ -32,14 +32,27 @@ Underbase is a MongoDB schema and data migration library that provides an easy-t
 
 - Migration versioning (major and minor)
 - Multiple MongoDB databases support
-- Automatic and incremental backups
+- Execution flow control & middlewares
 - Provide additional MongoDB query interface
 - Handle scalable environments by design
-<!-- - Backup restoration- Flexible & easy to configure -->
 
-## Example
+## Examples
 
-Check out this [example repository](https://github.com/sundowndev/underbase-example) for a real-world use case.
+Want to see projects using Underbase ? We created some examples for you.
+
+- [get-started](examples/get-started)
+- [babel-async-await](examples/babel-async-await)
+- [typescript](examples/typescript)
+- [docker-backup](examples/docker-backup)
+
+## Documentation
+
+Learn more about using Underbase on the official site!
+
+- [Getting Started](https://sundowndev.github.io/underbase/docs/installation)
+- [Configuration](https://sundowndev.github.io/underbase/docs/configuration)
+- [Guides](https://sundowndev.github.io/underbase/docs/organize)
+- [API Reference](https://sundowndev.github.io/underbase/docs/api)
 
 ## Contributing
 
@@ -51,7 +64,7 @@ Check out this [example repository](https://github.com/sundowndev/underbase-exam
 
 ## Support
 
-Underbase is being tested in continuous integration using node 8, 10 and 11, the latest version of the mongodb nodejs driver and the latest version of the MongoDB docker image. Dependencies are checked as soon as they are changed.
+Underbase is continuously being tested using node 8, 10, 11, the latest version of the [mongodb nodejs driver](https://github.com/mongodb/node-mongodb-native) (3.x) and the latest version of the [MongoDB docker image](https://docs.docker.com/samples/library/mongo/). Dependencies are frequently updated. It's compatible with any Node.js version above v7.x.
 
 ## Roadmap
 
@@ -63,8 +76,12 @@ See [SECURITY.md](SECURITY.md)
 
 ## Credits
 
-This repository is a fork of [emmanuelbuah/mgdb-migrator](https://github.com/emmanuelbuah/mgdb-migrator), which is a generic mongodb migration library based on [percolatestudio/meteor-migrations](https://github.com/percolatestudio/meteor-migrations).
-
-This fork was created in order to provide a CLI program to interact with the library's API and add some features such as automatic backups and MongoDB query interface.
+This repository is a fork of [emmanuelbuah/mgdb-migrator](https://github.com/emmanuelbuah/mgdb-migrator), which is a generic mongodb migration library based on [percolatestudio/meteor-migrations](https://github.com/percolatestudio/meteor-migrations). This fork was created in order to provide a CLI application to interact with the API and several new features.
 
 Icon was made by [Fabiana Antonioli](https://thenounproject.com/FafiAC) and published on [thenounproject](https://thenounproject.com/search/?q=prism&i=2263153).
+
+## License
+
+[MIT](https://github.com/sundowndev/underbase/blob/develop/LICENSE)
+
+© 2019-present Raphaël Cerveaux

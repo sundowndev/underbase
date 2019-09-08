@@ -3,7 +3,10 @@ module.exports = {
   testEnvironment: 'node',
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
-  collectCoverageFrom: [
-    './lib/**/*.ts',
+  collectCoverageFrom: ['packages/*/src/**/*.ts'],
+  testMatch: ['**/__tests__/**/?(*.)+(spec|test).ts'],
+  coveragePathIgnorePatterns: [
+    'underbase-types',
+    '__tests__',
   ],
 };

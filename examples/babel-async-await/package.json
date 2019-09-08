@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@underbase/cli": "file:../../packages/underbase-cli"
+  },
+  "scripts": {
+    "migrations:status": "underbase status --config migrations/config.js",
+    "migrations:run": "underbase migrate latest --config migrations/config.js",
+    "migrations:validate": "underbase validate --config migrations/config.js"
+  }
+}

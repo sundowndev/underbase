@@ -1,0 +1,38 @@
+{
+  "name": "@underbase/core",
+  "version": "2.0.0-alpha.0",
+  "description": "Abstract framework to write and execute MongoDB schema migration",
+  "main": "build/src/index",
+  "types": "build/src/index",
+  "files": [
+    "build"
+  ],
+  "author": "Raphaël Cerveaux <raphael@crvx.fr>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sundowndev/underbase.git",
+    "directory": "packages/underbase-core"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/sundowndev/underbase/issues"
+  },
+  "devDependencies": {
+    "@types/bluebird": "^3.5.27",
+    "@types/lodash": "^4.14.136",
+    "@types/mongodb": "^3.1.31",
+    "@types/type-check": "^0.3.27"
+  },
+  "dependencies": {
+    "@underbase/query-interface": "^2.0.0-alpha.0",
+    "@underbase/types": "^2.0.0-alpha.0",
+    "@underbase/utils": "^2.0.0-alpha.0",
+    "bluebird": "3.5.5",
+    "chalk": "^2.4.2",
+    "lodash": "4.17.15",
+    "mongodb": "3.2.2",
+    "type-check": "0.3.2"
+  }
+}
