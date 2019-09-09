@@ -8,19 +8,16 @@
 
 <div align="center">
   <a href="https://github.com/sundowndev/underbase/actions">
-    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/underbase/badge?ref=develop&style=flat-square" alt="build status" />
+    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/underbase/badge?ref=develop" alt="build status" />
   </a>
   <a href="https://codecov.io/gh/sundowndev/underbase">
-    <img src="https://img.shields.io/codecov/c/gh/sundowndev/underbase/develop.svg?style=flat-square" alt="code coverage" />
+    <img src="https://img.shields.io/codecov/c/gh/sundowndev/underbase/develop.svg" alt="code coverage" />
   </a>
   <a href="https://github.com/sundowndev/underbase/releases">
-    <img src="https://img.shields.io/github/release/sundowndev/underbase.svg?style=flat-square" alt="release" />
+    <img src="https://img.shields.io/github/release/sundowndev/underbase.svg" alt="release" />
   </a>
-  <!--<a href="https://www.npmjs.com/package/underbase">
-    <img alt="npm" src="https://img.shields.io/npm/v/underbase.svg?style=flat-square">
-  </a>-->
-  <a href="https://david-dm.org/sundowndev/underbase">
-    <img src="https://david-dm.org/sundowndev/underbase/status.svg?style=flat-square" alt="dependencies" />
+  <a href="https://badge.fury.io/js/underbase">
+    <img src="https://badge.fury.io/js/underbase.svg" alt="npm version" height="18">
   </a>
 </div>
 
