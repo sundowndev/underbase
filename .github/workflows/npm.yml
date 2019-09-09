@@ -2,21 +2,24 @@ on: push
 name: Publish on npm
 jobs:
   shellLint:
-    name: Shell Lint
+    name: Build & Publish
     runs-on: ubuntu-latest
     steps:
     - name: Build
       uses: actions/npm@master
       with:
         args: install
-
-    - name: Publish Filter
-      uses: actions/bin/filter@master
+        
+    - name: Bootstrap
+      uses: actions/npm@master
       with:
-        args: branch develop
-
+        args: |
+          run
+          bootstrap
+          
     - name: Publish
-      uses: mikeal/merge-release@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      uses: actions/npm@master
+      with:
+        args: |
+          run
+          publish
