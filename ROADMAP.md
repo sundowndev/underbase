@@ -46,7 +46,9 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [ ] Create examples ([#132](https://github.com/sundowndev/underbase/issues/132))
   - [x] commonjs
   - [x] babel-async-await
-  - [x] typescript
+  - [x] babel-typescript
+  - [ ] typescript
+  - [ ] backup
   - [ ] docker-backup
 - [ ] Update documentation (guides)
   - [ ] Organizing migrations
