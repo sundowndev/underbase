@@ -2,6 +2,7 @@
 // tslint:disable:no-empty
 import { IConfigFile } from '@underbase/types';
 import * as utils from '@underbase/utils';
+// Import * as fs from 'fs-extra';
 import 'jest-extended';
 import * as rerunCmd from '../../commands/rerun';
 import * as cliUtils from '../../common/utils';
@@ -23,6 +24,12 @@ describe('UNIT - CLI/Commands', () => {
 
   describe('Rerun', () => {
     test('should rerun current version', async () => {
+      jest
+        .spyOn(cliUtils, 'getMigrationsEntryFiles')
+        .mockImplementation((): any => {
+          return ['/test/1.0/index.js', '/test/1.2/index.js'];
+        });
+
       const config: IConfigFile = {
         db: '',
         logs: false,
@@ -67,10 +74,7 @@ describe('UNIT - CLI/Commands', () => {
       });
 
       mockedImportFile.mockImplementation((path: string) => {
-        expect(path).toBeOneOf([
-          `${config.migrationsDir}/1.0`,
-          `${config.migrationsDir}/1.2`,
-        ]);
+        expect(path).toBeOneOf(['/test/1.0/index.js', '/test/1.2/index.js']);
 
         return Promise.resolve({
           version: 1,

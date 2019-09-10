@@ -60,11 +60,14 @@ export async function main() {
     supportFile: configFile.supportFile || argv.supportFile,
   };
 
-  const versions = fs.existsSync(config.migrationsDir as fs.PathLike)
+  // Get versions sorted
+  const versions = (fs.existsSync(config.migrationsDir as fs.PathLike)
     ? (fs
         .readdirSync(config.migrationsDir as fs.PathLike)
         .filter((v: string) => v.match(new RegExp(/^[\d].[\d]$/))) as string[])
-    : [];
+    : []
+  ).sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
+
   const targetCommand = commands.find((c: any) => c.name === argv._[0]);
 
   if (targetCommand) {

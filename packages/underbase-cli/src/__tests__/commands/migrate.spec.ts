@@ -47,6 +47,12 @@ describe('UNIT - CLI/Commands', () => {
     });
 
     test('should import then run migrations', async () => {
+      jest
+        .spyOn(cliUtils, 'getMigrationsEntryFiles')
+        .mockImplementation((): any => {
+          return ['/test/1.0/index.js', '/test/1.2/index.js'];
+        });
+
       const config: IConfigFile = {
         db: '',
         logs: false,
@@ -89,10 +95,7 @@ describe('UNIT - CLI/Commands', () => {
       });
 
       mockedImportFile.mockImplementation((path: string) => {
-        expect(path).toBeOneOf([
-          `${config.migrationsDir}/1.0/index`,
-          `${config.migrationsDir}/1.2/index`,
-        ]);
+        expect(path).toBeOneOf(['/test/1.0/index.js', '/test/1.2/index.js']);
 
         return Promise.resolve({
           version: 1,

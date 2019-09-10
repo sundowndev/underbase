@@ -1,7 +1,7 @@
 import { Migration } from '@underbase/core';
-import { IConfigFile } from '@underbase/types';
-import { logger } from '@underbase/utils';
-import * as fs from 'fs';
+import { IConfigFile, IMigration } from '@underbase/types';
+import { importFile, logger } from '@underbase/utils';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 
 /**
@@ -34,4 +34,41 @@ export const initMigrator = async (config: IConfigFile): Promise<Migration> => {
   await migrator.config(config); // Returns a promise
 
   return migrator;
+};
+
+export const getMigrations = async (
+  config: IConfigFile,
+  versions: string[],
+): Promise<IMigration[]> => {
+  const files = await getMigrationsEntryFiles(config, versions);
+  const migrations = [];
+
+  for (const file of files) {
+    if (file) {
+      const migration: IMigration = await importFile(file);
+      migrations.push(migration);
+    }
+  }
+
+  return migrations;
+};
+
+export const getMigrationsEntryFiles = async (
+  config: IConfigFile,
+  versions: string[],
+): Promise<string[]> => {
+  const paths: string[] = [];
+
+  for (const version of versions) {
+    const indexPath = fs
+      .readdirSync(`${config.migrationsDir}/${version}`)
+      .filter(f => f.match(/^index.([\w])+$/))
+      .shift();
+
+    if (indexPath && config.migrationsDir) {
+      paths.push(path.join(config.migrationsDir, version, indexPath));
+    }
+  }
+
+  return paths;
 };

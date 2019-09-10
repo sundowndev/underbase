@@ -1,6 +1,6 @@
-import { IConfigFile, IMigration } from '@underbase/types';
-import { importFile, logger, timer } from '@underbase/utils';
-import { initMigrator } from '../common/utils';
+import { IConfigFile } from '@underbase/types';
+import { logger, timer } from '@underbase/utils';
+import { getMigrations, initMigrator } from '../common/utils';
 
 export const command = 'rerun';
 export const describe = 'Rerun the current version';
@@ -11,21 +11,11 @@ export const action = async ({
   config: IConfigFile;
   versions: string[];
 }) => {
-  const versionsArray = versions.map((v: string) => parseFloat(v)) as number[];
-
-  versionsArray.sort((a: number, b: number) => a - b);
-  versions = versionsArray.map((v: number) => v.toFixed(1)) as string[];
-
   const migrator = await initMigrator(config);
+  const migrations = await getMigrations(config, versions);
 
-  for (const i in versions) {
-    if (versions.hasOwnProperty(i)) {
-      const migrationObj: IMigration = await importFile(
-        `${config.migrationsDir}/${versions[i]}`,
-      );
-
-      await migrator.add(migrationObj);
-    }
+  for (const migration of migrations) {
+    await migrator.add(migration);
   }
 
   const currentVersion = await migrator.getVersion();
