@@ -15,6 +15,7 @@ if (process.argv.includes('-r') || process.argv.includes('--require')) {
   const { spawn } = require('child_process');
   const underbasePath = require.resolve('../build/src/index');
 
+  // Parse require argument
   const requireOptIndex = process.argv.indexOf('-r')
     ? process.argv.indexOf('-r')
     : process.argv.indexOf('--require');
@@ -37,13 +38,6 @@ if (process.argv.includes('-r') || process.argv.includes('--require')) {
     moduleToRequire,
     underbasePath,
     underbaseArgs,
-  );
-
-  console.info(
-    'EXEC:',
-    process.execPath,
-    args.join(' '),
-    '\n-----------------------------------',
   );
 
   const proc = spawn(process.execPath, args, {
