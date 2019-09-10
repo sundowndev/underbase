@@ -19,7 +19,7 @@ describe('UNIT - CLI/Commands', () => {
   });
 
   describe('List', () => {
-    test('should list versions', async () => {
+    test.skip('should list versions', async () => {
       mockedExistsSync.mockImplementation((path: any) => {
         expect(path).toMatch(/(test1)/);
 
@@ -37,7 +37,7 @@ describe('UNIT - CLI/Commands', () => {
       expect(mockedExistsSync).toHaveBeenCalledTimes(1);
     });
 
-    test('should not list versions', async () => {
+    test.skip('should not list versions', async () => {
       mockedExistsSync.mockImplementation((path: any) => {
         expect(path).toMatch(/(test1)/);
 

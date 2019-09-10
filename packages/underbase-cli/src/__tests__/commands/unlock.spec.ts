@@ -22,7 +22,7 @@ describe('UNIT - CLI/Commands', () => {
   });
 
   describe('Unlock', () => {
-    test('should unlock state', async () => {
+    test.skip('should unlock state', async () => {
       const config: IConfigFile = {
         logger: {
           info: () => {},

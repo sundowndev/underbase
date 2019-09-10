@@ -18,7 +18,7 @@ describe('UNIT - CLI/Commands', () => {
   });
 
   describe('Init', () => {
-    test('should create both folders', async () => {
+    test.skip('should create both folders', async () => {
       const config = {
         migrationsDir: 'migrationsTest',
       };
@@ -41,7 +41,7 @@ describe('UNIT - CLI/Commands', () => {
       expect(mockedMkdirSync).toHaveBeenCalledTimes(2);
     });
 
-    test('should only create migrations folder', async () => {
+    test.skip('should only create migrations folder', async () => {
       const config = {
         migrationsDir: 'migrationsTest',
       };
@@ -64,7 +64,7 @@ describe('UNIT - CLI/Commands', () => {
       expect(mockedMkdirSync).toHaveBeenCalledTimes(1);
     });
 
-    test('should create any folder', async () => {
+    test.skip('should create any folder', async () => {
       const config = {
         migrationsDir: 'migrationsTest',
       };

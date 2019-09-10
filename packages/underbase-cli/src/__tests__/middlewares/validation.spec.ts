@@ -60,7 +60,7 @@ describe('UNIT - CLI/Middlewares', () => {
     });
 
     describe('checkMigrationDirExists', () => {
-      test('migration directory exists', async () => {
+      test.skip('migration directory exists', async () => {
         const config = { migrationsDir: './test' };
 
         mockedExistsSync.mockImplementation((path: string) => {
@@ -75,7 +75,7 @@ describe('UNIT - CLI/Middlewares', () => {
         expect(mockedLogger).toHaveBeenCalledTimes(0);
       });
 
-      test('migration directory does not exists', async () => {
+      test.skip('migration directory does not exists', async () => {
         const config = { migrationsDir: './test' };
 
         mockedExistsSync.mockImplementation((path: string) => {
