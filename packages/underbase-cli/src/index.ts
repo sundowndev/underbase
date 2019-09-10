@@ -4,7 +4,7 @@ import { IConfigFile } from '@underbase/types';
 import { exit, logger } from '@underbase/utils';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import * as yargs from 'yargs';
+import yargs from 'yargs';
 
 // CLI arguments
 import * as args from './args';
@@ -62,8 +62,6 @@ export async function main() {
     supportFile: configFile.supportFile || argv.supportFile,
   };
 
-  validators.checkNoArgPassed(yargs, argv);
-
   const versions = fs.existsSync(config.migrationsDir as fs.PathLike)
     ? (fs
         .readdirSync(config.migrationsDir as fs.PathLike)
@@ -74,15 +72,13 @@ export async function main() {
   if (targetCommand) {
     validators.checkMigrationDirExists(config);
 
-    await targetCommand.action({
+    return await targetCommand.action({
       config,
       versions,
       argv,
     });
   } else {
-    logger.error(
-      'Invalid command. Use --help option to show available commands.',
-    );
+    yargs.showHelp();
   }
 
   exit();

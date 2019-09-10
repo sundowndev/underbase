@@ -21,44 +21,6 @@ describe('UNIT - CLI/Middlewares', () => {
   });
 
   describe('Validation', () => {
-    describe('checkNoArgPassed', () => {
-      test('arguments were passed', async () => {
-        mockedExit.mockImplementation(() => {
-          return;
-        });
-
-        validation.checkNoArgPassed(
-          {
-            showHelp: () => {
-              expect(1).toBe(0);
-            },
-          },
-          {
-            _: ['test'],
-          },
-        );
-
-        expect(mockedExit).toHaveBeenCalledTimes(0);
-      });
-
-      test('no arguments were passed', async () => {
-        mockedExit.mockImplementation(() => {
-          return;
-        });
-
-        validation.checkNoArgPassed(
-          {
-            showHelp: () => {},
-          },
-          {
-            _: [],
-          },
-        );
-
-        expect(mockedExit).toHaveBeenCalledTimes(1);
-      });
-    });
-
     describe('checkMigrationDirExists', () => {
       test.skip('migration directory exists', async () => {
         const config = { migrationsDir: './test' };
