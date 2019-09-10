@@ -32,7 +32,6 @@ import {
   IMigrationUtils,
 } from '@underbase/types';
 import { logger } from '@underbase/utils';
-import { Promise as BluebirdPromise } from 'bluebird';
 import chalk from 'chalk';
 import events, { EventEmitter } from 'events';
 import _ from 'lodash';
@@ -49,6 +48,7 @@ export class Migration {
   };
   private _list: any[];
   private _collection: Collection;
+  private _connection: MongoClient;
   private _db: Db;
   private options: IMigrationOptions;
   private _emitter: EventEmitter;
@@ -62,6 +62,7 @@ export class Migration {
     // Since we'll be at version 0 by default, we should have a migration set for it.
     this._list = [this.defaultMigration];
     this._collection = null as any;
+    this._connection = null as any;
     this._db = null as any;
     this.options = opts
       ? opts
@@ -78,6 +79,69 @@ export class Migration {
           db: null as any,
         };
     this._emitter = new events.EventEmitter();
+  }
+
+  /**
+   * Configure migration
+   *
+   * @param {IMigrationOptions} [opts]
+   * @returns {Promise<void>}
+   * @memberof Migration
+   */
+  public async config(opts?: IMigrationOptions): Promise<void> {
+    this.options = Object.assign({}, this.options, opts);
+
+    if (this.options.logger === null && this.options.logs === true) {
+      this.options.logger = logger;
+    }
+
+    if (this.options.logs === false) {
+      this.options.logger = {
+        // tslint:disable-next-line:no-empty
+        success: () => {},
+        // tslint:disable-next-line:no-empty
+        error: () => {},
+        // tslint:disable-next-line:no-empty
+        warn: () => {},
+        // tslint:disable-next-line:no-empty
+        info: () => {},
+        // tslint:disable-next-line:no-empty
+        log: () => {},
+      };
+    }
+
+    if (this.options.db === null) {
+      throw new ReferenceError('Option.db canno\'t be null');
+    }
+
+    let db: Db;
+
+    if (typeof this.options.db === 'string') {
+      this._connection = await MongoClient.connect(this.options.db, {
+        useNewUrlParser: true,
+      });
+
+      db = this._connection.db();
+
+      this._collection = db.collection(this.options.collectionName as string);
+    } else {
+      db = this.options.db;
+      this._collection = db.collection(this.options.collectionName as string);
+    }
+
+    this._db = db;
+
+    this.emitEvent('connect');
+  }
+
+  /**
+   * Destroy MongoDB instance pool
+   *
+   * @returns {void}
+   * @memberof Migration
+   */
+  public closeConnection(): void {
+    this._connection.close();
   }
 
   /**
@@ -125,60 +189,6 @@ export class Migration {
     });
 
     return null !== result;
-  }
-
-  /**
-   * Configure migration
-   *
-   * @param {IMigrationOptions} [opts]
-   * @returns {Promise<void>}
-   * @memberof Migration
-   */
-  public async config(opts?: IMigrationOptions): Promise<void> {
-    this.options = Object.assign({}, this.options, opts);
-
-    if (this.options.logger === null && this.options.logs === true) {
-      this.options.logger = logger;
-    }
-
-    if (this.options.logs === false) {
-      this.options.logger = {
-        // tslint:disable-next-line:no-empty
-        success: () => {},
-        // tslint:disable-next-line:no-empty
-        error: () => {},
-        // tslint:disable-next-line:no-empty
-        warn: () => {},
-        // tslint:disable-next-line:no-empty
-        info: () => {},
-        // tslint:disable-next-line:no-empty
-        log: () => {},
-      };
-    }
-
-    if (this.options.db === null) {
-      throw new ReferenceError('Option.db canno\'t be null');
-    }
-
-    let db: Db;
-
-    if (typeof this.options.db === 'string') {
-      const client: any = await MongoClient.connect(this.options.db, {
-        promiseLibrary: BluebirdPromise,
-        useNewUrlParser: true,
-      } as any);
-
-      db = client.db();
-
-      this._collection = db.collection(this.options.collectionName as string);
-    } else {
-      db = this.options.db;
-      this._collection = db.collection(this.options.collectionName as string);
-    }
-
-    this._db = db;
-
-    this.emitEvent('connect');
   }
 
   /**

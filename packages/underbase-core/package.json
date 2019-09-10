@@ -23,7 +23,6 @@
     "@underbase/query-interface": "^2.0.0-alpha.0",
     "@underbase/types": "^2.0.0-alpha.0",
     "@underbase/utils": "^2.0.0-alpha.0",
-    "bluebird": "3.5.5",
     "chalk": "^2.4.2",
     "lodash": "4.17.15",
     "mongodb": "3.2.2",
