@@ -60,12 +60,8 @@ export const exit = (code: number = 0) => {
  * @ignore
  * @private
  */
-export const importFile = async (path: string, compiler?: string) => {
+export const importFile = async (path: string) => {
   try {
-    if (compiler) {
-      await import(compiler);
-    }
-
     const file = await import(path);
 
     return typeof file.default === 'object' ? file.default : file;

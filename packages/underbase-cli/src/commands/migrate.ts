@@ -33,7 +33,6 @@ export const action = async ({
     if (versions.hasOwnProperty(i)) {
       const migration: IMigration = await importFile(
         `${config.migrationsDir}/${versions[i]}/index`,
-        config.require,
       );
 
       await migrator.add(migration);

@@ -53,11 +53,6 @@ export const options = {
       'Log in the terminal if you are already at the specified version.',
     type: 'boolean' as 'boolean',
   },
-  require: {
-    default: undefined,
-    description: 'Require a compiler register to fetch migration files.',
-    type: 'string' as 'string',
-  },
   supportFile: {
     default: undefined,
     description: 'Support file path.',

@@ -62,7 +62,6 @@ const checkMigrationPaths = async (config: IConfigFile, versions: string[]) => {
 
       const migration: IMigration = await importFile(
         `${config.migrationsDir}/${versions[i]}/index`,
-        config.require,
       );
 
       // Check version property

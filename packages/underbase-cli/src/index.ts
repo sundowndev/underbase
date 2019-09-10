@@ -57,7 +57,6 @@ export async function main() {
         ? (configFile.migrationsDir as string)
         : (argv.migrationsDir as string),
     ),
-    require: configFile.require || argv.require,
     supportFile: configFile.supportFile || argv.supportFile,
   };
 
