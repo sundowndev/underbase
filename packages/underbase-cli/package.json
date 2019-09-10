@@ -7,7 +7,7 @@
     "build"
   ],
   "bin": {
-    "underbase": "./build/src/index.js"
+    "underbase": "./bin/underbase.js"
   },
   "dependencies": {
     "@underbase/core": "^2.0.0-alpha.0",
