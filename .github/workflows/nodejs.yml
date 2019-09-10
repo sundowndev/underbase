@@ -30,8 +30,10 @@ jobs:
       run: npm run build:clean
 
     - name: test
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        npm i -g codecov
         docker-compose up -d underbase-db
         npm test
-        npm i -g codecov
-        codecov -f coverage/*.json -t ${{ secrets.GITHUB_TOKEN }}
+        codecov -f coverage/*.json -t ${GITHUB_TOKEN}
