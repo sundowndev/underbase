@@ -17,7 +17,7 @@
     <img src="https://img.shields.io/github/release/sundowndev/underbase.svg" alt="release" />
   </a>
   <a href="https://badge.fury.io/js/underbase">
-    <img src="https://badge.fury.io/js/underbase.svg" alt="npm version" height="18">
+    <img src="https://badge.fury.io/js/underbase.svg" alt="npm version">
   </a>
 </div>
 
