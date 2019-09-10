@@ -415,7 +415,7 @@ export class Migration {
         Logger: (...args: string[]) =>
           this.options.logger.log(
             ' '.repeat(logLevel),
-            chalk.inverse('LOGGER'),
+            chalk.inverse(' LOGGER '),
             ...args,
           ),
       };
