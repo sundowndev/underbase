@@ -13,9 +13,9 @@ jobs:
     - name: Bootstrap
       uses: actions/npm@master
       with:
-        args: ["run", "bootstrap"]
+        args: run bootstrap
           
     - name: Publish
       uses: actions/npm@master
       with:
-        args: ["run", "publish"]
+        args: run publish
