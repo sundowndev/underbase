@@ -33,15 +33,6 @@ Underbase is a MongoDB schema and data migration library that provides an easy-t
 - Provide additional MongoDB query interface
 - Handle scalable environments by design
 
-## Examples
-
-Want to see projects using Underbase ? We created some examples for you.
-
-- [get-started](examples/get-started)
-- [babel-async-await](examples/babel-async-await)
-- [typescript](examples/typescript)
-- [docker-backup](examples/docker-backup)
-
 ## Documentation
 
 Learn more about using Underbase on the official site!
@@ -51,6 +42,21 @@ Learn more about using Underbase on the official site!
 - [Guides](https://sundowndev.github.io/underbase/docs/organize)
 - [API Reference](https://sundowndev.github.io/underbase/docs/api)
 
+## Examples
+
+Want to see real-world usage of Underbase ? We've created some examples for you.
+
+- [get-started](examples/get-started)
+- [babel-async-await](examples/babel-async-await)
+- [babel-typescript](examples/babel-typescript)
+- [typescript](examples/typescript)
+- [backup](examples/backup)
+- [docker-backup](examples/docker-backup)
+
+## Support
+
+Underbase is continuously being tested using node 8, 10, 11, the latest version of the [mongodb nodejs driver](https://github.com/mongodb/node-mongodb-native) (3.x) and the latest version of the [MongoDB docker image](https://docs.docker.com/samples/library/mongo/). Dependencies are frequently updated. It's compatible with any Node.js version above v7.x.
+
 ## Contributing
 
 - Fork it!
@@ -58,18 +64,6 @@ Learn more about using Underbase on the official site!
 - Commit your changes: git commit -am 'Add some feature'
 - Push to the branch: git push origin feature/my-new-feature
 - Submit a pull request
-
-## Support
-
-Underbase is continuously being tested using node 8, 10, 11, the latest version of the [mongodb nodejs driver](https://github.com/mongodb/node-mongodb-native) (3.x) and the latest version of the [MongoDB docker image](https://docs.docker.com/samples/library/mongo/). Dependencies are frequently updated. It's compatible with any Node.js version above v7.x.
-
-## Roadmap
-
-See [ROADMAP.md](ROADMAP.md)
-
-## Security
-
-See [SECURITY.md](SECURITY.md)
 
 ## Credits
 
