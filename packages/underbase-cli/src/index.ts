@@ -27,8 +27,7 @@ export async function main() {
     .help('h', 'Show this help message')
     .alias('h', 'help')
     .locale('en_US')
-    .epilogue(args.docs)
-    .parse();
+    .epilogue(args.docs).argv;
 
   if (fs.existsSync(path.resolve(argv.config))) {
     configFile = await import(path.resolve(argv.config));
@@ -78,7 +77,7 @@ export async function main() {
       argv,
     });
   } else {
-    yargs.showHelp();
+    yargs.showHelp('log');
   }
 
   exit();
