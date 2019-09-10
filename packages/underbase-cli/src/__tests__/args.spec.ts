@@ -34,7 +34,6 @@ describe('UNIT - CLI/Arguments', () => {
       expect(args.options).toHaveProperty('logs');
       expect(args.options).toHaveProperty('migrationsDir');
       expect(args.options).toHaveProperty('logIfLatest');
-      expect(args.options).toHaveProperty('require');
       expect(args.options).toHaveProperty('supportFile');
     });
   });
