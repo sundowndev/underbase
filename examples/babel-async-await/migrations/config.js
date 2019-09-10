@@ -5,6 +5,6 @@ module.exports = {
   migrationsDir: __dirname,
   collectionName: '_migrations',
   logs: true,
-  compiler: 'babel-register',
+  require: '@babel/register',
   supportFile: path.join(__dirname, 'support.js'),
 };

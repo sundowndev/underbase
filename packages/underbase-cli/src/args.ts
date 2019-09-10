@@ -53,11 +53,10 @@ export const options = {
       'Log in the terminal if you are already at the specified version.',
     type: 'boolean' as 'boolean',
   },
-  compiler: {
+  require: {
     default: undefined,
-    description: 'Use a compiler register to fetch migration files.',
+    description: 'Require a compiler register to fetch migration files.',
     type: 'string' as 'string',
-    choices: ['babel-register', 'ts-node'],
   },
   supportFile: {
     default: undefined,

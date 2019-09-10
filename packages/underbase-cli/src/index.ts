@@ -58,7 +58,7 @@ export async function main() {
         ? (configFile.migrationsDir as string)
         : (argv.migrationsDir as string),
     ),
-    compiler: configFile.compiler || argv.compiler,
+    require: configFile.require || argv.require,
     supportFile: configFile.supportFile || argv.supportFile,
   };
 
@@ -72,7 +72,7 @@ export async function main() {
   if (targetCommand) {
     validators.checkMigrationDirExists(config);
 
-    return await targetCommand.action({
+    await targetCommand.action({
       config,
       versions,
       argv,

@@ -4,5 +4,5 @@ module.exports = {
   collectionName: '_migrations',
   mongodumpBinary: 'docker exec -it underbase_underbase-db_1 mongodump',
   logs: true,
-  compiler: 'babel-register',
+  require: '@babel/register',
 };

@@ -61,32 +61,9 @@ export const exit = (code: number = 0) => {
  * @private
  */
 export const importFile = async (path: string, compiler?: string) => {
-  // const registerCompiler = async (module: string) => {
-  //   switch (module) {
-  //     case 'babel-register': {
-  //       return require('@babel/register')({
-  //         extensions: ['.js', '.ts'],
-  //         cache: false,
-  //       });
-  //     }
-  //     case 'ts-node': {
-  //       return require('ts-node')({ transpileOnly: true });
-  //     }
-  //     default: {
-  //       logger.error('Compiler was not reconized, skipping.');
-  //     }
-  //   }
-  // };
-
   try {
     if (compiler) {
-      // await registerCompiler(compiler);
-
-      try {
-        await import(compiler);
-      } catch (e) {
-        throw new Error(e);
-      }
+      await import(compiler);
     }
 
     const file = await import(path);

@@ -16,7 +16,7 @@ interface IConfigFile {
   logs: boolean;
   logger: ILogger;
   logIfLatest?: boolean;
-  compiler?: string | undefined;
+  require?: string | undefined;
   supportFile?: string | undefined;
 }
 
