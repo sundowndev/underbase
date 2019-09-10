@@ -6,8 +6,8 @@
     "@underbase/cli": "file:../../packages/underbase-cli"
   },
   "scripts": {
-    "migrations:status": "underbase status --config migrations/config.js",
-    "migrations:run": "underbase migrate latest --config migrations/config.js",
-    "migrations:validate": "underbase validate --config migrations/config.js"
+    "migrations:status": "underbase -r @babel/register status --config migrations/config.js",
+    "migrations:run": "underbase -r @babel/register migrate latest --config migrations/config.js",
+    "migrations:validate": "underbase -r @babel/register validate --config migrations/config.js"
   }
 }
