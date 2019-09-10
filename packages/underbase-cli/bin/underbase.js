@@ -2,15 +2,6 @@
 // tslint:disable: no-var-requires
 'use strict';
 
-/**
- * If `value` begins with `v8-` and is not explicitly `v8-options`, remove prefix
- * @param {string} [value] - Value to check
- * @returns {string} `value` with prefix (maybe) removed
- * @ignore
- */
-const trimV8Option = value =>
-  value !== 'v8-options' && /^v8-/.test(value) ? value.slice(3) : value;
-
 if (process.argv.includes('-r') || process.argv.includes('--require')) {
   const { spawn } = require('child_process');
   const underbasePath = require.resolve('../build/src/index');
@@ -19,18 +10,18 @@ if (process.argv.includes('-r') || process.argv.includes('--require')) {
   const requireOptIndex = process.argv.indexOf('-r')
     ? process.argv.indexOf('-r')
     : process.argv.indexOf('--require');
-  const moduleToRequire = trimV8Option(process.argv[requireOptIndex + 1]);
+  const moduleToRequire = process.argv[requireOptIndex + 1];
 
   // Filter unwanted arguments
   const underbaseArgs = process.argv.filter(
     f =>
-      ![
+      [
         process.execPath,
         __filename,
         '-r',
         '--require',
         moduleToRequire,
-      ].includes(f),
+      ].indexOf(f) < 0,
   );
 
   const args = [].concat(
