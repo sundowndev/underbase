@@ -1,12 +1,12 @@
 // tslint:disable:no-console
 // tslint:disable:no-empty
-
 import { logger } from '@underbase/utils';
 import { Promise as BlueBirdPromise } from 'bluebird';
 import { Db, MongoClient } from 'mongodb';
 import { Migration } from '../index';
 
-let dbClient: Db;
+let connection: MongoClient;
+let db: Db;
 const collectionName = '_migration';
 const dbURL = process.env.DBURL || 'mongodb://localhost:27017/underbase_test';
 
@@ -16,16 +16,11 @@ describe('INTEGRATION - Migration', () => {
   let configObject: any;
 
   beforeAll(async () => {
-    try {
-      const client = await MongoClient.connect(dbURL, {
-        useNewUrlParser: true,
-      });
+    connection = await MongoClient.connect(dbURL, {
+      useNewUrlParser: true,
+    });
 
-      dbClient = client.db();
-    } catch (e) {
-      console.log(e);
-      throw e;
-    }
+    db = connection.db();
   });
 
   beforeEach(async () => {
@@ -85,6 +80,10 @@ describe('INTEGRATION - Migration', () => {
     await migrator.config(configObject);
   });
 
+  afterAll(async () => {
+    await connection.close();
+  });
+
   describe('#config', () => {
     describe('logs option', () => {
       test('enable', async () => {
@@ -130,7 +129,7 @@ describe('INTEGRATION - Migration', () => {
 
     describe('db option', () => {
       test('custom db client connection', async () => {
-        configObject.db = dbClient;
+        configObject.db = db;
 
         await migrator.config(configObject);
 
@@ -383,6 +382,33 @@ describe('INTEGRATION - Migration', () => {
     });
   });
 
+  describe('#unlock', () => {
+    test(`should be locked`, async () => {
+      // Lock migration state
+      await db.collection(collectionName).updateOne(
+        {
+          _id: 'control',
+        },
+        {
+          $set: {
+            version: 1.0,
+            locked: true,
+          },
+        },
+        {
+          upsert: true,
+        },
+      );
+
+      expect(await migrator.isLocked()).toBe(true);
+
+      // Unlock current state
+      await migrator.unlock();
+
+      expect(await migrator.isLocked()).toBe(false);
+    });
+  });
+
   describe('#isLocked', () => {
     test(`should be unlocked`, async () => {
       const locked = await migrator.isLocked();
@@ -390,7 +416,7 @@ describe('INTEGRATION - Migration', () => {
     });
 
     test(`should be locked`, async () => {
-      await dbClient.collection(collectionName).updateOne(
+      await db.collection(collectionName).updateOne(
         {
           _id: 'control',
         },
