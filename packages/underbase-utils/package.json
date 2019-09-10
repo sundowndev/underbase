@@ -18,9 +18,6 @@
   "bugs": {
     "url": "https://github.com/sundowndev/underbase/issues"
   },
-  "devDependencies": {
-    "@types/node": "12.7.4"
-  },
   "dependencies": {
     "@underbase/types": "^2.0.0-alpha.0",
     "chalk": "^2.4.2"

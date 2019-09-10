@@ -9,10 +9,6 @@
   "bin": {
     "underbase": "./build/src/index.js"
   },
-  "devDependencies": {
-    "@types/fs-extra": "8.0.0",
-    "@types/yargs": "13.0.2"
-  },
   "dependencies": {
     "@underbase/core": "^2.0.0-alpha.0",
     "@underbase/types": "^2.0.0-alpha.0",
