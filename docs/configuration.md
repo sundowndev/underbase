@@ -1,28 +1,19 @@
-# Configuration
-
-You can configure Migration with the `config` method. Defaults are:
-
-``` javascript
-migrator.config({
-  // Log job run details to console
-  logs: true,
-  // Use a custom logger function (level, ...args) => void
-  logger: null,
-  // Enable/disable logging "Not migrating, already at version {number}"
-  logIfLatest: true,
-  // migrations collection name to use in the database
-  collectionName: "migrations"
-  // mongdb url or mongo Db instance
-  db: "your connection string",
-});
-```
-
-## CLI options
+---
+id: configuration
+title: Configuration
+---
 
 The CLI application uses almost the same configuration API than the library.
 
 ```
 Usage: underbase <command> [OPTIONS]
+
+Commands:
+  underbase migrate <migration>  Initiate migration environment
+  underbase init                 Initiate migration environment
+  underbase list                 Show available migrations versions
+  underbase status               Show migrations status
+  underbase unlock               Unlock migrations state
 
 Options:
   --version                 Show package version                       [boolean]
@@ -40,22 +31,23 @@ Options:
   -h, --help                Show this help message                     [boolean]
 ```
 
-You can also use a JSON file to define configuration :
+You can also use a JSON or JS file to define configuration :
 
-```json
-{
-  "db": "mongodb://localhost:27017/underbase_test",
-  "migrationsDir": "./migrations/underbase_test",
-  "collectionName": "migrations",
-  "backupsDir": "./migrations/underbase_test/backups",
-  "mongodumpBinary": "mongodump",
-  "backup": false,
-  "logs": true
-}
+```js
+// config.Js
+module.export = {
+  db: 'mongodb://localhost:27017/underbase_test',
+  migrationsDir: './migrations/underbase_test',
+  collectionName: 'migrations',
+  backupsDir: './migrations/underbase_test/backups',
+  mongodumpBinary: 'mongodump',
+  backup: false,
+  logs: true,
+};
 ```
 
 And use it as below :
 
 ```bash
-underbase --config config.json
+underbase --config config.js
 ```

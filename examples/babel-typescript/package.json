@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "mongodb": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "*",
+    "@babel/preset-env": "*",
+    "@babel/preset-typescript": "*",
+    "@babel/register": "*",
+    "@underbase/cli": "file:../../packages/underbase-cli",
+    "@underbase/types": "file:../../packages/underbase-types"
+  },
+  "scripts": {
+    "migrations:status": "underbase -r @babel/register status --config migrations/config.js",
+    "migrations:run": "underbase -r @babel/register migrate latest --config migrations/config.js",
+    "migrations:validate": "underbase -r @babel/register validate --config migrations/config.js"
+  }
+}

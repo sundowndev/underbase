@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "build"
+  },
+  "references": [
+    { "path": "../underbase-queryInterface" },
+    { "path": "../underbase-types" },
+    { "path": "../underbase-utils" }
+  ]
+}

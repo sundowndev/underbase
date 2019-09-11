@@ -9,7 +9,7 @@ services:
       - underbase-db
     environment:
       - 'DBURL=mongodb://underbase-db:27017/underbase-db'
-      - 'NODE_ENV=developoment'
+      - 'NODE_ENV=development'
     volumes:
       - '.:/usr/src/underbase'
     ports:
@@ -21,8 +21,8 @@ services:
   underbase-db:
     image: mongo:latest
     ports:
-      - '27017:27017'
-    command: mongod --bind_ip 0.0.0.0 --smallfiles
+      - 27017:27017
+    command: mongod --bind_ip 0.0.0.0
 
   underbase-test:
     container_name: underbase_test

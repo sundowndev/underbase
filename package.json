@@ -1,79 +1,65 @@
 {
-  "name": "underbase",
-  "version": "1.0.5",
-  "description": "MongoDB schema and data migration library",
-  "main": "dist/index.js",
-  "bin": "dist/cli.js",
+  "private": true,
   "scripts": {
-    "lint": "tslint --project .",
-    "build": "webpack --mode production --config ./webpack.config.js --progress --color --display-error-details",
-    "build:watch": "rm -rf dist && webpack --mode production --config ./webpack.config.js --watch",
+    "start": "npm run lint && npm run build:clean && npm run test",
+    "lint": "tslint --project tsconfig.json 'packages/**/*.ts' --exclude '**/*.d.ts' --exclude 'node_modules/**/*.ts'",
+    "bootstrap": "lerna bootstrap --hoist",
+    "build": "node ./scripts/buildTs.js",
+    "build:clean": "rm -rf ./packages/*/build ./packages/*/coverage && npm run build",
+    "build:watch": "npm run build -- --watch",
+    "clean": "lerna run clean",
+    "clean-all": "rm -rf ./node_modules ./packages/*/node_modules ./packages/*/coverage ./packages/*/build",
+    "publish": "npm run build:clean && lerna publish",
+    "test": "cross-env NODE_ENV=test jest --config jest.config.js --coverage --useStderr --forceExit --detectOpenHandles",
+    "test:debug": "cross-env NODE_ENV=test node --inspect=0.0.0.0:5857 jest --coverage --useStderr --forceExit --detectOpenHandles",
+    "test:watch": "cross-env NODE_ENV=test jest --watchAll --useStderr --coverage",
+    "test:debug:watch": "cross-env NODE_ENV=test node --inspect=0.0.0.0:5857 jest --coverage --useStderr",
+    "docs:serve": "./node_modules/docsify-cli/bin/docsify serve ./docs",
+    "docs:ts": "typedoc --out ts-docs ./packages/**/* --theme default --readme none --exclude './packages/underbase-cli/**/*'",
     "docker:start": "docker-compose up underbase-dev",
     "docker:down": "docker-compose down",
-    "docker:test": "docker-compose run underbase-test",
-    "start": "npm run build && npm run lint && npm run test",
-    "test": "cross-env NODE_ENV=test jest ./test --config jest.config.js --coverage --useStderr --forceExit --detectOpenHandles",
-    "test:debug": "cross-env NODE_ENV=test node --inspect=0.0.0.0:5857 jest ./test  --coverage --useStderr --forceExit --detectOpenHandles",
-    "test:watch": "cross-env NODE_ENV=test jest ./test --watchAll --useStderr --coverage",
-    "test:debug:watch": "cross-env NODE_ENV=test node --inspect=0.0.0.0:5857 jest ./test --coverage --useStderr",
-    "docs:serve": "./node_modules/docsify-cli/bin/docsify serve ./docs"
-  },
-  "author": "Raphaël Cerveaux <raphael@crvx.fr> (https://twitter.com/sundowndev)",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sundowndev/underbase"
-  },
-  "bugs": {
-    "url": "https://github.com/sundowndev/underbase/issues"
-  },
-  "keywords": [
-    "mongo",
-    "mongodb",
-    "migration",
-    "schema"
-  ],
-  "license": "ISC",
-  "engines": {
-    "node": ">=7.10.0"
+    "docker:test": "docker-compose run underbase-test"
   },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "jest-extended"
+    ]
+  },
   "devDependencies": {
-    "@commitlint/cli": "^8.0.0",
-    "@commitlint/config-conventional": "^8.0.0",
-    "@types/bluebird": "3.5.26",
-    "@types/fs-extra": "^5.0.5",
-    "@types/jest": "^24.0.11",
-    "@types/lodash": "4.14.123",
-    "@types/mongodb": "3.1.22",
-    "@types/node": "10.14.4",
-    "@types/sinon": "^7.0.11",
-    "@types/type-check": "^0.3.27",
-    "cross-env": "^5.2.0",
-    "docsify-cli": "^4.3.0",
-    "esm": "^3.2.22",
-    "husky": "^2.4.1",
-    "jest": "24.5.0",
-    "sinon": "^7.3.1",
-    "ts-jest": "^24.0.2",
-    "ts-loader": "^5.3.3",
-    "tslint": "5.14.0",
+    "@babel/preset-env": "7.6.0",
+    "@babel/preset-typescript": "7.6.0",
+    "@babel/register": "7.6.0",
+    "@commitlint/cli": "8.1.0",
+    "@commitlint/config-conventional": "8.1.0",
+    "@types/bluebird": "3.5.27",
+    "@types/fs-extra": "8.0.0",
+    "@types/jest": "24.0.18",
+    "@types/lodash": "4.14.138",
+    "@types/mongodb": "3.3.1",
+    "@types/node": "12.7.5",
+    "@types/type-check": "0.3.27",
+    "chalk": "2.4.2",
+    "cross-env": "5.2.0",
+    "docsify-cli": "4.3.0",
+    "husky": "3.0.2",
+    "jest": "24.8.0",
+    "jest-extended": "0.11.2",
+    "lerna": "3.16.4",
+    "micromatch": "4.0.2",
+    "string-length": "3.1.0",
+    "ts-jest": "24.0.2",
+    "ts-loader": "5.4.5",
+    "tslint": "5.20.0",
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "6.1.0",
-    "typescript": "3.3.1",
+    "typedoc": "0.15.0",
+    "typescript": "3.6.3",
     "vrsource-tslint-rules": "6.0.0",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0",
-    "webpack-node-externals": "^1.7.2",
-    "yargs": "^13.2.2"
-  },
-  "dependencies": {
-    "bluebird": "3.5.3",
-    "lodash": "4.17.11",
-    "mongodb": "3.2.2",
-    "type-check": "0.3.2"
+    "bluebird": "3.5.5"
   }
 }

@@ -1,0 +1,39 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: install
+      run: |
+        set -o pipefail
+        npm install
+        npm run bootstrap
+
+    - name: lint
+      run: npm run lint
+
+    - name: build
+      run: npm run build:clean
+
+    - name: test
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        npm i -g codecov
+        docker-compose up -d underbase-db
+        npm test
+        codecov -f coverage/*.json -t ${GITHUB_TOKEN}

@@ -1,18 +1,25 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "rootDir": ".",
-    "outDir": "dist",
     "baseUrl": ".",
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": ["es2017"],
     "sourceMap": true,
-    "allowJs": true,
-    "typeRoots": ["node_modules/@types"],
-    "pretty": true,
-    "removeComments": true,
-    "noImplicitAny": false
+    "declaration": true,
+    "declarationMap": true,
+    "strict": true,
+    "composite": true,
+
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
-  "include": ["**/*.spec.ts"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["**/__tests__/**/*", "**/build/**/*"]
 }

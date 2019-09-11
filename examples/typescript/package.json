@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "mongodb": "*"
+  },
+  "devDependencies": {
+    "@underbase/cli": "file:../../packages/underbase-cli",
+    "@underbase/types": "file:../../packages/underbase-types",
+    "ts-node": "*",
+    "typescript": "*"
+  },
+  "scripts": {
+    "migrations:status": "underbase -r ts-node/register status --config migrations/config.js",
+    "migrations:run": "underbase -r ts-node/register migrate latest --config migrations/config.js",
+    "migrations:validate": "underbase -r ts-node/register validate --config migrations/config.js"
+  }
+}
