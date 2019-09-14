@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/underbase/badge?ref=develop" alt="build status" />
   </a>
   <a href="https://codecov.io/gh/sundowndev/underbase">
-    <img src="https://img.shields.io/codecov/c/gh/sundowndev/underbase/develop.svg" alt="code coverage" />
+    <img src="https://img.shields.io/codecov/c/gh/sundowndev/underbase" alt="code coverage" />
   </a>
   <a href="https://github.com/sundowndev/underbase/releases">
     <img src="https://img.shields.io/github/release/sundowndev/underbase.svg" alt="release" />
