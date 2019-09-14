@@ -33,7 +33,13 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        npm i -g codecov
         docker-compose up -d underbase-db
         npm test
-        codecov -f coverage/*.json -t ${GITHUB_TOKEN}
+
+    - name: Upload coverage to Codecov  
+      uses: codecov/codecov-action@v1.0.2
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: ./coverage/coverage.json
+        flags: unittests
+        name: codecov-umbrella 
