@@ -1,8 +1,8 @@
 {
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/register": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
+    "@babel/core": "*",
+    "@babel/register": "*",
+    "@babel/preset-env": "*",
     "@underbase/cli": "file:../../packages/underbase-cli"
   },
   "scripts": {
