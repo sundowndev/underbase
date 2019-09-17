@@ -1,10 +1,22 @@
 #!/usr/bin/env node
-// tslint:disable: no-var-requires
-'use strict';
+
+/* tslint:disable */
+
+// speed up `underbase --version`
+if (
+  ['v', 'version', '-v', '--v', '-version', '--version'].includes(
+    process.argv[2],
+  )
+) {
+  const contents = require('fs').readFileSync(`${__dirname}/../package.json`);
+  const package = JSON.parse(contents);
+  console.log(package.version);
+  process.exit(0);
+}
 
 if (process.argv.includes('-r') || process.argv.includes('--require')) {
   const { spawn } = require('child_process');
-  const underbasePath = require.resolve('../build/src/index');
+  const underbasePath = require.resolve(`${__dirname}/../build/src/index`);
 
   // Parse require argument
   const requireOptIndex = process.argv.indexOf('-r')
@@ -31,6 +43,7 @@ if (process.argv.includes('-r') || process.argv.includes('--require')) {
     underbaseArgs,
   );
 
+  // Launch app
   const proc = spawn(process.execPath, args, {
     stdio: 'inherit',
   });
@@ -51,5 +64,5 @@ if (process.argv.includes('-r') || process.argv.includes('--require')) {
     proc.kill('SIGTERM'); // If that didn't work, we're probably in an infinite loop, so make it die.
   });
 } else {
-  require('../build/src/index').main();
+  require(`${__dirname}/../build/src/index`).main();
 }
