@@ -18,6 +18,7 @@ describe('INTEGRATION - Migration', () => {
   beforeAll(async () => {
     connection = await MongoClient.connect(dbURL, {
       useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
 
     db = connection.db();

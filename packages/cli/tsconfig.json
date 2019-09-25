@@ -5,6 +5,7 @@
   },
   "references": [
     { "path": "../core" },
-    { "path": "../cli" }
+    { "path": "../types" },
+    { "path": "../utils" }
   ]
 }
