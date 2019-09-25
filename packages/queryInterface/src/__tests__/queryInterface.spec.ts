@@ -9,7 +9,7 @@ const dbURL = process.env.DBURL || 'mongodb://localhost:27017/underbase_test';
 let query: MongoCollection;
 let mongoCollection: Collection;
 
-describe('INTEGRATION - Query interface', () => {
+describe('E2E - Query interface', () => {
   beforeAll(async () => {
     connection = await MongoClient.connect(dbURL, {
       useNewUrlParser: true,
@@ -63,12 +63,12 @@ describe('INTEGRATION - Query interface', () => {
     test('unset a field', async () => {
       await mongoCollection.insertMany([{ field1: 'test1', field2: 'test2' }]);
 
-      await query.unset('field1').where();
+      await query.unset('field1').where({});
 
-      const document = await mongoCollection.findOne({ field2: 'test2' });
+      const document = await mongoCollection.find().toArray();
 
-      expect(document.field1).toBe(undefined);
-      expect(document.field2).toBe('test2');
+      expect(document[0].field1).toBe(undefined);
+      expect(document[0].field2).toBe('test2');
     });
 
     test('unset a field with where clause', async () => {

@@ -10,7 +10,7 @@ let db: Db;
 const collectionName = '_migration';
 const dbURL = process.env.DBURL || 'mongodb://localhost:27017/underbase_test';
 
-describe('INTEGRATION - Migration', () => {
+describe('E2E - Migration', () => {
   let migrator: Migration;
   let migrationsList: any[];
   let configObject: any;
