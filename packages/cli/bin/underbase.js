@@ -51,5 +51,5 @@ if (process.argv.includes('-r') || process.argv.includes('--require')) {
     proc.kill('SIGTERM'); // If that didn't work, we're probably in an infinite loop, so make it die.
   });
 } else {
-  require('../build/src/index').main();
+  require('../build/src/index');
 }
