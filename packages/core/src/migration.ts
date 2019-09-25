@@ -153,7 +153,10 @@ export class Migration {
    * @returns {void}
    * @memberof Migration
    */
-  public registerEvent(event: string, callback: any): void {
+  public registerEvent(
+    event: string,
+    callback: (...args: any[]) => void,
+  ): void {
     this._emitter.addListener(event, callback);
   }
 
