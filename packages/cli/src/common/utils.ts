@@ -15,16 +15,13 @@ export const initMigrator = async (config: IConfigFile): Promise<Migration> => {
 
   const migrator = new Migration();
 
-  if (
-    config.supportFile &&
-    fs.existsSync(path.resolve(config.supportFile as string))
-  ) {
-    const support = await import(path.resolve(config.supportFile as string));
+  if (config.supportFile && fs.existsSync(path.resolve(config.supportFile))) {
+    const support = await import(path.resolve(config.supportFile));
 
     if (typeof support.default === 'function') {
       support.default(
-        (event: string, cb: any) => {
-          migrator.registerEvent(event, cb);
+        (event: string, cb: (...args: any[]) => void): void => {
+          return migrator.registerEvent(event, cb);
         },
         { config },
       );
