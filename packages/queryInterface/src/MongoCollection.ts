@@ -79,7 +79,7 @@ export class MongoCollection {
   public count = async (query: object = {}): Promise<any> => {
     this._whereQuery = query;
 
-    return await this._collection.count(this._whereQuery);
+    return await this._collection.countDocuments(this._whereQuery);
   }
 
   private where = async (query: object = {}): Promise<any> => {
