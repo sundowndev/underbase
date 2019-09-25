@@ -119,6 +119,7 @@ export class Migration {
     if (typeof this.options.db === 'string') {
       this._connection = await MongoClient.connect(this.options.db, {
         useNewUrlParser: true,
+        useUnifiedTopology: true,
       });
 
       db = this._connection.db();

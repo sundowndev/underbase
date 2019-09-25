@@ -13,6 +13,7 @@ describe('INTEGRATION - Query interface', () => {
   beforeAll(async () => {
     connection = await MongoClient.connect(dbURL, {
       useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
 
     db = connection.db();

@@ -4,8 +4,8 @@
     "outDir": "build"
   },
   "references": [
-    { "path": "../underbase-core" },
-    { "path": "../underbase-types" },
-    { "path": "../underbase-utils" }
+    { "path": "../queryInterface" },
+    { "path": "../types" },
+    { "path": "../utils" }
   ]
 }

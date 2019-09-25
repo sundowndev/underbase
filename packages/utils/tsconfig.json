@@ -3,5 +3,5 @@
   "compilerOptions": {
     "outDir": "build"
   },
-  "references": [{ "path": "../underbase-types" }]
+  "references": [{ "path": "../types" }]
 }
