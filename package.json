@@ -44,7 +44,7 @@
     "chalk": "2.4.2",
     "cross-env": "6.0.0",
     "docsify-cli": "4.3.0",
-    "husky": "3.0.2",
+    "husky": "3.0.7",
     "jest": "24.8.0",
     "jest-extended": "0.11.2",
     "lerna": "3.16.4",
