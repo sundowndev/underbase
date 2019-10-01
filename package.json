@@ -58,6 +58,6 @@
     "typedoc": "0.15.0",
     "typescript": "3.6.3",
     "vrsource-tslint-rules": "6.0.0",
-    "bluebird": "3.5.5"
+    "bluebird": "3.7.0"
   }
 }
