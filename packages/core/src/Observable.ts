@@ -2,7 +2,7 @@ export default class Observable {
     private events: any;
 
     constructor() {
-        this.events = {}
+        this.events = {};
     }
 
     public on(e: string, f: any): void {
