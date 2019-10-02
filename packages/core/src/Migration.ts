@@ -352,13 +352,6 @@ export class Migration {
     const migrate = async (direction: string, idx: number): Promise<any> => {
       const migration = self.getMigrations()[idx];
 
-      if (typeof migration[direction] !== 'function') {
-        await unlock();
-        throw new Error(
-          'Cannot migrate ' + direction + ' on version ' + migration.version,
-        );
-      }
-
       this.options.logger.log(
         '\n',
         chalk.yellow(
