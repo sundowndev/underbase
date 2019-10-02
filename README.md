@@ -55,7 +55,7 @@ Want to see real-world usage of Underbase ? We've created some examples for you.
 
 ## Support
 
-Underbase is continuously being tested using node 8, 10, 11, the latest version of the [mongodb nodejs driver](https://github.com/mongodb/node-mongodb-native) (3.x) and the latest version of the [MongoDB docker image](https://docs.docker.com/samples/library/mongo/). Dependencies are frequently updated. It's compatible with any Node.js version above v7.x.
+Underbase is continuously being tested with node 8, 10, 11, the latest version of the [mongodb nodejs driver](https://github.com/mongodb/node-mongodb-native) (3.x) and the latest version of the [MongoDB docker image](https://docs.docker.com/samples/library/mongo/). Dependencies are frequently updated. It's compatible with any Node.js version above v7.x.
 
 ## Contributing
 
@@ -64,6 +64,14 @@ Underbase is continuously being tested using node 8, 10, 11, the latest version 
 - Commit your changes: git commit -am 'Add some feature'
 - Push to the branch: git push origin feature/my-new-feature
 - Submit a pull request
+
+## README Badge
+
+Using Underbase in an open-source project? Add a README badge to show it off: [![underbase](https://img.shields.io/badge/migrating%20with-underbase-2c3e50.svg)](https://sundowndev.github.io/underbase/)
+
+```
+[![underbase](https://img.shields.io/badge/migrating with-underbase-2c3e50.svg)](https://sundowndev.github.io/underbase/)
+```
 
 ## Credits
 
