@@ -136,10 +136,11 @@ describe('E2E - Query interface', () => {
 
       await query.set('field3', 'test3').where({ field1: 'test1' });
 
-      const docs = await mongoCollection.find().toArray();
+      const doc1 = await mongoCollection.findOne({ field1: 'test1' })
+      const doc2 = await mongoCollection.findOne({ field1: 'test2' })
 
-      expect(docs[0].field3).toBe('test3');
-      expect(docs[1].field3).toBe(undefined);
+      expect(doc1.field3).toBe('test3');
+      expect(doc2.field3).toBe(undefined);
     });
   });
 

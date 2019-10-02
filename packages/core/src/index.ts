@@ -1,4 +1,4 @@
-import { Migration } from './migration';
+import { Migration } from './Migration';
 
 const migrator = new Migration();
 
