@@ -132,7 +132,7 @@ export class Migration {
 
     this._db = db;
 
-    this.emitEvent('connect');
+    await this.emitEvent('connect');
   }
 
   /**
@@ -503,7 +503,7 @@ export class Migration {
         this.getMigrations()[endIdx].version,
     );
 
-    this.emitEvent(rerun ? 'rerun' : 'migrate');
+    await this.emitEvent(rerun ? 'rerun' : 'migrate');
 
     if (currentVersion < version) {
       for (let i = startIdx; i < endIdx; i++) {
