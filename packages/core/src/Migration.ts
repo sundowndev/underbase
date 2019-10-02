@@ -33,10 +33,10 @@ import {
 } from '@underbase/types';
 import { logger } from '@underbase/utils';
 import chalk from 'chalk';
-import events, { EventEmitter } from 'events';
 import _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
+import Observable from './Observable';
 
 const check = typeCheck;
 
@@ -51,7 +51,7 @@ export class Migration {
   private _connection: MongoClient;
   private _db: Db;
   private options: IMigrationOptions;
-  private _emitter: EventEmitter;
+  private _emitter: Observable;
 
   /**
    * Creates an instance of Migration.
@@ -78,7 +78,7 @@ export class Migration {
           // Mongdb url or mongo Db instance
           db: null as any,
         };
-    this._emitter = new events.EventEmitter();
+    this._emitter = new Observable();
   }
 
   /**
@@ -149,15 +149,15 @@ export class Migration {
    * Register an event
    *
    * @param {string} event
-   * @param {any} callback
+   * @param {any} f
    * @returns {void}
    * @memberof Migration
    */
   public registerEvent(
     event: string,
-    callback: (...args: any[]) => void,
+    f: (...args: any[]) => any,
   ): void {
-    this._emitter.addListener(event, callback);
+    this._emitter.on(event, f);
   }
 
   /**
@@ -330,8 +330,8 @@ export class Migration {
    * @param {string} event
    * @memberof Migration
    */
-  private emitEvent(event: string): void {
-    this._emitter.emit(event);
+  private async emitEvent(event: string): Promise<void> {
+    await this._emitter.emit(event, { config: this.options });
   }
 
   /**
