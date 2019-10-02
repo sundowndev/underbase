@@ -2,10 +2,7 @@ const { exec } = require('child_process');
 
 module.exports = (on, { config }) => {
   on('connect', () => config.logger.log('Running!'));
-  on('migrate', () => config.logger.log('Migrating!'));
-};
-
-module.exports.beforeMigrating = ({ config }) =>
+  on('migrate', ({ config }) =>
   new Promise((resolve, reject) => {
     config.logger.info('Creating backup...');
 
@@ -45,4 +42,5 @@ module.exports.beforeMigrating = ({ config }) =>
 
       return resolve();
     });
-  });
+  }));
+};
