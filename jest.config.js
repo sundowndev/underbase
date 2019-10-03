@@ -8,5 +8,6 @@ module.exports = {
   coveragePathIgnorePatterns: [
     'types',
     '__tests__',
+    'cli/src/index'
   ],
 };
