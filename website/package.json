@@ -3,7 +3,7 @@
     "examples": "docusaurus-examples",
     "start": "docusaurus-start",
     "build": "docusaurus-build",
-    "publish-gh-pages": "docusaurus-publish",
+    "publish-gh-pages": "GIT_USER=$(git config --get user.name) USE_SSH=true CURRENT_BRANCH=$(git branch | grep \\* | cut -d ' ' -f2) docusaurus-publish",
     "write-translations": "docusaurus-write-translations",
     "version": "docusaurus-version",
     "rename-version": "docusaurus-rename-version"
