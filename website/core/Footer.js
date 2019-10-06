@@ -53,16 +53,16 @@ class Footer extends React.Component {
               Stack Overflow
             </a>
             <a
-              href="https://twitter.com/sundowndev"
+              href="https://github.com/sundowndev/underbase/issues"
               target="_blank"
               rel="noreferrer noopener"
             >
-              Twitter
+              Issues tracker
             </a>
           </div>
           <div>
             <h5>More</h5>
-            <a href={`${this.props.config.baseUrl}blog`}>Release notes</a>
+            <a href="https://github.com/sundowndev/underbase/releases">Release notes</a>
             <a href="https://github.com/sundowndev/underbase">GitHub</a>
           </div>
         </section>

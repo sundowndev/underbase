@@ -29,6 +29,9 @@
       "installation": {
         "title": "Installation"
       },
+      "intro": {
+        "title": "Introduction"
+      },
       "logging": {
         "title": "Logging"
       },
@@ -46,9 +49,10 @@
       }
     },
     "links": {
+      "Docs": "Docs",
       "Guides": "Guides",
       "API": "API",
-      "Release notes": "Release notes"
+      "GitHub": "GitHub"
     },
     "categories": {
       "Get started": "Get started",
