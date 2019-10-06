@@ -13,8 +13,8 @@ const repoUrl = 'https://github.com/sundowndev/underbase';
 const siteConfig = {
   title: 'Underbase', // Title for your website.
   tagline: 'MongoDB schema and data migration library',
-  url: 'https://sundowndev.github.io', // Your website URL
-  baseUrl: '/underbase/', // Base URL for your project */
+  url: 'https://underbase.js.org', // Your website URL
+  baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
