@@ -1,0 +1,24 @@
+{
+  "name": "@underbase/query-interface",
+  "version": "2.0.0-alpha.0",
+  "main": "build/src/index",
+  "types": "build/src/index",
+  "files": [
+    "build"
+  ],
+  "author": "Raphaël Cerveaux <raphael@crvx.fr>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sundowndev/underbase.git",
+    "directory": "packages/underbase-cli"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/sundowndev/underbase/issues"
+  },
+  "dependencies": {
+    "mongodb": "3.3.2"
+  }
+}

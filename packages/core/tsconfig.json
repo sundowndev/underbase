@@ -4,7 +4,8 @@
     "outDir": "build"
   },
   "references": [
-    { "path": "../core" },
-    { "path": "../cli" }
+    { "path": "../queryInterface" },
+    { "path": "../types" },
+    { "path": "../utils" }
   ]
 }

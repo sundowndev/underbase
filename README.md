@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/underbase/badge?ref=develop" alt="build status" />
   </a>
   <a href="https://codecov.io/gh/sundowndev/underbase">
-    <img src="https://img.shields.io/codecov/c/gh/sundowndev/underbase" alt="code coverage" />
+    <img src="https://codecov.io/gh/sundowndev/underbase/branch/develop/graph/badge.svg" />
   </a>
   <a href="https://github.com/sundowndev/underbase/releases">
     <img src="https://img.shields.io/github/release/sundowndev/underbase.svg" alt="release" />
@@ -55,7 +55,7 @@ Want to see real-world usage of Underbase ? We've created some examples for you.
 
 ## Support
 
-Underbase is continuously being tested using node 8, 10, 11, the latest version of the [mongodb nodejs driver](https://github.com/mongodb/node-mongodb-native) (3.x) and the latest version of the [MongoDB docker image](https://docs.docker.com/samples/library/mongo/). Dependencies are frequently updated. It's compatible with any Node.js version above v7.x.
+Underbase is continuously being tested with node 8, 10, 11, the latest version of the [mongodb nodejs driver](https://github.com/mongodb/node-mongodb-native) (3.x) and the latest version of the [MongoDB docker image](https://docs.docker.com/samples/library/mongo/). Dependencies are frequently updated. It's compatible with any Node.js version above v7.x.
 
 ## Contributing
 
@@ -64,6 +64,14 @@ Underbase is continuously being tested using node 8, 10, 11, the latest version 
 - Commit your changes: git commit -am 'Add some feature'
 - Push to the branch: git push origin feature/my-new-feature
 - Submit a pull request
+
+## README Badge
+
+Using Underbase in an open-source project? Add a README badge to show it off: [![underbase](https://img.shields.io/badge/migrating%20with-underbase-2c3e50.svg)](https://sundowndev.github.io/underbase/)
+
+```
+[![underbase](https://img.shields.io/badge/migrating with-underbase-2c3e50.svg)](https://sundowndev.github.io/underbase/)
+```
 
 ## Credits
 
