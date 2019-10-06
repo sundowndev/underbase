@@ -1,3 +1,4 @@
+// tslint:disable: no-string-literal
 import Observable from '../Observable';
 
 describe('Unit - Observable', () => {
