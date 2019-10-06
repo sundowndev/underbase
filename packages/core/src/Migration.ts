@@ -153,10 +153,7 @@ export class Migration {
    * @returns {void}
    * @memberof Migration
    */
-  public registerEvent(
-    event: string,
-    f: (...args: any[]) => any,
-  ): void {
+  public registerEvent(event: string, f: (...args: any[]) => any): void {
     this._emitter.on(event, f);
   }
 
@@ -330,8 +327,11 @@ export class Migration {
    * @param {string} event
    * @memberof Migration
    */
-  private async emitEvent(event: string): Promise<void> {
-    await this._emitter.emit(event, { config: this.options });
+  private async emitEvent(
+    event: string,
+    data = { config: this.options },
+  ): Promise<void> {
+    await this._emitter.emit(event, data);
   }
 
   /**
