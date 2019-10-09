@@ -54,7 +54,7 @@
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "6.1.0",
     "typedoc": "0.15.0",
-    "typescript": "3.6.3",
+    "typescript": "3.6.4",
     "vrsource-tslint-rules": "6.0.0",
     "bluebird": "3.7.0"
   }
