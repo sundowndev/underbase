@@ -4,7 +4,7 @@
 
 <h1 align="center">Underbase</h1>
 
-<p align="center">MongoDB schema and data migration library. Check out <a href="https://sundowndev.github.io/underbase">documentation</a>.</p>
+<p align="center"><strong>MongoDB schema and data migration library</strong></p>
 
 <div align="center">
   <a href="https://github.com/sundowndev/underbase/actions">
@@ -25,13 +25,79 @@
 
 Underbase is a MongoDB schema and data migration library that provides an easy-to-use abstract interface for writting, organizing and executing your database migrations. Usable both in the CLI and as a module, you can easily implement it in your framework's code base.
 
-## Goals
+- **Promised:** uses promises and async/await. No callback hell.
+- **Flexible:** Multiple databases support. Migrations can be grouped, organized. Migrator can have event listeners.
+- **Scalable:** uses MongoDB cursor and aggregator.
+- **Testable:** can be used with assertions.
 
-- Migration versioning (major and minor)
-- Multiple MongoDB databases support
-- Execution flow control & middlewares
-- Provide additional MongoDB query interface
-- Handle scalable environments by design
+## Quick start
+
+### Install
+
+```
+npm install --save-dev underbase
+```
+
+>Underbase is compatible with any Node.js version above v7.x.
+
+### Configuration
+
+```js
+// underbase.config.js
+const path = require('path');
+
+module.exports = {
+  db: 'mongodb://localhost:27017/example_db',
+  migrationsDir: __dirname,
+  collectionName: '_migrations',
+};
+```
+
+### Usage
+
+```js
+// migrations/1.0/index.js
+module.exports = {
+  version: 1.0,
+  describe: 'Update users collection',
+  async up({ Query }) {
+    const Users = Query.collection('Users');
+
+    await Users.rename('datecreated', 'dateCreated').where({
+      datecreated: {
+        $exists: true,
+      },
+    });
+  },
+  async down({ Query }) {
+    const Users = Query.collection('Users');
+
+    await Users.rename('dateCreated', 'datecreated').where({
+      dateCreated: {
+        $exists: true,
+      },
+    });
+  },
+};
+```
+
+**Then, you can migrate :**
+
+```
+npx underbase migrate 1.0 --config underbase.config.js
+```
+
+**Want to rerun current migration version ?**
+
+```
+npx underbase rerun --config underbase.config.js
+```
+
+**Want to rollback a migration ?**
+
+```
+npx underbase migrate 0 --config underbase.config.js
+```
 
 ## Documentation
 
@@ -55,7 +121,7 @@ Want to see real-world usage of Underbase ? We've created some examples for you.
 
 ## Support
 
-Underbase is continuously being tested with node 8, 10, 11, the latest version of the [mongodb nodejs driver](https://github.com/mongodb/node-mongodb-native) (3.x) and the latest version of the [MongoDB docker image](https://docs.docker.com/samples/library/mongo/). Dependencies are frequently updated. It's compatible with any Node.js version above v7.x.
+Underbase is continuously being tested with node 8 & 11, the latest version of the [mongodb nodejs driver](https://github.com/mongodb/node-mongodb-native) (3.x) and the latest version of the [MongoDB docker image](https://docs.docker.com/samples/library/mongo/). Dependencies are frequently updated. It's compatible with any Node.js version above v7.x.
 
 ## Contributing
 
