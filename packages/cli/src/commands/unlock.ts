@@ -1,9 +1,10 @@
+import { IConfigFile } from '@underbase/types';
 import { logger, timer } from '@underbase/utils';
 import { initMigrator } from '../common/utils';
 
 export const command = 'force-unlock';
 export const describe = 'Force unlock migrations state';
-export const action = async ({ config }: { config: any }) => {
+export const action = async ({ config }: { config: IConfigFile }) => {
   const migrator = await initMigrator(config);
 
   if (await migrator.isLocked()) {
