@@ -22,16 +22,16 @@ interface IConfigFile {
 
 interface IMigrationUtils {
   MongoClient: Db;
-  Migrate: (migrations: any[]) => void;
+  Migrate: (migrations: unknown[]) => void;
   Query: QueryInterface;
   Logger: (...args: string[]) => void;
 }
 
 interface IMigration {
   version: number;
-  describe: string;
-  up: (db: IMigrationUtils) => Promise<any> | any;
-  down: (db: IMigrationUtils) => Promise<any> | any;
+  describe?: string;
+  up: (db: IMigrationUtils) => Promise<unknown> | unknown;
+  down: (db: IMigrationUtils) => Promise<unknown> | unknown;
 }
 
 interface ILogger {

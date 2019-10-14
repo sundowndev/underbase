@@ -36,6 +36,7 @@ import chalk from 'chalk';
 import _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
+import { getMigrationUtils } from './ObjectInjection';
 import Observable from './Observable';
 
 const check = typeCheck;
@@ -45,8 +46,10 @@ export class Migration {
     version: 0,
     // tslint:disable-next-line:no-empty
     up: () => {},
+    // tslint:disable-next-line:no-empty
+    down: () => {},
   };
-  private _list: any[];
+  private _list: IMigration[];
   private _collection: Collection;
   private _connection: MongoClient;
   private _db: Db;
@@ -153,7 +156,10 @@ export class Migration {
    * @returns {void}
    * @memberof Migration
    */
-  public registerEvent(event: string, f: (...args: any[]) => any): void {
+  public registerEvent(
+    event: string,
+    f: (...args: any[]) => Promise<any>,
+  ): void {
     this._emitter.on(event, f);
   }
 
@@ -377,48 +383,8 @@ export class Migration {
         );
       }
 
-      const logLevel = 8;
-      const _MigrationUtils: IMigrationUtils = {
-        MongoClient: this._db as Db,
-        Migrate: async (migrations: Array<Promise<any>> | any[]) => {
-          for (const i in migrations) {
-            if (migrations.hasOwnProperty(i)) {
-              if (
-                migrations[i][direction].constructor.name !== 'AsyncFunction' &&
-                migrations[i][direction].constructor.name !== 'Promise'
-              ) {
-                this.options.logger.warn(
-                  `One of the ${direction} functions is nor Async or Promise`,
-                  `(${migrations[i].describe || 'not described'})`,
-                );
-              }
-
-              if (migrations[i].describe) {
-                this.options.logger.log(
-                  ' '.repeat(logLevel),
-                  chalk.grey(migrations[i].describe),
-                );
-              }
-
-              try {
-                await migrations[i][direction](_MigrationUtils);
-              } catch (error) {
-                throw new Error(error);
-              }
-            }
-          }
-        },
-        Query: new QueryInterface(self._db),
-        Logger: (...args: string[]) =>
-          this.options.logger.log(
-            ' '.repeat(logLevel),
-            chalk.inverse(' LOGGER '),
-            ...args,
-          ),
-      };
-
       try {
-        await migration[direction](_MigrationUtils);
+        await migration[direction](getMigrationUtils());
         this.options.logger.log('');
       } catch (error) {
         throw new Error(error);
