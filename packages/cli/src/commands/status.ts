@@ -4,7 +4,7 @@ import { initMigrator } from '../common/utils';
 
 export const command = 'status';
 export const describe = 'Show migrations status';
-export const action = async ({ config }: { config: any }) => {
+export const action = async ({ config }: { config: IConfigFile }) => {
   const migrator = await initMigrator(config as IConfigFile);
 
   const currentVersion = await migrator.getVersion();
