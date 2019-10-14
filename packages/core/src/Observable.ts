@@ -1,5 +1,5 @@
 interface IEvents {
-  [key: string]: any[];
+  [key: string]: Array<(...args: unknown[]) => Promise<unknown>>;
 }
 
 export default class Observable {
@@ -9,7 +9,7 @@ export default class Observable {
     this.events = {};
   }
 
-  public on(e: string, f: any): void {
+  public on(e: string, f: (...args: unknown[]) => Promise<unknown>): void {
     if (!this.events[e]) {
       this.events[e] = [];
     }
@@ -17,7 +17,7 @@ export default class Observable {
     this.events[e].push(f);
   }
 
-  public async emit(e: string, data?: any): Promise<void> {
+  public async emit(e: string, data?: unknown): Promise<void> {
     if (!this.events[e]) {
       this.events[e] = [];
     }
