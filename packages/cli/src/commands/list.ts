@@ -1,3 +1,4 @@
+import { IConfigFile } from '@underbase/types';
 import { logger } from '@underbase/utils';
 import * as fs from 'fs-extra';
 
@@ -7,10 +8,10 @@ export const action = async ({
   config,
   versions,
 }: {
-  config: any;
+  config: IConfigFile;
   versions: string[];
 }) => {
-  if (fs.existsSync(config.migrationsDir)) {
+  if (config.migrationsDir && fs.existsSync(config.migrationsDir)) {
     logger.info('Versions list based on folders');
 
     versions.forEach((v: string) => logger.log(`- ${v}`));

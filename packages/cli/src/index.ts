@@ -40,7 +40,7 @@ export async function main() {
         ? (configFile.logs as boolean)
         : (argv.logs as boolean),
     // Null or a function
-    logger: logger as any,
+    logger,
     // Enable/disable info log "already at latest."
     logIfLatest:
       configFile.logIfLatest !== undefined

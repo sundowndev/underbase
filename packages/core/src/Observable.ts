@@ -1,25 +1,29 @@
+interface IEvents {
+  [key: string]: any[];
+}
+
 export default class Observable {
-    private events: any;
+  private events: IEvents;
 
-    constructor() {
-        this.events = {};
+  constructor() {
+    this.events = {};
+  }
+
+  public on(e: string, f: any): void {
+    if (!this.events[e]) {
+      this.events[e] = [];
     }
 
-    public on(e: string, f: any): void {
-        if (!this.events[e]) {
-            this.events[e] = [];
-        }
+    this.events[e].push(f);
+  }
 
-        this.events[e].push(f);
+  public async emit(e: string, data?: any): Promise<void> {
+    if (!this.events[e]) {
+      this.events[e] = [];
     }
 
-    public async emit(e: string, data: any = null): Promise<void> {
-        if (!this.events[e]) {
-            this.events[e] = [];
-        }
-
-        for (const observer of this.events[e]) {
-            await observer(data);
-        }
+    for (const observer of this.events[e]) {
+      await observer(data);
     }
+  }
 }

@@ -380,7 +380,7 @@ export class Migration {
       const logLevel = 8;
       const _MigrationUtils: IMigrationUtils = {
         MongoClient: this._db as Db,
-        Migrate: async (migrations: any[]) => {
+        Migrate: async (migrations: Array<Promise<any>> | any[]) => {
           for (const i in migrations) {
             if (migrations.hasOwnProperty(i)) {
               if (
