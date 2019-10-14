@@ -34,8 +34,8 @@ Underbase is a MongoDB schema and data migration library that provides an easy-t
 
 ### Install
 
-```
-npm install --save-dev underbase
+```shell
+npm install -g @underbase/cli
 ```
 
 >Underbase is compatible with any Node.js version above v7.x.
@@ -83,20 +83,20 @@ module.exports = {
 
 **Then, you can migrate :**
 
-```
-npx underbase migrate 1.0 --config underbase.config.js
+```shell
+underbase migrate 1.0 --config underbase.config.js
 ```
 
 **Want to rerun current migration version ?**
 
-```
-npx underbase rerun --config underbase.config.js
+```shell
+underbase rerun --config underbase.config.js
 ```
 
 **Want to rollback a migration ?**
 
-```
-npx underbase migrate 0 --config underbase.config.js
+```shell
+underbase migrate 0 --config underbase.config.js
 ```
 
 ## Documentation
