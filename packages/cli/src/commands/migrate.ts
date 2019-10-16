@@ -5,7 +5,7 @@ import * as path from 'path';
 import { getMigrations, initMigrator } from '../common/utils';
 
 export const command = 'migrate <migration>';
-export const desc = 'Migrate to a specified version';
+export const describe = 'Migrate to a specified version';
 export const action = async ({
   config,
   versions,
