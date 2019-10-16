@@ -25,18 +25,13 @@
 // tslint:disable:variable-name
 // tslint:disable:no-console
 
-import { QueryInterface } from '@underbase/query-interface';
-import {
-  IMigration,
-  IMigrationOptions,
-  IMigrationUtils,
-} from '@underbase/types';
+import { EDirection, IMigration, IMigrationOptions } from '@underbase/types';
 import { logger } from '@underbase/utils';
 import chalk from 'chalk';
 import _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
-import { getMigrationUtils } from './ObjectInjection';
+import MigrationUtils from './MigrationUtils';
 import Observable from './Observable';
 
 const check = typeCheck;
@@ -350,13 +345,15 @@ export class Migration {
    * @memberof Migration
    */
   private async execute(version: number, rerun?: boolean): Promise<void> {
-    const self = this;
     const control = await this.getControl(); // Side effect: upserts control document.
     let currentVersion = control.version;
 
     // Run the actual migration
-    const migrate = async (direction: string, idx: number): Promise<any> => {
-      const migration = self.getMigrations()[idx];
+    const migrate = async (
+      direction: EDirection,
+      idx: number,
+    ): Promise<any> => {
+      const migration = this.getMigrations()[idx];
 
       this.options.logger.log(
         '\n',
@@ -383,8 +380,10 @@ export class Migration {
         );
       }
 
+      const M = new MigrationUtils(direction, this._db, this.options.logger);
+
       try {
-        await migration[direction](getMigrationUtils());
+        await migration[direction](M.utils);
         this.options.logger.log('');
       } catch (error) {
         throw new Error(error);
@@ -398,7 +397,7 @@ export class Migration {
        * object and thus be able to update it.  All other simultaneous callers will not match the
        * object and thus will have null return values in the result of the operation.
        */
-      const updateResult = await self._collection.findOneAndUpdate(
+      const updateResult = await this._collection.findOneAndUpdate(
         {
           _id: 'control',
           locked: false,
@@ -416,14 +415,14 @@ export class Migration {
 
     // Side effect: saves version.
     const unlock = () =>
-      self.setControl({
+      this.setControl({
         locked: false,
         version: currentVersion,
       });
 
     // Side effect: saves version.
     const updateVersion = async () =>
-      await self.setControl({
+      await this.setControl({
         locked: true,
         version: currentVersion,
       });
@@ -435,7 +434,7 @@ export class Migration {
 
     if (rerun) {
       this.options.logger.info('Rerunning version ' + version);
-      await migrate('up', this.findIndexByVersion(version));
+      await migrate(EDirection.up, this.findIndexByVersion(version));
       this.options.logger.success('Finished migrating');
       await unlock();
       return;
@@ -467,8 +466,8 @@ export class Migration {
     if (currentVersion < version) {
       for (let i = startIdx; i < endIdx; i++) {
         try {
-          await migrate('up', i + 1);
-          currentVersion = self.getMigrations()[i + 1].version;
+          await migrate(EDirection.up, i + 1);
+          currentVersion = this.getMigrations()[i + 1].version;
           await updateVersion();
         } catch (e) {
           this.options.logger.error(
@@ -480,8 +479,8 @@ export class Migration {
     } else {
       for (let i = startIdx; i > endIdx; i--) {
         try {
-          await migrate('down', i);
-          currentVersion = self.getMigrations()[i - 1].version;
+          await migrate(EDirection.down, i);
+          currentVersion = this.getMigrations()[i - 1].version;
           await updateVersion();
         } catch (e) {
           this.options.logger.error(
