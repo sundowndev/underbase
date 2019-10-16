@@ -12,7 +12,7 @@ import * as args from './args';
 // Middlewares
 import * as validators from './middlewares/validators';
 
-let configFile: IConfigFile | any = {};
+let configFile: IConfigFile;
 
 export async function main() {
   const commands = await args.getCommands();

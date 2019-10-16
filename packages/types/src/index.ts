@@ -22,7 +22,7 @@ interface IConfigFile {
 
 interface IMigrationUtils {
   MongoClient: Db;
-  Migrate: (direction: string, migrations: IMigration[]) => Promise<void>;
+  Migrate: (migrations: IMigration[]) => Promise<void>;
   Query: QueryInterface;
   Logger: (...args: string[]) => void;
 }
@@ -54,6 +54,11 @@ interface ICommandActionOptions {
   argv: any;
 }
 
+enum EDirection {
+  up = 'up',
+  down = 'down',
+}
+
 export {
   IMigrationOptions,
   IConfigFile,
@@ -63,4 +68,5 @@ export {
   QueryInterface,
   ICommand,
   ICommandActionOptions,
+  EDirection,
 };

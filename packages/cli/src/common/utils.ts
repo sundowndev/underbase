@@ -20,9 +20,8 @@ export const initMigrator = async (config: IConfigFile): Promise<Migration> => {
 
     if (typeof support.default === 'function') {
       support.default(
-        (event: string, cb: (...args: any[]) => Promise<any>): void => {
-          return migrator.registerEvent(event, cb);
-        },
+        (e: string, f: (...args: unknown[]) => Promise<unknown>): void =>
+          migrator.registerEvent(e, f),
         { config },
       );
     }
