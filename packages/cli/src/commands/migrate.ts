@@ -1,4 +1,4 @@
-import { IConfigFile } from '@underbase/types';
+import { ICommandActionOptions } from '@underbase/types';
 import { exit, logger, timer } from '@underbase/utils';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -10,11 +10,7 @@ export const action = async ({
   config,
   versions,
   argv,
-}: {
-  config: IConfigFile;
-  versions: string[];
-  argv: any;
-}) => {
+}: ICommandActionOptions) => {
   if (config.supportFile && fs.existsSync(path.resolve(config.supportFile))) {
     try {
       const support = await import(path.resolve(config.supportFile));
