@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 export async function getCommands(): Promise<ICommand[]> {
-  const commandsList: any[] = [];
+  const commandsList: ICommand[] = [];
   const commandFiles = fs
     .readdirSync(path.join(__dirname, 'commands'))
     .filter((f: string) => f.match(new RegExp(/^(.*).(js)$/)));
