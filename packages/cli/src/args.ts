@@ -1,7 +1,8 @@
+import { ICommand } from '@underbase/types';
 import * as fs from 'fs';
 import * as path from 'path';
 
-export async function getCommands(): Promise<any[]> {
+export async function getCommands(): Promise<ICommand[]> {
   const commandsList: any[] = [];
   const commandFiles = fs
     .readdirSync(path.join(__dirname, 'commands'))

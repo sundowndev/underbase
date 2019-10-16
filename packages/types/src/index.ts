@@ -22,7 +22,7 @@ interface IConfigFile {
 
 interface IMigrationUtils {
   MongoClient: Db;
-  Migrate: (migrations: unknown[]) => void;
+  Migrate: (direction: string, migrations: IMigration[]) => Promise<void>;
   Query: QueryInterface;
   Logger: (...args: string[]) => void;
 }
@@ -35,11 +35,23 @@ interface IMigration {
 }
 
 interface ILogger {
-  info: (...args: any[]) => void;
-  warn: (...args: any[]) => void;
-  success: (...args: any[]) => void;
-  error: (...args: any[]) => void;
-  log: (...args: any[]) => void;
+  info: (...args: unknown[]) => void;
+  warn: (...args: unknown[]) => void;
+  success: (...args: unknown[]) => void;
+  error: (...args: unknown[]) => void;
+  log: (...args: unknown[]) => void;
+}
+
+interface ICommand {
+  command: string;
+  describe: string;
+  action: (options: ICommandActionOptions) => Promise<void>;
+}
+
+interface ICommandActionOptions {
+  config: IConfigFile;
+  versions: string[];
+  argv: any;
 }
 
 export {
@@ -49,4 +61,6 @@ export {
   IMigration,
   ILogger,
   QueryInterface,
+  ICommand,
+  ICommandActionOptions,
 };
