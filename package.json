@@ -45,7 +45,7 @@
     "husky": "3.0.9",
     "jest": "24.8.0",
     "jest-extended": "0.11.2",
-    "lerna": "3.18.2",
+    "lerna": "3.18.3",
     "micromatch": "4.0.2",
     "string-length": "3.1.0",
     "ts-jest": "24.1.0",
