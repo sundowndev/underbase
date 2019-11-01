@@ -1,0 +1,31 @@
+name: SonarQube CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [8.x, 11.x]
+    steps:
+    - uses: actions/checkout@v1
+    - name: install
+      run: |
+        export SONAR_SCANNER_VERSION=4.0.0.1744
+        export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
+        rm -rf $SONAR_SCANNER_HOME
+        mkdir -p $SONAR_SCANNER_HOME
+        curl -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
+        unzip $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+        rm $HOME/.sonar/sonar-scanner.zip
+        export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+        export SONAR_SCANNER_OPTS="-server"
+    - name: scan
+      run: |
+        sonar-scanner \
+          -Dsonar.projectKey=sundowndev_underbase \
+          -Dsonar.organization=sundowndev \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=d576ff7ca37ed2c87865528907ef4f77df2dad34
