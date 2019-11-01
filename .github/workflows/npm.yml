@@ -19,8 +19,7 @@ jobs:
         set -o pipefail
         npm install
         npm run bootstrap
-    - name: build
-      run: npm run build:clean
     - name: publish
       run: |
-        npm publish
+        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+        npm run publish -- from-git --yes
