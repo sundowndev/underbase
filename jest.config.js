@@ -6,7 +6,8 @@ module.exports = {
   collectCoverageFrom: ['packages/*/src/**/*.ts'],
   testMatch: ['**/__tests__/**/?(*.)+(spec|test).ts'],
   coveragePathIgnorePatterns: [
-    'underbase-types',
+    'types',
     '__tests__',
+    'cli/src/index'
   ],
 };

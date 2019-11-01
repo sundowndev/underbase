@@ -1,7 +1,4 @@
 module.exports = (on, { config }) => {
-  on('connect', () => console.log('Running!'));
-
-  on('migrate', () => {
-    console.log('Migrating!');
-  });
+  on('connect', () => config.logger.log('Running!'));
+  on('migrate', () => config.logger.log('Migrating!'));
 };

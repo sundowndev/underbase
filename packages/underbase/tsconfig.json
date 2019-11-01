@@ -4,7 +4,7 @@
     "outDir": "build"
   },
   "references": [
-    { "path": "../underbase-core" },
-    { "path": "../underbase-cli" }
+    { "path": "../core" },
+    { "path": "../cli" }
   ]
 }

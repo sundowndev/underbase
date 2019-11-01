@@ -8,15 +8,18 @@
 // See https://docusaurus.io/docs/site-config for all the possible
 // site configuration options.
 
+const repoUrl = 'https://github.com/sundowndev/underbase';
+
 const siteConfig = {
   title: 'Underbase', // Title for your website.
   tagline: 'MongoDB schema and data migration library',
-  url: 'https://sundowndev.github.io', // Your website URL
-  baseUrl: '/underbase/', // Base URL for your project */
+  url: 'https://underbase.js.org', // Your website URL
+  baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
-
+  editUrl: repoUrl + '/edit/master/docs/',
+  repoUrl,
   // Used for publishing and more
   projectName: 'underbase',
   organizationName: 'sundowndev',
@@ -26,10 +29,18 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    { doc: 'installation', label: 'Guides' },
+    { doc: 'installation', label: 'Docs' },
+    { doc: 'organize', label: 'Guides' },
     { doc: 'api', label: 'API' },
-    { blog: true, label: 'Release notes' },
+    { href: repoUrl, label: 'GitHub' },
+    { search: true },
   ],
+
+  algolia: {
+    apiKey: '786d3d4c1dcd55edcccd3efa89664896',
+    indexName: 'underbase',
+    algoliaOptions: {},
+  },
 
   /* path to images for header/footer */
   headerIcon: 'img/logo.svg',
@@ -57,7 +68,7 @@ const siteConfig = {
   */
 
   // This copyright info is used in /core/Footer.js and blog RSS/Atom feeds.
-  copyright: `Copyright © ${new Date().getFullYear()} Your Name or Your Company Name`,
+  copyright: `Copyright © ${new Date().getFullYear()} Raphaël Cerveaux`,
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.

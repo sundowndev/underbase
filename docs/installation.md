@@ -13,7 +13,7 @@ npm i underbase -g
 yarn global add underbase
 ```
 
-You can also install the package locally
+You can also install the package locally :
 
 ```bash
 npm i underbase --save-dev
@@ -25,7 +25,7 @@ yarn add underbase --dev
 ```bash
 underbase --help
 # or...
-./node_modules/underbase/build/cli.js --help
+npx underbase --help
 ```
 
 It should output the help message.

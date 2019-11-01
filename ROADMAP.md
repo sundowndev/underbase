@@ -33,7 +33,6 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [x] Create a license file
 - [x] Move `src` to `lib` and `dist` to `build`
 - [x] Rerun command
-- [ ] Backup feature
 
 ### `v1.0.0` (mvp)
 
@@ -46,7 +45,9 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
 - [ ] Create examples ([#132](https://github.com/sundowndev/underbase/issues/132))
   - [x] commonjs
   - [x] babel-async-await
+  - [x] babel-typescript
   - [x] typescript
+  - [x] backup
   - [ ] docker-backup
 - [ ] Update documentation (guides)
   - [ ] Organizing migrations
