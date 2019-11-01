@@ -1,21 +1,30 @@
-on: push
-name: Publish on npm
+name: npm CI
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
 jobs:
-  shellLint:
-    name: Publish job
+  publish:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
     steps:
-    - name: Install
-      uses: actions/npm@master
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
       with:
-        args: install
-        
-    - name: Bootstrap
-      uses: actions/npm@master
-      with:
-        args: run bootstrap
-          
-    - name: Publish
-      uses: actions/npm@master
-      with:
-        args: run publish
+        node-version: ${{ matrix.node-version }}
+    - name: install
+      run: |
+        set -o pipefail
+        npm install
+        npm run bootstrap
+    - name: build
+      run: npm run build:clean
+    - name: publish
+      run: |
+        npm publish
