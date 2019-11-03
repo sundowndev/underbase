@@ -50,9 +50,9 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
   - [x] backup
   - [ ] docker-backup
 - [ ] Update documentation (guides)
-  - [ ] Organizing migrations
-  - [ ] Usage with Typescript
-  - [ ] Working with backups
-  - [ ] Working with continuous deployment
+  - [x] Organizing migrations
+  - [x] Usage with Typescript
+  - [x] Usage with Babel
+  - [x] Working with backups
   - [ ] Testing your migrations (assert)
   
