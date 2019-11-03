@@ -3,7 +3,7 @@ id: configuration
 title: Configuration
 ---
 
-The CLI application uses almost the same configuration API than the library.
+The CLI tool uses almost the same [configuration API](api-config) than the library.
 
 ```plaintext
 Usage: underbase <command> [OPTIONS]
@@ -37,7 +37,7 @@ Documentation: https://sundowndev.github.io/underbase/
 You can also use a JSON or JS file to define configuration :
 
 ```js
-// config.js
+// underbase.config.js
 const path = require('path');
 
 module.exports = {
@@ -49,8 +49,14 @@ module.exports = {
 };
 ```
 
-And use it as below :
+And then use it as below :
 
 ```bash
-underbase --config config.js
+underbase --config underbase.config.js
+```
+
+You can check MongoDB connection by running the `status` command :
+
+```bash
+underbase --config underbase.config.js status
 ```

@@ -5,8 +5,8 @@
     "previous": "Previous",
     "tagline": "MongoDB schema and data migration library",
     "docs": {
-      "advanced": {
-        "title": "Advanced usage"
+      "api-config": {
+        "title": "Configuration API"
       },
       "api-dev": {
         "title": "Module for development"
@@ -14,17 +14,14 @@
       "api": {
         "title": "Module"
       },
-      "query-api": {
+      "api-queryInterface": {
         "title": "Query Interface"
       },
-      "backups": {
-        "title": "Working with backups"
+      "babel-usage": {
+        "title": "Babel usage"
       },
       "configuration": {
         "title": "Configuration"
-      },
-      "continuous-deployment": {
-        "title": "Working with continuous deployment"
       },
       "installation": {
         "title": "Installation"
@@ -43,6 +40,12 @@
       },
       "troubleshooting": {
         "title": "Troubleshooting"
+      },
+      "typescript-usage": {
+        "title": "Typescript usage"
+      },
+      "working-with-backups": {
+        "title": "Working with backups"
       },
       "writting-migrations": {
         "title": "Writting migrations"

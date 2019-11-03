@@ -5,7 +5,7 @@ title: Logging
 
 ## Inside migrations
 
-The library passes multiple objects to migrations functions. One of them make you able to use the library's logger.
+The library passes multiple objects to migrations functions. One of them make you able to send output messages to the CLI.
 
 ```js
 {
@@ -18,41 +18,32 @@ The library passes multiple objects to migrations functions. One of them make yo
 }
 ```
 
-You can use it as follow :
+Which will produce the following : 
 
-```js
-// Logger(level: SyslogLevels, logs: string)
-Logger('Hello world!');
-Logger('info', 'Hello world!');
 ```
+$ underbase migrate 1
 
-The `SyslogLevels` type is designed as described below :
+ INFO  Connecting to MongoDB...
+ INFO  Migrating from version 0 -> 1
 
-```typescript
-type SyslogLevels =
-  | 'debug'
-  | 'info'
-  | 'notice'
-  | 'warning'
-  | 'error'
-  | 'crit'
-  | 'alert';
+ Running down() on version 1
+     Name for this migration
+     LOGGER Hello world!
+
+ SUCCESS  Finished migrating.
+
+✦ Time spent: 0.995 sec
 ```
 
 ## Using module
 
-Migrations uses console by default for logging if not provided. If you want to use your
-own logger (for sending to other consumers or similar) you can do so by
-configuring the `logger` option when calling `migrator.config` .
+Migrations uses console by default for logging if not provided. If you want to use your own logger (for sending to other consumers or similar) you can do so by configuring the `logger` option when calling `migrator.config`.
 
-Migrations expects a function as `logger`, and will pass an argument with properties level, message,
-to it for
-you to take action on.
+Migrations expects a function as `logger`, and will pass arguments to it for you to take action on.
 
 ```js
-const MyLogger = function(level, message) {
-  console.log('Level', level);
-  console.log('Message', message);
+const MyLogger = function(level, ...args) {
+  console.log(level, ...args);
 }
 
 Migrations.config({
@@ -61,11 +52,6 @@ Migrations.config({
   ...
 });
 ```
-
-The arguments passed to `MyLogger` above includes `level` and `message`.
-
-- `level` will be a string, one of `debug`, `info`, `notice`, `warning`, `error`, `crit`, or `alert`.
-- `message` is a string, like `Finished migrating.`.
 
 Example :
 

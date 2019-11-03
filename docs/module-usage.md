@@ -7,50 +7,35 @@ title: Module usage
 
 You can configure Migration with the `config` method. Defaults are:
 
-``` javascript
+```javascript
+const migrator = require('@underbase/core');
+
 migrator.config({
   // Log job run details to console
   logs: true,
+
   // Use a custom logger function (level, ...args) => void
-  logger: null,
+  logger: (level, ...arg) => console.log(level, ...arg),
+
   // Enable/disable logging "Not migrating, already at version {number}"
   logIfLatest: true,
+
   // migrations collection name to use in the database
   collectionName: "migrations"
+
   // mongdb url or mongo Db instance
   db: "your connection string",
-});
-```
-
-## Basics
-
-Import and use the migration instance - migrator. User the migrator to configure and setup your migration
-
-```javascript
-import { migrator } from 'underbase';
-
-migrator.config({
-  // false disables logging
-  logs: true,
-  // null or a function
-  logger: (level, ...arg) => console.log(level, ...arg),
-  // enable/disable info log "already at latest."
-  logIfLatest: true,
-  // migrations collection name. Defaults to 'migrations'
-  collectionName: 'migrations',
-  // mongdb url or mongo Db instance
-  db: 'your connection string',
 }); // Returns a promise
 ```
 
-Or ...
+Use the migrator to configure and setup your migration.
 
-Define a new instance of migration and configure it as you see fit
+Or, define a new instance of migration and configure it as you see fit :
 
 ```javascript
-import { Migration } from 'underbase';
+const { Migration } = require('@underbase/core');
 
-var migrator = new Migration({
+const migrator = new Migration({
   // false disables logging
   logs: true,
   // null or a function
@@ -62,6 +47,7 @@ var migrator = new Migration({
   // mongdb url or mongo Db instance
   db: 'your connection string',
 });
+
 await migrator.config(); // Returns a promise
 ```
 
@@ -77,45 +63,20 @@ migrator.add({
 });
 ```
 
-To run this migration to the latest version:
+To run migrations until the latest version :
 
 ```javascript
 migrator.migrateTo('latest');
 ```
 
-We used ES6 to write examples but you can also write migrations in CommonJS :
+## Using ES6 syntax
 
-## Using CommonJS
-
-```js
-const { migrator } = require('underbase');
-
-migrator
-  .config({
-    // migrations collection name. Defaults to 'migrations'
-    collectionName: 'migrations',
-    // mongdb url or mongo Db instance
-    db: 'mongodb://localhost:27017/underbase',
-  })
-  .then(function() {
-    migrator.add({
-      /* ... */
-    });
-  })
-  .then(function() {
-    // ... do something
-    // migrator.migrateTo(1.0);
-  });
-```
-
-## Using ES6
-
-**Note:** using the CLI app will automatically execute migrations files as ES6 modules. You don't need babel.
+To
 
 ```js
 import { migrator } from 'underbase';
 
-(async () => {
+const main = async () => {
   await migrator.config({
     // migrations collection name. Defaults to 'migrations'
     collectionName: 'migrations',
@@ -127,30 +88,32 @@ import { migrator } from 'underbase';
     version: 1.0,
     describe: 'Users',
     up: async ({ MongoClient }) => {
-      await MongoClient.collection('users').updateMany(
-        {},
-        {
-          $rename: { username: 'name' },
-        },
-        { multi: true },
-      );
+      await MongoClient.collection('users')
+        .rename('datecreated', 'dateCreated')
+        .where({
+          datecreated: {
+            $exists: true,
+          },
+        });
     },
     down: async ({ MongoClient }) => {
-      await MongoClient.collection('users').updateMany(
-        {},
-        {
-          $rename: { name: 'username' },
-        },
-        { multi: true },
-      );
+      await MongoClient.collection('users')
+        .rename('datecreated', 'dateCreated')
+        .where({
+          datecreated: {
+            $exists: true,
+          },
+        });
     },
   });
 
-  // ... do something
-  // migrator.migrateTo(1.0);
-})();
+  // Do something...
+  await migrator.migrateTo(1.0);
+})
+
+main();
 ```
 
-Executing this will create a migration named `Users` for collection "users" attached to the version `1.0`.
+Executing this will create a migration named `Users` for collection `users` attached to the migration `1.0`.
 
-This will create a MongoDB collection named "migrations" to store the current state of migrations.
+When being ran for the first time, this will create a MongoDB collection named `migrations` to store the current state of migrations.

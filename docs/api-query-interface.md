@@ -1,5 +1,5 @@
 ---
-id: query-api
+id: api-queryInterface
 title: Query Interface
 ---
 

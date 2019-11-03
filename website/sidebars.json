@@ -5,17 +5,17 @@
       "installation",
       "configuration",
       "writting-migrations",
-      "advanced",
       "module-usage",
       "logging",
       "troubleshooting"
     ],
     "Guides": [
       "organize",
-      "backups",
-      "continuous-deployment",
+      "babel-usage",
+      "typescript-usage",
+      "working-with-backups",
       "typescript-usage"
     ],
-    "API": ["api", "query-api", "api-dev"]
+    "API": ["api", "api-config", "api-queryInterface", "api-dev"]
   }
 }

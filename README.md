@@ -84,6 +84,7 @@ module.exports = {
 **Then, you can migrate :**
 
 ```shell
+# From 0 to 1.0
 underbase migrate 1.0 --config underbase.config.js
 ```
 
@@ -96,6 +97,7 @@ underbase rerun --config underbase.config.js
 **Want to rollback a migration ?**
 
 ```shell
+# From 1.0 to 0
 underbase migrate 0 --config underbase.config.js
 ```
 

@@ -37,8 +37,8 @@ const siteConfig = {
   ],
 
   algolia: {
-    apiKey: '786d3d4c1dcd55edcccd3efa89664896',
-    indexName: 'underbase',
+    apiKey: '4dfa34bf215c68d49d1c8d7e73cee08e',
+    indexName: 'underbasejs',
     algoliaOptions: {},
   },
 

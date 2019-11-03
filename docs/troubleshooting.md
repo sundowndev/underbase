@@ -29,5 +29,7 @@ async (/* ... */) => {
 You can also do it from the command-line :
 
 ```bash
-underbase unlock
+underbase force-unlock
 ```
+
+Your problem is not stated ? [Open an issue !](https://github.com/sundowndev/underbase/issues)

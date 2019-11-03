@@ -5,29 +5,27 @@ title: Installation
 
 First, install the cli app using npm or yarn.
 
-It is recommended to install `underbase` globally :
+It is recommended to install the CLI tool globally :
 
-```bash
-npm i underbase -g
-# or...
-yarn global add underbase
+```shell
+npm install -g @underbase/cli
 ```
 
 You can also install the package locally :
 
-```bash
-npm i underbase --save-dev
+```shell
+npm install -D underbase
 yarn add underbase --dev
 ```
 
 ### Verify installation
 
-```bash
+```shell
 underbase --help
-# or...
-npx underbase --help
+# npx underbase --help
+# ./node_modules/.bin/underbase --help
 ```
 
-It should output the help message.
+It should returns the help message.
 
 See [module usage](module-usage) to learn how to use the library as a module.
