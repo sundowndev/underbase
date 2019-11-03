@@ -55,19 +55,21 @@ migrations
 └── worker.js <-- Service worker configuration file
 ```
 
-**_Why is it the most relevant way to organize migrations ?_** You may ask...
-
-Images are better than long explanations.
-
-#### Migrating from 0 to 2.0
+This would result in the following execution workflow :
 
 ![](https://i.imgur.com/iJWGEDS.png)
 
-#### File structure evolution
+### File structure evolution
+
+Every collections are migrated in the entrypoint.
 
 ![img1](https://i.imgur.com/bkHGZPZ.png)
 
+Collections now have their own file and executed from the entrypoint.
+
 ![img2](https://i.imgur.com/QBqoyU7.png)
+
+Collections now have their own folder with files, each file is attributed to a nested collection (e.g: Tokens for Users). Users and Tasks are now groups of migrations.
 
 ![img3](https://i.imgur.com/FhUQD01.png)
 
