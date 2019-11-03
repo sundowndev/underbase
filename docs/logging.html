@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Logging · Underbase</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="## Inside migrations"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Logging · Underbase"/><meta property="og:type" content="website"/><meta property="og:url" content="https://underbase.js.org/"/><meta property="og:description" content="## Inside migrations"/><meta property="og:image" content="https://underbase.js.org/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://underbase.js.org/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/logo.svg"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="Underbase"/><h2 class="headerTitleWithLogo">Underbase</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/installation" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/organize" target="_self">Guides</a></li><li class="siteNavGroupActive"><a href="/docs/api" target="_self">API</a></li><li class=""><a href="https://github.com/sundowndev/underbase" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Get started</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Get started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/intro">Introduction</a></li><li class="navListItem"><a class="navItem" href="/docs/installation">Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/configuration">Configuration</a></li><li class="navListItem"><a class="navItem" href="/docs/writting-migrations">Writting migrations</a></li><li class="navListItem"><a class="navItem" href="/docs/advanced">Advanced usage</a></li><li class="navListItem"><a class="navItem" href="/docs/module-usage">Module usage</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/logging">Logging</a></li><li class="navListItem"><a class="navItem" href="/docs/troubleshooting">Troubleshooting</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Guides</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/organize">Organizing migrations</a></li><li class="navListItem"><a class="navItem" href="/docs/backups">Working with backups</a></li><li class="navListItem"><a class="navItem" href="/docs/continuous-deployment">Working with continuous deployment</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/api">Module</a></li><li class="navListItem"><a class="navItem" href="/docs/query-api">Query Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api-dev">Module for development</a></li></ul></div></div></section></div><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Logging · Underbase</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="## Inside migrations"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Logging · Underbase"/><meta property="og:type" content="website"/><meta property="og:url" content="https://underbase.js.org/"/><meta property="og:description" content="## Inside migrations"/><meta property="og:image" content="https://underbase.js.org/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://underbase.js.org/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/logo.svg"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="Underbase"/><h2 class="headerTitleWithLogo">Underbase</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/installation" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/organize" target="_self">Guides</a></li><li class="siteNavGroupActive"><a href="/docs/api" target="_self">API</a></li><li class=""><a href="https://github.com/sundowndev/underbase" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Get started</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Get started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/intro">Introduction</a></li><li class="navListItem"><a class="navItem" href="/docs/installation">Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/configuration">Configuration</a></li><li class="navListItem"><a class="navItem" href="/docs/writting-migrations">Writting migrations</a></li><li class="navListItem"><a class="navItem" href="/docs/module-usage">Module usage</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/logging">Logging</a></li><li class="navListItem"><a class="navItem" href="/docs/troubleshooting">Troubleshooting</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Guides</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/organize">Organizing migrations</a></li><li class="navListItem"><a class="navItem" href="/docs/babel-usage">Babel usage</a></li><li class="navListItem"><a class="navItem" href="/docs/working-with-backups">Working with backups</a></li><li class="navListItem"><a class="navItem" href="/docs/typescript-usage">Typescript usage</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/api">Module</a></li><li class="navListItem"><a class="navItem" href="/docs/api-config">Configuration API</a></li><li class="navListItem"><a class="navItem" href="/docs/api-queryInterface">Query Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api-dev">Module for development</a></li></ul></div></div></section></div><script>
             var coll = document.getElementsByClassName('collapsible');
             var checkActiveCategory = true;
             for (var i = 0; i < coll.length; i++) {
@@ -55,7 +55,7 @@
               }
             });
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/sundowndev/underbase/edit/master/docs/logging.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Logging</h1></header><article><div><span><h2><a class="anchor" aria-hidden="true" id="inside-migrations"></a><a href="#inside-migrations" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Inside migrations</h2>
-<p>The library passes multiple objects to migrations functions. One of them make you able to use the library's logger.</p>
+<p>The library passes multiple objects to migrations functions. One of them make you able to send output messages to the CLI.</p>
 <pre><code class="hljs css language-js">{
   <span class="hljs-attr">version</span>: <span class="hljs-number">1.0</span>,
   <span class="hljs-attr">describe</span>: <span class="hljs-string">'Name for this migration'</span>,
@@ -65,31 +65,25 @@
   <span class="hljs-attr">down</span>: <span class="hljs-keyword">async</span> ({ MongoClient, Query, Migrate, Logger }) =&gt; {},
 }
 </code></pre>
-<p>You can use it as follow :</p>
-<pre><code class="hljs css language-js"><span class="hljs-comment">// Logger(level: SyslogLevels, logs: string)</span>
-Logger(<span class="hljs-string">'Hello world!'</span>);
-Logger(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Hello world!'</span>);
-</code></pre>
-<p>The <code>SyslogLevels</code> type is designed as described below :</p>
-<pre><code class="hljs css language-typescript"><span class="hljs-keyword">type</span> SyslogLevels =
-  | <span class="hljs-string">'debug'</span>
-  | <span class="hljs-string">'info'</span>
-  | <span class="hljs-string">'notice'</span>
-  | <span class="hljs-string">'warning'</span>
-  | <span class="hljs-string">'error'</span>
-  | <span class="hljs-string">'crit'</span>
-  | <span class="hljs-string">'alert'</span>;
+<p>Which will produce the following :</p>
+<pre><code class="hljs">$ underbase migrate <span class="hljs-number">1</span>
+
+ INFO  Connecting to MongoDB...
+ INFO  Migrating <span class="hljs-keyword">from</span> version <span class="hljs-number">0</span> -&gt; <span class="hljs-number">1</span>
+
+ Running down() on version <span class="hljs-number">1</span>
+     Name <span class="hljs-keyword">for</span> <span class="hljs-keyword">this</span> migration
+     LOGGER Hello world!
+
+ SUCCESS  Finished migrating.
+
+✦ Time spent: <span class="hljs-number">0.995</span> sec
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="using-module"></a><a href="#using-module" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using module</h2>
-<p>Migrations uses console by default for logging if not provided. If you want to use your
-own logger (for sending to other consumers or similar) you can do so by
-configuring the <code>logger</code> option when calling <code>migrator.config</code> .</p>
-<p>Migrations expects a function as <code>logger</code>, and will pass an argument with properties level, message,
-to it for
-you to take action on.</p>
-<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> MyLogger = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">level, message</span>) </span>{
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Level'</span>, level);
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Message'</span>, message);
+<p>Migrations uses console by default for logging if not provided. If you want to use your own logger (for sending to other consumers or similar) you can do so by configuring the <code>logger</code> option when calling <code>migrator.config</code>.</p>
+<p>Migrations expects a function as <code>logger</code>, and will pass arguments to it for you to take action on.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> MyLogger = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">level, ...args</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(level, ...args);
 }
 
 Migrations.config({
@@ -98,11 +92,6 @@ Migrations.config({
   ...
 });
 </code></pre>
-<p>The arguments passed to <code>MyLogger</code> above includes <code>level</code> and <code>message</code>.</p>
-<ul>
-<li><code>level</code> will be a string, one of <code>debug</code>, <code>info</code>, <code>notice</code>, <code>warning</code>, <code>error</code>, <code>crit</code>, or <code>alert</code>.</li>
-<li><code>message</code> is a string, like <code>Finished migrating.</code>.</li>
-</ul>
 <p>Example :</p>
 <pre><code class="hljs css language-js">MyLogger(<span class="hljs-string">'warning'</span>, <span class="hljs-string">'Beware! Up function is not async!'</span>);
 </code></pre>
@@ -120,8 +109,8 @@ Migrations.config({
               </script><script>
               var search = docsearch({
                 
-                apiKey: '786d3d4c1dcd55edcccd3efa89664896',
-                indexName: 'underbase',
+                apiKey: '4dfa34bf215c68d49d1c8d7e73cee08e',
+                indexName: 'underbasejs',
                 inputSelector: '#search_input_react',
                 algoliaOptions: {}
               });
