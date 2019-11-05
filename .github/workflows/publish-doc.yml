@@ -24,5 +24,5 @@ jobs:
         yarn
         git config --global user.name "${{ secrets.GH_USERNAME }}"
         git config --global user.email "${{ secrets.GH_EMAIL }}"
-        echo "machine github.com login ${{ secrets.GH_USERNAME }} password ${{ secrets.GITHUB_TOKEN }}" > ~/.netrc
+        echo "machine github.com login ${{ secrets.GH_USERNAME }} password ${{ github.token }}" > ~/.netrc
         cd website && yarn install && GIT_USER="${{ secrets.GH_USERNAME }}" yarn run publish-gh-pages
