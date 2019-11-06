@@ -71,7 +71,7 @@ migrator.migrateTo('latest');
 
 ## Using ES6 syntax
 
-To
+You can also use Babel to use ES6+ syntax. See [Babel usage](babel-usage).
 
 ```js
 import { migrator } from 'underbase';
@@ -116,4 +116,4 @@ main();
 
 Executing this will create a migration named `Users` for collection `users` attached to the migration `1.0`.
 
-When being ran for the first time, this will create a MongoDB collection named `migrations` to store the current state of migrations.
+When being run for the first time, this will create a MongoDB collection named `migrations` to store the current state of migrations.
