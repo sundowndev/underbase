@@ -60,19 +60,19 @@
 
 migrator.config({
   <span class="hljs-comment">// Log job run details to console</span>
-  logs: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">logs</span>: <span class="hljs-literal">true</span>,
 
   <span class="hljs-comment">// Use a custom logger function (level, ...args) =&gt; void</span>
-  logger: <span class="hljs-function">(<span class="hljs-params">level, ...arg</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(level, ...arg),
+  <span class="hljs-attr">logger</span>: <span class="hljs-function">(<span class="hljs-params">level, ...arg</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(level, ...arg),
 
   <span class="hljs-comment">// Enable/disable logging "Not migrating, already at version {number}"</span>
-  logIfLatest: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">logIfLatest</span>: <span class="hljs-literal">true</span>,
 
   <span class="hljs-comment">// migrations collection name to use in the database</span>
-  collectionName: <span class="hljs-string">"migrations"</span>
+  <span class="hljs-attr">collectionName</span>: <span class="hljs-string">"migrations"</span>
 
   <span class="hljs-comment">// mongdb url or mongo Db instance</span>
-  db: <span class="hljs-string">"your connection string"</span>,
+  <span class="hljs-attr">db</span>: <span class="hljs-string">"your connection string"</span>,
 }); <span class="hljs-comment">// Returns a promise</span>
 </code></pre>
 <p>Use the migrator to configure and setup your migration.</p>
@@ -81,15 +81,15 @@ migrator.config({
 
 <span class="hljs-keyword">const</span> migrator = <span class="hljs-keyword">new</span> Migration({
   <span class="hljs-comment">// false disables logging</span>
-  logs: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">logs</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-comment">// null or a function</span>
-  logger: <span class="hljs-function">(<span class="hljs-params">level, ...arg</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(level, ...arg),
+  <span class="hljs-attr">logger</span>: <span class="hljs-function">(<span class="hljs-params">level, ...arg</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(level, ...arg),
   <span class="hljs-comment">// enable/disable info log "already at latest."</span>
-  logIfLatest: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">logIfLatest</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-comment">// migrations collection name</span>
-  collectionName: <span class="hljs-string">'migrations'</span>,
+  <span class="hljs-attr">collectionName</span>: <span class="hljs-string">'migrations'</span>,
   <span class="hljs-comment">// mongdb url or mongo Db instance</span>
-  db: <span class="hljs-string">'your connection string'</span>,
+  <span class="hljs-attr">db</span>: <span class="hljs-string">'your connection string'</span>,
 });
 
 <span class="hljs-keyword">await</span> migrator.config(); <span class="hljs-comment">// Returns a promise</span>
@@ -97,7 +97,7 @@ migrator.config({
 <p>To write a simple migration, somewhere in the server section of your project define:</p>
 <pre><code class="hljs css language-javascript">migrator.add({
   <span class="hljs-attr">version</span>: <span class="hljs-number">1</span>, <span class="hljs-comment">// Implicit 1.0, we recommand always use float for this field</span>
-  up: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">{ MongoClient, Query, Migrate, Logger }</span>) </span>{
+  <span class="hljs-attr">up</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">{ MongoClient, Query, Migrate, Logger }</span>) </span>{
     <span class="hljs-comment">// use `MongoClient` (mongo driver Db instance) for migration setup to version 1</span>
     <span class="hljs-comment">// See http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html for db api</span>
   },
@@ -113,9 +113,9 @@ migrator.config({
 <span class="hljs-keyword">const</span> main = <span class="hljs-keyword">async</span> () =&gt; {
   <span class="hljs-keyword">await</span> migrator.config({
     <span class="hljs-comment">// migrations collection name. Defaults to 'migrations'</span>
-    collectionName: <span class="hljs-string">'migrations'</span>,
+    <span class="hljs-attr">collectionName</span>: <span class="hljs-string">'migrations'</span>,
     <span class="hljs-comment">// mongdb url or mongo Db instance</span>
-    db: <span class="hljs-string">'mongodb://localhost:27017/underbase'</span>,
+    <span class="hljs-attr">db</span>: <span class="hljs-string">'mongodb://localhost:27017/underbase'</span>,
   });
 
   migrator.add({
