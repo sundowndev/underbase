@@ -28,9 +28,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-env": "7.6.3",
-    "@babel/preset-typescript": "7.6.0",
-    "@babel/register": "7.6.2",
+    "@babel/preset-env": "7.7.1",
+    "@babel/preset-typescript": "7.7.2",
+    "@babel/register": "7.7.0",
     "@commitlint/cli": "8.2.0",
     "@commitlint/config-conventional": "8.2.0",
     "@types/bluebird": "3.5.28",
