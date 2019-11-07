@@ -20,9 +20,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: install & deploy
       run: |
-        cd website
-        yarn
         git config --global user.name "${{ secrets.GITHUB_USER }}"
         git config --global user.email "${{ secrets.GITHUB_EMAIL }}"
         echo "machine github.com login ${{ secrets.GITHUB_USER }} password ${{ github.token }}" > ~/.netrc
+        cd website && yarn && yarn build
         GIT_USER="${{ secrets.GITHUB_USER }}" npx docusaurus-publish
