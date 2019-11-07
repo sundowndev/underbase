@@ -37,7 +37,7 @@
     "@types/fs-extra": "8.0.1",
     "@types/jest": "24.0.22",
     "@types/lodash": "4.14.145",
-    "@types/mongodb": "3.3.8",
+    "@types/mongodb": "3.3.9",
     "@types/node": "12.12.6",
     "@types/type-check": "0.3.27",
     "chalk": "2.4.2",
