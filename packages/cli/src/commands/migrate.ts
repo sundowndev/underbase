@@ -14,7 +14,7 @@ export const action = async ({
   config: IConfigFile;
   versions: string[];
   argv: any;
-}) => {
+}): void => {
   if (config.supportFile && fs.existsSync(path.resolve(config.supportFile))) {
     try {
       const support = await import(path.resolve(config.supportFile));
