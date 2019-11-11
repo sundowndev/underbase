@@ -33,7 +33,7 @@
     "@babel/register": "7.7.0",
     "@commitlint/cli": "8.2.0",
     "@commitlint/config-conventional": "8.2.0",
-    "@types/bluebird": "3.5.28",
+    "@types/bluebird": "3.5.29",
     "@types/fs-extra": "8.0.1",
     "@types/jest": "24.0.22",
     "@types/lodash": "4.14.146",
