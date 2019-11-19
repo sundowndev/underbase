@@ -40,7 +40,7 @@
     "@types/mongodb": "3.3.11",
     "@types/node": "12.12.11",
     "@types/type-check": "0.3.27",
-    "chalk": "2.4.2",
+    "chalk": "3.0.0",
     "cross-env": "6.0.3",
     "husky": "3.1.0",
     "jest": "24.8.0",

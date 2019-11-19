@@ -20,6 +20,6 @@
   },
   "dependencies": {
     "@underbase/types": "^2.0.2-alpha.0",
-    "chalk": "^2.4.2"
+    "chalk": "^3.0.0"
   }
 }
