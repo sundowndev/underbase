@@ -38,7 +38,7 @@
     "@types/jest": "24.0.23",
     "@types/lodash": "4.14.149",
     "@types/mongodb": "3.3.12",
-    "@types/node": "12.12.15",
+    "@types/node": "12.12.16",
     "@types/type-check": "0.3.27",
     "chalk": "3.0.0",
     "cross-env": "6.0.3",
