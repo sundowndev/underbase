@@ -29,4 +29,4 @@ jobs:
         git config --global user.name "${{ secrets.GITHUB_USER }}"
         git config --global user.email "${{ secrets.GITHUB_USER }}@users.noreply.github.com"
         cd website && yarn
-        GIT_USER="${{ secrets.GITHUB_USER }}" ./node_modules/.bin/docusaurus-publish
+        GIT_USER="${{ secrets.GITHUB_USER }}" USE_SSH=true ./node_modules/.bin/docusaurus-publish
