@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@underbase/cli": "file:../../packages/underbase-cli"
+    "@underbase/cli": "file:../../packages/cli"
   },
   "scripts": {
     "migrations:status": "underbase status --config migrations/config.js",
