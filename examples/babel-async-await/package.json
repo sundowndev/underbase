@@ -3,7 +3,7 @@
     "@babel/core": "*",
     "@babel/register": "*",
     "@babel/preset-env": "*",
-    "@underbase/cli": "file:../../packages/underbase-cli"
+    "@underbase/cli": "file:../../packages/cli"
   },
   "scripts": {
     "migrations:status": "underbase -r @babel/register status --config migrations/config.js",

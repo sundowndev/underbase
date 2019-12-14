@@ -3,8 +3,8 @@
     "mongodb": "*"
   },
   "devDependencies": {
-    "@underbase/cli": "file:../../packages/underbase-cli",
-    "@underbase/types": "file:../../packages/underbase-types",
+    "@underbase/cli": "file:../../packages/cli",
+    "@underbase/types": "file:../../packages/types",
     "ts-node": "*",
     "typescript": "*"
   },
