@@ -4,7 +4,7 @@ import { EDirection, ILogger, IMigration } from '@underbase/types';
 import chalk from 'chalk';
 import { MigrationUtils } from '../MigrationUtils';
 
-describe('E2E - MigrationUtils', () => {
+describe('packages/core/src/MigrationUtils.ts - MigrationUtils', () => {
   const loggerMock: ILogger = {
     log: jest.fn(),
     info: jest.fn(),
