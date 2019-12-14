@@ -1,12 +1,14 @@
 export default {
   describe: 'Move tasks labels to a dedicated collection',
   async up({ MongoClient }) {
-    const Tasks = MongoClient.collection('Tasks');
-    const Labels = MongoClient.collection('Labels');
+    const tasksCollection = MongoClient.collection('Tasks');
+    const labelsCollection = MongoClient.collection('Labels');
 
-    for (task of await Tasks.find({})) {
+    const tasks = await tasksCollection.find().toArray();
+
+    for (const task of tasks) {
       const label = task.label;
-      const labelDoc = await Labels.findOneAndUpdate(
+      const labelDoc = await labelsCollection.findOneAndUpdate(
         { name: label },
         { $setOnInsert: { name: label } },
         {
@@ -15,7 +17,7 @@ export default {
         },
       );
 
-      await Tasks.updateOne(
+      await tasksCollection.updateOne(
         { _id: task._id },
         {
           $set: {
@@ -26,11 +28,17 @@ export default {
     }
   },
   async down({ MongoClient, Query }) {
-    const Tasks = MongoClient.collection('Tasks');
-    const Labels = MongoClient.collection('Labels');
+    const tasksCollection = MongoClient.collection('Tasks');
+    const labelsCollection = MongoClient.collection('Labels');
 
-    for (task of await Tasks.find({})) {
-      const labelDoc = await Labels.findOne({ _id: task.label });
+    const tasks = await tasksCollection.find().toArray();
+
+    for (const task of tasks) {
+      const labelDoc = await labelsCollection.findOne({ _id: task.label });
+
+      if (!labelDoc) {
+        return;
+      }
 
       await MongoClient.collection('Tasks').updateOne(
         { _id: task._id },
