@@ -108,7 +108,7 @@ export class Migration {
     }
 
     if (this.options.db === null) {
-      throw new ReferenceError("Option.db canno't be null");
+      throw new ReferenceError('Option.db canno\'t be null');
     }
 
     let db: Db;
@@ -587,6 +587,6 @@ export class Migration {
       }
     }
 
-    throw new Error("Can't find migration version " + version);
+    throw new Error('Can\'t find migration version ' + version);
   }
 }
