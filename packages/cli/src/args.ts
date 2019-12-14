@@ -10,9 +10,11 @@ export async function getCommands(): Promise<ICommand[]> {
 
   for (const cmd of commandFiles) {
     const object = await import(path.join(__dirname, 'commands', cmd));
+
     Object.assign(object, {
       name: object.command.replace(/( )\<([\w]*)\>/, ''),
     });
+
     commandsList.push(object);
   }
 
