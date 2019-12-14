@@ -1,17 +1,20 @@
+import { ICommand } from '@underbase/types';
 import * as fs from 'fs';
 import * as path from 'path';
 
-export async function getCommands(): Promise<any[]> {
-  const commandsList: any[] = [];
+export async function getCommands(): Promise<ICommand[]> {
+  const commandsList: ICommand[] = [];
   const commandFiles = fs
     .readdirSync(path.join(__dirname, 'commands'))
     .filter((f: string) => f.match(new RegExp(/^(.*).(js)$/)));
 
   for (const cmd of commandFiles) {
     const object = await import(path.join(__dirname, 'commands', cmd));
+
     Object.assign(object, {
       name: object.command.replace(/( )\<([\w]*)\>/, ''),
     });
+
     commandsList.push(object);
   }
 

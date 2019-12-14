@@ -3,27 +3,27 @@ import { IMigrationUtils } from '@underbase-types';
 export default {
   describe: 'Transform label field to array',
   async up({ MongoClient }: IMigrationUtils) {
-    const tasks = MongoClient.collection('Tasks');
+    const tasksCollection = MongoClient.collection('Tasks');
 
-    await tasks.find({}).forEach(async (doc: any) => {
-      const labels = [doc.label];
+    for (const task of await tasksCollection.find().toArray()) {
+      const labels = [task.label];
 
-      await tasks.updateOne(
-        { _id: doc._id },
+      await tasksCollection.updateOne(
+        { _id: task._id },
         { $unset: { label: 1 }, $set: { labels } },
       );
-    });
+    }
   },
   async down({ MongoClient }: IMigrationUtils) {
-    const tasks = MongoClient.collection('Tasks');
+    const tasksCollection = MongoClient.collection('Tasks');
 
-    await tasks.find({}).forEach(async (doc: any) => {
-      const label = doc.labels[0];
+    for (const task of await tasksCollection.find().toArray()) {
+      const label = task.labels[0];
 
-      await tasks.updateOne(
-        { _id: doc._id },
+      await tasksCollection.updateOne(
+        { _id: task._id },
         { $unset: { labels: 1 }, $set: { label } },
       );
-    });
+    }
   },
 };

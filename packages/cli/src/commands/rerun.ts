@@ -1,16 +1,10 @@
-import { IConfigFile } from '@underbase/types';
+import { TCommandAction } from '@underbase/types';
 import { logger, timer } from '@underbase/utils';
 import { getMigrations, initMigrator } from '../common/utils';
 
 export const command = 'rerun';
 export const describe = 'Rerun the current version';
-export const action = async ({
-  config,
-  versions,
-}: {
-  config: IConfigFile;
-  versions: string[];
-}) => {
+export const action: TCommandAction = async ({ config, versions }) => {
   const migrator = await initMigrator(config);
   const migrations = await getMigrations(config, versions);
 

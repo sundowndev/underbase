@@ -28,10 +28,19 @@ describe('UNIT - CLI/Commands', () => {
 
       const config = {
         migrationsDir: 'test1',
+        db: '',
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
       };
       const versions = ['1.0', '1.2', '2.0'];
+      const argv = {};
 
-      await listCmd.action({ config, versions });
+      await listCmd.action({ config, versions, argv });
 
       expect(mockedLogger).toHaveBeenCalledTimes(3);
       expect(mockedExistsSync).toHaveBeenCalledTimes(1);
@@ -46,10 +55,19 @@ describe('UNIT - CLI/Commands', () => {
 
       const config = {
         migrationsDir: 'test1',
+        db: '',
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
       };
       const versions = ['1.0', '1.2', '2.0'];
+      const argv = {};
 
-      await listCmd.action({ config, versions });
+      await listCmd.action({ config, versions, argv });
 
       expect(mockedLogger).toHaveBeenCalledTimes(0);
       expect(mockedExistsSync).toHaveBeenCalledTimes(1);

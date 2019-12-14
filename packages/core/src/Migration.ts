@@ -25,33 +25,30 @@
 // tslint:disable:variable-name
 // tslint:disable:no-console
 
-import { QueryInterface } from '@underbase/query-interface';
-import {
-  IMigration,
-  IMigrationOptions,
-  IMigrationUtils,
-} from '@underbase/types';
+import { EDirection, IMigration, IMigrationOptions } from '@underbase/types';
 import { logger } from '@underbase/utils';
 import chalk from 'chalk';
 import _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
+import { MigrationUtils } from './MigrationUtils';
 import Observable from './Observable';
+import { validateMigration } from './utils';
 
 const check = typeCheck;
 
 export class Migration {
-  private defaultMigration = {
-    version: 0,
-    // tslint:disable-next-line:no-empty
-    up: () => {},
-  };
-  private _list: any[];
-  private _collection: Collection;
-  private _connection: MongoClient;
-  private _db: Db;
+  private _list: IMigration[];
+  private _collection: Collection | null;
+  private _connection: MongoClient | null;
+  private _db: Db | null;
   private options: IMigrationOptions;
   private _emitter: Observable;
+  private defaultMigration: IMigration = {
+    version: 0,
+    up: () => new Promise(resolve => resolve()),
+    down: () => new Promise(resolve => resolve()),
+  };
 
   /**
    * Creates an instance of Migration.
@@ -61,22 +58,22 @@ export class Migration {
   constructor(opts?: IMigrationOptions) {
     // Since we'll be at version 0 by default, we should have a migration set for it.
     this._list = [this.defaultMigration];
-    this._collection = null as any;
-    this._connection = null as any;
-    this._db = null as any;
+    this._collection = null;
+    this._connection = null;
+    this._db = null;
     this.options = opts
       ? opts
       : {
           // False disables logging
           logs: true,
           // Null or a function
-          logger: null as any,
+          logger,
           // Enable/disable info log "already at latest."
           logIfLatest: true,
           // Migrations collection name
           collectionName: 'migrations',
           // Mongdb url or mongo Db instance
-          db: null as any,
+          db: '',
         };
     this._emitter = new Observable();
   }
@@ -142,18 +139,23 @@ export class Migration {
    * @memberof Migration
    */
   public closeConnection(): void {
-    this._connection.close();
+    if (this._connection) {
+      this._connection.close();
+    }
   }
 
   /**
    * Register an event
    *
    * @param {string} event
-   * @param {any} f
+   * @param {Function} f
    * @returns {void}
    * @memberof Migration
    */
-  public registerEvent(event: string, f: (...args: any[]) => any): void {
+  public registerEvent(
+    event: string,
+    f: (...args: unknown[]) => Promise<unknown>,
+  ): void {
     this._emitter.on(event, f);
   }
 
@@ -170,10 +172,10 @@ export class Migration {
   /**
    * Get migrations
    *
-   * @returns {any[]}
+   * @returns {IMigration[]}
    * @memberof Migration
    */
-  public getMigrations(): any[] {
+  public getMigrations(): IMigration[] {
     return this._list;
   }
 
@@ -184,6 +186,10 @@ export class Migration {
    * @memberof Migration
    */
   public async isLocked(): Promise<boolean> {
+    if (!this._collection) {
+      throw Error('Collection was not configured yet');
+    }
+
     const result = await this._collection.findOne({
       _id: 'control',
       locked: true,
@@ -199,27 +205,13 @@ export class Migration {
    * @memberof Migration
    */
   public add(migration: IMigration): void {
-    if (typeof migration.up !== 'function') {
-      throw new Error('Migration must supply an up function.');
-    }
-
-    if (typeof migration.down !== 'function') {
-      throw new Error('Migration must supply a down function.');
-    }
-
-    if (typeof migration.version !== 'number') {
-      throw new Error('Migration must supply a version number.');
-    }
-
-    if (migration.version <= 0) {
-      throw new Error('Migration version must be greater than 0');
-    }
+    validateMigration(migration);
 
     // Freeze the migration object to make it hereafter immutable
     Object.freeze(migration);
 
     this._list.push(migration);
-    this._list = _.sortBy(this._list, (m: any) => m.version);
+    this._list = _.sortBy(this._list, (m: IMigration) => m.version);
   }
 
   /**
@@ -260,7 +252,8 @@ export class Migration {
 
     try {
       if (version === 'latest') {
-        await this.execute(_.last<any>(this.getMigrations()).version);
+        const migrations = this.getMigrations();
+        await this.execute(_.last<any>(migrations).version);
       } else {
         await this.execute(
           parseFloat(version as string),
@@ -301,8 +294,13 @@ export class Migration {
    * Unlock control
    *
    * @memberof Migration
+   * @returns {void}
    */
-  public async unlock(): Promise<any> {
+  public async unlock(): Promise<void> {
+    if (!this._collection) {
+      throw Error('Collection was not configured yet');
+    }
+
     await this._collection.updateOne(
       { _id: 'control' },
       { $set: { locked: false } },
@@ -316,6 +314,10 @@ export class Migration {
    * @memberof Migration
    */
   public async reset(): Promise<void> {
+    if (!this._collection) {
+      throw Error('Collection was not configured yet');
+    }
+
     this._list = [this.defaultMigration];
     await this._collection.deleteMany({});
   }
@@ -323,15 +325,44 @@ export class Migration {
   /**
    * Emit an event
    *
-   * @returns {void}
    * @param {string} event
    * @memberof Migration
+   * @returns {void}
    */
   private async emitEvent(
     event: string,
     data = { config: this.options },
   ): Promise<void> {
     await this._emitter.emit(event, data);
+  }
+
+  /**
+   * This is an atomic op. The op ensures only one caller at a time will match the control
+   * object and thus be able to update it.  All other simultaneous callers will not match the
+   * object and thus will have null return values in the result of the operation.
+   *
+   * @memberof Migration
+   * @returns {Promise<boolean>}
+   */
+  private async lockControl(): Promise<boolean> {
+    if (!this._collection) {
+      throw Error('Collection was not configured yet');
+    }
+
+    const updateResult = await this._collection.findOneAndUpdate(
+      {
+        _id: 'control',
+        locked: false,
+      },
+      {
+        $set: {
+          locked: true,
+          lockedAt: new Date(),
+        },
+      },
+    );
+
+    return null != updateResult.value && 1 === updateResult.ok;
   }
 
   /**
@@ -344,13 +375,19 @@ export class Migration {
    * @memberof Migration
    */
   private async execute(version: number, rerun?: boolean): Promise<void> {
-    const self = this;
     const control = await this.getControl(); // Side effect: upserts control document.
     let currentVersion = control.version;
 
     // Run the actual migration
-    const migrate = async (direction: string, idx: number): Promise<any> => {
-      const migration = self.getMigrations()[idx];
+    const migrate = async (
+      direction: EDirection,
+      idx: number,
+    ): Promise<void> => {
+      if (!this._db) {
+        throw Error('Collection was not configured yet');
+      }
+
+      const migration = this.getMigrations()[idx];
 
       this.options.logger.log(
         '\n',
@@ -377,99 +414,42 @@ export class Migration {
         );
       }
 
-      const logLevel = 8;
-      const _MigrationUtils: IMigrationUtils = {
-        MongoClient: this._db as Db,
-        Migrate: async (migrations: any[]) => {
-          for (const i in migrations) {
-            if (migrations.hasOwnProperty(i)) {
-              if (
-                migrations[i][direction].constructor.name !== 'AsyncFunction' &&
-                migrations[i][direction].constructor.name !== 'Promise'
-              ) {
-                this.options.logger.warn(
-                  `One of the ${direction} functions is nor Async or Promise`,
-                  `(${migrations[i].describe || 'not described'})`,
-                );
-              }
-
-              if (migrations[i].describe) {
-                this.options.logger.log(
-                  ' '.repeat(logLevel),
-                  chalk.grey(migrations[i].describe),
-                );
-              }
-
-              try {
-                await migrations[i][direction](_MigrationUtils);
-              } catch (error) {
-                throw new Error(error);
-              }
-            }
-          }
-        },
-        Query: new QueryInterface(self._db),
-        Logger: (...args: string[]) =>
-          this.options.logger.log(
-            ' '.repeat(logLevel),
-            chalk.inverse(' LOGGER '),
-            ...args,
-          ),
-      };
+      const migrationHelper = new MigrationUtils(
+        direction,
+        this._db,
+        this.options.logger,
+      );
 
       try {
-        await migration[direction](_MigrationUtils);
+        await migration[direction](migrationHelper.utils);
         this.options.logger.log('');
       } catch (error) {
         throw new Error(error);
       }
     };
 
-    // Returns true if lock was acquired.
-    const lock = async () => {
-      /*
-       * This is an atomic op. The op ensures only one caller at a time will match the control
-       * object and thus be able to update it.  All other simultaneous callers will not match the
-       * object and thus will have null return values in the result of the operation.
-       */
-      const updateResult = await self._collection.findOneAndUpdate(
-        {
-          _id: 'control',
-          locked: false,
-        },
-        {
-          $set: {
-            locked: true,
-            lockedAt: new Date(),
-          },
-        },
-      );
-
-      return null != updateResult.value && 1 === updateResult.ok;
-    };
-
     // Side effect: saves version.
     const unlock = () =>
-      self.setControl({
+      this.setControl({
         locked: false,
         version: currentVersion,
       });
 
     // Side effect: saves version.
     const updateVersion = async () =>
-      await self.setControl({
+      await this.setControl({
         locked: true,
         version: currentVersion,
       });
 
-    if ((await lock()) === false) {
+    if ((await this.lockControl()) === false) {
       this.options.logger.info('Not migrating, control is locked.');
       return;
     }
 
     if (rerun) {
       this.options.logger.info('Rerunning version ' + version);
-      await migrate('up', this.findIndexByVersion(version));
+      await migrate(EDirection.up, this.findIndexByVersion(version));
       this.options.logger.success('Finished migrating');
       await unlock();
       return;
@@ -481,6 +461,7 @@ export class Migration {
           'Not migrating, already at version ' + version,
         );
       }
+
       await unlock();
       return;
     }
@@ -501,8 +482,8 @@ export class Migration {
     if (currentVersion < version) {
       for (let i = startIdx; i < endIdx; i++) {
         try {
-          await migrate('up', i + 1);
-          currentVersion = self.getMigrations()[i + 1].version;
+          await migrate(EDirection.up, i + 1);
+          currentVersion = this.getMigrations()[i + 1].version;
           await updateVersion();
         } catch (e) {
           this.options.logger.error(
@@ -514,8 +495,8 @@ export class Migration {
     } else {
       for (let i = startIdx; i > endIdx; i--) {
         try {
-          await migrate('down', i);
-          currentVersion = self.getMigrations()[i - 1].version;
+          await migrate(EDirection.down, i);
+          currentVersion = this.getMigrations()[i - 1].version;
           await updateVersion();
         } catch (e) {
           this.options.logger.error(
@@ -538,7 +519,12 @@ export class Migration {
    * @memberof Migration
    */
   private async getControl(): Promise<{ version: number; locked: boolean }> {
+    if (!this._collection) {
+      throw Error('Collection was not configured yet');
+    }
+
     const con = await this._collection.findOne({ _id: 'control' });
+
     return (
       con ||
       (await this.setControl({
@@ -560,6 +546,10 @@ export class Migration {
     version: number;
     locked: boolean;
   }): Promise<{ version: number; locked: boolean } | null> {
+    if (!this._collection) {
+      throw Error('Collection was not configured yet');
+    }
+
     // Be quite strict
     check('Number', control.version);
     check('Boolean', control.locked);

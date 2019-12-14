@@ -34,6 +34,9 @@ describe('UNIT - CLI/Commands', () => {
         collectionName: 'migrations',
         logs: true,
       };
+      const versions = ['1.0', '1.2'];
+      const argv = {};
+
       const currentVersion = '1.0';
       const isLocked = true;
 
@@ -50,7 +53,7 @@ describe('UNIT - CLI/Commands', () => {
         });
       });
 
-      await statusCmd.action({ config });
+      await statusCmd.action({ config, versions, argv });
 
       expect(mockedLogger).toHaveBeenCalledTimes(2);
     });
@@ -69,6 +72,9 @@ describe('UNIT - CLI/Commands', () => {
         collectionName: 'migrations',
         logs: true,
       };
+      const versions = ['1.0', '1.2'];
+      const argv = {};
+
       const currentVersion = '2.1';
       const isLocked = false;
 
@@ -85,7 +91,7 @@ describe('UNIT - CLI/Commands', () => {
         });
       });
 
-      await statusCmd.action({ config });
+      await statusCmd.action({ config, versions, argv });
 
       expect(mockedLogger).toHaveBeenCalledTimes(2);
     });

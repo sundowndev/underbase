@@ -5469,18 +5469,7 @@ modify-values@^1.0.0:
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
   integrity sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==
 
-mongodb@3.3.5:
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.3.5.tgz#38d531013afede92b0dd282e3b9f3c08c9bdff3b"
-  integrity sha512-6NAv5gTFdwRyVfCz+O+KDszvjpyxmZw+VlmqmqKR2GmpkeKrKFRv/ZslgTtZba2dc9JYixIf99T5Gih7TIWv7Q==
-  dependencies:
-    bson "^1.1.1"
-    require_optional "^1.0.1"
-    safe-buffer "^5.1.2"
-  optionalDependencies:
-    saslprep "^1.0.0"
-
-mongodb@^3.3.0-beta2:
+mongodb@3.4.0, mongodb@^3.3.0-beta2:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.4.0.tgz#3490bcdcadb9acfbf77e5ce14548bd59ba33a5f6"
   integrity sha512-W90jm/n8F0Edm47ljkVRK9l8qGW9g8T9ZSiZWRiUP58wLhsCJCeN/JxdpVnH0CUwwAw2hITUcCo9x58udpX2Uw==

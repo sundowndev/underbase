@@ -10,19 +10,19 @@ import chalk from 'chalk';
  * @returns object
  */
 export const logger: ILogger = {
-  info: (...args: string[]) => {
+  info: (...args: unknown[]) => {
     console.log(chalk.reset.inverse(' INFO '), ...args);
   },
-  warn: (...args: string[]) => {
+  warn: (...args: unknown[]) => {
     console.log(chalk.reset.inverse(' WARN '), chalk.grey(`${args.join(' ')}`));
   },
-  success: (...args: string[]) => {
+  success: (...args: unknown[]) => {
     console.log(chalk.reset.inverse.bold.green(` SUCCESS `), ...args);
   },
-  error: (...args: string[]) => {
+  error: (...args: unknown[]) => {
     console.log(chalk.reset.inverse.bold.red(` ERROR `), ...args);
   },
-  log: (...args: string[]) => {
+  log: (...args: unknown[]) => {
     console.log(...args);
   },
 };

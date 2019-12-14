@@ -12,7 +12,7 @@ import * as args from './args';
 // Middlewares
 import * as validators from './middlewares/validators';
 
-let configFile: IConfigFile | any = {};
+let configFile: IConfigFile;
 
 export async function main() {
   const commands = await args.getCommands();
@@ -33,31 +33,23 @@ export async function main() {
     configFile = await import(path.resolve(argv.config));
   }
 
-  const config: IConfigFile = {
+  let config: IConfigFile = Object.assign(configFile || {}, argv.default);
+
+  config = {
     // False disables logging
-    logs:
-      configFile.logs !== undefined
-        ? (configFile.logs as boolean)
-        : (argv.logs as boolean),
+    logs: config.logs,
     // Null or a function
-    logger: logger as any,
+    logger,
     // Enable/disable info log "already at latest."
-    logIfLatest:
-      configFile.logIfLatest !== undefined
-        ? (configFile.logIfLatest as boolean)
-        : (argv.logIfLatest as boolean),
+    logIfLatest: config.logIfLatest,
     // Migrations collection name. Defaults to 'migrations'
-    collectionName: configFile.collectionName
-      ? (configFile.collectionName as string)
-      : (argv.collectionName as string),
+    collectionName: config.collectionName,
     // MongDB connection url
-    db: configFile.db ? (configFile.db as string) : (argv.db as string),
-    migrationsDir: path.resolve(
-      configFile.migrationsDir
-        ? (configFile.migrationsDir as string)
-        : (argv.migrationsDir as string),
-    ),
-    supportFile: configFile.supportFile || argv.supportFile,
+    db: config.db,
+    migrationsDir: config.migrationsDir
+      ? path.resolve(config.migrationsDir)
+      : 'migrations',
+    supportFile: config.supportFile,
   };
 
   // Get versions sorted

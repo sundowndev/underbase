@@ -42,6 +42,7 @@ describe('UNIT - CLI/Commands', () => {
         },
       };
       const versions = ['1.0', '1.2'];
+      const argv = {};
 
       mockedExit.mockImplementation(() => {
         return;
@@ -84,7 +85,7 @@ describe('UNIT - CLI/Commands', () => {
         });
       });
 
-      await rerunCmd.action({ config, versions });
+      await rerunCmd.action({ config, versions, argv });
 
       expect(mockedInitMigrator).toHaveBeenCalledTimes(1);
       expect(mockedImportFile).toHaveBeenCalledTimes(2);

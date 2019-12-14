@@ -5,6 +5,7 @@
   "scripts": {
     "migrations:status": "underbase status --config migrations/config.js",
     "migrations:run": "underbase migrate latest --config migrations/config.js",
+    "migrations:reset": "underbase migrate 0 --config migrations/config.js",
     "migrations:validate": "underbase validate --config migrations/config.js"
   }
 }

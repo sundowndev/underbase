@@ -13,7 +13,7 @@ interface IConfigFile {
   collectionName?: string;
   migrationsDir?: string;
   db: string;
-  logs: boolean;
+  logs?: boolean;
   logger: ILogger;
   logIfLatest?: boolean;
   require?: string | undefined;
@@ -22,24 +22,43 @@ interface IConfigFile {
 
 interface IMigrationUtils {
   MongoClient: Db;
-  Migrate: (migrations: any[]) => void;
+  Migrate: (migrations: IMigration[]) => Promise<void>;
   Query: QueryInterface;
   Logger: (...args: string[]) => void;
 }
 
 interface IMigration {
   version: number;
-  describe: string;
-  up: (db: IMigrationUtils) => Promise<any> | any;
-  down: (db: IMigrationUtils) => Promise<any> | any;
+  describe?: string;
+  up: (db: IMigrationUtils) => Promise<unknown> | unknown;
+  down: (db: IMigrationUtils) => Promise<unknown> | unknown;
 }
 
 interface ILogger {
-  info: (...args: any[]) => void;
-  warn: (...args: any[]) => void;
-  success: (...args: any[]) => void;
-  error: (...args: any[]) => void;
-  log: (...args: any[]) => void;
+  info: (...args: unknown[]) => void;
+  warn: (...args: unknown[]) => void;
+  success: (...args: unknown[]) => void;
+  error: (...args: unknown[]) => void;
+  log: (...args: unknown[]) => void;
+}
+
+interface ICommand {
+  command: string;
+  describe: string;
+  action: TCommandAction;
+}
+
+type TCommandAction = (options: ICommandActionOptions) => Promise<void>;
+
+interface ICommandActionOptions {
+  config: IConfigFile;
+  versions: string[];
+  argv: any;
+}
+
+enum EDirection {
+  up = 'up',
+  down = 'down',
 }
 
 export {
@@ -49,4 +68,8 @@ export {
   IMigration,
   ILogger,
   QueryInterface,
+  ICommand,
+  ICommandActionOptions,
+  EDirection,
+  TCommandAction,
 };
