@@ -131,7 +131,6 @@ Register a new migration.
 
 ```javascript
 // Declaration : add(migration: IMigration): void
-// returns a promise
 migrator.add({
   version: 1,
   up: async ({ MongoClient }) => {
