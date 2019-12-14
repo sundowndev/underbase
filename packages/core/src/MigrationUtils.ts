@@ -8,7 +8,7 @@ import {
 import chalk from 'chalk';
 import { Db } from 'mongodb';
 
-class MigrationUtils {
+export class MigrationUtils {
   public utils: IMigrationUtils;
   private mongoClient: Db;
   private queryInterface: QueryInterface;
@@ -59,5 +59,3 @@ class MigrationUtils {
     }
   }
 }
-
-export default MigrationUtils;

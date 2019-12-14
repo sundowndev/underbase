@@ -31,7 +31,7 @@ import chalk from 'chalk';
 import _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
-import MigrationUtils from './MigrationUtils';
+import { MigrationUtils } from './MigrationUtils';
 import Observable from './Observable';
 import { validateMigration } from './utils';
 
