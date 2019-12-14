@@ -17,6 +17,9 @@
     "docker:down": "docker-compose down",
     "docker:test": "docker-compose run underbase-test"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
