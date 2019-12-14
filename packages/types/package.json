@@ -1,6 +1,6 @@
 {
   "name": "@underbase/types",
-  "version": "2.0.2-alpha.0",
+  "version": "2.0.2-alpha.1",
   "main": "build/src/index",
   "types": "build/src/index",
   "files": [
@@ -19,7 +19,7 @@
     "url": "https://github.com/sundowndev/underbase/issues"
   },
   "dependencies": {
-    "@underbase/query-interface": "^2.0.2-alpha.0",
+    "@underbase/query-interface": "^2.0.2-alpha.1",
     "mongodb": "^3.3.0-beta2"
   }
 }
