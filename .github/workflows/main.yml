@@ -1,4 +1,4 @@
-name: Node
+name: Test
 
 on: [push]
 
@@ -20,19 +20,19 @@ jobs:
     - name: install
       run: |
         set -o pipefail
-        npm install
-        npm run bootstrap
+        yarn
+        yarn bootstrap
 
     - name: lint
-      run: npm run lint
+      run: yarn lint
 
     - name: build
-      run: npm run build:clean
+      run: yarn build:clean
 
     - name: test
       run: |
         docker-compose up -d underbase-db
-        npm test
+        yarn test
 
     - name: Upload coverage to Codecov  
       uses: codecov/codecov-action@v1.0.2
