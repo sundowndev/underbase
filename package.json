@@ -8,7 +8,6 @@
     "build": "node ./scripts/buildTs.js",
     "build:clean": "rm -rf ./packages/*/build ./packages/*/coverage && yarn build",
     "build:watch": "yarn build -- --watch",
-    "clean": "lerna run clean",
     "clean-all": "rm -rf ./node_modules ./packages/*/node_modules ./packages/*/coverage ./packages/*/build",
     "publish": "yarn build:clean && lerna publish from-git -y",
     "test": "cross-env NODE_ENV=test jest --config jest.config.js --coverage --useStderr --forceExit --detectOpenHandles --verbose",
