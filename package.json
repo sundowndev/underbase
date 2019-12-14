@@ -3,7 +3,7 @@
   "scripts": {
     "start": "yarn lint && yarn build:clean && yarn test",
     "lint": "tslint --project tsconfig.json 'packages/**/*.ts' --exclude '**/*.d.ts' --exclude 'node_modules/**/*.ts'",
-    "bootstrap": "lerna bootstrap --hoist",
+    "bootstrap": "lerna bootstrap",
     "build": "node ./scripts/buildTs.js",
     "build:clean": "rm -rf ./packages/*/build ./packages/*/coverage && yarn build",
     "build:watch": "yarn build -- --watch",
