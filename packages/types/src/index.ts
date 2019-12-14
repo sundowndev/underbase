@@ -56,12 +56,6 @@ interface ICommandActionOptions {
   argv: any;
 }
 
-interface ICommandActionOptions {
-  config: IConfigFile;
-  versions: string[];
-  argv: any;
-}
-
 enum EDirection {
   up = 'up',
   down = 'down',
