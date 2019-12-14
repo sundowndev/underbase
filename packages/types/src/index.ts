@@ -13,7 +13,7 @@ interface IConfigFile {
   collectionName?: string;
   migrationsDir?: string;
   db: string;
-  logs: boolean;
+  logs?: boolean;
   logger: ILogger;
   logIfLatest?: boolean;
   require?: string | undefined;
