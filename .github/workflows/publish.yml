@@ -22,7 +22,6 @@ jobs:
       run: |
         set -o pipefail
         yarn
-        yarn bootstrap
         yarn build:clean
     - name: publish
       run: |
@@ -35,4 +34,5 @@ jobs:
         git config --global user.name "${{ secrets.GITHUB_USER }}"
         git config --global user.email "${{ secrets.GITHUB_USER }}@users.noreply.github.com"
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ./.npmrc
+        git fetch && git checkout --track origin/master -f
         yarn lerna publish --conventional-commits --no-verify-access --create-release github --yes
