@@ -45,7 +45,15 @@ interface ILogger {
 interface ICommand {
   command: string;
   describe: string;
-  action: (options: ICommandActionOptions) => Promise<void>;
+  action: TCommandAction;
+}
+
+type TCommandAction = (options: ICommandActionOptions) => Promise<void>;
+
+interface ICommandActionOptions {
+  config: IConfigFile;
+  versions: string[];
+  argv: any;
 }
 
 interface ICommandActionOptions {
@@ -69,4 +77,5 @@ export {
   ICommand,
   ICommandActionOptions,
   EDirection,
+  TCommandAction,
 };

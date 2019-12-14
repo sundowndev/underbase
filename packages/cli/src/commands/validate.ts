@@ -1,19 +1,17 @@
-import {
-  ICommandActionOptions,
-  IConfigFile,
-  IMigration,
-} from '@underbase/types';
+import { IConfigFile, IMigration, TCommandAction } from '@underbase/types';
 import { importFile, logger } from '@underbase/utils';
 import * as fs from 'fs-extra';
 import { getMigrationsEntryFiles } from '../common/utils';
 
 export const command = 'validate';
 export const describe = 'Validate migration files and configuration.';
-export const action = async ({ config, versions }: ICommandActionOptions) => {
-  return Promise.all([
+export const action: TCommandAction = async ({ config, versions }) => {
+  await Promise.all([
     checkMigrationsDir(config.migrationsDir),
     checkMigrationPaths(config, versions),
   ]);
+
+  return;
 };
 
 const checkMigrationsDir = (migrationsDir: string | undefined) => {
