@@ -1,4 +1,4 @@
-name: npm CI
+name: Publish packages
 
 on:
   push:
@@ -21,9 +21,9 @@ jobs:
     - name: install
       run: |
         set -o pipefail
-        npm install
-        npm run bootstrap
+        yarn
+        yarn bootstrap
     - name: publish
       run: |
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-        npm run publish -- from-git --yes
+        yarn publish -- from-git --yes
