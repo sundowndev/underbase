@@ -25,7 +25,7 @@ jobs:
         ssh-keyscan -t rsa github.com > "${SSH_DIR}/known_hosts"
         echo "${{ secrets.ACTIONS_DEPLOY_KEY }}" > "${SSH_DIR}/id_rsa"
         chmod 400 "${SSH_DIR}/id_rsa"
-        git remote set-url origin git@github.com:sundowndev/livre-blanc-video.git
+        git remote set-url origin git@github.com:sundowndev/underbase.git
         git config --global user.name "${{ secrets.GITHUB_USER }}"
         git config --global user.email "${{ secrets.GITHUB_USER }}@users.noreply.github.com"
         cd website && yarn
