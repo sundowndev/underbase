@@ -26,4 +26,4 @@ jobs:
     - name: publish
       run: |
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-        yarn publish
+        yarn lerna publish --conventional-commits --no-verify-access --create-release github --yes
