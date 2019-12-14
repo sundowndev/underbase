@@ -8,6 +8,8 @@ export const action: TCommandAction = async ({ config, versions }) => {
   if (config.migrationsDir && fs.existsSync(config.migrationsDir)) {
     logger.info('Versions list based on folders');
 
-    versions.forEach((v: string) => logger.log(`- ${v}`));
+    for (const version of versions) {
+      logger.log(`- ${version}`);
+    }
   }
 };
