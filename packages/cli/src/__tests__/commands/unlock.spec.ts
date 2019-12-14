@@ -36,6 +36,8 @@ describe('UNIT - CLI/Commands', () => {
         collectionName: 'migrations',
         logs: true,
       };
+      const versions = ['1.0', '1.2'];
+      const argv = {};
 
       mockedInitMigrator.mockImplementation((configObject: IConfigFile) => {
         expect(config).toBe(configObject);
@@ -54,7 +56,7 @@ describe('UNIT - CLI/Commands', () => {
         return { spent: () => '5' };
       });
 
-      await unlockCmd.action({ config });
+      await unlockCmd.action({ config, versions, argv });
 
       expect(mockedInitMigrator).toHaveBeenCalledTimes(1);
       expect(mockedLogger).toHaveBeenCalledTimes(2);
@@ -74,6 +76,8 @@ describe('UNIT - CLI/Commands', () => {
         collectionName: 'migrations',
         logs: true,
       };
+      const versions = ['1.0', '1.2'];
+      const argv = {};
 
       mockedInitMigrator.mockImplementation((configObject: IConfigFile) => {
         expect(config).toBe(configObject);
@@ -88,7 +92,7 @@ describe('UNIT - CLI/Commands', () => {
         });
       });
 
-      await unlockCmd.action({ config });
+      await unlockCmd.action({ config,versions,argv });
 
       expect(mockedInitMigrator).toHaveBeenCalledTimes(1);
       expect(mockedLogger).toHaveBeenCalledTimes(1);

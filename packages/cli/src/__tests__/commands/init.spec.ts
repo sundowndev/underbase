@@ -21,7 +21,17 @@ describe('UNIT - CLI/Commands', () => {
     test.skip('should create both folders', async () => {
       const config = {
         migrationsDir: 'migrationsTest',
+        db: '',
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
       };
+      const versions = ['1.0', '1.2'];
+      const argv = {};
 
       mockedExistsSync.mockImplementation((path: any) => {
         expect(path).toMatch(/(migrationsTest)/);
@@ -35,7 +45,7 @@ describe('UNIT - CLI/Commands', () => {
         return Promise.resolve();
       });
 
-      await initCmd.action({ config });
+      await initCmd.action({ config, versions, argv });
 
       expect(mockedExistsSync).toHaveBeenCalledTimes(2);
       expect(mockedMkdirSync).toHaveBeenCalledTimes(2);
@@ -44,7 +54,17 @@ describe('UNIT - CLI/Commands', () => {
     test.skip('should only create migrations folder', async () => {
       const config = {
         migrationsDir: 'migrationsTest',
+        db: '',
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
       };
+      const versions = ['1.0', '1.2'];
+      const argv = {};
 
       mockedExistsSync.mockImplementation((path: any) => {
         expect(path).toMatch(/(migrationsTest)/);
@@ -58,7 +78,7 @@ describe('UNIT - CLI/Commands', () => {
         return Promise.resolve();
       });
 
-      await initCmd.action({ config });
+      await initCmd.action({ config, versions, argv });
 
       expect(mockedExistsSync).toHaveBeenCalledTimes(2);
       expect(mockedMkdirSync).toHaveBeenCalledTimes(1);
@@ -67,7 +87,17 @@ describe('UNIT - CLI/Commands', () => {
     test.skip('should create any folder', async () => {
       const config = {
         migrationsDir: 'migrationsTest',
+        db: '',
+        logger: {
+          info: () => {},
+          error: () => {},
+          warn: () => {},
+          success: () => {},
+          log: () => {},
+        },
       };
+      const versions = ['1.0', '1.2'];
+      const argv = {};
 
       mockedExistsSync.mockImplementation((path: any) => {
         expect(path).toMatch(/(migrationsTest)/);
@@ -81,7 +111,7 @@ describe('UNIT - CLI/Commands', () => {
         return Promise.resolve();
       });
 
-      await initCmd.action({ config });
+      await initCmd.action({ config, versions, argv });
 
       expect(mockedExistsSync).toHaveBeenCalledTimes(2);
       expect(mockedMkdirSync).toHaveBeenCalledTimes(0);
