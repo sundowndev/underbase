@@ -13,49 +13,52 @@ export class MigrationUtils {
   private mongoClient: Db;
   private queryInterface: QueryInterface;
   private logger: ILogger;
-  private direction: EDirection;
 
   constructor(direction: EDirection, mongoClient: Db, logger: ILogger) {
-    this.direction = direction;
     this.mongoClient = mongoClient;
     this.queryInterface = new QueryInterface(this.mongoClient);
     this.logger = logger;
     this.utils = {
       MongoClient: this.mongoClient,
       Query: this.queryInterface,
-      Logger: this.loggerHelper,
-      Migrate: this.migrate,
+      Logger: this.loggerHelper(logger),
+      Migrate: this.migrate(direction),
     };
   }
 
-  private loggerHelper(...args: string[]) {
-    this.logger.log(' '.repeat(8), chalk.inverse(' LOGGER '), ...args);
+  private loggerHelper(logger: ILogger) {
+    return (...args: string[]): void => {
+      logger.log(' '.repeat(8), chalk.inverse(' LOGGER '), ...args);
+    };
   }
 
-  private async migrate(migrations: IMigration[]): Promise<void> {
-    const logLevel = 8;
-    const direction = this.direction;
+  private migrate(
+    direction: EDirection,
+  ): (migrations: IMigration[]) => Promise<void> {
+    return async (migrations: IMigration[]): Promise<void> => {
+      const logLevel = 8;
 
-    for (const migration of migrations) {
-      if (
-        migration[direction].constructor.name !== 'AsyncFunction' &&
-        migration[direction].constructor.name !== 'Promise'
-      ) {
-        this.logger.warn(
-          `One of the ${direction} functions is nor Async or Promise`,
-          `(${migration.describe || 'not described'})`,
-        );
-      }
+      for (const migration of migrations) {
+        if (
+          migration[direction].constructor.name !== 'AsyncFunction' &&
+          migration[direction].constructor.name !== 'Promise'
+        ) {
+          this.logger.warn(
+            `One of the ${direction} functions is nor Async or Promise`,
+            `(${migration.describe || 'not described'})`,
+          );
+        }
 
-      if (migration.describe) {
-        this.logger.log(' '.repeat(logLevel), chalk.grey(migration.describe));
-      }
+        if (migration.describe) {
+          this.logger.log(' '.repeat(logLevel), chalk.grey(migration.describe));
+        }
 
-      try {
-        await migration[direction](this.utils);
-      } catch (error) {
-        throw new Error(error);
+        try {
+          await migration[direction](this.utils);
+        } catch (error) {
+          throw new Error(error);
+        }
       }
-    }
+    };
   }
 }
