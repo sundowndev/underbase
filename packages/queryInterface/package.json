@@ -1,6 +1,6 @@
 {
   "name": "@underbase/query-interface",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "main": "build/src/index",
   "types": "build/src/index",
   "files": [

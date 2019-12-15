@@ -1,6 +1,6 @@
 {
   "name": "@underbase/core",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Abstract framework to write and execute MongoDB schema migration",
   "main": "build/src/index",
   "types": "build/src/index",
@@ -20,9 +20,9 @@
     "url": "https://github.com/sundowndev/underbase/issues"
   },
   "dependencies": {
-    "@underbase/query-interface": "^2.1.0",
-    "@underbase/types": "^2.1.0",
-    "@underbase/utils": "^2.1.1",
+    "@underbase/query-interface": "^2.1.2",
+    "@underbase/types": "^2.1.2",
+    "@underbase/utils": "^2.1.2",
     "chalk": "^3.0.0",
     "lodash": "4.17.15",
     "mongodb": "3.4.0",
