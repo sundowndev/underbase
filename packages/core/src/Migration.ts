@@ -337,10 +337,11 @@ export class Migration {
   }
 
   /**
-   * This is an atomic op. The op ensures only one caller at a time will match the control
+   * @description This is an atomic op. The op ensures only one caller at a time will match the control
    * object and thus be able to update it.  All other simultaneous callers will not match the
    * object and thus will have null return values in the result of the operation.
    *
+   * @private
    * @memberof Migration
    * @returns {Promise<boolean>}
    */
