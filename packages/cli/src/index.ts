@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { IConfigFile } from '@underbase/types';
+import { ICommand, IConfigFile } from '@underbase/types';
 import { exit, logger } from '@underbase/utils';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -14,10 +14,8 @@ import * as validators from './middlewares/validators';
 
 let configFile: IConfigFile;
 
-export async function main() {
-  const commands = await args.getCommands();
-
-  const argv = yargs
+function initArgv() {
+  return yargs
     .scriptName('underbase')
     .usage(args.usage)
     .commandDir('commands')
@@ -28,7 +26,9 @@ export async function main() {
     .alias('h', 'help')
     .locale('en_US')
     .epilogue(args.docs).argv;
+}
 
+async function getConfig(argv: any): Promise<IConfigFile> {
   if (fs.existsSync(path.resolve(argv.config))) {
     configFile = await import(path.resolve(argv.config));
   }
@@ -52,6 +52,14 @@ export async function main() {
     supportFile: config.supportFile,
   };
 
+  return config;
+}
+
+export async function main(): Promise<void> {
+  const argv = initArgv();
+  const config = await getConfig(argv);
+  const commands = await args.getCommands();
+
   // Get versions sorted
   const versions = (fs.existsSync(config.migrationsDir as fs.PathLike)
     ? (fs
@@ -60,7 +68,9 @@ export async function main() {
     : []
   ).sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
 
-  const targetCommand = commands.find((c: any) => c.name === argv._[0]);
+  const targetCommand: ICommand | undefined = commands.find(
+    (c: any) => c.name === argv._[0],
+  );
 
   if (targetCommand) {
     validators.checkMigrationDirExists(config);
