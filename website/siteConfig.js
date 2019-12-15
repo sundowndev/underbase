@@ -43,8 +43,8 @@ const siteConfig = {
   },
 
   /* path to images for header/footer */
-  headerIcon: 'img/logo.svg',
-  footerIcon: 'img/logo.svg',
+  headerIcon: 'img/logo_white.svg',
+  footerIcon: 'img/logo_white.svg',
   favicon: 'img/logo.svg',
 
   /* Colors for website */
