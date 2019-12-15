@@ -6,11 +6,11 @@ export class QueryInterface {
   public cursorOptions: any;
 
   private _db: Db;
-  private _collection: Collection;
+  private _collection: Collection | null;
 
   constructor(db: Db) {
     this._db = db;
-    this._collection = null as any;
+    this._collection = null;
   }
 
   public collection = (name: string): MongoCollection => {
