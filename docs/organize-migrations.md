@@ -61,11 +61,11 @@ This would result in the following execution workflow :
 
 ### File structure evolution
 
-Every collections are migrated in the entrypoint.
+Every collections are migrated inside the entrypoint `index.js`.
 
 ![img1](https://i.imgur.com/bkHGZPZ.png)
 
-Collections now have their own file and executed from the entrypoint.
+Collections now have their own file and are executed from the entrypoint.
 
 ![img2](https://i.imgur.com/QBqoyU7.png)
 
