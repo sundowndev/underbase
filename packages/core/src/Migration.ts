@@ -1,5 +1,4 @@
 // tslint:disable:variable-name
-// tslint:disable:no-console
 import { EDirection, IMigration, IMigrationOptions } from '@underbase/types';
 import { logger } from '@underbase/utils';
 import chalk from 'chalk';
@@ -42,13 +41,7 @@ export class Migration {
   private _db: Db | null;
   private options: IMigrationOptions;
   private _emitter: Observable;
-  private defaultMigration: IMigration = {
-    version: 0,
-    // tslint:disable-next-line: no-empty
-    up: async () => {},
-    // tslint:disable-next-line: no-empty
-    down: async () => {},
-  };
+  private defaultMigration: IMigration;
 
   /**
    * @memberof Migration
@@ -58,6 +51,13 @@ export class Migration {
    * @param {IMigrationOptions} [opts]
    */
   constructor(opts?: IMigrationOptions) {
+    this.defaultMigration = {
+      version: 0,
+      // tslint:disable-next-line: no-empty
+      up: async () => {},
+      // tslint:disable-next-line: no-empty
+      down: () => {},
+    };
     // Since we'll be at version 0 by default, we should have a migration set for it.
     this._list = [this.defaultMigration];
     this._collection = null;
