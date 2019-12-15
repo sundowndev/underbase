@@ -8,10 +8,10 @@
 
 <div align="center">
   <a href="https://github.com/sundowndev/underbase/actions">
-    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/underbase/badge?ref=develop" alt="build status" />
+    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/underbase/badge?ref=master" alt="build status" />
   </a>
   <a href="https://codecov.io/gh/sundowndev/underbase">
-    <img src="https://codecov.io/gh/sundowndev/underbase/branch/develop/graph/badge.svg" />
+    <img src="https://codecov.io/gh/sundowndev/underbase/branch/master/graph/badge.svg" />
   </a>
   <a href="https://github.com/sundowndev/underbase/releases">
     <img src="https://img.shields.io/github/release/sundowndev/underbase.svg" alt="release" />
@@ -149,6 +149,6 @@ Icon was made by [Fabiana Antonioli](https://thenounproject.com/FafiAC) and publ
 
 ## License
 
-[MIT](https://github.com/sundowndev/underbase/blob/develop/LICENSE)
+[MIT](https://github.com/sundowndev/underbase/blob/master/LICENSE)
 
 © 2019-present Raphaël Cerveaux
