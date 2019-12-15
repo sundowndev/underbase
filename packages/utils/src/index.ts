@@ -50,7 +50,7 @@ export const timer = () => {
  * @ignore
  * @private
  */
-export const exit = (code: number = 0) => {
+export const exit = (code: number = 0): void => {
   process.exit(code);
 };
 
