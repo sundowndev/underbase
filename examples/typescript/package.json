@@ -11,7 +11,7 @@
   "scripts": {
     "migrations:status": "underbase -r ts-node/register status --config migrations/config.js",
     "migrations:run": "underbase -r ts-node/register migrate latest --config migrations/config.js",
-    "migrations:reset": "underbase migrate 0 --config migrations/config.js",
+    "migrations:reset": "underbase -r ts-node/register migrate 0 --config migrations/config.js",
     "migrations:validate": "underbase -r ts-node/register validate --config migrations/config.js"
   }
 }
