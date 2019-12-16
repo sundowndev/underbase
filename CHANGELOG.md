@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/sundowndev/underbase/compare/v2.1.2...v2.1.3) (2019-12-16)
+
+
+### Bug Fixes
+
+* **examples:** imports & migration types ([4b25710](https://github.com/sundowndev/underbase/commit/4b257104802bdd80e1b4ad9bb156714c7021f0b6))
+* **examples:** require flag for reset script ([3980a8f](https://github.com/sundowndev/underbase/commit/3980a8f813bb1cc5f9a13414321903f1fdbc1f91))
+
+
+
+
+
 ## [2.1.2](https://github.com/sundowndev/underbase/compare/v2.1.1...v2.1.2) (2019-12-15)
 
 **Note:** Version bump only for package underbase
