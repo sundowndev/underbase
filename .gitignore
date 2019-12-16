@@ -5,3 +5,4 @@ coverage/
 website/build
 build
 *.tsbuildinfo
+examples/*/yarn.lock
