@@ -1,4 +1,4 @@
-import { IMigrationUtils } from '@underbase-types';
+import { IMigrationUtils } from '@underbase/types';
 import tasks from './tasks';
 
 export default {

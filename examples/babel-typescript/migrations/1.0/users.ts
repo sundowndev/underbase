@@ -1,4 +1,4 @@
-import { IMigrationUtils } from '@underbase/underbase-queryInterface';
+import { IMigrationUtils } from '@underbase/types';
 
 export default {
   describe: 'Fix typo in Users collection',

@@ -8,7 +8,7 @@
   "scripts": {
     "migrations:status": "underbase -r @babel/register status --config migrations/config.js",
     "migrations:run": "underbase -r @babel/register migrate latest --config migrations/config.js",
-    "migrations:reset": "underbase migrate 0 --config migrations/config.js",
+    "migrations:reset": "underbase -r @babel/register migrate 0 --config migrations/config.js",
     "migrations:validate": "underbase -r @babel/register validate --config migrations/config.js"
   }
 }

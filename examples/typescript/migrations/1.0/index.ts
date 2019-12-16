@@ -1,4 +1,4 @@
-import { IMigrationUtils } from '@underbase/underbase-types';
+import { IMigrationUtils } from '@underbase/types';
 import tasks from './tasks';
 import users from './users';
 

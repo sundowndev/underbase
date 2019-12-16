@@ -1,7 +1,8 @@
-import { IMigrationUtils } from '@underbase/underbase-queryInterface';
+import { IMigrationUtils } from '@underbase/types';
 
 export default {
   describe: 'Fix typo in Tasks collection',
+  version: 1.0,
   async up({ Query }: IMigrationUtils) {
     const tasks = Query.collection('Tasks');
 

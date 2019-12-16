@@ -2,16 +2,15 @@
 
 /* tslint:disable */
 
+const exit = (code = 0) => process.exit(code);
+
 // speed up `underbase --version`
-if (
-  ['v', 'version', '-v', '--v', '-version', '--version'].includes(
-    process.argv[2],
-  )
-) {
-  const contents = require('fs').readFileSync(`${__dirname}/../package.json`);
-  const package = JSON.parse(contents);
-  console.log(package.version);
-  process.exit(0);
+if (['v', 'version', '-v', '--version'].includes(process.argv[2])) {
+  const fs = require('fs');
+  const contents = fs.readFileSync(`${__dirname}/../package.json`);
+  const packageJson = JSON.parse(contents);
+  console.log(packageJson.version);
+  exit();
 }
 
 if (process.argv.includes('-r') || process.argv.includes('--require')) {
@@ -25,16 +24,11 @@ if (process.argv.includes('-r') || process.argv.includes('--require')) {
   const moduleToRequire = process.argv[requireOptIndex + 1];
 
   // Filter unwanted arguments
-  const underbaseArgs = process.argv.filter(
-    f =>
-      [
-        process.execPath,
-        __filename,
-        '-r',
-        '--require',
-        moduleToRequire,
-      ].indexOf(f) < 0,
-  );
+  const underbaseArgs = process.argv
+    .slice(2)
+    .filter(
+      f => ![process.execPath, '-r', '--require', moduleToRequire].includes(f),
+    );
 
   const args = [].concat(
     '--require',
@@ -53,7 +47,7 @@ if (process.argv.includes('-r') || process.argv.includes('--require')) {
       if (signal) {
         process.kill(process.pid, signal);
       } else {
-        process.exit(code);
+        exit(code);
       }
     });
   });

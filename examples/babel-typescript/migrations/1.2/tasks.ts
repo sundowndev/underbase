@@ -1,7 +1,8 @@
-import { IMigrationUtils } from '@underbase-types';
+import { IMigrationUtils } from '@underbase/types';
 
 export default {
   describe: 'Transform label field to array',
+  version: 1.2,
   async up({ MongoClient }: IMigrationUtils) {
     const tasksCollection = MongoClient.collection('Tasks');
 

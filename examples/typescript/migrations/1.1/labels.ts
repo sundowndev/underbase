@@ -1,7 +1,8 @@
-import { IMigrationUtils } from '@underbase/underbase-queryInterface';
+import { IMigrationUtils } from '@underbase/types';
 
 export default {
   describe: 'Move tasks labels to a dedicated collection',
+  version: 1.1,
   async up({ MongoClient }: IMigrationUtils) {
     const tasksCollection = MongoClient.collection('Tasks');
     const labelsCollection = MongoClient.collection('Labels');
