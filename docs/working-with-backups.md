@@ -16,36 +16,35 @@ First, create a support file :
 const { exec } = require('child_process');
 
 module.exports = (on, { config }) => {
-  on(
-    'migrate',
-    () =>
-      new Promise((resolve, reject) => {
-        const mongodumpBinary = 'mongodump';
+  on('migrate', async () => {
+    const mongodumpBinary = 'mongodump';
+    const host = '';
+    const database = 'underbase_example';
+    const filePath = path.join(__dirname, 'backups', 'v1.2.gz');
 
-        // some code here...
+    const cmd = [
+      mongodumpBinary,
+      `--host ${host}`,
+      `--archive=${filePath}`,
+      `--gzip`,
+      `--db ${database}`,
+    ].join(' ');
 
-        const cmd = [
-          mongodumpBinary,
-          `--host ${host}`,
-          `--archive=${filePath}`,
-          `--gzip`,
-          `--db ${database}`,
-        ].join(' ');
+    const promise = exec(cmd, error => {
+      if (error) {
+        config.logger.error(
+          'An error occured while creating backup file. Cancelling.',
+        );
+        throw new Error(error);
+      }
 
-        return exec(cmd, error => {
-          if (error) {
-            config.logger.error(
-              'An error occured while creating backup file. Cancelling.',
-            );
-            return reject(error);
-          }
+      config.logger.success(`Backup created: ${filePath}`);
 
-          config.logger.success(`Backup created: ${filePath}`);
+      // Continue and start migrating
+    });
 
-          return resolve(); // Continue and start migrating
-        });
-      }),
-  );
+    return Promise.all([promise]);
+  });
 };
 ```
 
