@@ -66,7 +66,7 @@ migrator.add({
 To run migrations until the latest version :
 
 ```javascript
-migrator.migrateTo('latest');
+await migrator.migrateTo('latest');
 ```
 
 ## Using ES6 syntax
