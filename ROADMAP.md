@@ -1,6 +1,10 @@
 # Roadmap
 
-Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), before adding new features, the very first thing to do is to make a stable version of this fork. The initial state for this fork is `v0.9-dev`. My goal with this project is to maintain this repository with a good workflow using CI and unit/integration tests, as well as having ~100% coverage and ensure support for node 8,10,11, the last version of [mongodb](https://docs.mongodb.com/manual/release-notes/) (currently 4.0), and [node-mongodb-native](https://github.com/mongodb/node-mongodb-native) 3.x.
+Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), before adding new features, the very first thing to do is to make a stable version of this fork. The initial state for this fork is `v0.9-dev`.
+
+### Short term goals
+
+My goal with this project is to maintain this repository with a good workflow using CI and unit/integration tests, as well as having ~100% coverage and ensure support for node 8,10,11,12 the latest version of [mongodb](https://docs.mongodb.com/manual/release-notes/) (currently 4.0), and [node-mongodb-native](https://github.com/mongodb/node-mongodb-native) 3.x.
 
 ### `v0.9-dev`
 
@@ -55,4 +59,3 @@ Since I forked the project of [emmanuelbuah](https://github.com/emmanuelbuah), b
   - [x] Usage with Babel
   - [x] Working with backups
   - [ ] Testing your migrations (assert)
-  
