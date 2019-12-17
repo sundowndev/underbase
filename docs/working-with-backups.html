@@ -62,36 +62,35 @@
 <span class="hljs-keyword">const</span> { exec } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
 
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function">(<span class="hljs-params">on, { config }</span>) =&gt;</span> {
-  on(
-    <span class="hljs-string">'migrate'</span>,
-    () =&gt;
-      <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
-        <span class="hljs-keyword">const</span> mongodumpBinary = <span class="hljs-string">'mongodump'</span>;
+  on(<span class="hljs-string">'migrate'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> mongodumpBinary = <span class="hljs-string">'mongodump'</span>;
+    <span class="hljs-keyword">const</span> host = <span class="hljs-string">''</span>;
+    <span class="hljs-keyword">const</span> database = <span class="hljs-string">'underbase_example'</span>;
+    <span class="hljs-keyword">const</span> filePath = path.join(__dirname, <span class="hljs-string">'backups'</span>, <span class="hljs-string">'v1.2.gz'</span>);
 
-        <span class="hljs-comment">// some code here...</span>
+    <span class="hljs-keyword">const</span> cmd = [
+      mongodumpBinary,
+      <span class="hljs-string">`--host <span class="hljs-subst">${host}</span>`</span>,
+      <span class="hljs-string">`--archive=<span class="hljs-subst">${filePath}</span>`</span>,
+      <span class="hljs-string">`--gzip`</span>,
+      <span class="hljs-string">`--db <span class="hljs-subst">${database}</span>`</span>,
+    ].join(<span class="hljs-string">' '</span>);
 
-        <span class="hljs-keyword">const</span> cmd = [
-          mongodumpBinary,
-          <span class="hljs-string">`--host <span class="hljs-subst">${host}</span>`</span>,
-          <span class="hljs-string">`--archive=<span class="hljs-subst">${filePath}</span>`</span>,
-          <span class="hljs-string">`--gzip`</span>,
-          <span class="hljs-string">`--db <span class="hljs-subst">${database}</span>`</span>,
-        ].join(<span class="hljs-string">' '</span>);
+    <span class="hljs-keyword">const</span> promise = exec(cmd, error =&gt; {
+      <span class="hljs-keyword">if</span> (error) {
+        config.logger.error(
+          <span class="hljs-string">'An error occured while creating backup file. Cancelling.'</span>,
+        );
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(error);
+      }
 
-        <span class="hljs-keyword">return</span> exec(cmd, error =&gt; {
-          <span class="hljs-keyword">if</span> (error) {
-            config.logger.error(
-              <span class="hljs-string">'An error occured while creating backup file. Cancelling.'</span>,
-            );
-            <span class="hljs-keyword">return</span> reject(error);
-          }
+      config.logger.success(<span class="hljs-string">`Backup created: <span class="hljs-subst">${filePath}</span>`</span>);
 
-          config.logger.success(<span class="hljs-string">`Backup created: <span class="hljs-subst">${filePath}</span>`</span>);
+      <span class="hljs-comment">// Continue and start migrating</span>
+    });
 
-          <span class="hljs-keyword">return</span> resolve(); <span class="hljs-comment">// Continue and start migrating</span>
-        });
-      }),
-  );
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.all([promise]);
+  });
 };
 </code></pre>
 <p>Then add it to the configuration :</p>
