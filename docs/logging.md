@@ -18,7 +18,7 @@ The library passes multiple objects to migrations functions. One of them make yo
 }
 ```
 
-Which will produce the following : 
+Which will produce the following :
 
 ```
 $ underbase migrate 1
@@ -42,9 +42,13 @@ Migrations uses console by default for logging if not provided. If you want to u
 Migrations expects a function as `logger`, and will pass arguments to it for you to take action on.
 
 ```js
-const MyLogger = function(level, ...args) {
-  console.log(level, ...args);
-}
+const MyLogger = {
+  log: (...args) => console.log('<log>', ...args),
+  error: (...args) => console.log('<error>', ...args),
+  warn: (...args) => console.log('<warn>', ...args),
+  info: (...args) => console.log('<info>', ...args),
+  success: (...args) => console.log('<success>', ...args),
+};
 
 Migrations.config({
   ...
@@ -53,8 +57,8 @@ Migrations.config({
 });
 ```
 
-Example :
+Your logger will then be called like so :
 
 ```js
-MyLogger('warning', 'Beware! Up function is not async!');
+MyLogger.warn('Beware! Up function is not async!');
 ```
