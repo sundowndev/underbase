@@ -2,6 +2,7 @@ import { IMigrationUtils } from '@underbase/types';
 
 export default {
   describe: 'Fix typo in Users collection',
+  version: 1.0,
   async up({ Query }: IMigrationUtils) {
     const users = Query.collection('Users');
 
