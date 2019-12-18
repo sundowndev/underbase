@@ -21,7 +21,7 @@ export class MigrationUtils {
   /**
    * @memberof MigrationUtils
    * @constructor
-   * 
+   *
    * @param {EDirection} direction
    * @param {Db} mongoClient
    * @param {ILogger} logger

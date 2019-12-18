@@ -23,17 +23,17 @@ export default class Observable {
    *
    * @function on
    * @description Register an action on an event.
-   * 
-   * @param {string} e Event
-   * @param {function} f Action callback
+   *
+   * @param {string} event Event
+   * @param {function} callback Action callback
    * @returns {void}
    */
-  public on(e: string, f: (...args: unknown[]) => Promise<unknown>): void {
-    if (!this.events[e]) {
-      this.events[e] = [];
+  public on(event: string, callback: (...args: unknown[]) => Promise<unknown>): void {
+    if (!this.events[event]) {
+      this.events[event] = [];
     }
 
-    this.events[e].push(f);
+    this.events[event].push(callback);
   }
 
   public async emit(e: string, data?: unknown): Promise<void> {
