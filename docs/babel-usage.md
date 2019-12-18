@@ -38,3 +38,25 @@ You can then use Babel to transpile migration files on the fly :
 ```
 underbase --require @babel/register --config underbase.config.js
 ```
+
+### Babel + Typescript
+
+To use Babel with Typescript, you have to enable `.ts` extension. In order do that, we've created a package which uses `@babel/register`.
+
+You still need to have `@babel/register` and `@babel/preset-typescript` installed.
+
+See [this code example](https://github.com/sundowndev/underbase/tree/develop/examples/babel-typescript).
+
+#### Instructions
+
+1. Install the package
+
+```bash
+yarn add -D @underbase/babel-register-ts
+```
+
+2. Then, you can use your Typescript files
+
+```bash
+underbase -r @underbase/babel-register-ts migrate 1.0
+```

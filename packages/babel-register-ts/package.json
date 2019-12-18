@@ -1,0 +1,24 @@
+{
+  "name": "@underbase/babel-register-ts",
+  "version": "2.1.2",
+  "main": "index.js",
+  "types": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "author": "Raphaël Cerveaux <raphael@crvx.fr>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sundowndev/underbase.git",
+    "directory": "packages/babel-register-ts"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/sundowndev/underbase/issues"
+  },
+  "dependencies": {
+    "@babel/register": "^7.7.4"
+  }
+}
