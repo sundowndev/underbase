@@ -2,7 +2,7 @@
 // tslint:disable:no-empty
 import { EDirection, ILogger, IMigration } from '@underbase/types';
 import chalk from 'chalk';
-import { MigrationUtils } from '../MigrationUtils';
+import { MigrationUtils } from '../classes/MigrationUtils';
 
 describe('packages/core/src/MigrationUtils.ts - MigrationUtils', () => {
   const loggerMock: ILogger = {

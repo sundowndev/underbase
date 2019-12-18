@@ -3,7 +3,7 @@
 import { logger } from '@underbase/utils';
 import { Promise as BlueBirdPromise } from 'bluebird';
 import { Db, MongoClient } from 'mongodb';
-import { Migration } from '../index';
+import { Migration } from '..';
 
 let connection: MongoClient;
 let db: Db;
