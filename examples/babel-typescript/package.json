@@ -3,17 +3,17 @@
     "mongodb": "*"
   },
   "devDependencies": {
-    "@babel/core": "*",
     "@babel/preset-env": "*",
     "@babel/preset-typescript": "*",
     "@babel/register": "*",
     "@underbase/cli": "file:../../packages/cli",
-    "@underbase/types": "file:../../packages/types"
+    "@underbase/types": "file:../../packages/types",
+    "@underbase/babel-register-ts": "file:../../packages/babel-register-ts"
   },
   "scripts": {
-    "migrations:status": "underbase -r @babel/register status --config migrations/config.js",
-    "migrations:run": "underbase -r @babel/register migrate latest --config migrations/config.js",
-    "migrations:reset": "underbase -r @babel/register migrate 0 --config migrations/config.js",
-    "migrations:validate": "underbase -r @babel/register validate --config migrations/config.js"
+    "migrations:status": "underbase -r @underbase/babel-register-ts status --config migrations/config.js",
+    "migrations:run": "underbase -r @underbase/babel-register-ts migrate latest --config migrations/config.js",
+    "migrations:reset": "underbase -r @underbase/babel-register-ts migrate 0 --config migrations/config.js",
+    "migrations:validate": "underbase -r @underbase/babel-register-ts validate --config migrations/config.js"
   }
 }
