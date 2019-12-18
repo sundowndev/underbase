@@ -31,9 +31,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-env": "7.7.6",
-    "@babel/preset-typescript": "7.7.4",
-    "@babel/register": "7.7.4",
     "@commitlint/cli": "8.2.0",
     "@commitlint/config-conventional": "8.2.0",
     "@types/bluebird": "3.5.29",
@@ -43,13 +40,11 @@
     "@types/mongodb": "3.3.12",
     "@types/node": "12.12.18",
     "@types/type-check": "0.3.27",
-    "chalk": "3.0.0",
     "cross-env": "6.0.3",
     "husky": "3.1.0",
     "jest": "24.8.0",
     "jest-extended": "0.11.2",
     "lerna": "3.19.0",
-    "micromatch": "4.0.2",
     "string-length": "3.1.0",
     "ts-jest": "24.2.0",
     "ts-loader": "5.4.5",
@@ -58,7 +53,6 @@
     "tslint-microsoft-contrib": "6.1.0",
     "typedoc": "0.15.4",
     "typescript": "3.7.3",
-    "vrsource-tslint-rules": "6.0.0",
-    "bluebird": "3.7.2"
+    "vrsource-tslint-rules": "6.0.0"
   }
 }
