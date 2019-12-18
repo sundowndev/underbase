@@ -1,6 +1,6 @@
 {
   "name": "@underbase/babel-register-ts",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "main": "index.js",
   "types": "index.js",
   "files": [
