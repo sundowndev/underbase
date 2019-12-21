@@ -40,7 +40,6 @@ My goal with this project is to maintain this repository with a good workflow us
 
 ### `v1.0.0` (mvp)
 
-<!--- [ ] CLI: `--history` option to save migration history into a .log file-->
 - [x] Init monorepo using Lerna with the following packages
 - [x] Support for ES6 and Typescript
 - [x] Validate command
@@ -57,7 +56,7 @@ My goal with this project is to maintain this repository with a good workflow us
   - [x] Usage with Typescript
   - [x] Usage with Babel
   - [x] Working with backups
-  
-  ### What's next ?
-  
-  Then, next releases will come with new features and codebase improvements !
+
+### What's next ?
+
+Then, next releases will come with new features and codebase improvements !
