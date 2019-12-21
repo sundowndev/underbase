@@ -1,6 +1,6 @@
 {
   "name": "@underbase/core",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Abstract framework to write and execute MongoDB schema migration",
   "main": "build/src/index",
   "types": "build/src/index",
