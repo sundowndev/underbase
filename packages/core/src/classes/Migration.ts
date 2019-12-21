@@ -5,9 +5,9 @@ import chalk from 'chalk';
 import _ from 'lodash';
 import { Collection, Db, MongoClient } from 'mongodb';
 import { typeCheck } from 'type-check';
+import { validateMigration } from '../utils';
 import { MigrationUtils } from './MigrationUtils';
 import Observable from './Observable';
-import { validateMigration } from './utils';
 
 interface IControl {
   version: number;
@@ -45,9 +45,8 @@ export class Migration {
 
   /**
    * @memberof Migration
-   *
    * @constructor
-   * @description Creates an instance of Migration.
+   *
    * @param {IMigrationOptions} [opts]
    */
   constructor(opts?: IMigrationOptions) {

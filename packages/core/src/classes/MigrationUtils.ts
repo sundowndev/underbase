@@ -8,12 +8,24 @@ import {
 import chalk from 'chalk';
 import { Db } from 'mongodb';
 
+/**
+ * @class MigrationUtils
+ * @description This is a class that represent a collection of utils later passed to migrations.
+ */
 export class MigrationUtils {
   public utils: IMigrationUtils;
   private mongoClient: Db;
   private queryInterface: QueryInterface;
   private logger: ILogger;
 
+  /**
+   * @memberof MigrationUtils
+   * @constructor
+   *
+   * @param {EDirection} direction
+   * @param {Db} mongoClient
+   * @param {ILogger} logger
+   */
   constructor(direction: EDirection, mongoClient: Db, logger: ILogger) {
     this.mongoClient = mongoClient;
     this.queryInterface = new QueryInterface(this.mongoClient);
@@ -26,12 +38,28 @@ export class MigrationUtils {
     };
   }
 
-  private loggerHelper(logger: ILogger) {
+  /**
+   * @private
+   * @memberof MigrationUtils
+   *
+   * @function loggerHelper
+   * @description This is an helper which returns a log function.
+   * @returns {function}
+   */
+  private loggerHelper(logger: ILogger): (...args: string[]) => void {
     return (...args: string[]): void => {
       logger.log(' '.repeat(8), chalk.inverse(' LOGGER '), ...args);
     };
   }
 
+  /**
+   * @private
+   * @memberof MigrationUtils
+   *
+   * @function migrate
+   * @description This allows a migration to run nested migrations with a defined direction.
+   * @returns {function}
+   */
   private migrate(
     direction: EDirection,
   ): (migrations: IMigration[]) => Promise<void> {

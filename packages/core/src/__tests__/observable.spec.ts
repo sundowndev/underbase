@@ -1,5 +1,5 @@
 // tslint:disable: no-string-literal
-import Observable from '../Observable';
+import Observable from '../classes/Observable';
 
 describe('packages/core/src/Observable.ts - Observable', () => {
   let emitter: Observable;
