@@ -36,12 +36,12 @@ export default class Observable {
     this.events[event].push(callback);
   }
 
-  public async emit(e: string, data?: unknown): Promise<void> {
-    if (!this.events[e]) {
-      this.events[e] = [];
+  public async emit(event: string, data?: unknown): Promise<void> {
+    if (!this.events[event]) {
+      this.events[event] = [];
     }
 
-    for (const observer of this.events[e]) {
+    for (const observer of this.events[event]) {
       await observer(data);
     }
   }
