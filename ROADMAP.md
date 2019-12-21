@@ -46,16 +46,18 @@ My goal with this project is to maintain this repository with a good workflow us
 - [x] Validate command
 - [x] Event isteners
 - [x] Refactor yargs implementation ([#131](https://github.com/sundowndev/underbase/issues/131))
-- [ ] Create examples ([#132](https://github.com/sundowndev/underbase/issues/132))
+- [x] Create examples ([#132](https://github.com/sundowndev/underbase/issues/132))
   - [x] commonjs
   - [x] babel-async-await
   - [x] babel-typescript
   - [x] typescript
   - [x] backup
-  - [ ] docker-backup
-- [ ] Update documentation (guides)
+- [x] Update documentation (guides)
   - [x] Organizing migrations
   - [x] Usage with Typescript
   - [x] Usage with Babel
   - [x] Working with backups
-  - [ ] Testing your migrations (assert)
+  
+  ### What's next ?
+  
+  Then, next releases will come with new features and codebase improvements !
