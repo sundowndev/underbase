@@ -1,6 +1,6 @@
 {
   "name": "underbase",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "main": "build/src/index",
   "types": "build/src/index",
   "files": [
@@ -10,8 +10,8 @@
     "underbase": "./bin/underbase.js"
   },
   "dependencies": {
-    "@underbase/cli": "^2.2.3",
-    "@underbase/core": "^2.2.2",
+    "@underbase/cli": "^2.2.4",
+    "@underbase/core": "^2.2.4",
     "import-local": "^3.0.2"
   },
   "author": "Raphaël Cerveaux <raphael@crvx.fr>",
