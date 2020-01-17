@@ -78,7 +78,7 @@ underbase --logIfLatest true
 Support file path.
 
 - Default : `undefined`
-- Type : `boolean`
+- Type : `string`
 
 ```shell
 underbase --supportFile ./support.js
