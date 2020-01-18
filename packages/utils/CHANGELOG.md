@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.5](https://github.com/sundowndev/underbase/compare/v2.2.4...v2.2.5) (2020-01-18)
+
+**Note:** Version bump only for package @underbase/utils
+
+
+
+
+
 ## [2.2.4](https://github.com/sundowndev/underbase/compare/v2.2.3...v2.2.4) (2020-01-15)
 
 **Note:** Version bump only for package @underbase/utils
