@@ -10,6 +10,9 @@
   <a href="https://github.com/sundowndev/underbase/actions">
     <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/underbase/badge?ref=master" alt="build status" />
   </a>
+  <a href="https://codeclimate.com/github/sundowndev/underbase/maintainability">
+    <img src="https://api.codeclimate.com/v1/badges/ef8db7f1334994f01ea6/maintainability" />
+  </a>
   <a href="https://codecov.io/gh/sundowndev/underbase">
     <img src="https://codecov.io/gh/sundowndev/underbase/branch/master/graph/badge.svg" />
   </a>
