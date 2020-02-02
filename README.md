@@ -41,7 +41,7 @@ Underbase is a MongoDB schema and data migration library that provides an easy-t
 npm install -g @underbase/cli
 ```
 
->Underbase is compatible with any Node.js version above v8.x.
+>Underbase is compatible with any Node.js version above v8.x. ⚠️ As of March 2020, Underbase will drop support for Nodejs v8.x.
 
 ### Configuration
 
