@@ -52,7 +52,7 @@
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "6.1.0",
     "typedoc": "0.15.4",
-    "typescript": "3.7.5",
+    "typescript": "3.8.2",
     "vrsource-tslint-rules": "6.0.0"
   }
 }
