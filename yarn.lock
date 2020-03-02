@@ -1378,10 +1378,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
-"@types/mongodb@3.3.16":
-  version "3.3.16"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.3.16.tgz#3b125aa0e31ef0f6733fcfcf507cce1324823a26"
-  integrity sha512-i1Ov36BXdp+urtPsaSvrNfCdsaVn4Ukq1m1kGyzdWB1+eg3gJ68unXU5LNmnF4EAMRFY6FXZzA7/W3NST40b8g==
+"@types/mongodb@3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.0.tgz#3876f0884dda1f73b31b76ea5978817b1e18adff"
+  integrity sha512-wHk5o4zM9Md1us5GcNw6dogf9Oyfu4SmIt/TCVWX4W+YetRu913LBF/Grf+pa2Uvb9UIXftyY8YWeDwyIvR7GQ==
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
