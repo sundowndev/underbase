@@ -32,7 +32,8 @@
     "access": "public"
   },
   "engines": {
-    "node": ">= 6"
+    "node": ">= 10",
+    "strict": true
   },
   "bugs": {
     "url": "https://github.com/sundowndev/underbase/issues"
