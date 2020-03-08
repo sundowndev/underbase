@@ -1,6 +1,6 @@
 {
   "name": "underbase",
-  "version": "2.2.10",
+  "version": "2.2.11",
   "main": "build/src/index",
   "types": "build/src/index",
   "files": [
@@ -10,7 +10,7 @@
     "underbase": "./bin/underbase.js"
   },
   "dependencies": {
-    "@underbase/cli": "^2.2.9",
+    "@underbase/cli": "^2.2.11",
     "@underbase/core": "^2.2.8",
     "import-local": "^3.0.2"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@underbase/cli",
-  "version": "2.2.9",
+  "version": "2.2.11",
   "main": "build/src/index",
   "types": "build/src/index",
   "files": [
