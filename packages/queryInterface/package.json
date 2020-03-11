@@ -19,6 +19,6 @@
     "url": "https://github.com/sundowndev/underbase/issues"
   },
   "dependencies": {
-    "mongodb": "3.5.4"
+    "mongodb": "3.5.5"
   }
 }
