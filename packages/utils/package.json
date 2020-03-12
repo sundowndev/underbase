@@ -1,6 +1,6 @@
 {
   "name": "@underbase/utils",
-  "version": "2.2.8",
+  "version": "2.2.12",
   "main": "build/src/index",
   "types": "build/src/index",
   "files": [
@@ -19,7 +19,7 @@
     "url": "https://github.com/sundowndev/underbase/issues"
   },
   "dependencies": {
-    "@underbase/types": "^2.2.8",
+    "@underbase/types": "^2.2.12",
     "chalk": "^3.0.0"
   }
 }

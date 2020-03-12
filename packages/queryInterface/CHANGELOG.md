@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.12](https://github.com/sundowndev/underbase/compare/v2.2.11...v2.2.12) (2020-03-12)
+
+**Note:** Version bump only for package @underbase/query-interface
+
+
+
+
+
 ## [2.2.8](https://github.com/sundowndev/underbase/compare/v2.2.7...v2.2.8) (2020-02-25)
 
 **Note:** Version bump only for package @underbase/query-interface
