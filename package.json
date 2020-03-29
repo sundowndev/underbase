@@ -42,7 +42,7 @@
     "@types/type-check": "0.3.27",
     "cross-env": "7.0.2",
     "husky": "4.2.3",
-    "jest": "25.1.0",
+    "jest": "25.2.3",
     "jest-extended": "0.11.5",
     "lerna": "3.20.2",
     "string-length": "4.0.1",
