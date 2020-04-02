@@ -48,7 +48,7 @@
     "string-length": "4.0.1",
     "ts-jest": "25.2.1",
     "ts-loader": "5.4.5",
-    "tslint": "5.20.1",
+    "tslint": "6.1.1",
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "6.1.0",
     "typedoc": "0.15.4",
