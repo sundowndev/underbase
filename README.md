@@ -126,7 +126,7 @@ Want to see real-world usage of Underbase ? We've created some examples for you.
 
 ## Support
 
-Underbase is continuously being tested with node v8 & v12, the latest version of the [mongodb nodejs driver](https://github.com/mongodb/node-mongodb-native) (3.x) and the latest version of the [MongoDB docker image](https://docs.docker.com/samples/library/mongo/). Dependencies are frequently updated. It's compatible with any Node.js version above v8.x.
+Underbase is continuously being tested with node v10 & v12, the latest version of the [mongodb nodejs driver](https://github.com/mongodb/node-mongodb-native) (3.x) and the latest version of the [MongoDB docker image](https://docs.docker.com/samples/library/mongo/). Dependencies are frequently updated. It's compatible with any Node.js version above v8.x.
 
 ## Contributing
 
