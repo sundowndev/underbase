@@ -7,7 +7,7 @@ When migrating in production, you may want to create a backup of your database b
 
 Unfortunately, there's no built-in backup feature in underbase. But you can still achieve this using the built-in event emitter !
 
-See [this code example](https://github.com/sundowndev/underbase/tree/develop/examples/backup).
+See [this code example](https://github.com/sundowndev/underbase/tree/master/examples/backup).
 
 First, create a support file :
 
