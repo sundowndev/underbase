@@ -24,7 +24,7 @@
     "@underbase/types": "^2.2.12",
     "@underbase/utils": "^2.2.16",
     "chalk": "^4.0.0",
-    "lodash": "4.17.15",
+    "lodash": "4.17.19",
     "mongodb": "3.5.5",
     "type-check": "0.4.0"
   }
