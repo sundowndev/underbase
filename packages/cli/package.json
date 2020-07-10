@@ -14,7 +14,7 @@
     "@underbase/types": "^2.2.12",
     "@underbase/utils": "^2.2.16",
     "fs-extra": "9.0.0",
-    "yargs": "15.3.1"
+    "yargs": "15.4.1"
   },
   "author": "Raphaël Cerveaux <raphael@crvx.fr>",
   "repository": {
