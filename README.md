@@ -33,6 +33,10 @@ Underbase is a MongoDB schema and data migration library that provides an easy-t
 - **Scalable:** uses MongoDB cursor and aggregator.
 - **Testable:** can be used with assertions.
 
+## Current status
+
+The current API (v2.x) is stable and production ready. But **the project will be discontinued as of August, 2020** since it didn't match my expectations. Feel free to fork, contribute to keep the project up to date and maintained.
+
 ## Quick start
 
 ### Install
