@@ -47,7 +47,7 @@
     "lerna": "3.21.0",
     "string-length": "4.0.1",
     "ts-jest": "25.2.1",
-    "ts-loader": "5.4.5",
+    "ts-loader": "8.0.3",
     "tslint": "5.20.1",
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "6.1.0",
