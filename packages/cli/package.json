@@ -1,6 +1,6 @@
 {
   "name": "@underbase/cli",
-  "version": "2.2.16",
+  "version": "2.2.17",
   "main": "build/src/index",
   "types": "build/src/index",
   "files": [
@@ -10,7 +10,7 @@
     "underbase": "./bin/underbase.js"
   },
   "dependencies": {
-    "@underbase/core": "^2.2.16",
+    "@underbase/core": "^2.2.17",
     "@underbase/types": "^2.2.12",
     "@underbase/utils": "^2.2.16",
     "fs-extra": "9.0.0",
